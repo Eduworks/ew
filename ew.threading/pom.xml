@@ -7,11 +7,7 @@
     <artifactId>ew</artifactId>
     <version>0.0.1</version>
   </parent>
-  <groupId>com.eduworks</groupId>
   <artifactId>ew.distributed</artifactId>
-  <version>0.0.1</version>
-  <name>ew.threading</name>
-  <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>

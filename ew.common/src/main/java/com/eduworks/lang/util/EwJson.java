@@ -25,7 +25,7 @@ import com.eduworks.lang.json.impl.EwJsonObject;
 /**
  * Provides general helper methods for {@link JSONArray} and {@link JSONObject}. When methods
  * deal in specific {@link EwJsonCollection}s, they should be put in their respective classes.
- * This class is reserved specifically for the basic classes in org.json.*.
+ * This class is reserved specifically for the basic classes in org.json.*. 
  *
  * @author dharvey
  * @since September, 2011

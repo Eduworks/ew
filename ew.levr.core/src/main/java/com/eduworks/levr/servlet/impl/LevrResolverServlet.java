@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletInputStream;
@@ -88,8 +90,9 @@ public class LevrResolverServlet extends LevrServlet
 						resolvableFunctions = new EwMap<String, Resolvable>();
 						codeFiles = new EwList<File>();
 
+						loadAdditionalConfigFilesFromServletContext("/WEB-INF/lib/", servletContext);
+						loadAdditionalConfigFilesFromServletContext("/WEB-INF/classes/", servletContext);
 						loadAdditionalConfigFilesFromServletContext("/", servletContext);
-						//loadAdditionalConfigFilesFromContext("/");
 						loadAdditionalConfigFiles(new File(EwFileSystem.getWebConfigurationPath()));
 					}
 					for (String webService : resolvableFunctions.keySet())
@@ -129,10 +132,32 @@ public class LevrResolverServlet extends LevrServlet
 
 	private static void loadAdditionalConfigFilesFromServletContext(String path, ServletContext servletContext) throws IOException, JSONException
 	{
-		if (servletContext != null)
+		if (servletContext == null)
+			return;
+		if (path.endsWith(".jar"))
+		{
+			  ZipInputStream zip = new ZipInputStream(servletContext.getResourceAsStream(path));
+			  while(true) {
+			    ZipEntry e = zip.getNextEntry();
+			    if (e == null)
+			      break;
+			    String name = e.getName();
+			    if (name.endsWith(".rs2")) {
+
+					File createTempFile = File.createTempFile(path.replace("/", "").replace("\\", ""), e.getName().replace("/", "").replace("\\", ""));
+					FileWriter fileWriter = new FileWriter(createTempFile);
+					IOUtils.copy(zip, fileWriter);
+					fileWriter.close();
+					loadAdditionalConfigFiles(createTempFile);
+					createTempFile.delete();
+			    }
+			  }
+			  zip.close();
+		}
+		else if (path.endsWith("/"))
 		{
 			Set<String> resourcePaths = servletContext.getResourcePaths(path);
-			if (resourcePaths != null)
+			if (resourcePaths != null && resourcePaths.size() > 0)
 				for (String contextPath : resourcePaths)
 				{
 					if (contextPath.endsWith("/") || contextPath.endsWith(".jar"))
@@ -142,12 +167,16 @@ public class LevrResolverServlet extends LevrServlet
 					}
 					File createTempFile = File.createTempFile("inWar", contextPath.replace("/", "").replace("\\", ""));
 					FileWriter fileWriter = new FileWriter(createTempFile);
-					IOUtils.copy(servletContext.getResourceAsStream(contextPath), fileWriter);
+					InputStream resourceAsStream = servletContext.getResourceAsStream(contextPath);
+					IOUtils.copy(resourceAsStream, fileWriter);
+					resourceAsStream.close();
 					fileWriter.close();
 					loadAdditionalConfigFiles(createTempFile);
 					createTempFile.delete();
 				}
 		}
+		else
+			System.out.println("Failed: " + path);
 	}
 
 	private static void loadAdditionalConfigFilesFromContext(String path) throws IOException, JSONException

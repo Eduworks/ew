@@ -1,0 +1,2 @@
+pong=#object(ping="pong").displayJson(_collapse="true");
+/ping=pong;

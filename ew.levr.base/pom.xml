@@ -8,59 +8,55 @@
 		<artifactId>ew</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	<groupId>com.eduworks</groupId>
 	<artifactId>ew.levr.base</artifactId>
-	<version>0.0.1</version>
-	<name>ew.levr.base</name>
-	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-  <packaging>jar</packaging>
-  <dependencies>
-  	<dependency>
-  		<groupId>com.eduworks</groupId>
-  		<artifactId>ew.levr.core</artifactId>
-  		<version>0.0.1</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>commons-codec</groupId>
-  		<artifactId>commons-codec</artifactId>
-  		<version>1.6</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>commons-lang</groupId>
-  		<artifactId>commons-lang</artifactId>
-  		<version>2.6</version>
-  	</dependency>
-  	<dependency>
-		<groupId>org.apache.commons</groupId>
-		<artifactId>commons-csv</artifactId>
-		<version>1.2</version>
-	</dependency>
-	<dependency>
-		<groupId>xerces</groupId>
-		<artifactId>xercesImpl</artifactId>
-		<version>2.6.2</version>
-	</dependency>
-	<dependency>
-		<groupId>org.jsoup</groupId>
-		<artifactId>jsoup</artifactId>
-		<version>1.8.2</version>
-	</dependency>
-	<dependency>
-		<groupId>org.semanticdesktop.aperture</groupId>
-		<artifactId>aperture-core</artifactId>
-		<version>1.6.0</version>
-	</dependency>
-	<dependency>
-		<groupId>joda-time</groupId>
-		<artifactId>joda-time</artifactId>
-		<version>2.3</version>
-	</dependency>
-		
+	<packaging>jar</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>com.eduworks</groupId>
+			<artifactId>ew.levr.core</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.6.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.8.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.semanticdesktop.aperture</groupId>
+			<artifactId>aperture-core</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.3</version>
+		</dependency>
 
-  </dependencies>
+
+	</dependencies>
 	<repositories>
 		<repository>
 			<id>aperture-repo</id>

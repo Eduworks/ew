@@ -1,69 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.eduworks</groupId>
-  <artifactId>ew</artifactId>
-  <version>0.0.1</version>
-  <packaging>pom</packaging>
+	<groupId>com.eduworks</groupId>
+	<artifactId>ew</artifactId>
+	<version>0.0.1</version>
+	<packaging>pom</packaging>
 
-  <name>ew</name>
-  <url>http://maven.apache.org</url>
+	<name>ew</name>
+	<url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.8.2</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-    	<groupId>log4j</groupId>
-    	<artifactId>log4j</artifactId>
-    	<version>1.2.16</version>
-    </dependency>
-  </dependencies>
-  <modules>
-  	<module>ew.common</module>
-  	<module>ew.threading</module>
-  	<module>ew.db.mapdb</module>
-  	<module>ew.db.couchdb</module>
-    <module>ew.image</module>
-    <module>ew.ontology</module>
-    <module>ew.levr.core</module>
-    <module>ew.levr.base</module>
-    <module>ew.levr.db.couchbase</module>
-    <module>ew.levr.db.couchdb</module>
-    <module>ew.levr.db.mapdb</module>
-    <module>ew.levr.distributed</module>
-    <module>ew.levr.net</module>
-    <module>ew.levr.ontology</module>
-    <module>ew.levr.security</module>
-    <module>ew.levr.service.paypal</module>
-    <module>ew.levr.code</module>
-    <module>ew.levr.service.solr</module>
-    <module>ew.levr.lang.english</module>
-    <module>ew.levr.dist.slim</module>
-  </modules>
-  <organization>
-  	<name>Eduworks Corporation</name>
-  	<url>http://www.eduworks.com</url>
-  </organization>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
+	</dependencies>
+	<modules>
+		<module>ew.common</module>
+		<module>ew.threading</module>
+		<module>ew.db.mapdb</module>
+		<module>ew.db.couchdb</module>
+		<module>ew.image</module>
+		<module>ew.ontology</module>
+		<module>ew.levr.core</module>
+		<module>ew.levr.base</module>
+		<module>ew.levr.db.couchbase</module>
+		<module>ew.levr.db.couchdb</module>
+		<module>ew.levr.db.mapdb</module>
+		<module>ew.levr.distributed</module>
+		<module>ew.levr.net</module>
+		<module>ew.levr.ontology</module>
+		<module>ew.levr.security</module>
+		<module>ew.levr.service.paypal</module>
+		<module>ew.levr.code</module>
+		<module>ew.levr.service.solr</module>
+		<module>ew.levr.lang.english</module>
+		<module>ew.levr.dist.slim</module>
+		<module>ew.levr.db.skyrepo</module>
+		<module>ew.levr.ebac.skyid</module>
+	</modules>
+	<organization>
+		<name>Eduworks Corporation</name>
+		<url>http://www.eduworks.com</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>Copyright 2008-2016 Eduworks Corporation</comments>
+		</license>
+	</licenses>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
