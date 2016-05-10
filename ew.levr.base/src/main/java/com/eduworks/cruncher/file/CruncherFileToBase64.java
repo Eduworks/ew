@@ -49,12 +49,12 @@ public class CruncherFileToBase64 extends Cruncher
 
 	private void encodeFile(JSONObject result, File obj) throws JSONException, IOException
 	{
-		result.put(obj.getName(), Base64.encodeBase64(FileUtils.readFileToByteArray(obj)));
+		result.put(obj.getName(), Base64.encodeBase64String(FileUtils.readFileToByteArray(obj)));
 	}
 
 	private void encodeFile(JSONObject result, InMemoryFile obj) throws JSONException, IOException
 	{
-		result.put(obj.name, Base64.encodeBase64(obj.data));
+		result.put(obj.name, Base64.encodeBase64String(obj.data));
 	}
 
 	@Override

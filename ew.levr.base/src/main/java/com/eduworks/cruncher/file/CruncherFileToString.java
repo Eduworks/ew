@@ -27,7 +27,7 @@ public class CruncherFileToString extends Cruncher
 			InMemoryFile file = (InMemoryFile) obj;
 			try
 			{
-				return IOUtils.toString(file.data);
+				return IOUtils.toString(file.data, encoding);
 			}
 			catch (IOException e)
 			{
@@ -41,7 +41,7 @@ public class CruncherFileToString extends Cruncher
 			
 			try {
 				for(InMemoryFile file : fileList){
-					array.put(IOUtils.toString(file.data,encoding));
+					array.put(IOUtils.toString(file.data, encoding));
 				}
 				
 				return array;
