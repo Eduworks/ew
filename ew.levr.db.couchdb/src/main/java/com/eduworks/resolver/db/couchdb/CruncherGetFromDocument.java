@@ -20,6 +20,8 @@ import com.fourspaces.couchdb.Document;
 
 public class CruncherGetFromDocument extends CruncherDocument
 {
+	boolean toldem = false;
+
 	public String encodeValue2(String value)
 	{
 		try
@@ -36,7 +38,10 @@ public class CruncherGetFromDocument extends CruncherDocument
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
-		Logger.getLogger(getClass()).info("This class has recently been converted to a Cruncher by Fritz.");
+		if (!toldem)
+			Logger.getLogger(getClass()).info("This class has recently been converted to a Cruncher by Fritz.");
+		toldem = true;
+
 		JSONObject result = new JSONObject();
 		final boolean doNotShorten = optAsBoolean("_doNotShorten", false, c, parameters, dataStreams);
 		final boolean nullify = optAsBoolean("_canNull", false, c, parameters, dataStreams);
@@ -73,6 +78,7 @@ public class CruncherGetFromDocument extends CruncherDocument
 
 		for (String key : keySet())
 		{
+			if (isSetting(key)) continue;
 			final EwJsonObject jsonObject = (EwJsonObject) d.getJSONObject();
 			final String existing = getAsString(key, c, parameters, dataStreams);
 
@@ -105,7 +111,7 @@ public class CruncherGetFromDocument extends CruncherDocument
 			return object;
 		}
 
-		return (nullify && result.length() == 0) ? null : this;
+		return (nullify && result.length() == 0) ? null : result;
 	}
 
 	@Override

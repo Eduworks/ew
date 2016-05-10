@@ -1,6 +1,8 @@
 package com.eduworks.resolver;
 
+import java.io.InputStream;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -104,6 +106,7 @@ public class ResolverFactory
 		List<ClassLoader> classLoadersList = new ArrayList<ClassLoader>();
 		classLoadersList.add(ClasspathHelper.contextClassLoader());
 		classLoadersList.add(ClasspathHelper.staticClassLoader());
+		classLoadersList.add(new URLClassLoader(urls.toArray(new URL[0])));
 		Reflections reflections = new Reflections(new ConfigurationBuilder().addClassLoaders(classLoadersList).setUrls(urls)
 				.setScanners(new SubTypesScanner(), new TypeAnnotationsScanner().filterResultsBy(new Predicate<String>()
 				{
@@ -229,5 +232,6 @@ public class ResolverFactory
 			throw new RuntimeException(e);
 		}
 	}
+
 
 }

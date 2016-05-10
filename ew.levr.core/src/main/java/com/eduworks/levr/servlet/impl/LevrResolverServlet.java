@@ -78,8 +78,7 @@ public class LevrResolverServlet extends LevrServlet
 		if (codeFilesLastCheckedMs + 5000 < System.currentTimeMillis())
 		{
 			codeFilesLastCheckedMs = System.currentTimeMillis();
-			if (resolvableWebServices == null || getFilesLastModified(new File(EwFileSystem.getWebConfigurationPath())) != codeFilesLastModifiedMs
-					|| codeFiles.size() == 0)
+			if (resolvableWebServices == null || getFilesLastModified(new File(EwFileSystem.getWebConfigurationPath())) != codeFilesLastModifiedMs)
 			{
 				FileReader input = null;
 				try
@@ -94,6 +93,7 @@ public class LevrResolverServlet extends LevrServlet
 						loadAdditionalConfigFilesFromServletContext("/WEB-INF/classes/", servletContext);
 						loadAdditionalConfigFilesFromServletContext("/", servletContext);
 						loadAdditionalConfigFiles(new File(EwFileSystem.getWebConfigurationPath()));
+						codeFilesLastModifiedMs = getFilesLastModified(new File(EwFileSystem.getWebConfigurationPath()));
 					}
 					for (String webService : resolvableFunctions.keySet())
 					{
@@ -221,14 +221,12 @@ public class LevrResolverServlet extends LevrServlet
 						log.debug("Loading: " + codeFile.getPath());
 						codeFiles.add(codeFile);
 						bindWebServices(resolvableWebServices, LevrResolverParser.decodeStreams(codeFile));
-						codeFilesLastModifiedMs = Math.max(codeFile.lastModified(), codeFilesLastModifiedMs);
 					}
 					if (codeFile.getName().endsWith(".rs2"))
 					{
 						log.debug("Loading: " + codeFile.getPath());
 						codeFiles.add(codeFile);
 						bindWebServicesAndFunctions(resolvableWebServices, resolvableFunctions, LevrResolverV2Parser.decodeStreams(codeFile));
-						codeFilesLastModifiedMs = Math.max(codeFile.lastModified(), codeFilesLastModifiedMs);
 					}
 					JSONObject scriptPack = null;
 					Map<String, JSONObject> scriptStreams = null;
@@ -244,7 +242,6 @@ public class LevrResolverServlet extends LevrServlet
 						scriptStreams = new EwMap<String, JSONObject>();
 						scriptStreams.put(cleanFilename, scriptPack);
 						bindWebServices(resolvableWebServices, scriptStreams);
-						codeFilesLastModifiedMs = Math.max(codeFile.lastModified(), codeFilesLastModifiedMs);
 					}
 					if (codeFile.getName().endsWith(".jsl"))
 					{
@@ -258,7 +255,6 @@ public class LevrResolverServlet extends LevrServlet
 						scriptStreams = new EwMap<String, JSONObject>();
 						scriptStreams.put(cleanFilename, scriptPack);
 						bindWebServices(resolvableWebServices, scriptStreams);
-						codeFilesLastModifiedMs = Math.max(codeFile.lastModified(), codeFilesLastModifiedMs);
 					}
 				}
 				catch (NullPointerException ex)

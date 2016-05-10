@@ -48,7 +48,6 @@
 		<module>ew.levr.code</module>
 		<module>ew.levr.service.solr</module>
 		<module>ew.levr.lang.english</module>
-		<module>ew.levr.dist.slim</module>
 		<module>ew.levr.db.skyrepo</module>
 		<module>ew.levr.ebac.skyid</module>
 	</modules>

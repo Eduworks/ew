@@ -39,7 +39,7 @@ public abstract class CruncherDocument extends Cruncher
 	/** @return true if the password is the {@link #BYPASS_VALUE}, false otherwise */
 	protected boolean bypassLogin(Context c,Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
-		return getAsString(PASS_KEY, c,parameters,dataStreams).equals(BYPASS_VALUE);
+		return BYPASS_VALUE.equals(getAsString(PASS_KEY, c,parameters,dataStreams));
 	}
 
 	/** @return true if there is a new password in play, false otherwise */
