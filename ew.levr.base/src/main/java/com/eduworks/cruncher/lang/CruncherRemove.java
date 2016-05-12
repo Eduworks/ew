@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.eduworks.lang.EwList;
+import com.eduworks.lang.util.EwJson;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 
@@ -30,7 +31,9 @@ public class CruncherRemove extends Cruncher
 		Object o = getObj(c, parameters, dataStreams);
 		if (o instanceof JSONObject)
 		{
-			JSONObject jo = (JSONObject) o;
+			JSONObject jo = new JSONObject();
+			for (String k : EwJson.getKeys((JSONObject) o))
+				jo.put(k, ((JSONObject) o).get(k));
 			for (String key : keySet())
 				if (key.equals("item"))
 				{
