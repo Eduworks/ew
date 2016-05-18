@@ -31,7 +31,7 @@ public class CruncherSha1 extends Cruncher
 			SecretKeySpec signingKey = new SecretKeySpec(key.getBytes(), HMAC_SHA1_ALGORITHM);
 			Mac mac = Mac.getInstance(HMAC_SHA1_ALGORITHM);
 			mac.init(signingKey);
-			return Base64.encodeBase64(mac.doFinal(data.getBytes()));
+			return new String(Base64.encodeBase64(mac.doFinal(data.getBytes())));
 		}
 		catch (NoSuchAlgorithmException e)
 		{

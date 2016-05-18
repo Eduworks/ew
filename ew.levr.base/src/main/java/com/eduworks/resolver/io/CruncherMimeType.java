@@ -3,17 +3,17 @@ package com.eduworks.resolver.io;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.semanticdesktop.aperture.mime.identifier.MimeTypeIdentifier;
-import org.semanticdesktop.aperture.mime.identifier.magic.MagicMimeTypeIdentifier;
 
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
+import com.eduworks.util.io.EwFileSystem;
 import com.eduworks.util.io.InMemoryFile;
 
 public class CruncherMimeType extends Cruncher
@@ -42,8 +42,9 @@ public class CruncherMimeType extends Cruncher
 	public static Object getMimeType(InMemoryFile file, JSONObject extensions) throws IOException, JSONException
 	{
 		String mimeType = null;
-		MimeTypeIdentifier identifier = new MagicMimeTypeIdentifier();
-		mimeType = identifier.identify(file.data, file.name, null);
+		File temporaryFile = file.toTemporaryFile();
+		mimeType = Files.probeContentType(temporaryFile.toPath());
+		EwFileSystem.deleteEventually(temporaryFile);
 		mimeType = checkExtensions(mimeType, file, extensions);
 		mimeType = fixMimeType(mimeType, file.name, file.data);
 		return mimeType;
@@ -55,10 +56,8 @@ public class CruncherMimeType extends Cruncher
 		if (mimeType == null)
 		{
 			byte[] bytes = null;
-			MimeTypeIdentifier identifier = new MagicMimeTypeIdentifier();
-			int length = Math.max(1024, identifier.getMinArrayLength());
+			mimeType = Files.probeContentType(file.toPath());
 			bytes = FileUtils.readFileToByteArray(file);
-			mimeType = identifier.identify(bytes, file.getName(), null);
 			mimeType = checkExtensions(mimeType, file, extensions);
 			mimeType = fixMimeType(mimeType, file.getName(), bytes);
 		}

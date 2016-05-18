@@ -5,16 +5,36 @@
 
 	<groupId>com.eduworks</groupId>
 	<artifactId>ew</artifactId>
-	<version>0.0.1</version>
+	<version>3.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>ew</name>
-	<url>http://maven.apache.org</url>
+	<name>Eduworks LEVR</name>
+	<description>LEVR is a web service framework that allows you to write and publish complex web services quickly and in a variety of domain-specific languages.</description>
+	<url>https://github.com/Eduworks/ew</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<ew.build.version>3.0.0-SNAPSHOT</ew.build.version>
 	</properties>
-
+	
+	<organization>
+		<name>Eduworks Corporation</name>
+		<url>http://www.eduworks.com</url>
+	</organization>
+	
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>Copyright 2008-2016 Eduworks Corporation</comments>
+		</license>
+	</licenses>
+	
+	<scm>
+		<url>https://github.com/Eduworks/ew.git</url>
+	</scm>
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -28,6 +48,7 @@
 			<version>1.2.16</version>
 		</dependency>
 	</dependencies>
+	
 	<modules>
 		<module>ew.common</module>
 		<module>ew.threading</module>
@@ -51,18 +72,7 @@
 		<module>ew.levr.db.skyrepo</module>
 		<module>ew.levr.ebac.skyid</module>
 	</modules>
-	<organization>
-		<name>Eduworks Corporation</name>
-		<url>http://www.eduworks.com</url>
-	</organization>
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-			<comments>Copyright 2008-2016 Eduworks Corporation</comments>
-		</license>
-	</licenses>
+	
 	<build>
 		<plugins>
 			<plugin>

@@ -29,16 +29,17 @@ public class ConcurrentBlockingQueue<T> extends ConcurrentLinkedQueue<T> impleme
 	@Override
 	public T poll(long timeout, TimeUnit unit) throws InterruptedException
 	{
-    long nanos = unit.toNanos(timeout);
-    long future = System.nanoTime()+nanos;
-    while (System.nanoTime() < future)
-    {
-    	T t = null;
-    	if ((t = super.poll()) == null) 
-    		EwThreading.sleep(1);
-    	if (t != null) return t;
-    }
-    return null;
+		long nanos = unit.toNanos(timeout);
+		long future = System.nanoTime() + nanos;
+		while (System.nanoTime() < future)
+		{
+			T t = null;
+			if ((t = super.poll()) == null)
+				EwThreading.sleep(10);
+			if (t != null)
+				return t;
+		}
+		return null;
 	}
 
 	@Override
@@ -52,7 +53,8 @@ public class ConcurrentBlockingQueue<T> extends ConcurrentLinkedQueue<T> impleme
 	{
 		int count = 0;
 		T t = null;
-		while ((t = super.poll()) != null);
+		while ((t = super.poll()) != null)
+			;
 		{
 			c.add(t);
 			count++;
@@ -65,7 +67,8 @@ public class ConcurrentBlockingQueue<T> extends ConcurrentLinkedQueue<T> impleme
 	{
 		int count = 0;
 		T t = null;
-		while ((t = super.poll()) != null && maxElements < count);
+		while ((t = super.poll()) != null && maxElements < count)
+			;
 		{
 			c.add(t);
 			count++;

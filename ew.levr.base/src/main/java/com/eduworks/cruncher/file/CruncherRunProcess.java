@@ -39,6 +39,7 @@ public class CruncherRunProcess extends Cruncher
 	        
 	        String line;
 	        process.waitFor();
+	        process.destroy();
 	        while ((line = br.readLine()) != null) {
 	        	output.add(line);
 	        }

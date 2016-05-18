@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.eduworks</groupId>
 		<artifactId>ew</artifactId>
-		<version>0.0.1</version>
+		<version>3.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>ew.levr.db.couchbase</artifactId>
 	<packaging>jar</packaging>
@@ -12,19 +12,12 @@
 		<dependency>
 			<groupId>com.eduworks</groupId>
 			<artifactId>ew.levr.core</artifactId>
-			<version>0.0.1</version>
+			<version>3.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>couchbase</groupId>
+			<groupId>com.couchbase.client</groupId>
 			<artifactId>couchbase-client</artifactId>
-			<version>1.1.5</version>
+			<version>1.4.12</version>
 		</dependency>
 	</dependencies>
-	<repositories>
-		<repository>
-			<id>couchbase-repo</id>
-			<name>couchbase</name>
-			<url>http://files.couchbase.com/maven2/</url>
-		</repository>
-	</repositories>
 </project>

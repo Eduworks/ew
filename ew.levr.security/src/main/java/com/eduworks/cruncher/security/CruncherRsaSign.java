@@ -38,7 +38,7 @@ public class CruncherRsaSign extends Cruncher
 			sig.initSign(bobPubKey);
 			sig.update(object.getBytes());
 			byte[] signature = sig.sign();
-			return Base64.encodeBase64(signature);
+			return new String(Base64.encodeBase64(signature));
 		}
 		catch (SignatureException e)
 		{
