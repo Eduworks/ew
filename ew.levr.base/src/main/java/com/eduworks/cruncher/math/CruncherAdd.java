@@ -27,8 +27,10 @@ public class CruncherAdd extends Cruncher
 			if (isSetting(key))
 				continue;
 			Object o = get(key,c,parameters, dataStreams);
-			if (o == null || o.toString().isEmpty())
+			if (o == null)
 				continue;
+			if (o instanceof String && ((String) o).length() > 0 && Character.isLetter(((String) o).charAt(0)))
+				enforceString = true;
 			if (resultStr.length() == 0 && !enforceString)
 				try
 				{
