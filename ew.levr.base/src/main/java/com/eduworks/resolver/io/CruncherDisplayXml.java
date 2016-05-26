@@ -44,13 +44,6 @@ public class CruncherDisplayXml extends Cruncher
 	/**
 	 * Replace special characters with XML escapes:
 	 * 
-	 * <pre>
-	 * &amp; <small>(ampersand)</small> is replaced by &amp;amp;
-	 * &lt; <small>(less than)</small> is replaced by &amp;lt;
-	 * &gt; <small>(greater than)</small> is replaced by &amp;gt;
-	 * &quot; <small>(double quote)</small> is replaced by &amp;quot;
-	 * </pre>
-	 * 
 	 * @param string
 	 *            The string to be escaped.
 	 * @return The escaped string.

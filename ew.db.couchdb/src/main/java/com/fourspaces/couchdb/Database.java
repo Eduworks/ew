@@ -37,7 +37,7 @@ import com.eduworks.lang.json.impl.EwJsonObject;
 
 /**
  * This represents a particular database on the CouchDB server
- * <p/>
+ * 
  * Using this object, you can get/create/update/delete documents. You can also
  * call views (named and adhoc) to query the underlying database.
  * 

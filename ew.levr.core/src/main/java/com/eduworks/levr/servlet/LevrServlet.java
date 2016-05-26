@@ -137,7 +137,6 @@ public abstract class LevrServlet extends HttpServlet
 		return (callback.isEmpty()) ? resultsAsString : callback + "(" + resultsAsString + ")";
 	}
 
-	/** @see {@link #crossDomainFix(HttpServletRequest, String)} */
 	protected void startJsonpPayload(HttpServletRequest request, PrintStream pw)
 	{
 		String callback = getStringFromParameter(request, "callback", "");
@@ -145,7 +144,6 @@ public abstract class LevrServlet extends HttpServlet
 			pw.append(callback + "(");
 	}
 
-	/** @see {@link #crossDomainFix(HttpServletRequest, String)} */
 	protected void finishJsonpPayload(HttpServletRequest request, PrintStream pw)
 	{
 		String callback = getStringFromParameter(request, "callback", "");

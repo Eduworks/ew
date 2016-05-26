@@ -464,7 +464,6 @@ public class Ontology extends OntologyWrapper
 	 * @param values
 	 *            - values of the properties for the new instance
 	 * @return OntologyInstance wrapper for the new instance created
-	 * @throws JSONException JSON Formatting Exception
 	 */
 	public OntologyInstance createInstance(String classId, JSONObject values)
 	{

@@ -57,7 +57,6 @@ public abstract class Cruncher implements Resolvable
 		return key.equals("obj");
 	}
 
-	/** Equivalent to {@link EwUri#encodeValue(String)}, but throws exception. */
 	protected static String encodeValue(String value) throws UnsupportedEncodingException
 	{
 		return URLEncoder.encode(decodeValue(value), EwUri.UTF_8);

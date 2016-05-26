@@ -18,11 +18,8 @@ public class CruncherSendEmail extends Cruncher
 {
 
 	/**
-	 * Sends an email using the parameters passed in. Expected parameters:
-	 * <list> <li><b>_to</b>: destination email</li> <li><b>_from</b>: source
-	 * email</li> <li><b>_subject</b>: email subject</li> <li><b>_template</b>:
-	 * email body</li> </list> <br/>
-	 * <br/>
+	 * Sends an email using the parameters passed in.
+	 * 
 	 * The template value searches for "${from}" Email sending has no return
 	 * value, so this method just returns the body of the email sent.
 	 *
