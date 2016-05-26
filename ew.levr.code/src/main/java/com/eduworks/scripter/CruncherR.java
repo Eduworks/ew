@@ -9,11 +9,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 
-import rcaller.RCaller;
-import rcaller.RCode;
-
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
+import com.github.rcaller.rStuff.RCaller;
+import com.github.rcaller.rStuff.RCode;
 
 public class CruncherR extends Cruncher
 {
@@ -75,7 +74,7 @@ public class CruncherR extends Cruncher
 //		exec.destroy();
 		try
 		{
-			caller.redirectROutputToConsole();
+			caller.redirectROutputToStream(System.out);
 			caller.runAndReturnResult(returns);
 		}
 		finally
