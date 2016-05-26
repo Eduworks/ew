@@ -98,8 +98,11 @@ public class ResolverFactory
 		EwSet<URL> urls = new EwSet<URL>();
 		for (URL url : urlsForCurrentClasspath)
 		{
-			if (!url.toString().contains("icu4j"))
-				urls.add(url);
+			if (url.toString().contains("icu4j"))
+				continue;
+			if (!url.toString().contains("levr") && url.toString().contains(".jar"))
+				continue;
+			urls.add(url);
 		}
 		System.out.println(urls.toString());
 		System.out.println("We are now going to scan for any Resolvers, Crunchers, or Scripters.");
@@ -107,8 +110,8 @@ public class ResolverFactory
 		classLoadersList.add(ClasspathHelper.contextClassLoader());
 		classLoadersList.add(ClasspathHelper.staticClassLoader());
 		classLoadersList.add(new URLClassLoader(urls.toArray(new URL[0])));
-		Reflections reflections = new Reflections(new ConfigurationBuilder().addClassLoaders(classLoadersList).setUrls(urls)
-				.setScanners(new SubTypesScanner(), new TypeAnnotationsScanner().filterResultsBy(new Predicate<String>()
+		Reflections reflections = new Reflections(new ConfigurationBuilder().addClassLoaders(classLoadersList).setUrls(urls).setScanners(new SubTypesScanner(),
+				new TypeAnnotationsScanner().filterResultsBy(new Predicate<String>()
 				{
 					@Override
 					public boolean apply(String input)
@@ -207,7 +210,7 @@ public class ResolverFactory
 			{
 				c2 = cruncherSpecs.get("execute");
 				if (c2 == null)
-					throw new RuntimeException("Neither cruncher nor function exist: "+name);
+					throw new RuntimeException("Neither cruncher nor function exist: " + name);
 				Cruncher cruncher = c2.newInstance();
 				cruncher.build("service", name);
 				return cruncher;
@@ -232,6 +235,5 @@ public class ResolverFactory
 			throw new RuntimeException(e);
 		}
 	}
-
 
 }

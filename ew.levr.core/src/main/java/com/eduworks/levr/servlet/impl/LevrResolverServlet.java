@@ -134,7 +134,7 @@ public class LevrResolverServlet extends LevrServlet
 	{
 		if (servletContext == null)
 			return;
-		if (path.endsWith(".jar"))
+		if (path.endsWith(".jar") && path.toLowerCase().contains("levr"))
 		{
 			  ZipInputStream zip = new ZipInputStream(servletContext.getResourceAsStream(path));
 			  while(true) {
@@ -175,8 +175,8 @@ public class LevrResolverServlet extends LevrServlet
 					createTempFile.delete();
 				}
 		}
-		else
-			System.out.println("Failed: " + path);
+//		else
+//			System.out.println("Failed: " + path);
 	}
 
 	private static void loadAdditionalConfigFilesFromContext(String path) throws IOException, JSONException
