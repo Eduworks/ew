@@ -33,7 +33,7 @@ public class OntologyInstance extends OntologyWrapper {
 	 * @param cls - Class that we want to create a new instance of
 	 * @param values - Values of the new Instance Properties
 	 * @return OntologyInstance of the newly created instance
-	 * @throws JSONException
+	 * @throws JSONException JSON Formatting Exception
 	 */
 	public static OntologyInstance createInstance(OntologyClass cls, JSONObject values){
 		Ontology ont = cls.getOntology();
@@ -350,7 +350,7 @@ public class OntologyInstance extends OntologyWrapper {
 	/**
 	 * (DANGER) Creates a new OntologyInstance, wrapping the OWLAPI object passed in, assumes ontology passed in is the ontology in
 	 * which the instance is within
-	 * @param instance - OWLAPI Individual to be wrapped 
+	 * @param jInstance - OWLAPI Individual to be wrapped 
 	 * @param o - Ontology that this Individual is a part of
 	 */
 	public OntologyInstance(Individual jInstance, Ontology o){
@@ -396,8 +396,7 @@ public class OntologyInstance extends OntologyWrapper {
 	
 	/**
 	 * Updates the OntologyInstance with the values passed in
-	 * @param values
-	 * @return
+	 * @param values Values to insert into the OntologyInstance
 	 */
 	@SuppressWarnings("unchecked")
 	public void update(JSONObject values){

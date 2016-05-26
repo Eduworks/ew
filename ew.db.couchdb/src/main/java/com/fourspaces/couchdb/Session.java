@@ -89,26 +89,56 @@ import org.json.JSONException;
  */
 public class Session
 {
-	private static final String	DEFAULT_CHARSET	= "UTF-8";
+	private static final String DEFAULT_CHARSET = "UTF-8";
 
-	private static final String	MIME_TYPE_JSON	= "application/json";
+	private static final String MIME_TYPE_JSON = "application/json";
 
-	protected Log				log				= LogFactory.getLog(Session.class);
-	protected final String		host;
-	protected final int			port;
-	protected final String		user;
-	protected final String		pass;
-	protected final boolean		secure;
-	protected final boolean		usesAuth;
+	protected Log log = LogFactory.getLog(Session.class);
+	protected final String host;
+	protected final int port;
+	protected final String user;
+	protected final String pass;
+	protected final boolean secure;
+	protected final boolean usesAuth;
 
-	protected CouchResponse		lastResponse;
+	protected CouchResponse lastResponse;
 
-	BasicHttpContext			localContext	= new BasicHttpContext();
+	BasicHttpContext localContext = new BasicHttpContext();
 
-	BasicScheme					basicAuth		= new BasicScheme();
+	BasicScheme basicAuth = new BasicScheme();
 
-	protected HttpClient		httpClient;
-	protected HttpParams		httpParams;
+	protected HttpClient httpClient;
+	protected HttpParams httpParams;
+
+	static class PreemptiveAuthInterceptor implements HttpRequestInterceptor
+	{
+
+		public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException
+		{
+			AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
+
+			// If no auth scheme avaialble yet, try to initialize it
+			// preemptively
+			if (authState.getAuthScheme() == null)
+			{
+				AuthScheme authScheme = (AuthScheme) context.getAttribute("preemptive-auth");
+				CredentialsProvider credsProvider = (CredentialsProvider) context.getAttribute(ClientContext.CREDS_PROVIDER);
+				HttpHost targetHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
+				if (authScheme != null)
+				{
+					Credentials creds = credsProvider.getCredentials(new AuthScope(targetHost.getHostName(), targetHost.getPort()));
+					if (creds == null)
+					{
+						throw new HttpException("No credentials for preemptive authentication");
+					}
+					authState.setAuthScheme(authScheme);
+					authState.setCredentials(creds);
+				}
+			}
+
+		}
+
+	}
 
 	/**
 	 * Constructor for obtaining a Session with an HTTP-AUTH username/password
@@ -123,41 +153,10 @@ public class Session
 	 *            - username
 	 * @param pass
 	 *            - password
+	 * @param usesAuth Uses basic auth?
 	 * @param secure
 	 *            - use an SSL connection?
 	 */
-	static class PreemptiveAuthInterceptor implements HttpRequestInterceptor
-	{
-
-		public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException
-		{
-			AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
-
-			// If no auth scheme avaialble yet, try to initialize it
-			// preemptively
-			if (authState.getAuthScheme() == null)
-			{
-				AuthScheme authScheme = (AuthScheme) context.getAttribute("preemptive-auth");
-				CredentialsProvider credsProvider = (CredentialsProvider) context
-						.getAttribute(ClientContext.CREDS_PROVIDER);
-				HttpHost targetHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
-				if (authScheme != null)
-				{
-					Credentials creds = credsProvider.getCredentials(new AuthScope(targetHost.getHostName(), targetHost
-							.getPort()));
-					if (creds == null)
-					{
-						throw new HttpException("No credentials for preemptive authentication");
-					}
-					authState.setAuthScheme(authScheme);
-					authState.setCredentials(creds);
-				}
-			}
-
-		}
-
-	}
-
 	public Session(String host, int port, String user, String pass, boolean usesAuth, boolean secure)
 	{
 		this.host = host;
@@ -171,16 +170,15 @@ public class Session
 		httpParams = new BasicHttpParams();
 		httpParams.setIntParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 200);
 		httpParams.setParameter(CoreConnectionPNames.TCP_NODELAY, true);
-		httpParams.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE,
-				new org.apache.http.conn.params.ConnPerRoute()
-				{
+		httpParams.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new org.apache.http.conn.params.ConnPerRoute()
+		{
 
-					@Override
-					public int getMaxForRoute(HttpRoute arg0)
-					{
-						return 1000;
-					}
-				});
+			@Override
+			public int getMaxForRoute(HttpRoute arg0)
+			{
+				return 1000;
+			}
+		});
 		SchemeRegistry schemeRegistry = new SchemeRegistry();
 
 		schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
@@ -192,8 +190,7 @@ public class Session
 		if (user != null)
 		{
 			defaultClient.addRequestInterceptor(new PreemptiveAuthInterceptor(), 0);
-			defaultClient.getCredentialsProvider().setCredentials(AuthScope.ANY,
-					new UsernamePasswordCredentials(user, pass));
+			defaultClient.getCredentialsProvider().setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(user, pass));
 		}
 
 		this.httpClient = defaultClient;
@@ -211,7 +208,9 @@ public class Session
 	 * This isn't supported by CouchDB - you need a proxy in front to use this
 	 *
 	 * @param host
+	 *            Host or IP of the remote machine
 	 * @param port
+	 *            Port of the remote machine
 	 * @param user
 	 *            - username
 	 * @param pass
@@ -226,7 +225,9 @@ public class Session
 	 * Main constructor for obtaining a Session.
 	 *
 	 * @param host
+	 *            Hostname or IP of the server
 	 * @param port
+	 *            Port to access
 	 */
 	public Session(String host, int port)
 	{
@@ -238,8 +239,11 @@ public class Session
 	 * This isn't supported by CouchDB - you need a proxy in front to use this
 	 *
 	 * @param host
+	 *            Hostname or IO of the server
 	 * @param port
+	 *            Port to access
 	 * @param secure
+	 *            Whether the connection is secure (HTTPS)
 	 */
 	public Session(String host, int port, boolean secure)
 	{
@@ -269,7 +273,7 @@ public class Session
 	/**
 	 * Is this a secured connection (set in constructor)
 	 *
-	 * @return
+	 * @return True if secured.
 	 */
 	public boolean isSecure()
 	{
@@ -279,8 +283,9 @@ public class Session
 	/**
 	 * Retrieves a list of all database names from the server
 	 *
-	 * @return
+	 * @return List of database names.
 	 * @throws JSONException
+	 *             JSON formatting issues.
 	 */
 	public List<String> getDatabaseNames() throws JSONException
 	{
@@ -299,8 +304,10 @@ public class Session
 	 * Loads a database instance from the server
 	 *
 	 * @param name
+	 *            Name of the database.
 	 * @return the database (or null if it doesn't exist)
 	 * @throws JSONException
+	 *             JSON formatting issues.
 	 */
 	public Database getDatabase(String name) throws JSONException
 	{
@@ -320,8 +327,10 @@ public class Session
 	 * Creates a new database (if the name doesn't already exist)
 	 *
 	 * @param name
+	 *            Name of the database.
 	 * @return the new database (or null if there was an error)
 	 * @throws JSONException
+	 *             JSON formatting issues
 	 */
 	public Database createDatabase(String name) throws JSONException
 	{
@@ -346,9 +355,11 @@ public class Session
 	 * Deletes a database (by name) from the CouchDB server.
 	 *
 	 * @param name
+	 *            Name of the database
 	 * @return true = successful, false = an error occurred (likely the database
 	 *         named didn't exist)
 	 * @throws JSONException
+	 *             JSON formatting issues.
 	 */
 	public boolean deleteDatabase(String name) throws JSONException
 	{
@@ -359,8 +370,10 @@ public class Session
 	 * Deletes a database from the CouchDB server
 	 *
 	 * @param db
+	 *            Database to delete
 	 * @return was successful
 	 * @throws JSONException
+	 *             JSON formatting issues
 	 */
 	public boolean deleteDatabase(Database db) throws JSONException
 	{
@@ -554,7 +567,7 @@ public class Session
 	public CouchResponse getSoft(String url) throws JSONException
 	{
 		HttpGet get = new HttpGet(buildUrl(url));
-		return http(get,30);
+		return http(get, 30);
 	}
 
 	/**
@@ -625,17 +638,17 @@ public class Session
 		{
 			log.error(ExceptionUtils.getStackTrace(e));
 			if (attempt < 30)
-				http(req,attempt + 1);
+				http(req, attempt + 1);
 		}
 		catch (IllegalArgumentException e)
 		{
 			if (attempt < 30)
-				http(req,attempt + 1);
+				http(req, attempt + 1);
 		}
 		catch (SocketException e)
 		{
 			if (attempt < 30)
-				http(req,attempt + 1);
+				http(req, attempt + 1);
 			else
 				log.error(e.getMessage());
 		}
@@ -643,7 +656,7 @@ public class Session
 		{
 			log.error(ExceptionUtils.getStackTrace(e));
 			if (attempt < 30)
-				http(req,attempt + 1);
+				http(req, attempt + 1);
 		}
 		finally
 		{
@@ -660,8 +673,8 @@ public class Session
 			}
 		}
 		if (response != null)
-		if ("unauthorized".equals(response.getErrorId()))
-			return http(req);
+			if ("unauthorized".equals(response.getErrorId()))
+				return http(req);
 		return response;
 	}
 

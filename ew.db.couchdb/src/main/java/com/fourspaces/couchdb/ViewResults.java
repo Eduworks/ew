@@ -60,8 +60,8 @@ public class ViewResults extends Document {
 	 * <p>
 	 * You can load the remaining information from Document.reload();
 	 * 
-	 * @return
-	 * @throws JSONException 
+	 * @return List of Document objects.
+	 * @throws JSONException JSON Formatting Exception
 	 */
 	public List<Document> getResults() throws JSONException {
 		JSONArray ar = getJSONObject().getJSONArray("rows");
@@ -80,7 +80,7 @@ public class ViewResults extends Document {
 
 	/**
 	 * The new that created this results list.
-	 * @return
+	 * @return View object
 	 */
 	public View getView() {
 		return calledView;

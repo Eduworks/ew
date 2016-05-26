@@ -11,13 +11,13 @@ public abstract class OntologyWrapper {
 	/**
 	 * Returns the Id of the OntologyObject (the part after the # in the IRI), should convert it to the @-format that can be sent across 
 	 * web services and still be recognized as an ID
-	 * @return 
+	 * @return ID of the OntologyObject
 	 */
 	public abstract String getId();
 	
 	/**
 	 * Returns the Full IRI of the OntologyObject
-	 * @return
+	 * @return IRI of the OntologyObject
 	 */
 	public abstract String getFullId();
 	

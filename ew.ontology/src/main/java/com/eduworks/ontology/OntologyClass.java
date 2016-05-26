@@ -319,11 +319,10 @@ public class OntologyClass extends OntologyWrapper {
 		this(o, jenaCls);
 	}
 	
-	/**
-	 * NOT IMPLEMENTED YET
-	 * @return
-	 */
 	public JSONObject update(JSONObject newVals){
+		//Not yet completed!
+		
+	
 		JSONObject oldValues = this.getJSONRepresentation();
 		oldValues.remove("instanceId");
 		JSONObject currentValues = new JSONObject();

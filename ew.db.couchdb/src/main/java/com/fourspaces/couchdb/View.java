@@ -29,7 +29,6 @@ import java.net.URLEncoder;
  * (or given an ad-hoc query).
  * 
  * @author mbreese
- * 
  */
 public class View
 {
@@ -51,8 +50,8 @@ public class View
 	/**
 	 * Build a view given a document and a name
 	 * 
-	 * @param doc
-	 * @param name
+	 * @param doc Document to use to create a view.
+	 * @param name Name of the view
 	 */
 	public View(Document doc, String name)
 	{
@@ -63,7 +62,7 @@ public class View
 	/**
 	 * Build a view given only a fullname ex: ("_add_docs", "_temp_view")
 	 * 
-	 * @param fullname
+	 * @param fullname Full name of the view (no document)
 	 */
 	public View(String fullname)
 	{
@@ -93,8 +92,7 @@ public class View
 	 * Based upon settings, builds the queryString to add to the URL for this
 	 * view.
 	 * 
-	 * 
-	 * @return
+	 * @return Query String
 	 */
 	public String getQueryString()
 	{
@@ -165,7 +163,7 @@ public class View
 	/**
 	 * The number of entries to return
 	 * 
-	 * @param count
+	 * @param count number of items.
 	 * @deprecated CouchDB 0.9 uses limit instead
 	 */
 	public void setCount(Integer count)
@@ -192,7 +190,7 @@ public class View
 	/**
 	 * Stop listing at this key
 	 * 
-	 * @param endKey
+	 * @param endKey End key.
 	 */
 	public void setEndKey(String endKey)
 	{
@@ -202,7 +200,7 @@ public class View
 	/**
 	 * Reverse the listing
 	 * 
-	 * @param reverse
+	 * @param reverse Reverse the listing.
 	 * @deprecated CouchDB 0.9 uses "descending" instead
 	 */
 	public void setReverse(Boolean reverse)
@@ -218,7 +216,7 @@ public class View
 	/**
 	 * Skip listing these keys (not sure if this works, or the format)
 	 * 
-	 * @param skip
+	 * @param skip Whether to skip.
 	 */
 	public void setSkip(String skip)
 	{
@@ -228,7 +226,7 @@ public class View
 	/**
 	 * Start listing at this key
 	 * 
-	 * @param startKey
+	 * @param startKey The Start Key
 	 */
 	public void setStartKey(String startKey)
 	{
@@ -238,7 +236,7 @@ public class View
 	/**
 	 * Not sure... might be for batch updates, but not sure.
 	 * 
-	 * @param update
+	 * @param update whether to update
 	 */
 	public void setUpdate(Boolean update)
 	{
@@ -258,7 +256,7 @@ public class View
 	/**
 	 * The name for this view (w/o doc id)
 	 * 
-	 * @return
+	 * @return Name of the view.
 	 */
 	public String getName()
 	{
@@ -269,7 +267,7 @@ public class View
 	 * the full name for this view (w/ doc id, if avail) in the form of :
 	 * "docid:name" or "name"
 	 * 
-	 * @return
+	 * @return Name of the view.
 	 */
 	public String getFullName()
 	{
@@ -279,7 +277,7 @@ public class View
 	/**
 	 * The function definition for this view, if it is available.
 	 * 
-	 * @return
+	 * @return Function definition of the view.
 	 */
 	public String getFunction()
 	{

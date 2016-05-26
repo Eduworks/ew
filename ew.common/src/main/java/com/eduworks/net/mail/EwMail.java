@@ -1,28 +1,5 @@
 package com.eduworks.net.mail;
 
-//# Configuration file for javax.mail
-//# If a value for an item is not provided, then
-//# system defaults will be used. These items can
-//# also be set in code.
-//
-//# Host whose mail services will be used
-//# (Default value : localhost)
-//mail.host=mail.blah.com
-//
-//# Return address to appear on emails
-//# (Default value : username@host)
-//mail.from=webmaster@blah.net
-//
-//# Other possible items include:
-//# mail.user=
-//# mail.store.protocol=
-//# mail.transport.protocol=
-//# mail.smtp.host=
-//# mail.smtp.user=
-//# mail.debug=
-//
-//A class which uses this file to send an email :
-
 import java.util.Properties;
 
 import javax.mail.BodyPart;
@@ -37,11 +14,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-
-/**
- * Simple demonstration of using the javax.mail API.
- *
- */
 public final class EwMail
 {
 
@@ -61,9 +33,9 @@ public final class EwMail
 		}
 	}
 
-	private static Session getSession(String smtpHost,String smtpPort,String smtpUser,String smtpPass)
+	private static Session getSession(String smtpHost, String smtpPort, String smtpUser, String smtpPass)
 	{
-		Authenticator authenticator = new Authenticator(smtpUser,smtpPass);
+		Authenticator authenticator = new Authenticator(smtpUser, smtpPass);
 
 		Properties properties = new Properties();
 		properties.setProperty("mail.smtp.submitter", authenticator.getPasswordAuthentication().getUserName());
@@ -78,17 +50,13 @@ public final class EwMail
 		return Session.getInstance(properties, authenticator);
 	}
 
-	/**
-	 * Send a single email.
-	 * @throws MessagingException
-	 * @throws AddressException
-	 */
-	public static void sendEmail(String smtpHost,String smtpPort,String smtpUser,String smtpPass,String aFromEmailAddr, String aToEmailAddr, String aSubject, String aBody) throws AddressException, MessagingException
+	public static void sendEmail(String smtpHost, String smtpPort, String smtpUser, String smtpPass, String aFromEmailAddr, String aToEmailAddr,
+			String aSubject, String aBody) throws AddressException, MessagingException
 	{
 		// Here, no Authenticator argument is used (it is null).
 		// Authenticators are used to prompt the user for user
 		// name and password.
-		Session session = getSession(smtpHost,smtpPort,smtpUser,smtpPass);
+		Session session = getSession(smtpHost, smtpPort, smtpUser, smtpPass);
 		MimeMessage message = new MimeMessage(session);
 
 		message.setFrom(new InternetAddress(aFromEmailAddr));
@@ -100,17 +68,13 @@ public final class EwMail
 
 	}
 
-	/**
-	 * Send a single email.
-	 * @throws MessagingException
-	 * @throws AddressException
-	 */
-	public static void sendHtmlEmail(String smtpHost,String smtpPort,String smtpUser,String smtpPass,String aFromEmailAddr, String aToEmailAddr, String aSubject, String aBody) throws AddressException, MessagingException
+	public static void sendHtmlEmail(String smtpHost, String smtpPort, String smtpUser, String smtpPass, String aFromEmailAddr, String aToEmailAddr,
+			String aSubject, String aBody) throws AddressException, MessagingException
 	{
 		// Here, no Authenticator argument is used (it is null).
 		// Authenticators are used to prompt the user for user
 		// name and password.
-		Session session = getSession(smtpHost,smtpPort,smtpUser,smtpPass);
+		Session session = getSession(smtpHost, smtpPort, smtpUser, smtpPass);
 		MimeMessage message = new MimeMessage(session);
 
 		message.setFrom(new InternetAddress(aFromEmailAddr));
@@ -118,7 +82,7 @@ public final class EwMail
 		message.setSubject(aSubject);
 		MimeMultipart mp = new MimeMultipart("related");
 		BodyPart bp = new MimeBodyPart();
-		bp.setContent(aBody,"text/html");
+		bp.setContent(aBody, "text/html");
 		mp.addBodyPart(bp);
 
 		message.setContent(mp);

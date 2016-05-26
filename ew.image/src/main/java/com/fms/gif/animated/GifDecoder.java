@@ -247,6 +247,7 @@ public class GifDecoder {
 
 	/**
 	 * Gets the image contents of frame n.
+	 * @param n Frame number to get
 	 *
 	 * @return BufferedImage representation of frame, or null if n is invalid.
 	 */
@@ -270,7 +271,7 @@ public class GifDecoder {
 	/**
 	 * Reads GIF image from stream
 	 *
-	 * @param BufferedInputStream containing GIF file.
+	 * @param is containing GIF file.
 	 * @return read status code (0 = no errors)
 	 */
 	public int read(BufferedInputStream is) {
@@ -297,7 +298,7 @@ public class GifDecoder {
 	/**
 	 * Reads GIF image from stream
 	 *
-	 * @param InputStream containing GIF file.
+	 * @param is containing GIF file.
 	 * @return read status code (0 = no errors)
 	 */
 	public int read(InputStream is) {

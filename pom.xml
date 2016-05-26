@@ -16,12 +16,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<ew.build.version>3.0.0-SNAPSHOT</ew.build.version>
 	</properties>
-	
+
 	<organization>
 		<name>Eduworks Corporation</name>
 		<url>http://www.eduworks.com</url>
 	</organization>
-	
+
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
@@ -30,11 +30,23 @@
 			<comments>Copyright 2008-2016 Eduworks Corporation</comments>
 		</license>
 	</licenses>
-	
+
 	<scm>
-		<url>https://github.com/Eduworks/ew.git</url>
+		<connection>scm:svn:https://github.com/Eduworks/ew</connection>
+		<url>https://github.com/Eduworks/ew</url>
 	</scm>
-	
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -48,7 +60,7 @@
 			<version>1.2.16</version>
 		</dependency>
 	</dependencies>
-	
+
 	<modules>
 		<module>ew.common</module>
 		<module>ew.threading</module>
@@ -72,7 +84,7 @@
 		<module>ew.levr.db.skyrepo</module>
 		<module>ew.levr.ebac.skyid</module>
 	</modules>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -81,9 +93,39 @@
 				<version>3.5.1</version>
 				<configuration>
 					<source>1.7</source>
-					<target>1.7</target>
+					<target>1.7</target>					
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-gpg-plugin</artifactId> 
+				<version>1.5</version> <executions> <execution> <id>sign-artifacts</id> <configuration> 
+				<skip>true</skip> </configuration> <phase>verify</phase> <goals> <goal>sign</goal> 
+				</goals> </execution> </executions> </plugin> -->
 		</plugins>
 	</build>
 </project>

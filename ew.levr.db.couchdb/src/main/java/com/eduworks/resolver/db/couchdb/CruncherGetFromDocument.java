@@ -83,7 +83,7 @@ public class CruncherGetFromDocument extends CruncherDocument
 			final String existing = getAsString(key, c, parameters, dataStreams);
 
 			if (key.equals("id"))
-				result.put(key, EwJson.getId(jsonObject));
+				result.put(key, getId(jsonObject));
 			else if (jsonObject.hasComplex(key))
 			{
 				Object complex = jsonObject.get(key);

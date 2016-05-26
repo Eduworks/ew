@@ -81,6 +81,12 @@ public class CruncherSendEmail extends Cruncher
 	 * Replaces $(key) in the format string with the corresponding value from this JSONObject,
 	 * or the attached parameters. Setting keys and any keys specified in the ignore array may
 	 * not be referenced in the format string, or an exception is thrown.
+	 * @param format Formatted string used to compose the email, with {variables}
+	 * @param c Context of the Web Service Call
+	 * @param parameters Parameters to the Cruncher
+	 * @param dataStreams Datastreams we can access
+	 * @param ignore Variables to ignore
+	 * @return Formatted string with filled in variables.
 	 */
 	public String format(String format, Context c, Map<String,String[]> parameters, Map<String,InputStream> dataStreams, String ... ignore)
 	{

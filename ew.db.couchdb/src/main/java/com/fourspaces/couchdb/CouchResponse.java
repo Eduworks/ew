@@ -51,22 +51,21 @@ import org.json.JSONObject;
  * returned json error message.
  * 
  * @author mbreese
- * 
  */
 public class CouchResponse
 {
-	Log					log	= LogFactory.getLog(CouchResponse.class);
+	Log log = LogFactory.getLog(CouchResponse.class);
 
-	private String		body;
+	private String body;
 	private byte[] bodybytes;
-	private String		path;
-	private Header[]	headers;
-	private int			statusCode;
-	private String		methodName;
-	boolean				ok	= false;
+	private String path;
+	private Header[] headers;
+	private int statusCode;
+	private String methodName;
+	boolean ok = false;
 
-	private String		error_id;
-	private String		error_reason;
+	private String error_id;
+	private String error_reason;
 
 	/**
 	 * C-tor parses the method results to build the CouchResponse object. First,
@@ -76,17 +75,17 @@ public class CouchResponse
 	 * 
 	 * @param method
 	 * @throws IOException
-	 * @throws JSONException 
+	 * @throws JSONException
 	 */
 	CouchResponse(HttpRequestBase req, HttpResponse response) throws IOException, JSONException
 	{
 		headers = response.getAllHeaders();
 
 		HttpEntity entity = response.getEntity();
-		
+
 		bodybytes = IOUtils.toByteArray(entity.getContent());
 		ByteArrayInputStream bais = new ByteArrayInputStream(bodybytes);
-		body = toString(entity,null,bais);
+		body = toString(entity, null, bais);
 
 		path = req.getURI().getPath();
 
@@ -100,15 +99,15 @@ public class CouchResponse
 
 		boolean isDelete = (req instanceof HttpDelete);
 
-		if ((isGet && statusCode == 404) ||(statusCode == 401) || (isPut && statusCode == 409) || (isPost && statusCode == 404)
+		if ((isGet && statusCode == 404) || (statusCode == 401) || (isPut && statusCode == 409) || (isPost && statusCode == 404)
 				|| (isDelete && statusCode == 404))
 		{
 			JSONObject jbody = new JSONObject(body);
 			error_id = jbody.getString("error");
 			error_reason = jbody.getString("reason");
 		}
-		else if ((isPut && 199 < statusCode && statusCode < 300) || (isPost && statusCode == 201) ||(isPost && statusCode == 202) || (isDelete && statusCode == 202)
-				|| (isDelete && statusCode == 200))
+		else if ((isPut && 199 < statusCode && statusCode < 300) || (isPost && statusCode == 201) || (isPost && statusCode == 202)
+				|| (isDelete && statusCode == 202) || (isDelete && statusCode == 200))
 		{
 
 			if (path.endsWith("_bulk_docs"))
@@ -125,48 +124,60 @@ public class CouchResponse
 		{
 			ok = true;
 		}
-//		log.debug(toString());
+		// log.debug(toString());
 	}
 
-    public static String toString(
-            final HttpEntity entity, final String defaultCharset,final InputStream bais) throws IOException, ParseException {
-        if (entity == null) {
-            throw new IllegalArgumentException("HTTP entity may not be null");
-        }
-        InputStream instream = bais == null ? entity.getContent() : bais;
-        if (instream == null) {
-            return "";
-        }
-        if (entity.getContentLength() > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("HTTP entity too large to be buffered in memory");
-        }
-        int i = (int)entity.getContentLength();
-        if (i < 0) {
-            i = 4096;
-        }
-        String charset = EntityUtils.getContentCharSet(entity);
-        if (charset == null) {
-            charset = defaultCharset;
-        }
-        if (charset == null) {
-            charset = HTTP.DEFAULT_CONTENT_CHARSET;
-        }
-        Reader reader = new InputStreamReader(instream, charset);
-        CharArrayBuffer buffer = new CharArrayBuffer(i); 
-        try {
-            char[] tmp = new char[1024];
-            int l;
-            while((l = reader.read(tmp)) != -1) {
-                buffer.append(tmp, 0, l);
-            }
-        } finally {
-            reader.close();
-        }
-        return buffer.toString();
-    }
+	public static String toString(final HttpEntity entity, final String defaultCharset, final InputStream bais) throws IOException, ParseException
+	{
+		if (entity == null)
+		{
+			throw new IllegalArgumentException("HTTP entity may not be null");
+		}
+		InputStream instream = bais == null ? entity.getContent() : bais;
+		if (instream == null)
+		{
+			return "";
+		}
+		if (entity.getContentLength() > Integer.MAX_VALUE)
+		{
+			throw new IllegalArgumentException("HTTP entity too large to be buffered in memory");
+		}
+		int i = (int) entity.getContentLength();
+		if (i < 0)
+		{
+			i = 4096;
+		}
+		String charset = EntityUtils.getContentCharSet(entity);
+		if (charset == null)
+		{
+			charset = defaultCharset;
+		}
+		if (charset == null)
+		{
+			charset = HTTP.DEFAULT_CONTENT_CHARSET;
+		}
+		Reader reader = new InputStreamReader(instream, charset);
+		CharArrayBuffer buffer = new CharArrayBuffer(i);
+		try
+		{
+			char[] tmp = new char[1024];
+			int l;
+			while ((l = reader.read(tmp)) != -1)
+			{
+				buffer.append(tmp, 0, l);
+			}
+		}
+		finally
+		{
+			reader.close();
+		}
+		return buffer.toString();
+	}
+
 	@Override
 	/**
 	 * A better toString for this object... can be very verbose though.
+	 * @return String form of this object.
 	 */
 	public String toString()
 	{
@@ -177,8 +188,8 @@ public class CouchResponse
 	 * Retrieves the body of the request as a JSONArray object. (such as listing
 	 * database names)
 	 * 
-	 * @return
-	 * @throws JSONException 
+	 * @return Body of the request.
+	 * @throws JSONException Malformed parse.
 	 */
 	public JSONArray getBodyAsJSONArray() throws JSONException
 	{
@@ -190,7 +201,7 @@ public class CouchResponse
 	/**
 	 * Was the request successful?
 	 * 
-	 * @return
+	 * @return Is Ok.
 	 */
 	public boolean isOk()
 	{
@@ -200,7 +211,7 @@ public class CouchResponse
 	/**
 	 * What was the error id?
 	 * 
-	 * @return
+	 * @return Error ID.
 	 */
 	public String getErrorId()
 	{
@@ -214,7 +225,7 @@ public class CouchResponse
 	/**
 	 * what was the error reason given?
 	 * 
-	 * @return
+	 * @return Error Reason.
 	 */
 	public String getErrorReason()
 	{
@@ -229,8 +240,8 @@ public class CouchResponse
 	 * Returns the body of the response as a JSON Object (such as for a
 	 * document)
 	 * 
-	 * @return
-	 * @throws JSONException 
+	 * @return Body of the response as a JSON object.
+	 * @throws JSONException Malformed JSON.
 	 */
 	public JSONObject getBodyAsJSONObject() throws JSONException
 	{
@@ -244,8 +255,8 @@ public class CouchResponse
 	/**
 	 * Retrieves a specific header from the response (not really used anymore)
 	 * 
-	 * @param key
-	 * @return
+	 * @param key Key into the header of the HTTP request.
+	 * @return Header of the HTTP request.
 	 */
 	public String getHeader(String key)
 	{

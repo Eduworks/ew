@@ -11,5 +11,10 @@ import org.json.JSONObject;
  */
 public interface EwJsonSerializable
 {
+	/***
+	 * Returns the object serialized as a JSON Object.
+	 * @return Serialized Object
+	 * @throws JSONException If the JSON object being constructed is malformed.
+	 */
 	JSONObject toJsonObject() throws JSONException;
 }

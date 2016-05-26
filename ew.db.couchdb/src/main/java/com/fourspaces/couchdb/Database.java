@@ -74,7 +74,7 @@ public class Database
 	/**
 	 * The name of the database
 	 * 
-	 * @return
+	 * @return Name of the database.
 	 */
 	public String getName()
 	{
@@ -87,7 +87,7 @@ public class Database
 	 * the initial load... so if you want an accurate assessment, call
 	 * Session.getDatabase() again to reload a new database object.
 	 * 
-	 * @return
+	 * @return Document count.
 	 */
 	public int getDocumentCount()
 	{
@@ -99,8 +99,8 @@ public class Database
 	 * 'revision id' of an entire database. Useful for getting all documents in
 	 * a database since a certain revision
 	 * 
-	 * @return
-	 * @see getAllDocuments()
+	 * @return Update sequence.
+	 * @see #getAllDocuments()
 	 */
 	public int getUpdateSeq()
 	{
@@ -112,7 +112,7 @@ public class Database
 	 * 
 	 * @return ViewResults - the results of the view... this can be iterated
 	 *         over to get each document.
-	 * @throws JSONException
+	 * @throws JSONException Malformed Parse.
 	 */
 	public ViewResults getAllDocuments() throws JSONException
 	{
@@ -123,7 +123,7 @@ public class Database
 	 * Gets all design documents
 	 * 
 	 * @return ViewResults - all design docs
-	 * @throws JSONException
+	 * @throws JSONException Malformed Parse.
 	 */
 	public ViewResults getAllDesignDocuments() throws JSONException
 	{
@@ -137,9 +137,10 @@ public class Database
 	/**
 	 * Runs the standard "_all_docs" view on this database, with count
 	 * 
+	 * @param count Number of documents to return.
 	 * @return ViewResults - the results of the view... this can be iterated
 	 *         over to get each document.
-	 * @throws JSONException
+	 * @throws JSONException Malformed Parse.
 	 */
 	public ViewResults getAllDocumentsWithCount(int count) throws JSONException
 	{
@@ -194,9 +195,10 @@ public class Database
 	/**
 	 * Runs "_all_docs_by_update_seq?startkey=revision" view on this database
 	 * 
+	 * @param revision Start document.
 	 * @return ViewResults - the results of the view... this can be iterated
 	 *         over to get each document.
-	 * @throws JSONException
+	 * @throws JSONException Malformed Parse.
 	 */
 	public ViewResults getAllDocuments(int revision) throws JSONException
 	{
@@ -207,9 +209,9 @@ public class Database
 	 * Runs a named view on the database This will run a view and apply any
 	 * filtering that is requested (reverse, startkey, etc).
 	 * 
-	 * @param view
-	 * @return
-	 * @throws JSONException
+	 * @param view View to run on the database.
+	 * @return View Results.
+	 * @throws JSONException Malformed Parse.
 	 */
 	public ViewResults view(View view) throws JSONException
 	{
@@ -220,10 +222,10 @@ public class Database
 	 * Runs a view, appending "_view" to the request if isPermanentView is true.
 	 * *
 	 * 
-	 * @param view
-	 * @param isPermanentView
-	 * @return
-	 * @throws JSONException
+	 * @param view View to run on the database.
+	 * @param isPermanentView Whether to make the view permanent.
+	 * @return View Results
+	 * @throws JSONException Malformed Parse.
 	 */
 	private ViewResults view(final View view, final boolean isPermanentView) throws JSONException
 	{
@@ -257,8 +259,9 @@ public class Database
 	 * @param fullname
 	 *            - the fullname (including the document name) ex:
 	 *            foodoc:viewname
-	 * @return
-	 * @throws JSONException
+	 *            @param stale Set the view to stale or up-to-date.
+	 * @return View Results
+	 * @throws JSONException Malformed Parse.
 	 */
 
 	public ViewResults view(String fullname, boolean stale) throws JSONException
@@ -341,18 +344,20 @@ public class Database
 
 	/**
 	 * Save a document at the given _id
-	 * <p/>
+	 * 
 	 * if the docId is null or empty, then this performs a POST to the database
 	 * and retrieves a new _id.
-	 * <p/>
+	 * 
 	 * Otherwise, a PUT is called.
-	 * <p/>
+	 * 
 	 * Either way, a new _id and _rev are retrieved and updated in the Document
 	 * object
 	 * 
-	 * @param doc
-	 * @param docId
-	 * @throws JSONException
+	 * @param doc Document to save.
+	 * @param docId Document Id to save it under
+	 * @throws JSONException JSON formatting exception.
+	 * @return True if document saved.
+	 * @throws IOException HTTP error
 	 */
 	public boolean saveDocument(Document doc, String docId) throws IOException, JSONException
 	{
@@ -407,8 +412,10 @@ public class Database
 	/**
 	 * Save a document w/o specifying an id (can be null)
 	 * 
-	 * @param doc
-	 * @throws JSONException
+	 * @param doc Document to save to database.
+	 * @return Whether the document was saved or not.
+	 * @throws IOException HTTP issues.
+	 * @throws JSONException Encoding issues.
 	 */
 	public boolean saveDocument(Document doc) throws IOException, JSONException
 	{
@@ -535,9 +542,10 @@ public class Database
 	/**
 	 * Retrieves a document from the CouchDB database
 	 * 
-	 * @param id
-	 * @return
-	 * @throws JSONException
+	 * @param id ID of the document
+	 * @return Document retreived from database
+	 * @throws JSONException Malformed JSON
+	 * @throws IOException HTTP issues
 	 */
 	public Document getDocument(String id) throws IOException, JSONException
 	{
@@ -549,9 +557,10 @@ public class Database
 	 * revisions. The list of revision keys can be retrieved from
 	 * Document.getRevisions();
 	 * 
-	 * @param id
-	 * @return
-	 * @throws JSONException
+	 * @param id ID of the document
+	 * @return Document (with revisions)
+	 * @throws JSONException Malformed JSON
+	 * @throws IOException HTTP issues
 	 */
 	public Document getDocumentWithRevisions(String id) throws IOException, JSONException
 	{
@@ -561,10 +570,11 @@ public class Database
 	/**
 	 * Retrieves a specific document revision
 	 * 
-	 * @param id
-	 * @param revision
-	 * @return
-	 * @throws JSONException
+	 * @param id ID of the document
+	 * @return Document (with revisions)
+	 * @param revision Revision of the document
+	 * @throws JSONException Malformed JSON
+	 * @throws IOException HTTP issues
 	 */
 	public Document getDocument(String id, String revision) throws IOException, JSONException
 	{
@@ -575,11 +585,12 @@ public class Database
 	 * Retrieves a specific document revision and (optionally) asks for a list
 	 * of all revisions
 	 * 
-	 * @param id
-	 * @param revision
-	 * @param showRevisions
-	 * @return the document
-	 * @throws JSONException
+	 * @param id ID of the document
+	 * @return Document (with revisions if showRevisions)
+	 * @param revision Revision of the document
+	 * @param showRevisions Whether to include revisions
+	 * @throws JSONException Malformed JSON
+	 * @throws IOException HTTP issues
 	 */
 	public Document getDocument(String id, String revision, boolean showRevisions) throws IOException, JSONException
 	{
@@ -635,9 +646,10 @@ public class Database
 	/**
 	 * Deletes a document
 	 * 
-	 * @param d
+	 * @param d Document to delete.
 	 * @return was the delete successful?
-	 * @throws JSONException
+	 * @throws JSONException Formatting issues.
+	 * @throws IOException HTTP issues.
 	 * @throws IllegalArgumentException
 	 *             for blank document id
 	 */
@@ -672,11 +684,12 @@ public class Database
 	/**
 	 * Gets attachment
 	 * 
-	 * @param id
+	 * @param id ID of the attachment
 	 * @param attachment
 	 *            attachment body
 	 * @return attachment body
-	 * @throws JSONException
+	 * @throws JSONException JSON formatting issues.
+	 * @throws IOException HTTP issues.
 	 */
 	public byte[] getAttachment(String id, String attachment) throws IOException, JSONException
 	{
@@ -687,7 +700,7 @@ public class Database
 	/**
 	 * Puts attachment to the doc
 	 * 
-	 * @param id
+	 * @param id ID of the attachment
 	 * @param fname
 	 *            attachment name
 	 * @param ctype
@@ -695,7 +708,8 @@ public class Database
 	 * @param attachment
 	 *            attachment body
 	 * @return was the delete successful?
-	 * @throws JSONException
+	 * @throws JSONException JSON formatting issues
+	 * @throws IOException HTTP issues
 	 */
 	public String putAttachment(String id, String fname, String ctype, InputStream attachment) throws IOException,
 			JSONException

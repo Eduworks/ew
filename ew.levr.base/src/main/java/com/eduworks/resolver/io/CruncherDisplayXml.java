@@ -91,7 +91,7 @@ public class CruncherDisplayXml extends Cruncher
 	 * @param object
 	 *            A JSONObject.
 	 * @return A string.
-	 * @throws JSONException
+	 * @throws JSONException JSON Formatting Exception
 	 */
 	public static String toString(Object object) throws JSONException
 	{
@@ -106,7 +106,7 @@ public class CruncherDisplayXml extends Cruncher
 	 * @param tagName
 	 *            The optional name of the enclosing tag.
 	 * @return A string.
-	 * @throws JSONException
+	 * @throws JSONException JSON Formatting Exception
 	 */
 	public static String toString(Object object, String tagName) throws JSONException
 	{

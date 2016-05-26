@@ -116,8 +116,8 @@ public class EwList<E> extends ArrayList<E> implements Serializable
 	 * Returns true IFF this list contains an element in c, uses
 	 * {@link #contains(Object)}
 	 * 
-	 * @param c
-	 * @return
+	 * @param c Other collection.
+	 * @return If any element in c is contained in this list.
 	 */
 	public boolean containsAny(Collection<?> c)
 	{
@@ -132,9 +132,9 @@ public class EwList<E> extends ArrayList<E> implements Serializable
 	 * Returns true IFF this list contains an element in c, uses
 	 * {@link #contains(Object, Comparator)}
 	 * 
-	 * @param c
-	 * @param comparator
-	 * @return
+	 * @param c Other collection.
+	 * @param comparator Comparator to compare this and c.
+	 * @return If any element in c is contained in this list according to the comparator.
 	 */
 	public boolean containsAny(Collection<?> c, Comparator<E> comparator)
 	{
@@ -149,8 +149,8 @@ public class EwList<E> extends ArrayList<E> implements Serializable
 	 * Returns true IFF this list contains an element in c, uses
 	 * {@link #contains(Object)}
 	 * 
-	 * @param c
-	 * @return
+	 * @param c Other array.
+	 * @return If any element in c is contained in this list.
 	 */
 	public boolean containsAny(E[] c)
 	{
@@ -164,8 +164,8 @@ public class EwList<E> extends ArrayList<E> implements Serializable
 	 * Returns true IFF this list contains an element who's toString() is
 	 * String.equals(str)
 	 * 
-	 * @param word
-	 * @return
+	 * @param str String to use in comparison.
+	 * @return If any element in this list, when passed through toString(), equals str.
 	 */
 	public boolean containsByToString(String str)
 	{

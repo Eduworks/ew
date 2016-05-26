@@ -119,6 +119,13 @@ public class CruncherString extends Cruncher
 	 * Replaces $(key) in the format string with the corresponding value from this JSONObject,
 	 * or the attached parameters. Setting keys and any keys specified in the ignore array may
 	 * not be referenced in the format string, or an exception is thrown.
+	 * 
+	 * @param format String to use to format. 
+	 * @param c Context of the Web Service Call
+	 * @param parameters Parameters to the Cruncher
+	 * @param dataStreams Datastreams we can access
+	 * @param ignore Tags in the string to ignore.
+	 * @return Formatted string
 	 */
 	public String format(String format, Context c, Map<String,String[]> parameters, Map<String,InputStream> dataStreams, String ... ignore)
 	{
@@ -226,6 +233,9 @@ public class CruncherString extends Cruncher
 	 * camel-cased words are parsed, and acronyms such as "JSONObject" are separated:
 	 * "JSON Object". In either case, underscores '_' and spaces delimit words,
 	 * whereas words with dashes '-' and single quotes are considered single words.
+	 * @param string String to titleCase
+	 * @param lowerFirst Lowercase the string first?
+	 * @return Titlecased String
 	 */
 	public String toTitleCase(String string, boolean lowerFirst)
 	{

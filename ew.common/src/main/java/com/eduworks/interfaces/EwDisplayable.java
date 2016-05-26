@@ -9,5 +9,9 @@ package com.eduworks.interfaces;
  */
 public interface EwDisplayable
 {
+	/***
+	 * Returns the object in a user friendly format.
+	 * @return User readable string.
+	 */
 	String toDisplayString();
 }

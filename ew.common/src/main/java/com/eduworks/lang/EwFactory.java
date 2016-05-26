@@ -13,7 +13,7 @@ public abstract class EwFactory<W>
 	/***
 	 * Create a new object and return it.
 	 * 
-	 * @param string
+	 * @param name
 	 *            The name of the object.
 	 * @return The new object.
 	 */

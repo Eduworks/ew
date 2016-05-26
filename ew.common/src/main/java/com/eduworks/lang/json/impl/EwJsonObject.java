@@ -23,7 +23,8 @@ import com.eduworks.lang.util.EwUri;
  * A class to extend {@link JSONObject} and implement {@link EwJsonCollection}.
  * Provides the following features and functionality:
  * <ul>
- * <li>enhances all JSONObject behavior even when JSONObject methods are called</li>
+ * <li>enhances all JSONObject behavior even when JSONObject methods are called
+ * </li>
  * <li>processes complex array keys "key[0].key[next]" against nested JSON
  * objects</li>
  * <li>wraps incoming/outgoing {@link JSONArray}s as EwJsonArrays</li>
@@ -37,6 +38,7 @@ import com.eduworks.lang.util.EwUri;
  * @author dharvey
  * @since September, 2011
  */
+@Deprecated
 @SuppressWarnings("rawtypes")
 public class EwJsonObject extends JSONObject implements EwJsonCollection
 {
@@ -64,6 +66,11 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 	 * Convert String or {@link JSONObject} to EwJsonObject, and put and return
 	 * it if it is valid.
 	 * 
+	 * @param json
+	 *            Collection to get element from.
+	 * @param ref
+	 *            Location of element
+	 * @return Element to return.
 	 * @throws JSONException
 	 *             if key is not found or value cannot be converted to
 	 *             {@link JSONObject}
@@ -101,6 +108,16 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 	 * If "ref" is not null, merge "from" with any existing json value at "ref"
 	 * -- a non-json value at "ref" will be overwritten. If "from" is an
 	 * {@link EwJsonArray}, its values will be merged using the indices as keys.
+	 * 
+	 * @param into
+	 *            Object to merge from into.
+	 * @param from
+	 *            Collection to merge into from.
+	 * @param ref
+	 *            Beginning key, ordered by god knows what.
+	 * @return Merged object.
+	 * @throws JSONException
+	 *             If the data becomes malformed.
 	 */
 	public static EwJsonObject merge(EwJsonObject into, EwJsonCollection from, Object ref) throws JSONException
 	{
@@ -137,7 +154,11 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 
 	/**
 	 * @see #mergeFromString(JSONObject, String, Object)
+	 * @param source
+	 *            String to attempt to parse.
 	 * @return a new {@link EwJsonObject} parsed from source string
+	 * @throws JSONException
+	 *             If the JSON parse is malformed.
 	 */
 	public static EwJsonObject parse(String source) throws JSONException
 	{
@@ -151,6 +172,16 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 	 * converted to an {@link EwJsonObject} and returned. If ref is null the new
 	 * object is merged with the the one passed in; otherwise the new object is
 	 * merged with anything existing at the key slot specified by ref.
+	 * 
+	 * @param object
+	 *            Object to merge into
+	 * @param source
+	 *            Object to parse and merge
+	 * @param ref
+	 *            Key to start at
+	 * @return JSON Object of results
+	 * @throws JSONException
+	 *             If the JSON parse is malformed.
 	 */
 	public static EwJsonObject mergeFromString(JSONObject object, String source, Object ref) throws JSONException
 	{
@@ -247,6 +278,15 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 	 * 
 	 * @see EwJson#tryParseJson(Object, boolean)
 	 * @see EwJsonObject#merge(EwJsonObject, EwJsonCollection, Object)
+	 * @param into
+	 *            Object to put parsed JSON into
+	 * @param from
+	 *            String to parse
+	 * @param ref
+	 *            Place to start parsing from?
+	 * @return JSON Collection of results
+	 * @throws JSONException
+	 *             Malformed JSON in from.
 	 */
 	public static EwJsonCollection tryMergeAny(JSONObject into, Object from, Object ref) throws JSONException
 	{
@@ -316,13 +356,11 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 		EwJsonObject.merge(this, collection, null);
 	}
 
-	/** Equivalent to JSONObject(JSONObject, String[]) */
 	public EwJsonObject(JSONObject object, String[] names) throws JSONException
 	{
 		super(object, names);
 	}
 
-	/** Equivalent to JSONObject(Object, String[]) */
 	public EwJsonObject(Object object, String[] names) throws JSONException
 	{
 		super(object, names);
@@ -332,6 +370,10 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 	 * Attempt to merge any object with this.
 	 * 
 	 * @see #merge(Object)
+	 * @param source
+	 *            Object to attempt to use to populate this array.
+	 * @throws JSONException
+	 *             Malformed object.
 	 */
 	public EwJsonObject(Object source) throws JSONException
 	{
@@ -353,8 +395,6 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 			EwJsonObject.tryMergeAny(this, source, null);
 		}
 	}
-
-	/* OVERRIDDEN MEMBERS */
 
 	/** Overridden to ensure {@link EwJsonArray}s are used for accumulation. */
 	@Override
@@ -584,6 +624,7 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 		Collections.sort(l);
 		return l.iterator();
 	}
+
 	@SuppressWarnings("unchecked")
 	public EwList<String> keySetUnsorted()
 	{
@@ -655,8 +696,8 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 	}
 
 	/**
-	 * @return the boolean value corresponding to "ref", or false if key does not
-	 *         exist or is not a String
+	 * @return the boolean value corresponding to "ref", or false if key does
+	 *         not exist or is not a String
 	 */
 	@Override
 	public boolean optBoolean(Object ref)
@@ -693,8 +734,8 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 	}
 
 	/**
-	 * @return the value corresponding to "ref", or zero if key does not exist or
-	 *         is not a String
+	 * @return the value corresponding to "ref", or zero if key does not exist
+	 *         or is not a String
 	 */
 	@Override
 	public int optInt(Object ref)
@@ -792,8 +833,8 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 	}
 
 	/**
-	 * @return the value corresponding to "ref", or zero if key does not exist or
-	 *         is not a String
+	 * @return the value corresponding to "ref", or zero if key does not exist
+	 *         or is not a String
 	 */
 	@Override
 	public long optLong(Object ref)
@@ -1035,7 +1076,7 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 	}
 
 	boolean sortedKeys = false;
-	
+
 	@Override
 	public Iterator keys()
 	{
@@ -1062,12 +1103,13 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 		return r;
 	}
 
-	public String toString(){
+	public String toString()
+	{
 		sortedKeys = true;
 		String result = super.toString();
 		sortedKeys = false;
 		return result;
-		
+
 	}
-	
+
 }

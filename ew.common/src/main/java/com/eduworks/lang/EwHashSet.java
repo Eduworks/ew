@@ -10,9 +10,11 @@ import org.json.JSONException;
 
 /***
  * Helper methods on HashSet
+ * 
  * @author Fritz
  *
- * @param <E> Set type
+ * @param <E>
+ *            Set type
  */
 public class EwHashSet<E> extends HashSet<E>
 {
@@ -22,6 +24,7 @@ public class EwHashSet<E> extends HashSet<E>
 	{
 		super(set);
 	}
+
 	public EwHashSet(List<E> hs)
 	{
 		super(hs);
@@ -30,12 +33,12 @@ public class EwHashSet<E> extends HashSet<E>
 	public EwHashSet()
 	{
 	}
-	
+
 	public EwHashSet(int count)
 	{
 		super(count);
 	}
-	
+
 	public EwHashSet(AbstractCollection<E> objects)
 	{
 		super(objects);
@@ -43,20 +46,23 @@ public class EwHashSet<E> extends HashSet<E>
 
 	public EwHashSet(JSONArray allowedWords)
 	{
-		for (int i = 0;i < allowedWords.length();i++)
+		for (int i = 0; i < allowedWords.length(); i++)
 			try
 			{
-				add((E)allowedWords.get(i));
+				add((E) allowedWords.get(i));
 			}
 			catch (JSONException e)
 			{
 				e.printStackTrace();
 			}
 	}
+
 	/***
 	 * Returns true IFF any value in coll is found in this set.
-	 * @param coll The collection to test against.
-	 * @return 
+	 * 
+	 * @param coll
+	 *            The collection to test against.
+	 * @return If the collection contains any element in coll.
 	 */
 	public boolean containsAny(AbstractCollection<E> coll)
 	{

@@ -325,6 +325,7 @@ public class EwFileSystem
 
 	/**
 	 * Close a stream or reader/writer object.
+	 * @param stream Stream to close.
 	 */
 	public static void closeIt(Object stream)
 	{
@@ -350,7 +351,11 @@ public class EwFileSystem
 	 * Download the content of a URL to a specific local file or a temporary
 	 * file if no local file is specified. Returns the local file used.
 	 * 
-	 * @param timeout
+	 * @param path URL to download.
+	 * @param localFile To this local file.
+	 * @param timeout Timeout for download.
+	 * @return Downloaded file or null.
+	 * @throws IOException Error in downloading or writing file.
 	 */
 	public static File downloadFile(String path, File localFile, int timeout) throws IOException
 	{

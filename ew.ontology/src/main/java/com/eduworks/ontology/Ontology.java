@@ -157,6 +157,8 @@ public class Ontology extends OntologyWrapper
 	 * Loads an existing ontology from the local directory and wraps it in an
 	 * Ontology object to be manipulated
 	 * 
+	 * @param tdbDataSet Dataset used to load the ontology.
+	 * 
 	 * @param identifier
 	 *            - Identifier of the ontology (right now this is the filename
 	 *            without the directory or extension)
@@ -223,6 +225,8 @@ public class Ontology extends OntologyWrapper
 	/**
 	 * Creates a new ontology file in the local directory and then loads and
 	 * wraps it in an Ontology object
+	 * 
+	 * @param tdbDataSet Dataset specification to use to create the ontology.
 	 * 
 	 * @param identifier
 	 *            - The identifier of the new ontology (right now, just the name
@@ -297,6 +301,7 @@ public class Ontology extends OntologyWrapper
 	/**
 	 * Saves the underlying ontology after modifications to the ontology that
 	 * need to be propogated for queries
+	 * @param tdbDataSet Dataset to save to the ontology.
 	 */
 	public void save(Dataset tdbDataSet)
 	{
@@ -345,14 +350,6 @@ public class Ontology extends OntologyWrapper
 		return ids;
 	}
 
-	/* Class */
-
-	/**
-	 * 
-	 * @param id
-	 * @param values
-	 * @return
-	 */
 	public OntologyClass createClass(String id, JSONObject values)
 	{
 		String tempUri = baseIRI + "#" + id;
@@ -467,7 +464,7 @@ public class Ontology extends OntologyWrapper
 	 * @param values
 	 *            - values of the properties for the new instance
 	 * @return OntologyInstance wrapper for the new instance created
-	 * @throws JSONException
+	 * @throws JSONException JSON Formatting Exception
 	 */
 	public OntologyInstance createInstance(String classId, JSONObject values)
 	{
@@ -606,13 +603,6 @@ public class Ontology extends OntologyWrapper
 		return false;
 	}
 
-	/* Property */
-
-	/**
-	 * 
-	 * @param propertyId
-	 * @return
-	 */
 	public OntologyProperty createDataProperty(String propertyId, JSONObject values)
 	{
 		if (propertyExists(propertyId))

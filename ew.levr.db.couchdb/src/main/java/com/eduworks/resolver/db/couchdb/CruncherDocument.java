@@ -36,6 +36,13 @@ public abstract class CruncherDocument extends Cruncher
 		super();
 	}
 
+	public static String getId(JSONObject object)
+	{
+		final String id = object.optString("_id").trim();
+
+		return (id != null && id.length() > 0) ? object.optString("_id") : object.optString("id");
+	}
+	
 	/** @return true if the password is the {@link #BYPASS_VALUE}, false otherwise */
 	protected boolean bypassLogin(Context c,Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{

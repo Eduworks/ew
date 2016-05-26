@@ -83,7 +83,6 @@ public class AnimatedGifEncoder {
 	 * image is added.
 	 *
 	 * @param iter int number of iterations.
-	 * @return
 	 */
 	public void setRepeat(int iter) {
 		if (iter >= 0) {
@@ -155,6 +154,7 @@ public class AnimatedGifEncoder {
 	 * Flushes any pending data and closes output file.
 	 * If writing to an OutputStream, the stream is not
 	 * closed.
+	 * @return If saving was successful.
 	 */
 	public boolean finish() {
 		if (!started) return false;
@@ -204,7 +204,6 @@ public class AnimatedGifEncoder {
 	 * than 20 do not yield significant improvements in speed.
 	 *
 	 * @param quality int greater than 0.
-	 * @return
 	 */
 	public void setQuality(int quality) {
 		if (quality < 1) quality = 1;

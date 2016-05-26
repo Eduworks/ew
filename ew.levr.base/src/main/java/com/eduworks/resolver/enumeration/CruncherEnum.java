@@ -8,9 +8,9 @@ package com.eduworks.resolver.enumeration;
 @Deprecated
 public interface CruncherEnum
 {
-	/** Specifies a key for a specific value (or default key if the enumeration represents values) */
+	/** @return Specifies a key for a specific value (or default key if the enumeration represents values) */
 	public String getKey();
 
-	/** Specifies the value for a specific key (or default value if the enumeration represents keys) */
+	/** @return Specifies the value for a specific key (or default value if the enumeration represents keys) */
 	public String getValue();
 }

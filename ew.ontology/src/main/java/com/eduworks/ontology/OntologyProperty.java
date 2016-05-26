@@ -296,31 +296,11 @@ public class OntologyProperty extends OntologyWrapper {
 	OntProperty jenaProp;
 	
 	/**
-	 * (DEPRECATED)
-	 * Creates an OntologyProperty Wrapper, by looking through ontology given for the property with the specified IRI. There is no guarantee
-	 * that the property returned is not a new property
-	 * @param o
-	 * @param iri
-	 */
-	public OntologyProperty(Ontology o, IRI iri){
-		ont = o;
-		
-		String s = idCharacter+iri.getFragment();
-		
-//		if(o.getDataPropertyIdList().contains(s)){
-//			_prop = ont.getOWLDataFactory().getOWLDataProperty(iri);
-//		}else if(o.getObjectPropertyIdList().contains(s)){
-//			_prop = ont.getOWLDataFactory().getOWLObjectProperty(iri);
-//		}else{
-//			throw new RuntimeException("Could not find Property with id: "+s);
-//		}
-	}
-	
-	/**
 	 * Creates an OntologyProperty Wrapper to wrap the OWLAPI OWLProperty passed in, assumes that the ontology passed in is the 
 	 * owner of the property
-	 * @param prop
-	 * @param o
+	 * @param prop Property to wrap
+	 * @param o Ontology to use to wrap the property
+	 * @param jena Jena based property
 	 */
 	public OntologyProperty(Ontology o, OWLProperty prop, OntProperty jena){
 		// TODO: May want to check whether ontology contains the property

@@ -85,7 +85,7 @@ public class Document implements Serializable
 	/**
 	 * Create a new Document from a JSONObject
 	 *
-	 * @param obj
+	 * @param obj JSON object to convert into a document
 	 */
 	public Document(JSONObject obj)
 	{
@@ -120,7 +120,7 @@ public class Document implements Serializable
 	/**
 	 * This document's id (if saved)
 	 *
-	 * @return
+	 * @return ID of the document (with subpath)
 	 */
 	public String getId()
 	{
@@ -141,6 +141,7 @@ public class Document implements Serializable
 
 	/**
 	 * This strips _design from the document id
+	 * @return ID of the view (without the preamble path)
 	 */
 	public String getViewDocumentId()
 	{
@@ -159,7 +160,7 @@ public class Document implements Serializable
 	/**
 	 * This document's Revision (if saved)
 	 *
-	 * @return
+	 * @return Revision of the document
 	 */
 	public String getRev()
 	{
@@ -186,8 +187,9 @@ public class Document implements Serializable
 	 * been populated with a "full=true" query, then the database will be
 	 * re-queried
 	 *
-	 * @return
-	 * @throws JSONException
+	 * @return Array of revisions of the document.
+	 * @throws IOException HTTP issues
+	 * @throws JSONException JSON formatting issues
 	 */
 	public String[] getRevisions() throws IOException, JSONException
 	{
@@ -212,9 +214,9 @@ public class Document implements Serializable
 	/**
 	 * Get a named view that is stored in the document.
 	 *
-	 * @param name
-	 * @return
-	 * @throws JSONException
+	 * @param name Name of the view
+	 * @return View object
+	 * @throws JSONException JSON formatting issues
 	 */
 	public View getView(String name) throws JSONException
 	{
@@ -237,10 +239,10 @@ public class Document implements Serializable
 	 *
 	 * @param designDoc
 	 *            document name
-	 * @param viewName
-	 * @param function
-	 * @return
-	 * @throws JSONException
+	 * @param viewName Name of the view
+	 * @param function Name of the function to store the view in
+	 * @return View created by the action
+	 * @throws JSONException JSON formatting exception
 	 */
 	public View addView(String designDoc, String viewName, String function) throws JSONException
 	{
@@ -270,7 +272,7 @@ public class Document implements Serializable
 	 * <p>
 	 * This isn't persisted until the document is saved.
 	 *
-	 * @param viewName
+	 * @param viewName Name of the view.
 	 */
 	public void deleteView(String viewName)
 	{
@@ -287,7 +289,8 @@ public class Document implements Serializable
 	 * copy of data from the server and uses that to populate this document.
 	 * This doesn't overwrite any unsaved data.
 	 *
-	 * @throws JSONException
+	 * @throws JSONException JSON formatting issues.
+	 * @throws IOException HTTP issues.
 	 */
 	public void refresh() throws IOException, JSONException
 	{
@@ -314,8 +317,8 @@ public class Document implements Serializable
 	/**
 	 * Retrieves the backing JSONObject
 	 *
-	 * @return
-	 * @throws JSONException
+	 * @return Backing JSON object.
+	 * @throws JSONException JSON formatting issues
 	 */
 	public JSONObject getJSONObject() throws JSONException
 	{
@@ -435,7 +438,6 @@ public class Document implements Serializable
 		}
 	}
 
-	/** Identical to {@link #get(String)} since complex keys are basic to {@link EwJsonObject}. */
 	public Object getComplex(String path) throws JSONException
 	{
 		return get(path);
