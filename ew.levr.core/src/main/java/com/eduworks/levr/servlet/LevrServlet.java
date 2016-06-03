@@ -229,7 +229,7 @@ public abstract class LevrServlet extends HttpServlet
 		else
 			response.setStatus(500);
 		e.printStackTrace();
-		if (outputStream != null)
+		if (outputStream != null && e.getMessage() != null)
 		{
 			outputStream.println(e.getMessage());
 			outputStream.flush();
