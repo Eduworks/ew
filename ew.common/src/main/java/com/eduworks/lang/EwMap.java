@@ -34,7 +34,9 @@ public class EwMap<E,T> extends LinkedHashMap<E,T> implements Serializable
 			while (keys.hasNext())
 			{
 				String next = keys.next();
-				put((E)next,(T)parameters.get(keys.next()));
+				Object object = parameters.get(next);
+				if (object != null)
+				put((E)next,(T)object);
 			}
 		}
 	}

@@ -172,7 +172,9 @@ public class CruncherHttpPost extends Cruncher
 		{
 			try
 			{
+				if (execute != null)
 				execute.close();
+				if (hc != null)
 				hc.close();
 			}
 			catch (IOException e)

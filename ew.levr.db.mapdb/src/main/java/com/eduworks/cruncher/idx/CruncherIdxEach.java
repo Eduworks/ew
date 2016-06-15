@@ -91,7 +91,7 @@ public class CruncherIdxEach extends Cruncher
 								c.remove(valueString);
 							if (result instanceof EwJsonSerializable)
 								result = ((EwJsonSerializable) result).toJsonObject();
-							if (!memorySaver)
+							if (!memorySaver && result != null)
 								output.put(key, result);
 						}
 						catch (JSONException e)
