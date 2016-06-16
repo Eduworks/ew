@@ -22,6 +22,7 @@ public class CruncherRemoveDuplicates extends Cruncher
 		HashMap<String,Object> hs = new LinkedHashMap<String,Object>();
 		
 		for (int i = 0;i < ja.length();i++)
+			if (!ja.isNull(i))
 			hs.put(ja.get(i).toString(),ja.get(i));
 //			for (int j = i+1;j < ja.length();j++)
 //			{

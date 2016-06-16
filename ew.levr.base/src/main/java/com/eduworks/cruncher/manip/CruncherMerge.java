@@ -30,6 +30,7 @@ public class CruncherMerge extends Cruncher
 				{
 					JSONArray ja2 = (JSONArray) o;
 					for (int j = 0;j < ja2.length();j++)
+						if (!ja2.isNull(j))
 						results.put(ja2.get(j));
 				}
 				else if (o instanceof JSONObject)
@@ -53,6 +54,7 @@ public class CruncherMerge extends Cruncher
 				{
 					JSONArray ja2 = (JSONArray) o;
 					for (int j = 0;j < ja2.length();j++)
+						if (!ja2.isNull(j))
 						results.put(ja2.get(j));
 				}
 				else if (o instanceof JSONObject)
