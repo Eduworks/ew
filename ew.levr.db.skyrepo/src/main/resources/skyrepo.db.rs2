@@ -232,7 +232,7 @@ searchObj=#object(
 ).put(
 	_key="_source",
 	_value=#object(a="*").valueSet()
-).debug(prefix="Sig Search Terms: ");
+);
 
 protectedTypeArray = #skyRepoGetProtectedTypes().cforEach(
 	paramName="protectedType",
@@ -324,7 +324,7 @@ nonSigSearchObj = #object(
 ).put(
 	_key="_source",
 	_value=#object(a="*").valueSet()
-).debug(prefix="Non-Sig Search Terms: ");
+);
 
 
 searchUrl=#add(
@@ -341,7 +341,7 @@ signatureSearch=searchObj.httpPost(url=searchUrl,multipart="false").toObject().c
 checkRunSignatureSearch = #if(operator=#signatureSheet().count(), operand="0",
 	ne=signatureSearch,
 	eq=#toArray()
-).debug(prefix="sig search:");
+);
 
 nonSigSearch = nonSigSearchObj.httpPost(url=searchUrl,multipart="false").toObject().cget(hits="").cget(hits="").cforEach(
 	paramName="obj",
@@ -353,7 +353,7 @@ nonSigSearch = nonSigSearchObj.httpPost(url=searchUrl,multipart="false").toObjec
 checkRunNonSigSearch = #catch(
 	try=nonSigSearch, 
 	runtime=#toArray()
-).debug(prefix="nonsig search:");
+);
 
 search = #if(operator=#toArray(obj="@sigResults").count(), operand="@size",
 	eq="@sigResults",

@@ -15,4 +15,4 @@ adminList = #append(
 	a=#skyrepoAdminPpk().rsaPpkToPk().replace(replace="\r?\n", with="")
 );
 
-#skyrepoAdminList = adminList
+#skyrepoAdminList = adminList;
