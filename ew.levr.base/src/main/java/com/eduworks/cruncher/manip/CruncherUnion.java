@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -23,15 +24,16 @@ public class CruncherUnion extends Cruncher
 	{
 		Collection<Object> ja;
 		boolean unique = optAsBoolean("unique",true,c,parameters,dataStreams);
+		
 		if (unique)
-			ja = new HashSet<Object>();
+			ja = new LinkedHashSet<Object>();
 		else
 			ja = new ArrayList<Object>();
+		
 		JSONArray obj = getObjAsJsonArray(c, parameters, dataStreams);
 		
 		for (int i = 0;i < obj.length();i++)
 			ja.add(obj.get(i));
-		
 			
 		Boolean accumulate = optAsBoolean("accumulate", true, c, parameters, dataStreams);
 		JSONObject jo = new JSONObject();
