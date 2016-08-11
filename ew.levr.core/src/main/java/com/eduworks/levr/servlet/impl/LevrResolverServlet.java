@@ -136,13 +136,15 @@ public class LevrResolverServlet extends LevrServlet
 			return;
 		if (path.endsWith(".jar") && path.toLowerCase().contains("levr"))
 		{
-			  ZipInputStream zip = new ZipInputStream(servletContext.getResourceAsStream(path));
-			  while(true) {
-			    ZipEntry e = zip.getNextEntry();
-			    if (e == null)
-			      break;
-			    String name = e.getName();
-			    if (name.endsWith(".rs2")) {
+			ZipInputStream zip = new ZipInputStream(servletContext.getResourceAsStream(path));
+			while (true)
+			{
+				ZipEntry e = zip.getNextEntry();
+				if (e == null)
+					break;
+				String name = e.getName();
+				if (name.endsWith(".rs2"))
+				{
 
 					File createTempFile = File.createTempFile(path.replace("/", "").replace("\\", ""), e.getName().replace("/", "").replace("\\", ""));
 					FileWriter fileWriter = new FileWriter(createTempFile);
@@ -150,9 +152,9 @@ public class LevrResolverServlet extends LevrServlet
 					fileWriter.close();
 					loadAdditionalConfigFiles(createTempFile);
 					createTempFile.delete();
-			    }
-			  }
-			  zip.close();
+				}
+			}
+			zip.close();
 		}
 		else if (path.endsWith("/"))
 		{
@@ -175,8 +177,8 @@ public class LevrResolverServlet extends LevrServlet
 					createTempFile.delete();
 				}
 		}
-//		else
-//			System.out.println("Failed: " + path);
+		// else
+		// System.out.println("Failed: " + path);
 	}
 
 	private static void loadAdditionalConfigFilesFromContext(String path) throws IOException, JSONException
@@ -443,7 +445,12 @@ public class LevrResolverServlet extends LevrServlet
 
 		for (FileItem item : parseRequest)
 		{
-			c.filenames.put(item.getFieldName(), item.getName());
+			// IE artifact. When files are attached, they are sent using their
+			// full path in 'name' and their filename in 'FieldName'.
+			if (item.getName() != null && item.getName().contains("\\"))
+				c.filenames.put(item.getFieldName(), item.getFieldName());
+			else
+				c.filenames.put(item.getFieldName(), item.getName());
 			InputStream inputStream = item.getInputStream();
 			try
 			{

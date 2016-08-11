@@ -19,8 +19,10 @@ public class CruncherNtlmGetUsername extends Cruncher
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
-		String token = getObj(c, parameters, dataStreams).toString();
+		String token = getObjAsString(c, parameters, dataStreams);
 
+		if (token == null || token.isEmpty())
+			return null;
 		byte[] src = Base64.decodeBase64(token);
 		try
 		{

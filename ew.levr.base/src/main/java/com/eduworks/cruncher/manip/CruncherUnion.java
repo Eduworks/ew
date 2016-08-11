@@ -48,7 +48,7 @@ public class CruncherUnion extends Cruncher
 		{
 			Collection<Object> results;
 			if (unique)
-				results = new HashSet<Object>();
+				results = new LinkedHashSet<Object>();
 			else
 				results = new ArrayList<Object>();
 			for (Object o : ja)
