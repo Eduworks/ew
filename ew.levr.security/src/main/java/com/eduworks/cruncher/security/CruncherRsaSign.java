@@ -25,6 +25,7 @@ public class CruncherRsaSign extends Cruncher
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
+		CruncherRsaGenerate.checkProvider();
 		String object = new EwJsonObject(getObj(c, parameters, dataStreams).toString()).toString();
 		String key = getAsString("ppk", c, parameters, dataStreams);
 		try

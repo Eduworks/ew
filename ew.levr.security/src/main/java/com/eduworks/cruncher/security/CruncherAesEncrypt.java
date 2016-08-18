@@ -26,7 +26,11 @@ public class CruncherAesEncrypt extends Cruncher
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
-		String payload = getObj(c, parameters, dataStreams).toString();
+		CruncherRsaGenerate.checkProvider();
+		Object obj = getObj(c, parameters, dataStreams);
+		if (obj == null)
+			return null;
+		String payload = obj.toString();
 		String secret = getAsString("secret", c, parameters, dataStreams);
 		String iv = getAsString("iv", c, parameters, dataStreams);
 

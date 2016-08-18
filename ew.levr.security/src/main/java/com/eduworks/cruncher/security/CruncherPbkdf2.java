@@ -21,6 +21,7 @@ public class CruncherPbkdf2 extends Cruncher
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
+		CruncherRsaGenerate.checkProvider();
 		String obj = getObj(c, parameters, dataStreams).toString();
 		String salt = getAsString("salt", c, parameters, dataStreams);
 		int iterations = Integer.parseInt(getAsString("iterations", c, parameters, dataStreams));

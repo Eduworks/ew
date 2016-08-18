@@ -9,6 +9,10 @@ context=#add(a="@",b="context");
 #context=context;
 type=#add(a="@",b="type");
 #type=type;
+reader=#add(a="@",b="reader");
+#reader=reader;
+id=#add(a="@",b="id");
+#id=id;
 signatureParam=#add(a="@",b="signature");
 #signature=signatureParam;
 signatureArr=#toObject(obj="@signatureArr");
@@ -24,7 +28,7 @@ type=#if(
 		eq=context.add(z=type),
 		ne=context.add(y="/",z=type)
 	)
-).debug();
+);
 owner=signatureArr.getByParam(param=owner);
 expiry=signatureArr.cget(expiry="");
 signature=signatureArr.getByParam(param=signatureParam);
@@ -87,5 +91,5 @@ verifySignature=#object(
 	z=owner
 ).cget(z="");
 
-signatureSheet=signatureSheet.cforEach(paramName="signatureArr",threaded="false",array="true",rethrow="true",op=verifySignature).cache(name="signatureSheet");
+signatureSheet=signatureSheet.cforEach(paramName="signatureArr",threaded="false",array="true",rethrow="true",op=verifySignature).cache(name=#add(a="signatureSheet",b=signatureSheet.toString()));
 #signatureSheet=signatureSheet;

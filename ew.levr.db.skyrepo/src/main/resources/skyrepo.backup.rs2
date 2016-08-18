@@ -49,7 +49,7 @@ search=query.httpPost(
 	url=#add(a=#urlBase(),z="/data/_search?scroll=1m"),
 	contentType="application/json",
 	multipart="false"	
-).debug();
+);
 
 scroll=#object(
 	a=#toObject(obj="@search").cget(hits="").cget(hits="").cforEach(
@@ -58,17 +58,17 @@ scroll=#object(
 		op=check
 	),
 	b=#if(
-		operator=#toObject(obj="@search").cget(hits="").cget(hits="").count().debug(),
+		operator=#toObject(obj="@search").cget(hits="").cget(hits="").count(),
 		operand="0",
 		eq=#error(code="200",msg="Complete.")
 	),
 	c=#toObject(obj="@search").cgetByParam(param="_scroll_id").variableSet(key="scroll")
 ).call(
 	search=#httpGet(
-		obj=#add(a=#urlBase(),b="/_search/scroll?scroll=1m&scroll_id=",c=#variableGet(key="scroll")).debug(),
+		obj=#add(a=#urlBase(),b="/_search/scroll?scroll=1m&scroll_id=",c=#variableGet(key="scroll")),
 		contentType="text/plain",
 		multipart="false"	
-	).debug()
+	)
 );
 
 backupActual=#object(
@@ -77,10 +77,10 @@ backupActual=#object(
 		array="true",
 		op=check
 	),
-	b=#toObject(obj="@search").cgetByParam(param="_scroll_id").debug().variableSet(key="scroll"),
+	b=#toObject(obj="@search").cgetByParam(param="_scroll_id").variableSet(key="scroll"),
 	c=scroll.while(
 		condition=#if(
-			operator=#variableGet(key="scroll").debug(),
+			operator=#variableGet(key="scroll"),
 			operand="",
 			eq="false",
 			ne="true"

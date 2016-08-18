@@ -29,13 +29,18 @@ import com.eduworks.resolver.Cruncher;
 
 public class CruncherRsaGenerate extends Cruncher
 {
-	{
-		Security.addProvider(new BouncyCastleProvider());
-	}
 
+	public static void checkProvider()
+	{
+		BouncyCastleProvider provider = new BouncyCastleProvider();
+		if (Security.getProvider(provider.getName()) == null)
+			Security.addProvider(provider);
+	}
+	
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
+		checkProvider();
 		StringWriter sw = new StringWriter();
 		try
 		{

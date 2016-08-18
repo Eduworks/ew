@@ -26,6 +26,7 @@ public class CruncherRsaEncrypt extends Cruncher
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
+		CruncherRsaGenerate.checkProvider();
 		String payload = getObj(c, parameters, dataStreams).toString();
 		String key = getAsString("pk", c, parameters, dataStreams);
 		try

@@ -3,6 +3,7 @@ package com.eduworks.cruncher.lang;
 import java.io.InputStream;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,12 +17,21 @@ public class CruncherWhile extends Cruncher
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
 		Object result = null;
-		if (optAsString("do","false", c, parameters, dataStreams).equals("true"))
-			result = getObj(c,parameters, dataStreams);
+		Boolean accm = optAsBoolean("accumulate", false, c, parameters, dataStreams);
+		if (accm)
+			result = new JSONArray();
+		if (optAsString("do", "false", c, parameters, dataStreams).equals("true"))
+			if (accm)
+				((JSONArray) result).put(getObj(c, parameters, dataStreams));
+			else
+				result = getObj(c, parameters, dataStreams);
 		Object o = get("condition", c, parameters, dataStreams);
-		while(o != null && !o.equals("false"))
+		while (o != null && !o.equals("false"))
 		{
-			result = getObj(c,parameters, dataStreams);
+			if (accm)
+				((JSONArray) result).put(getObj(c, parameters, dataStreams));
+			else
+				result = getObj(c, parameters, dataStreams);
 			o = get("condition", c, parameters, dataStreams);
 		}
 		return result;
@@ -48,7 +58,7 @@ public class CruncherWhile extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj","Resolvable","condition","Boolean","?do","Boolean");
+		return jo("obj", "Resolvable", "condition", "Boolean", "?do", "Boolean");
 	}
 
 }

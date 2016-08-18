@@ -29,6 +29,7 @@ public class CruncherRsaDecrypt extends Cruncher
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
+		CruncherRsaGenerate.checkProvider();
 		byte[] ciphertext = Base64.decodeBase64(getObj(c, parameters, dataStreams).toString());
 		String key = getAsString("ppk", c, parameters, dataStreams);
 		try

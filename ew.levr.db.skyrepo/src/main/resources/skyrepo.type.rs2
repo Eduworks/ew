@@ -86,7 +86,7 @@ addMappingNoSearch=#object(
 			index="no"
 		)
 	)
-).httpPost(url=mapUrl,multipart="false").debug(prefix="Add Mapping Result: ");
+).httpPost(url=mapUrl,multipart="false");
 
 addWhiteSpaceRemovalMapping = #object(
 	properties=#object(
@@ -97,7 +97,7 @@ addWhiteSpaceRemovalMapping = #object(
 			analyzer="whitespace_remove"
 		)
 	)
-).httpPost(url=mapUrl,multipart="false").debug(prefix="Add Whitespace Result: ");
+).httpPost(url=mapUrl,multipart="false");
 
 addWhiteSpaceRemovalMapping = #object(
 	properties=getCurrentMapping.put(
@@ -107,7 +107,7 @@ addWhiteSpaceRemovalMapping = #object(
 		_key=#add(a="@typePrefix",c="@field",d=".type"),
 		_value="string"
 	).fromDotNotationObject()
-).debug(prefix="Now mapping: ").httpPost(url=mapUrl, multipart="false").debug(prefix="Add Whitespace Result: ");
+).httpPost(url=mapUrl, multipart="false");
 
 addWhiteSpaceRemovalMapping=#if(
 	operator=getCurrentMapping.getByParam(param=#add(a="@typePrefix",c="@field",d=".analyzer")),
@@ -137,7 +137,7 @@ addNotAnalyzedMultiField = #object(
 			)
 		)
 	)
-).httpPost(url=mapUrl, multipart="false").debug(prefix="Not Analyzed Result: ");
+).httpPost(url=mapUrl, multipart="false");
 	
 addNotAnalyzedMultiField = #object(
 	properties=getCurrentMapping.put(
@@ -156,7 +156,7 @@ addNotAnalyzedMultiField = #object(
 		_key=#add(a="@typePrefix",c="@field",d=".type"),
 		_value="multi_field"
 	).fromDotNotationObject()
-).debug(prefix="Now mapping: ").httpPost(url=mapUrl, multipart="false").debug(prefix="Not Analyzed Result: ");
+).httpPost(url=mapUrl, multipart="false");
 
 addNotAnalyzedMultiField=#if(
 	operator=getCurrentMapping.getByParam(param=#add(a="@typePrefix",c="@field",d=".fields.(full).index")),
@@ -172,7 +172,7 @@ addExcludeFromAllIndex = #object(
 		_key=#add(a="@typePrefix",c="@field",d=".type"),
 		_value="string"
 	).fromDotNotationObject()
-).debug(prefix="Now mapping: ").httpPost(url=mapUrl, multipart="false").debug(prefix="Result: ");
+).httpPost(url=mapUrl, multipart="false");
 
 addExcludeFromAllIndex=#if(
 	operator=getCurrentMapping.has(has=#add(a="@typePrefix",c="@field",d=".include_in_all")),

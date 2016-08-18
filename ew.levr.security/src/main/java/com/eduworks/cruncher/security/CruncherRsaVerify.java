@@ -25,6 +25,7 @@ public class CruncherRsaVerify extends Cruncher
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
+		CruncherRsaGenerate.checkProvider();
 		String signature = getObj(c, parameters, dataStreams).toString();
 		String key = getAsString("pk", c, parameters, dataStreams);
 		Object against = new EwJsonObject(get("against", c, parameters, dataStreams).toString()).toString();

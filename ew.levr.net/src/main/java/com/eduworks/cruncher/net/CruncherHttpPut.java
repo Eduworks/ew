@@ -122,6 +122,7 @@ public class CruncherHttpPut extends Cruncher
 			String string = null;
 			try
 			{
+				if (execute.getEntity() != null)
 				string = EntityUtils.toString(execute.getEntity());
 			}
 			catch (ParseException e)
