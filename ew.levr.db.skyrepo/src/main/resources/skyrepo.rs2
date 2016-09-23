@@ -15,34 +15,38 @@ postObject=postData.fileToString().toObject();
 postArray=postData.fileToString().toArray();
 
 get=#skyrepoGet(
-	type=query.cget(type=""),
-	id=query.cget(id=""),
-	version=query.cget(version="")
+        type=query.cget(type=""),
+        id=query.cget(id=""),
+        version=query.cget(version="")
 );
 
 save=postObject.skyrepoPut(
-	type=query.cget(type=""),
-	id=query.cget(id=""),
-	version=query.cget(version="")
+        type=query.cget(type=""),
+        id=query.cget(id=""),
+        version=query.cget(version="")
 );
 
 delete=get.skyrepoDelete(
-	type=query.cget(type=""),
-	id=query.cget(id=""),
-	version=query.cget(version="")
+        type=query.cget(type=""),
+        id=query.cget(id=""),
+        version=query.cget(version="")
 );
 
-saveOrDelete = #if(operator="@methodType",operand="DELETE",
-	eq=delete,
-	ne=save
+saveOrGet=#if(
+        operator=postData,
+        operand="",
+        eq=get.displayJson(_collapse="true"),
+        ne=save
 );
 
-saveOrGet=#object(
-	a=saveOrDelete,
-	b=get
-).cget(b="");
+deleteOrOther = #if(
+        operator="@methodType",
+        operand="DELETE",
+        eq=delete,
+        ne=saveOrGet
+);
 
-data=saveOrGet.call(type="data").displayJson(_collapse="true");
+data=deleteOrOther.call(type="data");
 /data=data;
 
 multiGet=postArray.cforEach(paramName="urlRemainder",op=get.call(type="data"),array="true").displayJson(_collapse="true");
@@ -79,13 +83,6 @@ search=#skyrepoSearch(
 
 types = #skyrepoTypes();
 /sky/repo/types=types;
-
-performance=#reflectionPerformance().displayJson();
-/perf=performance;
-
-pong=#object(ping="pong").displayJson(_collapse="true");
-/ping=pong;
-
 
 admin = #skyrepoAdminList().displayJson(_collapse="true");
 /sky/admin = admin;
