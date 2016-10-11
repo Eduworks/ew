@@ -21,6 +21,7 @@ public class CruncherCollapse extends Cruncher
 
 		String key = getAsString("keyKey", c, parameters, dataStreams);
 		String value = getAsString("valueKey", c, parameters, dataStreams);
+		Boolean removeKey = optAsBoolean("removeKey", true,c, parameters, dataStreams);
 		Boolean accumulate = optAsBoolean("accumulate", true, c, parameters, dataStreams);
 
 		JSONObject result = new JSONObject();
@@ -51,7 +52,8 @@ public class CruncherCollapse extends Cruncher
 						result.accumulate(jo.getString(key), jo);
 					else
 						result.put(jo.getString(key), jo);
-					jo.remove(key);
+					if (removeKey)
+						jo.remove(key);
 				}
 			}
 		}

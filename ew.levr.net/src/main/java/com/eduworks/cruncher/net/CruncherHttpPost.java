@@ -49,6 +49,7 @@ public class CruncherHttpPost extends Cruncher
 		String contentType = getAsString("contentType", c, parameters, dataStreams);
 		// String accept = getAsString("accept", parameters, dataStreams);
 		boolean multiPart = optAsBoolean("multipart", true, c, parameters, dataStreams);
+		boolean formdata = optAsBoolean("formdata", false, c, parameters, dataStreams);
 		boolean reliable = optAsBoolean("reliable", false, c, parameters, dataStreams);
 		String authToken = getAsString("authToken", c, parameters, dataStreams);
 		HttpPost post = new HttpPost(url);
@@ -56,16 +57,37 @@ public class CruncherHttpPost extends Cruncher
 		HttpEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE, null, Charset.forName("UTF-8"));
 		if (multiPart)
 		{
-			AbstractContentBody contentBody = null;
-			if (o instanceof File)
-				contentBody = new FileBody((File) o, contentType);
-			else if (o instanceof InMemoryFile)
-				contentBody = new InputStreamBody(((InMemoryFile) o).getInputStream(), contentType);
-			else if (o instanceof JSONObject || o instanceof JSONArray)
-				contentBody = new StringBody(o.toString(), ContentType.APPLICATION_JSON);
+			if (formdata)
+			{
+				JSONObject fd = (JSONObject) o;
+				AbstractContentBody contentBody = null;
+				for (String key : EwJson.getKeys(fd))
+				{
+					Object fdo = fd.get(key);
+					if (fdo instanceof File)
+						contentBody = new FileBody((File) fdo, contentType);
+					else if (fdo instanceof InMemoryFile)
+						contentBody = new InputStreamBody(((InMemoryFile) fdo).getInputStream(), contentType);
+					else if (fdo instanceof JSONObject || fdo instanceof JSONArray)
+						contentBody = new StringBody(fdo.toString(), ContentType.APPLICATION_JSON);
+					else
+						contentBody = new StringBody(fdo.toString(), ContentType.create("text/plain", Charset.forName("UTF-8")));
+					((MultipartEntity) entity).addPart(key, contentBody);
+				}
+			}
 			else
-				contentBody = new StringBody(o.toString(), ContentType.create(contentType, Charset.forName("UTF-8")));
-			((MultipartEntity) entity).addPart(name, contentBody);
+			{
+				AbstractContentBody contentBody = null;
+				if (o instanceof File)
+					contentBody = new FileBody((File) o, contentType);
+				else if (o instanceof InMemoryFile)
+					contentBody = new InputStreamBody(((InMemoryFile) o).getInputStream(), contentType);
+				else if (o instanceof JSONObject || o instanceof JSONArray)
+					contentBody = new StringBody(o.toString(), ContentType.APPLICATION_JSON);
+				else
+					contentBody = new StringBody(o.toString(), ContentType.create(contentType, Charset.forName("UTF-8")));
+				((MultipartEntity) entity).addPart(name, contentBody);
+			}
 		}
 		else
 		{
