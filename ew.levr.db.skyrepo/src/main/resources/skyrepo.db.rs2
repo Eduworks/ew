@@ -83,12 +83,12 @@ delete=#object(
 				operator=#signatureSheet().intersect(b=#owners(obj="@oldObj")).count(),
 				operand="0",
 				eq=#if(
-					operator=#signatureSheet().intersect(a=#append(a=#skyIdAdminPpk().rsaPpkToPk().replace(replace="\r?\n", with=""))).count(),
+					operator=#signatureSheet().intersect(a=#append(a=#skyrepoAdminPpk().rsaPpkToPk().replace(replace="\r?\n", with=""))).count(),
 					operand="0",
 					eq=#error(code="401",msg="Only an owner of an object may delete it.")
 				)
 			),
-			eq=#if(operator=#signatureSheet().intersect(a=#append(a=#skyIdAdminPpk().rsaPpkToPk().replace(replace="\r?\n", with=""))).count(),
+			eq=#if(operator=#signatureSheet().intersect(a=#append(a=#skyrepoAdminPpk().rsaPpkToPk().replace(replace="\r?\n", with=""))).count(),
 					operand="0",
 					eq=#error(code="403",msg="This object is public, nobody can delete it."),
 				)
