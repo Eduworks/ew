@@ -14,7 +14,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ew.build.version>3.0.0-SNAPSHOT</ew.build.version>
 	</properties>
 
 	<organization>
@@ -47,11 +46,25 @@
 		</repository>
 	</distributionManagement>
 
+	<developers>
+		<developer>
+			<name>Ronald "Fritz" Ray</name>
+			<email>fritz.ray@eduworks.com</email>
+			<organization>Eduworks Corporation</organization>
+			<organizationUrl>http://www.eduworks.com</organizationUrl>
+			<roles>
+				<role>Architect</role>
+				<role>Developer</role>
+			</roles>
+			<timezone>PST</timezone>
+		</developer>
+	</developers>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -93,7 +106,7 @@
 				<version>3.5.1</version>
 				<configuration>
 					<source>1.7</source>
-					<target>1.7</target>					
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			<plugin>
