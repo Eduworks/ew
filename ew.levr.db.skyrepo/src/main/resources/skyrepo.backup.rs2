@@ -31,16 +31,16 @@ query=#object(
 
 check=#object(
 	word=#urlBase().add(
-		a="/data/",
-		b=#toObject(obj="@hit").getByParam(param="_type"),
-		c="/",
-		d=#toObject(obj="@hit").getByParam(param="_id").urlEncode()
+		p="/data/",
+		q=#toObject(obj="@hit").getByParam(param="_type"),
+		r="/",
+		s=#toObject(obj="@hit").getByParam(param="_id").urlEncode()
 	).httpGet().toObject().getByParam(param="_source").toString().fileSave(
 		path=backupPath.add(
-			a="/",
-			b=#toObject(obj="@hit").getByParam(param="_type"),
-			c="/",
-			d=#toObject(obj="@hit").getByParam(param="_id").stringToHex()
+			p="/",
+			q=#toObject(obj="@hit").getByParam(param="_type"),
+			r="/",
+			s=#toObject(obj="@hit").getByParam(param="_id").stringToHex()
 		)
 	)
 );
@@ -55,6 +55,7 @@ scroll=#object(
 	a=#toObject(obj="@search").cget(hits="").cget(hits="").cforEach(
 		paramName="hit",
 		array="true",
+		threaded="false",
 		op=check
 	),
 	b=#if(
