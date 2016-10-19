@@ -19,7 +19,7 @@ public class CruncherCache extends Cruncher
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
-		String cacheName = "cruncherCache"+getAsString("name", c, parameters, dataStreams);
+		String cacheName = "cruncherCache" + getAsString("name", c, parameters, dataStreams);
 		Object result = null;
 		Object lock = null;
 		if (optAsBoolean("removeAllGlobal", false, c, parameters, dataStreams))
@@ -43,8 +43,7 @@ public class CruncherCache extends Cruncher
 					EwCache.getCache("GlobalCache").remove(cacheName);
 				else
 					c.remove(cacheName);
-			}
-			else
+			} else
 			{
 				if (optAsBoolean("global", false, c, parameters, dataStreams))
 					result = EwCache.getCache("GlobalCache").get(cacheName);
@@ -53,11 +52,11 @@ public class CruncherCache extends Cruncher
 				if (result == null)
 				{
 					result = getObj(c, parameters, dataStreams);
-					if (!optAsBoolean("justLock",false,c,parameters,dataStreams))
-					if (optAsBoolean("global", false, c, parameters, dataStreams))
-						EwCache.getCache("GlobalCache").put(cacheName, result);
-					else
-						c.put(cacheName, result);
+					if (!optAsBoolean("justLock", false, c, parameters, dataStreams))
+						if (optAsBoolean("global", false, c, parameters, dataStreams))
+							EwCache.getCache("GlobalCache").put(cacheName, result);
+						else
+							c.put(cacheName, result);
 				}
 			}
 		}
