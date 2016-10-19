@@ -20,6 +20,13 @@ get=#skyrepoGet(
         version=query.cget(version="")
 );
 
+get=#if(
+	operator=#toObject(obj="@get").count(),
+	operand="0",
+	eq=#error(code="404",msg="Object not found or you did not supply sufficient permissions to access the object."),
+	ne=#toObject(obj="@get")
+).call(get=get);
+
 save=postObject.skyrepoPut(
         type=query.cget(type=""),
         id=query.cget(id=""),

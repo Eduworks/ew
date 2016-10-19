@@ -123,6 +123,12 @@ get=getUrl.httpGet().toObject().cgetByParam(
 	param="_source"
 ).filterResults();
 
+get=#if(
+	operator=#toObject(obj="@get").count(),
+	operand="0",
+	ne=#toObject(obj="@get")
+).call(get=get);
+
 #skyrepoGet=get;
 
 ownerSignatureFilterArray = #signatureSheet().cforEach(
