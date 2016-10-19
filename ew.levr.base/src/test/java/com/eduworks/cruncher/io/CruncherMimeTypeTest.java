@@ -3,9 +3,9 @@ package com.eduworks.cruncher.io;
 import java.io.InputStream;
 import java.util.HashMap;
 
-import junit.framework.Assert;
 
 import org.json.JSONException;
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.eduworks.cruncher.file.CruncherFileLoad;
@@ -31,6 +31,9 @@ public class CruncherMimeTypeTest
 		{
 			e.printStackTrace();
 		}
+		if (result.equals("text/xml"))
 		Assert.assertEquals("text/xml", result);
+		else
+			Assert.assertEquals("application/xml", result);
 	}
 }
