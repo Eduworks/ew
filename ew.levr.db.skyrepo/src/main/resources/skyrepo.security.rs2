@@ -95,7 +95,14 @@ isEncryptedType=#if(
 	operand="0",
 	gt="true",
 	eq=#if(
-		operator=#httpGet(obj=types.getIndex(index="0")).fileToString().toObject().getByParam(param=protect),
+		operator=#httpGet(
+			obj=types.getIndex(index="0")
+		).cache(
+			global="true",
+			name=#add(z=types.getIndex(index="0"),a="httpGet")
+		).fileToString().toObject().getByParam(
+			param=protect
+		),
 		operand="true",
 		eq="true",
 		ne="false"
