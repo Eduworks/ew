@@ -27,8 +27,7 @@ putUrl=#add(
 			j="&version_type=external&refresh=true"
 		),
 		eq="?refresh=true"
-	),
-	
+	)	
 );
 
 //BUG: Check to see if there are no signature sheet signatures but the owners change, if it changes the owner.
@@ -90,7 +89,7 @@ delete=#object(
 			),
 			eq=#if(operator=#signatureSheet().intersect(a=#append(a=#skyrepoAdminPpk().rsaPpkToPk().replace(replace="\r?\n", with=""))).count(),
 					operand="0",
-					eq=#error(code="403",msg="This object is public, nobody can delete it."),
+					disabledeq=#error(code="403",msg="This object is public, nobody can delete it."),
 				)
 		).ccall(
 			oldObj=#skyrepoGet(version="")
