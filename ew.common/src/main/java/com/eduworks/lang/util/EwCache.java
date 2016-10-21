@@ -3,7 +3,6 @@ package com.eduworks.lang.util;
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -59,7 +58,10 @@ public class EwCache<K, V>
 	public synchronized void put(K key, V value)
 	{
 		if (cache)
-			map.put(key, value);
+			if (value == null)
+				remove(key);
+			else
+				map.put(key, value);
 	}
 
 	public synchronized void clear()
