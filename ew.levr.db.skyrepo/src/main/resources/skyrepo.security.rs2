@@ -151,14 +151,14 @@ filterResults=#if(
 	operator="@obj",
 	operand="",
 	ne=#if(
-		operator=#startsWith(obj="@obj",with="{"),
-		operand="true",
-		eq=filterResultObject,
-		ne=#if(
-			operator=#startsWith(obj="@obj",with="["),
-			operand="true",
-			eq=filterResultArray,
-			ne="@obj"			
+		operator=#toObject(obj="@obj").catch(any=""),
+		operand="",
+		ne=filterResultObject,
+		eq=#if(
+			operator=#toArray(obj="@obj",wrapString="false").catch(any=""),
+			operand="",
+			ne=filterResultArray,
+			eq="@obj"			
 		)
 	)
 );

@@ -15,9 +15,9 @@ postObject=postData.fileToString().toObject();
 postArray=postData.fileToString().toArray();
 
 get=#skyrepoGet(
-        type=query.cget(type=""),
-        id=query.cget(id=""),
-        version=query.cget(version="")
+    type=query.cget(type=""),
+    id=query.cget(id=""),
+    version=query.cget(version="")
 );
 
 get=#if(
@@ -28,29 +28,29 @@ get=#if(
 ).call(get=get);
 
 save=postObject.skyrepoPut(
-        type=query.cget(type=""),
-        id=query.cget(id=""),
-        version=query.cget(version="")
+    type=query.cget(type=""),
+    id=query.cget(id=""),
+    version=query.cget(version="")
 );
 
 delete=get.skyrepoDelete(
-        type=query.cget(type=""),
-        id=query.cget(id=""),
-        version=query.cget(version="")
+    type=query.cget(type=""),
+    id=query.cget(id=""),
+    version=query.cget(version="")
 );
 
 saveOrGet=#if(
-        operator=postData,
-        operand="",
-        eq=get.displayJson(_collapse="true"),
-        ne=save
+    operator=postData,
+    operand="",
+    eq=get.displayJson(_collapse="true"),
+    ne=save
 );
 
 deleteOrOther = #if(
-        operator="@methodType",
-        operand="DELETE",
-        eq=delete,
-        ne=saveOrGet
+    operator="@methodType",
+    operand="DELETE",
+    eq=delete,
+    ne=saveOrGet
 );
 
 data=deleteOrOther.call(type="data");
