@@ -34,7 +34,7 @@ public class CruncherToArray extends Cruncher
 				String asString = obj.toString();
 				Object result = c.get(asString);
 				if (result == null)
-					if (asString.startsWith("["))
+					if (asString.startsWith("[") || !optAsBoolean("wrapString", true, c, parameters, dataStreams))
 						return new JSONArray(asString);
 					else
 					{
@@ -43,17 +43,18 @@ public class CruncherToArray extends Cruncher
 					}
 				if (!(result instanceof JSONArray))
 				{
-					if (result.toString().startsWith("["))
+					if (result.toString().startsWith("[") || !optAsBoolean("wrapString", true, c, parameters, dataStreams))
 						return new JSONArray(result.toString());
 					result = new JSONArray();
 					((JSONArray) result).put(obj);
 				}
 				return result;
-			}
-			catch (Exception ex)
+			} catch (Exception ex)
 			{
+				if (!optAsBoolean("wrapString", true, c, parameters, dataStreams))
+					throw ex;
 				JSONArray ary = new JSONArray();
-				ary.put(getAsString("obj", c, parameters, dataStreams));
+				ary.put(obj);
 				return ary;
 			}
 		}
@@ -96,7 +97,7 @@ public class CruncherToArray extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj","String|Object|List|JSONArray|Number|String[]|JSONObject","?wrap","Boolean");
+		return jo("obj", "String|Object|List|JSONArray|Number|String[]|JSONObject", "?wrap", "Boolean");
 	}
 
 }
