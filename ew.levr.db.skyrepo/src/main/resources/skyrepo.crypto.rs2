@@ -48,7 +48,7 @@ signatureSheet=#object(
 verifySignature=#object(
 	a=#if(
 		operator=type,
-		operand="http://schema.eduworks.com/ebac/0.2/timeLimitedSignature",
+		operand="http://schema.cassproject.org/kbac/0.2/TimeLimitedSignature",
 		ne=#error(code="422",msg="Invalid Signature Version.")
 	),
 	aa=#if(
