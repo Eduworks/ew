@@ -139,17 +139,12 @@ getAnyBySaltedId=#object(
 	).cget(payload="")
 ).valueSet().union().getIndex(index="0");
 
-retrieve=#if(
-	operator="@payload",
-	operand="",
-	eq=#error(code="404", msg="User does not exist."),
-	ne=#aesDecrypt(
-		obj="@payload",
+retrieve=#aesDecrypt(
+		obj=#debug(obj="@retrievePayload",prefix="retrievePayload:"),
 		secret=secret,
 		iv=saltedId
-	).toObject()
-).ccall(
-	payload=getAnyBySaltedId
+	).toObject().ccall(
+	retrievePayload=getAnyBySaltedId
 );
 
 payload=#object(
@@ -180,7 +175,12 @@ retreiveFormally=#if(
 		secret=secret,
 		iv=saltedId
 	).toObject().put(password=""),
-	ne=#error(code="401",msg="Incorrect password.")
+	ne=#if(
+		operator=retrieve,
+		operand="",
+		eq=#error(code="404", msg="User does not exist."),
+		ne=#error(code="401",msg="Incorrect password.")
+	)
 );
 
 retreiveFormally = signatureSheet.toDatastream(
