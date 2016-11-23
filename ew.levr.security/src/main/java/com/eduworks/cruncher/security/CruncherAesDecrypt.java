@@ -15,7 +15,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.bouncycastle.util.encoders.Base64;
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,14 +38,14 @@ public class CruncherAesDecrypt extends Cruncher
 
 		try
 		{
-			IvParameterSpec ivParameter = new IvParameterSpec(Base64.decode(iv));
-			SecretKeySpec aesKey = new SecretKeySpec(Base64.decode(secret), "AES");
+			IvParameterSpec ivParameter = new IvParameterSpec(Base64.decodeBase64(iv));
+			SecretKeySpec aesKey = new SecretKeySpec(Base64.decodeBase64(secret), "AES");
 
 			Cipher decryptCipher = Cipher.getInstance("AES/CTR/PKCS5Padding");
 			decryptCipher.init(Cipher.DECRYPT_MODE, aesKey, ivParameter);
 
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			ByteArrayInputStream inStream = new ByteArrayInputStream(Base64.decode(cipherText));
+			ByteArrayInputStream inStream = new ByteArrayInputStream(Base64.decodeBase64(cipherText));
 			CipherInputStream cipherInputStream = new CipherInputStream(inStream, decryptCipher);
 			byte[] buf = new byte[1024];
 			int bytesRead;
@@ -55,30 +55,24 @@ public class CruncherAesDecrypt extends Cruncher
 				{
 					outputStream.write(buf, 0, bytesRead);
 				}
-			}
-			finally
+			} finally
 			{
 				cipherInputStream.close();
 			}
 			return outputStream.toString();
-		}
-		catch (InvalidKeyException e)
+		} catch (InvalidKeyException e)
 		{
 			e.printStackTrace();
-		}
-		catch (IOException e)
+		} catch (IOException e)
 		{
 			e.printStackTrace();
-		}
-		catch (NoSuchAlgorithmException e)
+		} catch (NoSuchAlgorithmException e)
 		{
 			e.printStackTrace();
-		}
-		catch (NoSuchPaddingException e)
+		} catch (NoSuchPaddingException e)
 		{
 			e.printStackTrace();
-		}
-		catch (InvalidAlgorithmParameterException e)
+		} catch (InvalidAlgorithmParameterException e)
 		{
 			e.printStackTrace();
 		}
@@ -106,6 +100,6 @@ public class CruncherAesDecrypt extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj", "String", "iv", "String","secret","String");
+		return jo("obj", "String", "iv", "String", "secret", "String");
 	}
 }

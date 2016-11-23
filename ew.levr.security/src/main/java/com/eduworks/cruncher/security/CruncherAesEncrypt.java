@@ -14,7 +14,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.bouncycastle.util.encoders.Base64;
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,8 +36,8 @@ public class CruncherAesEncrypt extends Cruncher
 
 		try
 		{
-			IvParameterSpec ivParameter = new IvParameterSpec(Base64.decode(iv));
-			SecretKeySpec aesKey = new SecretKeySpec(Base64.decode(secret), "AES");
+			IvParameterSpec ivParameter = new IvParameterSpec(Base64.decodeBase64(iv));
+			SecretKeySpec aesKey = new SecretKeySpec(Base64.decodeBase64(secret), "AES");
 
 			// Encrypt cipher
 			Cipher encryptCipher = Cipher.getInstance("AES/CTR/PKCS5Padding");
@@ -51,25 +51,20 @@ public class CruncherAesEncrypt extends Cruncher
 			cipherOutputStream.close();
 			byte[] encryptedBytes = outputStream.toByteArray();
 
-			return new String(Base64.encode(encryptedBytes));
-		}
-		catch (InvalidKeyException e)
+			return new String(Base64.encodeBase64(encryptedBytes));
+		} catch (InvalidKeyException e)
 		{
 			e.printStackTrace();
-		}
-		catch (IOException e)
+		} catch (IOException e)
 		{
 			e.printStackTrace();
-		}
-		catch (NoSuchAlgorithmException e)
+		} catch (NoSuchAlgorithmException e)
 		{
 			e.printStackTrace();
-		}
-		catch (NoSuchPaddingException e)
+		} catch (NoSuchPaddingException e)
 		{
 			e.printStackTrace();
-		}
-		catch (InvalidAlgorithmParameterException e)
+		} catch (InvalidAlgorithmParameterException e)
 		{
 			e.printStackTrace();
 		}
@@ -97,6 +92,6 @@ public class CruncherAesEncrypt extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj", "String", "iv", "String","secret","String");
+		return jo("obj", "String", "iv", "String", "secret", "String");
 	}
 }
