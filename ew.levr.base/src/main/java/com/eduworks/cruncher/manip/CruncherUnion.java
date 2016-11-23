@@ -31,7 +31,7 @@ public class CruncherUnion extends Cruncher
 
 		JSONArray obj = getObjAsJsonArray(c, parameters, dataStreams);
 		if (obj == null)
-			obj = new JSONArray();
+			return null;
 
 		for (int i = 0; i < obj.length(); i++)
 			ja.add(obj.get(i));

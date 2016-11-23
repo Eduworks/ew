@@ -3,7 +3,6 @@ package com.eduworks.cruncher.io;
 import java.io.InputStream;
 import java.util.HashMap;
 
-
 import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,13 +25,12 @@ public class CruncherMimeTypeTest
 		try
 		{
 			result = cmt.resolve(new Context(), new HashMap<String, String[]>(), new HashMap<String, InputStream>());
-		}
-		catch (JSONException e)
+		} catch (JSONException e)
 		{
 			e.printStackTrace();
 		}
 		if (result.equals("text/xml"))
-		Assert.assertEquals("text/xml", result);
+			Assert.assertEquals("text/xml", result);
 		else
 			Assert.assertEquals("application/xml", result);
 	}
