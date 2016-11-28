@@ -20,8 +20,8 @@ public class CruncherCall extends Cruncher
 	public Object resolve(final Context c, Map<String, String[]> parameters, final Map<String, InputStream> dataStreams) throws JSONException
 	{
 		final EwMap<String, String[]> newParams = new EwMap<String, String[]>(parameters);
-		boolean background = optAsBoolean("background",false,c,parameters,dataStreams);
-		final boolean newContext = optAsBoolean("newContext",false,c,parameters,dataStreams);
+		boolean background = optAsBoolean("background", false, c, parameters, dataStreams);
+		final boolean newContext = optAsBoolean("newContext", false, c, parameters, dataStreams);
 		ArrayList<String> valuesToRemove = new ArrayList<String>();
 		for (String key : keySet())
 		{
@@ -32,7 +32,7 @@ public class CruncherCall extends Cruncher
 			if (isSetting(key))
 				continue;
 			Object value;
-				value = get(key,c,parameters, dataStreams);
+			value = get(key, c, parameters, dataStreams);
 			if (value != null)
 			{
 				String valueString = value.toString();
@@ -40,26 +40,30 @@ public class CruncherCall extends Cruncher
 				valuesToRemove.add(valueString);
 				newParams.put(key, new String[] { valueString });
 			}
+			else
+				newParams.remove(key);
 		}
 		JSONObject paramsObject = getAsJsonObject("_params", c, parameters, dataStreams);
 		if (paramsObject != null)
-		for (String key : EwJson.getKeys(paramsObject))
-		{
-			Object value;
-			value = paramsObject.get(key);
-			if (value != null)
+			for (String key : EwJson.getKeys(paramsObject))
 			{
-				String valueString = value.toString();
-				c.put(valueString, value);
-				valuesToRemove.add(valueString);
-				newParams.put(key, new String[] { valueString });
+				Object value;
+				value = paramsObject.get(key);
+				if (value != null)
+				{
+					String valueString = value.toString();
+					c.put(valueString, value);
+					valuesToRemove.add(valueString);
+					newParams.put(key, new String[] { valueString });
+				}
+				else
+					newParams.remove(key);
 			}
-		}
-		Object result=null;
+		Object result = null;
 		if (background)
 			EwThreading.fork(new MyRunnable()
 			{
-				
+
 				@Override
 				public void run()
 				{
@@ -69,10 +73,10 @@ public class CruncherCall extends Cruncher
 						if (newContext)
 						{
 							Context c2 = new Context(c);
-							result = resolveAChild("obj", c2,newParams, dataStreams);
+							result = resolveAChild("obj", c2, newParams, dataStreams);
 						}
 						else
-							result = resolveAChild("obj", c,newParams, dataStreams);
+							result = resolveAChild("obj", c, newParams, dataStreams);
 					}
 					catch (JSONException e)
 					{
@@ -81,7 +85,7 @@ public class CruncherCall extends Cruncher
 				}
 			});
 		else
-		result=resolveAChild("obj", c,newParams, dataStreams);
+			result = resolveAChild("obj", c, newParams, dataStreams);
 		for (String s : valuesToRemove)
 			c.remove(s);
 		return result;
@@ -102,7 +106,7 @@ public class CruncherCall extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj","Resolvable","<any>","Object","background","Boolean");
+		return jo("obj", "Resolvable", "<any>", "Object", "background", "Boolean");
 	}
 
 	@Override

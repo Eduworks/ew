@@ -23,7 +23,7 @@ public class CruncherExecute extends Cruncher
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
 		String ws = getAsString("service", c, parameters, dataStreams);
-		boolean soft = optAsBoolean("soft",true,c,parameters, dataStreams);
+		boolean soft = optAsBoolean("soft", true, c, parameters, dataStreams);
 
 		Map<String, String[]> parameterMap = new EwMap<String, String[]>(parameters);
 
@@ -37,19 +37,23 @@ public class CruncherExecute extends Cruncher
 				continue;
 			if (key.equals("soft"))
 				continue;
-			if (key.equals("paramObj")){
+			if (key.equals("paramObj"))
+			{
 				JSONObject paramObj = getAsJsonObject(key, c, parameters, dataStreams);
-				
-				for(String paramName : EwJson.getKeys(paramObj)){
-					
-					if(!parameterMap.containsKey(paramName)){
-							parameterMap.put(paramName, new String[] { paramObj.get(paramName).toString() });
+
+				for (String paramName : EwJson.getKeys(paramObj))
+				{
+					if (!parameterMap.containsKey(paramName))
+					{
+						parameterMap.put(paramName, new String[] { paramObj.get(paramName).toString() });
 					}
 				}
 			}
 			Object object = get(key, c, parameters, dataStreams);
-			if (object!=null)
+			if (object != null)
 				parameterMap.put(key, new String[] { object.toString() });
+			else
+				parameterMap.remove(key);
 		}
 
 		Map<String, InputStream> dataStreamMap = new EwMap<String, InputStream>(dataStreams);
@@ -65,12 +69,14 @@ public class CruncherExecute extends Cruncher
 				e.printStackTrace();
 			}
 			if (o != null)
-				parameterMap.put("obj", new String[]{o.toString()});
+				parameterMap.put("obj", new String[] { o.toString() });
+			else
+				parameterMap.remove("obj");
 		}
 
 		try
 		{
-			return LevrResolverServlet.execute(log, true, ws, c, parameterMap,dataStreamMap, false);
+			return LevrResolverServlet.execute(log, true, ws, c, parameterMap, dataStreamMap, false);
 		}
 		catch (RuntimeException e)
 		{
@@ -130,7 +136,7 @@ public class CruncherExecute extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("service","String","<any>","String","obj","File|InMemoryFile|JSONArray|JSONObject","paramObj","JSONObject");
+		return jo("service", "String", "<any>", "String", "obj", "File|InMemoryFile|JSONArray|JSONObject", "paramObj", "JSONObject");
 	}
 
 }
