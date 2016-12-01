@@ -74,6 +74,8 @@ public class ResolverFactory
 
 		if (r == null)
 			r = getCorrectResolver(obj.getString("function"));
+		if (r != null)
+			r.setLineAndColAndSource(obj.getInt("_lineNumber"), obj.getInt("_colNumber"), obj.getString("_codeFile"),obj.getString("_codeMethod"));
 
 		Iterator i = obj.keys();
 		while (i.hasNext())
@@ -81,6 +83,14 @@ public class ResolverFactory
 			final String key = i.next().toString();
 
 			if ("function".equals(key))
+				continue;
+			if ("_lineNumber".equals(key))
+				continue;
+			if ("_colNumber".equals(key))
+				continue;
+			if ("_codeFile".equals(key))
+				continue;
+			if ("_codeMethod".equals(key))
 				continue;
 
 			r.build(key, cast(obj.get(key)));

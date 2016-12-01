@@ -27,5 +27,6 @@ public interface Resolvable extends Cloneable
 	String getDescription();
 	String getReturn();
 	String getAttribution();
+	void setLineAndColAndSource(Integer line, Integer col, String file,String method);
 	JSONObject getParameters() throws JSONException;
 }

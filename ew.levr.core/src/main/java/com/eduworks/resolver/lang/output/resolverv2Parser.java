@@ -664,7 +664,7 @@ public class resolverv2Parser extends Parser {
             }
 
             match(input,22,FOLLOW_22_in_functioncall768); 
-            try{obj.put("function",x.getText().substring(1));}catch(JSONException e){}
+            try{obj.put("function",x.getText().substring(1));obj.put("_lineNumber", x.getLine());obj.put("_colNumber", x.getCharPositionInLine());}catch(JSONException e){}
             pushFollow(FOLLOW_param_in_functioncall777);
             param();
 
@@ -737,7 +737,7 @@ public class resolverv2Parser extends Parser {
             }
 
             match(input,22,FOLLOW_22_in_dotfunctioncall799); 
-            try{stk.push(obj);obj = new EwJsonObject();obj.put("function",y.getText().substring(1));}catch(JSONException e){}
+            try{stk.push(obj);obj = new EwJsonObject();obj.put("function",y.getText().substring(1));obj.put("_lineNumber", y.getLine());obj.put("_colNumber", y.getCharPositionInLine());}catch(JSONException e){}
             pushFollow(FOLLOW_param_in_dotfunctioncall808);
             param();
 
@@ -1001,7 +1001,7 @@ public class resolverv2Parser extends Parser {
                                     }
 
                                     match(input,22,FOLLOW_22_in_param871); 
-                                    try{stk.push(obj);obj = new EwJsonObject();obj.put("function",y.getText().substring(1));}catch(JSONException e){}
+                                    try{stk.push(obj);obj = new EwJsonObject();obj.put("function",y.getText().substring(1));obj.put("_lineNumber", x.getLine());obj.put("_colNumber", x.getCharPositionInLine());}catch(JSONException e){}
                                     pushFollow(FOLLOW_param_in_param882);
                                     param();
 

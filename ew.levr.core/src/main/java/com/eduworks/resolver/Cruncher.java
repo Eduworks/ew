@@ -5,6 +5,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -41,6 +43,10 @@ public abstract class Cruncher implements Resolvable
 	public Map<String, Object> data = null;
 	public boolean resolverCompatibilityReplaceMode = true;
 	public static Logger log = Logger.getLogger(Cruncher.class);
+	protected Integer codeLineNumber = null;
+	protected Integer codeColNumber = null;
+	protected String codeFileName = null;
+	protected String codeMethod = null;
 
 	protected JSONObject jo(Object... strings) throws JSONException
 	{
@@ -50,6 +56,15 @@ public abstract class Cruncher implements Resolvable
 			jo.put(strings[i].toString(), strings[i + 1]);
 		}
 		return jo;
+	}
+
+	@Override
+	public void setLineAndColAndSource(Integer line, Integer col, String file, String method)
+	{
+		codeLineNumber = line;
+		codeColNumber = col;
+		codeFileName = file;
+		codeMethod = method;
 	}
 
 	protected boolean isObj(String key)
@@ -170,12 +185,65 @@ public abstract class Cruncher implements Resolvable
 				return resolveAChild(c, parameters, dataStreams, key, scripter);
 			}
 			return o;
-		}
-		catch (EditableRuntimeException ex)
+		} catch (Throwable ex)
 		{
-			ex.append("in " + getKeys(this));
+			ArrayList<StackTraceElement> list = new ArrayList<StackTraceElement>();
+			StackTraceElement el = new StackTraceElement(codeFileName, codeMethod + ":" + codeLineNumber + ":" + codeColNumber,
+					debugObject(data) + "/" + debugParameters(parameters), codeLineNumber);
+			list.add(el);
+			for (StackTraceElement l : ex.getStackTrace())
+				list.add(l);
+			ex.setStackTrace((StackTraceElement[]) list.toArray(new StackTraceElement[0]));
 			throw ex;
 		}
+	}
+
+	private String debugObject(Map<String, Object> os)
+	{
+		StringBuilder b = new StringBuilder();
+		b.append("{");
+		boolean first = true;
+		for (String key : os.keySet())
+		{
+			if (!first)
+				b.append(",");
+			first = false;
+			Object o = os.get(key);
+			b.append(key);
+			b.append(":");
+			if (o instanceof Cruncher)
+				b.append(o.getClass().getSimpleName());
+			else
+				b.append(o.toString());
+		}
+		b.append("}");
+		return b.toString();
+	}
+
+	private String debugParameters(Map<String, String[]> os)
+	{
+		StringBuilder b = new StringBuilder();
+		b.append("{");
+		boolean first = true;
+		for (String key : os.keySet())
+		{
+			String[] o = os.get(key);
+			if (o == null || o.length == 0 || o[0].length() == 0)
+				continue;
+			if (!first)
+				b.append(",");
+			first = false;
+			b.append(key);
+			b.append(":");
+			for (int i = 0; i < o.length; i++)
+			{
+				if (i != 0)
+					b.append("|");
+				b.append(o[i]);
+			}
+		}
+		b.append("}");
+		return b.toString();
 	}
 
 	private Object resolveAChild(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams, String key, Resolvable thing)
@@ -244,8 +312,7 @@ public abstract class Cruncher implements Resolvable
 			try
 			{
 				return NumberFormat.getNumberInstance(java.util.Locale.US).parse((String) obj).doubleValue();
-			}
-			catch (ParseException e)
+			} catch (ParseException e)
 			{
 				return Double.parseDouble((String) obj);
 			}
@@ -259,8 +326,7 @@ public abstract class Cruncher implements Resolvable
 			try
 			{
 				return getAsDouble(key, c, parameters, dataStreams);
-			}
-			catch (NumberFormatException ex)
+			} catch (NumberFormatException ex)
 			{
 				return defaultx;
 			}
@@ -316,8 +382,7 @@ public abstract class Cruncher implements Resolvable
 		return Boolean.parseBoolean(string);
 	}
 
-	protected int optAsInteger(String key, int defaultx, Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams)
-			throws JSONException
+	protected int optAsInteger(String key, int defaultx, Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
 		String string = getAsString(key, c, parameters, dataStreams);
 		if (string == null)
@@ -416,6 +481,7 @@ public abstract class Cruncher implements Resolvable
 
 	public String[] getResolverNames()
 	{
-		return new String[] { "c" + getResolverName(), getResolverName() };
+		return new String[]
+		{ "c" + getResolverName(), getResolverName() };
 	}
 }
