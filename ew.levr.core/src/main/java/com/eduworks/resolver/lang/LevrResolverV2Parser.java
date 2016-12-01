@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeSet;
 
 import org.antlr.runtime.ANTLRStringStream;
@@ -14,6 +15,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.eduworks.lang.util.EwJson;
 import com.eduworks.resolver.lang.output.resolverv2Lexer;
 import com.eduworks.resolver.lang.output.resolverv2Parser;
 import com.eduworks.util.Tuple;
@@ -39,8 +41,18 @@ public class LevrResolverV2Parser
 			{
 				e.printStackTrace();
 			}
+			for (Entry<String,JSONObject> o : rp.servlets.entrySet())
+			{
+				setFile(o.getValue(),fileToDecode.getName());
+				setMethod(o.getValue(),o.getKey());
+			}
+			for (Entry<String,JSONObject> o : rp.functions.entrySet())
+			{
+				setFile(o.getValue(),fileToDecode.getName());
+				setMethod(o.getValue(),o.getKey());
+			}
 			if (rp.servlets.size() > 0)
-			log.debug(new TreeSet<String>(rp.servlets.keySet()));
+				log.debug(new TreeSet<String>(rp.servlets.keySet()));
 			if (rp.functions.size() > 0)
 				log.debug(new TreeSet<String>(rp.functions.keySet()));
 				
@@ -60,5 +72,20 @@ public class LevrResolverV2Parser
 		{
 			IOUtils.closeQuietly(input);
 		}
+	}
+
+	private static void setFile(JSONObject o,String file) throws JSONException
+	{
+		o.put("_codeFile",file);
+		for (String key : EwJson.getKeys(o))
+			if (o.get(key) instanceof JSONObject)
+				setFile(o.getJSONObject(key),file);
+	}
+	private static void setMethod(JSONObject o,String method) throws JSONException
+	{
+		o.put("_codeMethod",method);
+		for (String key : EwJson.getKeys(o))
+			if (o.get(key) instanceof JSONObject)
+				setMethod(o.getJSONObject(key),method);
 	}
 }
