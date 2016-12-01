@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.lang.ref.SoftReference;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -580,7 +581,31 @@ public class LevrResolverServlet extends LevrServlet
 			log.info("Request: " + requestString + toString(parameterMap));
 		long ms = System.currentTimeMillis();
 		long nanos = System.nanoTime();
-		Object result = resolver.resolve(c, parameterMap, dataStreams);
+		Object result = null;
+		try
+		{
+			result = resolver.resolve(c, parameterMap, dataStreams);
+		}
+		catch (Throwable ex)
+		{
+			ArrayList<StackTraceElement> list = new ArrayList<StackTraceElement>();
+			StackTraceElement el = new StackTraceElement("LevrResolverServlet", requestString + ":" + resolver.getClass().getSimpleName(),
+					"\n\t\t@params: " + Cruncher.debugParameters(parameterMap), 0);
+			for (StackTraceElement l : ex.getStackTrace())
+			{
+				if (l.getClassName().contains("com.eduworks.cruncher") || l.getClassName().contains("com.eduworks.resolver")
+						|| l.getClassName().contains("com.eduworks.levr.servlet"))
+				{
+					if (el != null)
+						list.add(el);
+					el = null;
+					continue;
+				}
+				list.add(l);
+			}
+			ex.setStackTrace((StackTraceElement[]) list.toArray(new StackTraceElement[0]));
+			throw ex;
+		}
 		long elapsed = System.nanoTime() - nanos;
 		if (resolver instanceof Cruncher)
 		{

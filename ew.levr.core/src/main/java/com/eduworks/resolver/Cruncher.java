@@ -6,7 +6,6 @@ import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -21,7 +20,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.eduworks.lang.EwList;
-import com.eduworks.lang.json.impl.EwJsonObject;
 import com.eduworks.lang.util.EwUri;
 import com.eduworks.resolver.exception.EditableRuntimeException;
 
@@ -164,41 +162,29 @@ public abstract class Cruncher implements Resolvable
 	{
 		if (c.shouldAbort())
 			return null;
-		try
+		Object o = null;
+		o = get(key);
+		if (o instanceof Cruncher)
 		{
-			Object o = get(key);
-			if (o instanceof Cruncher)
-			{
-				long nanos = System.nanoTime();
-				Cruncher cruncher = (Cruncher) o;
-				Object result = resolveAChild(c, parameters, dataStreams, key, cruncher);
-				long diff = System.nanoTime() - nanos;
-				cruncher.nanosProcessing.addAndGet(diff);
-				cruncher.nanosInside.addAndGet(diff);
-				cruncher.executions.incrementAndGet();
-				nanosProcessing.addAndGet(-diff);
-				return result;
-			}
-			if (o instanceof Scripter)
-			{
-				Scripter scripter = (Scripter) o;
-				return resolveAChild(c, parameters, dataStreams, key, scripter);
-			}
-			return o;
-		} catch (Throwable ex)
-		{
-			ArrayList<StackTraceElement> list = new ArrayList<StackTraceElement>();
-			StackTraceElement el = new StackTraceElement(codeFileName, codeMethod + ":" + codeLineNumber + ":" + codeColNumber,
-					"\n\t\tobject: "+debugObject(data) + "\n\t\t@params: " + debugParameters(parameters), codeLineNumber);
-			list.add(el);
-			for (StackTraceElement l : ex.getStackTrace())
-				list.add(l);
-			ex.setStackTrace((StackTraceElement[]) list.toArray(new StackTraceElement[0]));
-			throw ex;
+			long nanos = System.nanoTime();
+			Cruncher cruncher = (Cruncher) o;
+			Object result = resolveAChild(c, parameters, dataStreams, key, cruncher);
+			long diff = System.nanoTime() - nanos;
+			cruncher.nanosProcessing.addAndGet(diff);
+			cruncher.nanosInside.addAndGet(diff);
+			cruncher.executions.incrementAndGet();
+			nanosProcessing.addAndGet(-diff);
+			return result;
 		}
+		if (o instanceof Scripter)
+		{
+			Scripter scripter = (Scripter) o;
+			return resolveAChild(c, parameters, dataStreams, key, scripter);
+		}
+		return o;
 	}
 
-	private String debugObject(Map<String, Object> os)
+	private static String debugObject(Map<String, Object> os)
 	{
 		StringBuilder b = new StringBuilder();
 		b.append("{");
@@ -220,7 +206,7 @@ public abstract class Cruncher implements Resolvable
 		return b.toString();
 	}
 
-	private String debugParameters(Map<String, String[]> os)
+	public static String debugParameters(Map<String, String[]> os)
 	{
 		StringBuilder b = new StringBuilder();
 		b.append("{");
@@ -251,10 +237,32 @@ public abstract class Cruncher implements Resolvable
 	{
 		if (c.shouldAbort())
 			return null;
-		if (thing instanceof Cruncher)
-			return ((Cruncher) thing).resolve(c, parameters, dataStreams);
-		if (thing instanceof Scripter)
-			return ((Scripter) thing).resolve(c, parameters, dataStreams);
+		try
+		{
+			if (thing instanceof Cruncher)
+				return ((Cruncher) thing).resolve(c, parameters, dataStreams);
+			if (thing instanceof Scripter)
+				return ((Scripter) thing).resolve(c, parameters, dataStreams);
+		}
+		catch (Throwable ex)
+		{
+			ArrayList<StackTraceElement> list = new ArrayList<StackTraceElement>();
+			StackTraceElement el = new StackTraceElement(codeFileName, codeMethod + "." + thing.getClass().getSimpleName() + ":" + codeLineNumber,
+					"\n\t\tparams: " + debugObject(data) + "\n\t\t@params: " + debugParameters(parameters), codeLineNumber);
+			for (StackTraceElement l : ex.getStackTrace())
+			{
+				if (l.getClassName().contains("com.eduworks.cruncher") || l.getClassName().contains("com.eduworks.resolver")
+						|| l.getClassName().contains("com.eduworks.levr.servlet"))
+				{
+					if (el != null)
+						list.add(el);
+					el = null;
+				}
+				list.add(l);
+			}
+			ex.setStackTrace((StackTraceElement[]) list.toArray(new StackTraceElement[0]));
+			throw ex;
+		}
 		throw new RuntimeException("Don't understand how to resolve " + thing);
 	}
 
@@ -312,7 +320,8 @@ public abstract class Cruncher implements Resolvable
 			try
 			{
 				return NumberFormat.getNumberInstance(java.util.Locale.US).parse((String) obj).doubleValue();
-			} catch (ParseException e)
+			}
+			catch (ParseException e)
 			{
 				return Double.parseDouble((String) obj);
 			}
@@ -326,7 +335,8 @@ public abstract class Cruncher implements Resolvable
 			try
 			{
 				return getAsDouble(key, c, parameters, dataStreams);
-			} catch (NumberFormatException ex)
+			}
+			catch (NumberFormatException ex)
 			{
 				return defaultx;
 			}
@@ -481,7 +491,6 @@ public abstract class Cruncher implements Resolvable
 
 	public String[] getResolverNames()
 	{
-		return new String[]
-		{ "c" + getResolverName(), getResolverName() };
+		return new String[] { "c" + getResolverName(), getResolverName() };
 	}
 }
