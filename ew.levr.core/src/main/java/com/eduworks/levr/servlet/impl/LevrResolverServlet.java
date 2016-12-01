@@ -589,8 +589,9 @@ public class LevrResolverServlet extends LevrServlet
 		catch (Throwable ex)
 		{
 			ArrayList<StackTraceElement> list = new ArrayList<StackTraceElement>();
-			StackTraceElement el = new StackTraceElement("LevrResolverServlet", requestString + ":" + resolver.getClass().getSimpleName(),
-					"\n\t\t@params: " + Cruncher.debugParameters(parameterMap), 0);
+			String cruncherName = resolver.getClass().getSimpleName().replace("Cruncher", "");
+			StackTraceElement el = new StackTraceElement(requestString, cruncherName.substring(0, 1).toLowerCase() + cruncherName.substring(1),
+					"\n\t\t@params: " + Cruncher.debugParameters(parameterMap), c.size());
 			for (StackTraceElement l : ex.getStackTrace())
 			{
 				if (l.getClassName().contains("com.eduworks.cruncher") || l.getClassName().contains("com.eduworks.resolver")

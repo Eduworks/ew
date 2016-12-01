@@ -247,8 +247,10 @@ public abstract class Cruncher implements Resolvable
 		catch (Throwable ex)
 		{
 			ArrayList<StackTraceElement> list = new ArrayList<StackTraceElement>();
-			StackTraceElement el = new StackTraceElement(codeFileName, codeMethod + "." + thing.getClass().getSimpleName() + ":" + codeLineNumber,
-					"\n\t\tparams: " + debugObject(data) + "\n\t\t@params: " + debugParameters(parameters), codeLineNumber);
+			String cruncherName = thing.getClass().getSimpleName().replace("Cruncher", "");
+			StackTraceElement el = new StackTraceElement(codeMethod, cruncherName.substring(0, 1).toLowerCase() + cruncherName.substring(1) + " ", codeFileName
+					+ ":" + codeLineNumber + ":" + codeColNumber + ")\n\t\tparams: " + debugObject(data) + "\n\t\t@params: " + debugParameters(parameters),
+					c.size());
 			for (StackTraceElement l : ex.getStackTrace())
 			{
 				if (l.getClassName().contains("com.eduworks.cruncher") || l.getClassName().contains("com.eduworks.resolver")
