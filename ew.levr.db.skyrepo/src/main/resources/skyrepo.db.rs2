@@ -59,11 +59,12 @@ put=#if(
 		).ccall(
 			oldObj=#skyrepoGet(version="")
 		),
-		z=#toObject(obj="@obj").toObject().httpPost(
+		elasticSearch=#toObject(obj="@obj").httpPost(
 			url=putUrl,
 			contentType="application/json",
 			multipart="false"
-		)
+		),
+		mapDb=#toObject(obj="@obj").idxPut(indexDir=".",databaseName="skyrepo",index="@id",key="@version")
 	)
 ).object(z=#toObject(obj="@obj")).cget(z="");
 
@@ -99,7 +100,7 @@ delete=#object(
 		).ccall(
 			oldObj=#skyrepoGet(version="")
 		),
-		z=#httpDelete(
+		elasticSearch=#httpDelete(
 			url=deleteUrl
 		)
 ).cget(z="");
@@ -125,7 +126,13 @@ getUrl=#add(
 
 get=getUrl.httpGet().toObject().cgetByParam(
 	param="_source"
-).filterResults();
+)
+
+getMapDb=#idxGet(indexDir=".",databaseName="skyrepo",index="@id",key="@version").toObject();
+
+get=#if(operator="@version",operand="",eq=get,ne=getMapDb);
+
+get=get.filterResults();
 
 get=#if(
 	operator=#toObject(obj="@get").count(),
