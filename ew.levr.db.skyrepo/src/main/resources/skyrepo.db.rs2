@@ -64,7 +64,7 @@ put=#if(
 			contentType="application/json",
 			multipart="false"
 		),
-		mapDb=#toObject(obj="@obj").idxPut(indexDir=".",databaseName="skyrepo",index="@id",key="@version")
+		mapDb=#toObject(obj="@obj").idxPut(indexDir=".",databaseName="skyrepo",index="@type",key=#add(a="@id",b="/",c="@version"))
 	)
 ).object(z=#toObject(obj="@obj")).cget(z="");
 
@@ -128,7 +128,8 @@ get=getUrl.httpGet().toObject().cgetByParam(
 	param="_source"
 )
 
-getMapDb=#idxGet(indexDir=".",databaseName="skyrepo",index="@id",key="@version").toObject();
+getMapDb=#idxGet(indexDir=".",databaseName="skyrepo",index="@type",key=#add(a="@id",b="/",c="@version")).toObject();
+getMapDb=#if(operator=getMapDb,operand="",eq=get,ne=getMapDb);
 
 get=#if(operator="@version",operand="",eq=get,ne=getMapDb);
 
