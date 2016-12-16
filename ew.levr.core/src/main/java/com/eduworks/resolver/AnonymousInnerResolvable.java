@@ -8,6 +8,20 @@ import org.json.JSONObject;
 
 public abstract class AnonymousInnerResolvable implements Resolvable
 {
+	
+	protected Integer codeLineNumber = null;
+	protected Integer codeColNumber = null;
+	protected String codeFileName = null;
+	protected String codeMethod = null;
+	
+	@Override
+	public void setLineAndColAndSource(Integer line, Integer col, String file, String method)
+	{
+		codeLineNumber = line;
+		codeColNumber = col;
+		codeFileName = file;
+		codeMethod = method;
+	}
 
 	protected Integer codeLineNumber = null;
 	protected Integer codeColNumber = null;
