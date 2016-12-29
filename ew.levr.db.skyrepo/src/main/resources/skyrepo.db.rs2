@@ -12,9 +12,16 @@ id=#add(a="@",b="id");
 
 urlBase=#urlBase();
 
+indexBase=#if(
+    operator=#indexBase(),
+    operand="",
+    eq="data",
+    ne=#indexBase()
+);
+
 putUrl=#add(
 	a=urlBase,
-	b="/data/",
+	b="/",bb=indexBase,bbb="/",
 	c="@type",
 	d="/",
 	g=#urlEncode(obj="@id"),
@@ -72,7 +79,7 @@ put=#if(
 
 deleteUrl=#add(
 	a=urlBase,
-	b="/data/",
+	b="/",bb=indexBase,bbb="/",
 	c="@type",
 	d="/",
 	g=#urlEncode(obj="@id"),
@@ -109,7 +116,7 @@ delete=#object(
 
 getUrl=#add(
 	a=urlBase,
-	b="/data/",
+	b="/",bb=indexBase,bbb="/",
 	c="@type",
 	f="/",
 	g=#urlEncode(obj="@id"),

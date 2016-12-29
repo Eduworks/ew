@@ -5,6 +5,13 @@
 
 backupPath=#string(str="backup/");
 
+indexBase=#if(
+    operator=#indexBase(),
+    operand="",
+    eq="data",
+    ne=#indexBase()
+);
+
 testBackupLocation=#fileSave(path=backupPath.add(z="temp.tmp"));
 checkBackupLocation=#if(
 	operator=#fileExists(path=backupPath.add(z="temp.tmp")),
@@ -31,7 +38,7 @@ query=#object(
 
 check=#object(
 	word=#urlBase().add(
-		p="/data/",
+		p="/",pp=indexBase,ppp="/",
 		q=#toObject(obj="@hit").getByParam(param="_type"),
 		r="/",
 		s=#toObject(obj="@hit").getByParam(param="_id").urlEncode()
@@ -46,7 +53,7 @@ check=#object(
 );
 
 search=query.httpPost(
-	url=#add(a=#urlBase(),z="/data/_search?scroll=1m"),
+	url=#add(a=#urlBase(),z="/",zz=indexBase,zzz="/_search?scroll=1m"),
 	contentType="application/json",
 	multipart="false"	
 );
@@ -115,7 +122,7 @@ restore=#fileList(path=backupPath).forEach(
 			),
 			z=#fileLoad(path=#add(_string="true",a=backupPath,aa="/",b="@dir",bb="/",f="@file")).fileToString().toObject().httpPut(
 				url=#urlBase().add(
-					z="/data/",
+					z=#add(a="/",b=indexBase,c="/"),
 					zz="@dir",
 					zzz="/",
 					zzzz=#hexToString(obj="@file").urlEncode(),

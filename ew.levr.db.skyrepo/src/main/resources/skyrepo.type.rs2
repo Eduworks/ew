@@ -18,16 +18,23 @@ urlType=#add(
 	c=obj.getByParam(param=type).replace(replace=obj.getByParam(param=context),with="").string(op="trim",chars="/")
 );
 
+indexBase=#if(
+    operator=#indexBase(),
+    operand="",
+    eq="data",
+    ne=#indexBase()
+);
+
 mapUrl=#add(
 	a=#urlBase(),
-	b="/data/",
+	b="/",bb=indexBase,bbb="/",
 	c="@type",
 	d="/_mapping"
 );
 
 map=mapUrl.httpGet().toObject().cache(name="elasticMapping");
 
-properties=map.cget(data="").cget(mappings="").getByParam(param="@type").cget(properties="");
+properties=map.getByParam(param=indexBase).cget(mappings="").getByParam(param="@type").cget(properties="");
 
 settingsUrl = #add(
 	a=#urlBase(),
@@ -307,15 +314,15 @@ addAnalyzer = #object(
 ).httpPut(
 	url=#add(
 		a=#urlBase(),
-		b="/data",
+		b="/",c=indexBase
 	)
 );
 
 checkAddAnalyzer = #if(
-	operator=#decode(obj="@settings").has(has="data"),
+	operator=#decode(obj="@settings").has(has=indexBase),
 	operand="true",
 	eq=#if(
-		operator=#decode(obj="@settings").cget(data="").cget(index="").cget(analysis="").cget(analyzer="").has(has="whitespace_remove"),
+		operator=#decode(obj="@settings").getByParam(param=indexBase).cget(index="").cget(analysis="").cget(analyzer="").has(has="whitespace_remove"),
 		operand="true",
 		ne=addAnalyzer
 	),
