@@ -53,10 +53,10 @@ deleteOrOther = #if(
     ne=saveOrGet
 );
 
-data=deleteOrOther.call(type="data");
+data=deleteOrOther;
 /data=data;
 
-multiGet=postArray.cforEach(paramName="urlRemainder",op=get.call(type="data"),array="true").displayJson(_collapse="true");
+multiGet=postArray.cforEach(paramName="urlRemainder",op=get,array="true").displayJson(_collapse="true");
 
 /sky/repo/multiGet=multiGet;
 
