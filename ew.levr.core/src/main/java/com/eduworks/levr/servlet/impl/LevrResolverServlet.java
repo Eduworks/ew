@@ -48,15 +48,21 @@ import com.eduworks.lang.util.EwJson;
 import com.eduworks.levr.servlet.LevrServlet;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
+import com.eduworks.resolver.CruncherJavascriptBinder;
 import com.eduworks.resolver.Resolvable;
 import com.eduworks.resolver.ResolverFactory;
 import com.eduworks.resolver.exception.SoftException;
+import com.eduworks.resolver.lang.LevrJsParser;
 import com.eduworks.resolver.lang.LevrResolverParser;
 import com.eduworks.resolver.lang.LevrResolverV2Parser;
 import com.eduworks.util.Tuple;
 import com.eduworks.util.io.EwFileSystem;
 import com.eduworks.util.io.InMemoryFile;
+import javax.script.Bindings;
+import javax.script.ScriptContext;
 import javax.servlet.http.HttpSession;
+import jdk.nashorn.internal.objects.NativeFunction;
+import jdk.nashorn.internal.runtime.ScriptFunction;
 
 @SuppressWarnings("serial")
 public class LevrResolverServlet extends LevrServlet
@@ -271,6 +277,12 @@ public class LevrResolverServlet extends LevrServlet
                         scriptStreams.put(cleanFilename, scriptPack);
                         bindWebServices(resolvableWebServices, scriptStreams);
                     }
+                    if (codeFile.getName().endsWith(".js"))
+                    {
+                        log.debug("Loading: " + codeFile.getPath());
+                        codeFiles.add(codeFile);
+                        bindJavascriptFunctions(resolvableFunctions, LevrJsParser.decodeStreams(codeFile));
+                    }
                 } catch (NullPointerException ex)
                 {
                     System.out.println("Failed on " + codeFile.getPath());
@@ -305,6 +317,18 @@ public class LevrResolverServlet extends LevrServlet
         for (Entry<String, JSONObject> entry : decodeStreams.getSecond().entrySet())
         {
             functions2.put(entry.getKey().substring(1), ResolverFactory.create(entry.getValue()));
+//            LevrJsParser.engine.getBindings(ScriptContext.GLOBAL_SCOPE).put(entry.getKey().substring(1), );
+        }
+    }
+
+    private static void bindJavascriptFunctions(Map<String, Resolvable> resolvableFunctions,Bindings bindings)
+    {
+        CruncherJavascriptBinder cj = new CruncherJavascriptBinder();
+        for (String s : bindings.keySet())
+        {
+            CruncherJavascriptBinder jb = new CruncherJavascriptBinder();
+            jb.build("function", s);
+            resolvableFunctions.put(s,jb);
         }
     }
 
