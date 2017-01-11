@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.script.ScriptContext;
 import javax.script.ScriptException;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +33,9 @@ public class CruncherJavascriptBinder extends Cruncher
                     }
                 }
             }
+            LevrJsParser.engine.put("context", c);
+            LevrJsParser.engine.put("parameters", parameters);
+            LevrJsParser.engine.put("dataStreams", dataStreams);
             return LevrJsParser.engine.eval(getAsString("function", c, parameters, dataStreams) + ".call('"+jo.getString("obj")+"',JSON.parse('" + jo.toString() + "'));");
         } catch (ScriptException ex)
         {

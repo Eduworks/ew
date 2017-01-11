@@ -1,4 +1,5 @@
 target/
+nbactions.xml
 .settings
 pom.xml.tag
 pom.xml.releaseBackup
