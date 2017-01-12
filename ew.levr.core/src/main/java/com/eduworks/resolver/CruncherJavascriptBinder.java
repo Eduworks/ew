@@ -3,10 +3,7 @@ package com.eduworks.resolver;
 import com.eduworks.resolver.lang.LevrJsParser;
 import java.io.InputStream;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.script.ScriptContext;
-import javax.script.ScriptException;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,8 +17,6 @@ public class CruncherJavascriptBinder extends Cruncher
     @Override
     public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
     {
-        try
-        {
             JSONObject jo = new JSONObject();
             for (String s : parameters.keySet())
             {
@@ -34,13 +29,10 @@ public class CruncherJavascriptBinder extends Cruncher
                 }
             }
             LevrJsParser.engine.put("context", c);
+            LevrJsParser.engine.put("params", jo);
             LevrJsParser.engine.put("parameters", parameters);
             LevrJsParser.engine.put("dataStreams", dataStreams);
-            return LevrJsParser.engine.eval(getAsString("function", c, parameters, dataStreams) + ".call('"+jo.getString("obj")+"',JSON.parse('" + jo.toString() + "'));");
-        } catch (ScriptException ex)
-        {
-            throw new RuntimeException(ex);
-        }
+            return ((ScriptObjectMirror) LevrJsParser.engine.get(getAsString("function", c, parameters, dataStreams))).call(jo.opt("obj"));
     }
 
     @Override

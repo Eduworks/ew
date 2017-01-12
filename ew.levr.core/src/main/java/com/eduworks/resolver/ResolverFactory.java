@@ -24,6 +24,7 @@ import com.eduworks.lang.EwMap;
 import com.eduworks.lang.EwSet;
 import com.eduworks.lang.json.impl.EwJsonArray;
 import com.eduworks.lang.util.EwJson;
+import com.eduworks.resolver.lang.LevrJsParser;
 import com.google.common.base.Predicate;
 
 public class ResolverFactory
@@ -200,6 +201,7 @@ public class ResolverFactory
 			}
 		}
 		System.out.println(scripters + " Scripters.");
+                LevrJsParser j = new LevrJsParser();
 		System.out.println("Free Memory - " + ((Runtime.getRuntime().freeMemory() / 1024) / 1024));
 		System.out.println("Total Memory - " + ((Runtime.getRuntime().totalMemory() / 1024) / 1024));
 		System.out.println("Max Memory - " + ((Runtime.getRuntime().maxMemory() / 1024) / 1024));

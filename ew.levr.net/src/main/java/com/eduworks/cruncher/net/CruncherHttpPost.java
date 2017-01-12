@@ -228,7 +228,7 @@ public class CruncherHttpPost extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj", "String", "contentType", "String", "?multipart", "Boolean", "?name", "String", "?authToken", "String");
+		return jo("obj", "String", "url","String","contentType", "String", "?multipart", "Boolean", "?name", "String", "?authToken", "String");
 	}
 
 }
