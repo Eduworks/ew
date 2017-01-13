@@ -135,23 +135,23 @@ public class LevrJsParser
             {
                 jsTemplate = "function {functionName}({paramList}){\n";
             }
-            jsTemplate += "var cru = new " + ResolverFactory.cruncherSpecs.get(cruncherName).getName() + "();\n";
+            jsTemplate += "\tvar cru = new " + ResolverFactory.cruncherSpecs.get(cruncherName).getName() + "();\n";
             for (String key : ((EwJsonObject) c.getParameters()).keySetUnsorted())
             {
                 key = key.trim();
                 if (key.contains("<any>"))
                 {
-                    jsTemplate += "for(var k in vany) cru.build(k,com.eduworks.resolver.lang.LevrJsParser.jsToJava(vany[k]));\n";
+                    jsTemplate += "\tfor(var k in vany) cru.build(k,com.eduworks.resolver.lang.LevrJsParser.jsToJava(vany[k]));\n";
                 } else if (key.startsWith("?"))
                 {
                     key = key.replace("?", "");
-                    jsTemplate += "if (v" + key.replace("-", "") + " != null) cru.build('" + key + "',com.eduworks.resolver.lang.LevrJsParser.jsToJava(v" + key.replace("-", "") + "));\n";
+                    jsTemplate += "\tif (v" + key.replace("-", "") + " != null) cru.build('" + key + "',com.eduworks.resolver.lang.LevrJsParser.jsToJava(v" + key.replace("-", "") + "));\n";
                 } else
                 {
-                    jsTemplate += "cru.build('" + key + "',com.eduworks.resolver.lang.LevrJsParser.jsToJava(v" + key.replace("-", "") + "));\n";
+                    jsTemplate += "\tcru.build('" + key + "',com.eduworks.resolver.lang.LevrJsParser.jsToJava(v" + key.replace("-", "") + "));\n";
                 }
             }
-            jsTemplate += "return cru.resolve(context,parameters,dataStreams);\n"
+            jsTemplate += "\treturn cru.resolve(context,parameters,dataStreams);\n"
                     + "}";
             jsTemplate = jsTemplate.replace("{paramList}", paramList).replace("{functionName}", cruncherName);
             //System.out.println(jsTemplate);
@@ -175,9 +175,9 @@ public class LevrJsParser
         {
             String jsTemplate;
             jsTemplate = "function {functionName}(vany){\n";
-            jsTemplate += "var cru = com.eduworks.levr.servlet.impl.LevrResolverServlet.resolvableFunctions.get('" + cruncherName + "');\n";
-            jsTemplate += "if (vany != null) for(var k in vany) cru.build(k,com.eduworks.resolver.lang.LevrJsParser.jsToJava(vany[k]));\n";
-            jsTemplate += "return cru.resolve(context,parameters,dataStreams);\n"
+            jsTemplate += "\tvar cru = com.eduworks.levr.servlet.impl.LevrResolverServlet.resolvableFunctions.get('" + cruncherName + "');\n";
+            jsTemplate += "\tif (vany != null) for(var k in vany) cru.build(k,com.eduworks.resolver.lang.LevrJsParser.jsToJava(vany[k]));\n";
+            jsTemplate += "\treturn cru.resolve(context,parameters,dataStreams);\n"
                     + "}";
             jsTemplate = jsTemplate.replace("{functionName}", cruncherName);
 //            System.out.println(jsTemplate);

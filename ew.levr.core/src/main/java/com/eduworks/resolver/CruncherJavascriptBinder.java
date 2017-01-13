@@ -32,6 +32,8 @@ public class CruncherJavascriptBinder extends Cruncher
             LevrJsParser.engine.put("params", jo);
             LevrJsParser.engine.put("parameters", parameters);
             LevrJsParser.engine.put("dataStreams", dataStreams);
+            if (get("obj") instanceof ScriptObjectMirror)
+                return ((ScriptObjectMirror) get("obj")).call(null);
             return ((ScriptObjectMirror) LevrJsParser.engine.get(getAsString("function", c, parameters, dataStreams))).call(jo.opt("obj"));
     }
 
