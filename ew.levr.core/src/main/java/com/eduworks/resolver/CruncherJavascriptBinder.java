@@ -3,6 +3,11 @@ package com.eduworks.resolver;
 import com.eduworks.resolver.lang.LevrJsParser;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.script.Bindings;
+import javax.script.ScriptContext;
+import javax.script.ScriptException;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,24 +22,46 @@ public class CruncherJavascriptBinder extends Cruncher
     @Override
     public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
     {
-            JSONObject jo = new JSONObject();
-            for (String s : parameters.keySet())
+        ScriptObjectMirror jo = null;
+        try
+        {
+            jo = (ScriptObjectMirror) LevrJsParser.engine.eval("new Object()");
+        } catch (ScriptException ex)
+        {
+            Logger.getLogger(CruncherJavascriptBinder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (String s : parameters.keySet())
+        {
+            if (parameters.get(s) != null)
             {
-                if (parameters.get(s) != null)
+                if (parameters.get(s).length != 0)
                 {
-                    if (parameters.get(s).length != 0)
-                    {
-                        jo.put(s, parameters.get(s)[0]);
-                    }
+                    jo.put(s, parameters.get(s)[0]);
                 }
             }
-            LevrJsParser.engine.put("context", c);
-            LevrJsParser.engine.put("params", jo);
-            LevrJsParser.engine.put("parameters", parameters);
-            LevrJsParser.engine.put("dataStreams", dataStreams);
-            if (get("obj") instanceof ScriptObjectMirror)
-                return ((ScriptObjectMirror) get("obj")).call(null);
-            return ((ScriptObjectMirror) LevrJsParser.engine.get(getAsString("function", c, parameters, dataStreams))).call(jo.opt("obj"));
+        }
+        final ScriptObjectMirror som;
+        if (get("obj") instanceof ScriptObjectMirror)
+        {
+            som = (ScriptObjectMirror) get("obj");
+        } else
+        {
+            som = (ScriptObjectMirror) LevrJsParser.engine.get(getAsString("function", c, parameters, dataStreams));
+        }
+        ScriptObjectMirror newThis = null;
+        try
+        {
+            newThis = (ScriptObjectMirror) LevrJsParser.engine.eval("new Object()");
+        } catch (ScriptException ex)
+        {
+            Logger.getLogger(CruncherJavascriptBinder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        newThis.put("context", c);
+        newThis.put("params", jo);
+        newThis.put("parameters", parameters);
+        newThis.put("dataStreams", dataStreams);
+        return som.call(newThis);
+
     }
 
     @Override

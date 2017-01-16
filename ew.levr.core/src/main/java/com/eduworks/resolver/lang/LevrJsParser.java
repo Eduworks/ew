@@ -3,6 +3,7 @@ package com.eduworks.resolver.lang;
 import com.eduworks.lang.json.impl.EwJsonObject;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
+import com.eduworks.resolver.CruncherJavascriptBinder;
 import com.eduworks.resolver.Resolvable;
 import com.eduworks.resolver.ResolverFactory;
 import java.io.File;
@@ -151,7 +152,7 @@ public class LevrJsParser
                     jsTemplate += "\tcru.build('" + key + "',com.eduworks.resolver.lang.LevrJsParser.jsToJava(v" + key.replace("-", "") + "));\n";
                 }
             }
-            jsTemplate += "\treturn cru.resolve(context,parameters,dataStreams);\n"
+            jsTemplate += "\treturn cru.resolve(this.context,this.parameters,this.dataStreams);\n"
                     + "}";
             jsTemplate = jsTemplate.replace("{paramList}", paramList).replace("{functionName}", cruncherName);
             //System.out.println(jsTemplate);
@@ -177,7 +178,7 @@ public class LevrJsParser
             jsTemplate = "function {functionName}(vany){\n";
             jsTemplate += "\tvar cru = com.eduworks.levr.servlet.impl.LevrResolverServlet.resolvableFunctions.get('" + cruncherName + "');\n";
             jsTemplate += "\tif (vany != null) for(var k in vany) cru.build(k,com.eduworks.resolver.lang.LevrJsParser.jsToJava(vany[k]));\n";
-            jsTemplate += "\treturn cru.resolve(context,parameters,dataStreams);\n"
+            jsTemplate += "\treturn cru.resolve(this.context,this.parameters,this.dataStreams);\n"
                     + "}";
             jsTemplate = jsTemplate.replace("{functionName}", cruncherName);
 //            System.out.println(jsTemplate);
@@ -200,6 +201,12 @@ public class LevrJsParser
         else if (m.isArray())
         {
             return new JSONArray(m.values());
+        }
+        else if (m.isFunction())
+        {
+            CruncherJavascriptBinder b = new CruncherJavascriptBinder();
+            b.build("obj", m);
+            return b;
         }
         }
         return o;

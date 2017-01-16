@@ -159,14 +159,17 @@ public class ResolverFactory
 			}
 			catch (NoClassDefFoundError e)
 			{
+                            System.err.println("Error initializing " + c.getName());
 				e.printStackTrace();
 			}
 			catch (IllegalAccessException e)
 			{
+                            System.err.println("Error initializing " + c.getName());
 				e.printStackTrace();
 			}
 			catch (Throwable t)
 			{
+                            System.err.println("Error initializing " + c.getName());
 				t.printStackTrace();
 			}
 		}
