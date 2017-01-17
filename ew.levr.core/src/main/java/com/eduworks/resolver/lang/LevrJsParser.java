@@ -33,7 +33,6 @@ import org.json.JSONObject;
  */
 public class LevrJsParser
 {
-
     public static Logger log = Logger.getLogger(LevrJsParser.class);
     public static ScriptEngineManager factory;
     public static ScriptEngine engine;
@@ -43,6 +42,9 @@ public class LevrJsParser
         factory = new ScriptEngineManager();
         engine = factory.getEngineByName("nashorn");
         log.info("Nashorn Javascript Engine Loaded.");
+        engine.put("ctx", new Context());
+        engine.put("parameters",null);
+        engine.put("dataStreams",null);
         String allCruncherBindings = "";
         for (String cruncherName : ResolverFactory.cruncherSpecs.keySet())
         {
@@ -69,15 +71,13 @@ public class LevrJsParser
         try
         {
             fr = new FileReader(fileToDecode);
-            LevrJsParser.engine.put("context", new Context());
-            LevrJsParser.engine.put("parameters", new HashMap<String,String[]>());
-            LevrJsParser.engine.put("dataStreams", new HashMap<String, InputStream>());
             engine.eval(fr);
             Bindings bindings = engine.getBindings(ScriptContext.ENGINE_SCOPE);
             fr.close();
             if (bindings.size() > 0)
             {
-                final TreeSet<String> bindingTreeset = new TreeSet<String>(bindings.keySet());
+                final TreeSet<String> bindingTreeset = new TreeSet<>();
+                bindingTreeset.addAll(bindings.keySet());
                 bindingTreeset.removeAll(ResolverFactory.cruncherSpecs.keySet());
                 log.debug(bindingTreeset);
             }
@@ -152,7 +152,12 @@ public class LevrJsParser
                     jsTemplate += "\tcru.build('" + key + "',com.eduworks.resolver.lang.LevrJsParser.jsToJava(v" + key.replace("-", "") + "));\n";
                 }
             }
-            jsTemplate += "\treturn cru.resolve(this.context,this.parameters,this.dataStreams);\n"
+            
+            jsTemplate += "\treturn cru.resolve("
+                    + "this === undefined ? new com.eduworks.resolver.Context() : this.ctx,"
+                    + "this === undefined ? null : this.parameters,"
+                    + "this === undefined ? null : this.dataStreams"
+                    + ");\n"
                     + "}";
             jsTemplate = jsTemplate.replace("{paramList}", paramList).replace("{functionName}", cruncherName);
             //System.out.println(jsTemplate);
@@ -176,10 +181,16 @@ public class LevrJsParser
         {
             String jsTemplate;
             jsTemplate = "function {functionName}(vany){\n";
-            jsTemplate += "\tvar cru = com.eduworks.levr.servlet.impl.LevrResolverServlet.resolvableFunctions.get('" + cruncherName + "');\n";
+            jsTemplate += "\tvar cru = new com.eduworks.cruncher.refl.CruncherExecute();\n";
+            jsTemplate += "\tcru.build('service','"+cruncherName+"');\n";
             jsTemplate += "\tif (vany != null) for(var k in vany) cru.build(k,com.eduworks.resolver.lang.LevrJsParser.jsToJava(vany[k]));\n";
-            jsTemplate += "\treturn cru.resolve(this.context,this.parameters,this.dataStreams);\n"
-                    + "}";
+            
+            jsTemplate += "\treturn cru.resolve("
+                    + "this === undefined ? new com.eduworks.resolver.Context() : this.ctx,"
+                    + "this === undefined ? null : this.parameters,"
+                    + "this === undefined ? null : this.dataStreams"
+                    + ");\n";
+            jsTemplate += "}";
             jsTemplate = jsTemplate.replace("{functionName}", cruncherName);
 //            System.out.println(jsTemplate);
             engine.eval(jsTemplate);

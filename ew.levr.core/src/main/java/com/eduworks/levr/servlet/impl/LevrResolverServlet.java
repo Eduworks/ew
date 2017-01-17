@@ -310,13 +310,13 @@ public class LevrResolverServlet extends LevrServlet
     private static void bindWebServicesAndFunctions(Map<String, Resolvable> config2, Map<String, Resolvable> functions2,
             Tuple<Map<String, JSONObject>, Map<String, JSONObject>> decodeStreams) throws JSONException
     {
-        bindWebServices(config2, decodeStreams.getFirst());
         for (Entry<String, JSONObject> entry : decodeStreams.getSecond().entrySet())
         {
             final Resolvable resolverFunction = ResolverFactory.create(entry.getValue());
             functions2.put(entry.getKey().substring(1), resolverFunction);
             LevrJsParser.createJavascriptFunctionBinding(entry.getKey().substring(1), resolverFunction);
         }
+        bindWebServices(config2, decodeStreams.getFirst());
     }
 
     private static void bindJavascriptFunctions(Map<String, Resolvable> resolvableFunctions, Bindings bindings)

@@ -6,7 +6,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.script.Bindings;
+import javax.script.Invocable;
 import javax.script.ScriptContext;
+import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.json.JSONException;
@@ -23,9 +25,13 @@ public class CruncherJavascriptBinder extends Cruncher
     public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
     {
         ScriptObjectMirror jo = null;
+        ScriptEngine e = LevrJsParser.engine;
         try
         {
-            jo = (ScriptObjectMirror) LevrJsParser.engine.eval("new Object()");
+            jo = (ScriptObjectMirror) e.eval("new Object()");
+//            Invocable i = (Invocable)e;
+//            i.invokeMethod(e.eval("Object"), "bindProperties",jo, e.eval("this"));
+//            jo = (ScriptObjectMirror) e.eval("new Object()");
         } catch (ScriptException ex)
         {
             Logger.getLogger(CruncherJavascriptBinder.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,12 +62,11 @@ public class CruncherJavascriptBinder extends Cruncher
         {
             Logger.getLogger(CruncherJavascriptBinder.class.getName()).log(Level.SEVERE, null, ex);
         }
-        newThis.put("context", c);
+        newThis.put("ctx", c);
         newThis.put("params", jo);
         newThis.put("parameters", parameters);
         newThis.put("dataStreams", dataStreams);
         return som.call(newThis);
-
     }
 
     @Override
