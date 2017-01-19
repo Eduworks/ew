@@ -16,6 +16,7 @@ public class CruncherReverse extends Cruncher
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
 		JSONArray array = getObjAsJsonArray(c, parameters, dataStreams);
+                if (array == null) return null;
 		JSONArray results = new JSONArray();
 		for (int i = 0; i < array.length(); i++)
 		{

@@ -39,40 +39,45 @@ putUrl=#add(
 
 //BUG: Check to see if there are no signature sheet signatures but the owners change, if it changes the owner.
 //20161126 fray: Added rule: "If the object is new, then the writer does not have to own it."
+putInternal=#object(
+    elasticSearch=#toObject(obj="@obj").httpPost(
+        url=putUrl,
+        contentType="application/json",
+        multipart="false"
+    ),
+    mapDb=#toObject(obj="@obj").idxPut(indexDir=".",databaseName="skyrepo",index="@type",key=#add(a="@id",b="/",c="@version"))
+);
+#skyrepoPutInternal=putInternal;
+
 put=#if(
-	operator="@obj",
-	operand="",
-	ne=#object(
-		a=#skyRepoCheckType(
-			obj=#toObject(obj="@obj").toObject()
-		),
-		c=#if(
-			operator=#owners(obj="@oldObj").count(),
-			operand="0",
-			gt=#if(
-				operator=#signatureSheet().intersect(b=#owners(obj="@oldObj")).count(),
-				operand="0",
-				eq=#if(
-					operator=#owners(obj="@oldObj").count(),
-					operand="0",
-					eq=#error(code="401",msg="This object is public, nobody can own it."),
-					ne=#if(
-						operator="@oldObj",
-						operand="",
-						ne=#error(code="401",msg="Only an owner of an object may change it.")
-					)
-				)
-			)
-		).ccall(
-			oldObj=#skyrepoGet(version="")
-		),
-		elasticSearch=#toObject(obj="@obj").httpPost(
-			url=putUrl,
-			contentType="application/json",
-			multipart="false"
-		),
-		mapDb=#toObject(obj="@obj").idxPut(indexDir=".",databaseName="skyrepo",index="@type",key=#add(a="@id",b="/",c="@version"))
-	)
+    operator="@obj",
+    operand="",
+    ne=#object(
+        a=#skyRepoCheckType(
+            obj=#toObject(obj="@obj").toObject()
+        ),
+        c=#if(
+            operator=#owners(obj="@oldObj").count(),
+            operand="0",
+            gt=#if(
+                operator=#signatureSheet().intersect(b=#owners(obj="@oldObj")).count(),
+                operand="0",
+                eq=#if(
+                    operator=#owners(obj="@oldObj").count(),
+                    operand="0",
+                    eq=#error(code="401",msg="This object is public, nobody can own it."),
+                    ne=#if(
+                        operator="@oldObj",
+                        operand="",
+                        ne=#error(code="401",msg="Only an owner of an object may change it.")
+                    )
+                )
+            )
+        ).ccall(
+            oldObj=#skyrepoGet(version="")
+        ),
+        putInternal=putInternal
+    )
 ).object(z=#toObject(obj="@obj")).cget(z="");
 
 #skyrepoPut=put;

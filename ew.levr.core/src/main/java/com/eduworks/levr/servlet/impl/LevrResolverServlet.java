@@ -48,15 +48,19 @@ import com.eduworks.lang.util.EwJson;
 import com.eduworks.levr.servlet.LevrServlet;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
+import com.eduworks.resolver.CruncherJavascriptBinder;
 import com.eduworks.resolver.Resolvable;
 import com.eduworks.resolver.ResolverFactory;
 import com.eduworks.resolver.exception.SoftException;
+import com.eduworks.resolver.lang.LevrJsParser;
 import com.eduworks.resolver.lang.LevrResolverParser;
 import com.eduworks.resolver.lang.LevrResolverV2Parser;
 import com.eduworks.util.Tuple;
 import com.eduworks.util.io.EwFileSystem;
 import com.eduworks.util.io.InMemoryFile;
+import javax.script.Bindings;
 import javax.servlet.http.HttpSession;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
 @SuppressWarnings("serial")
 public class LevrResolverServlet extends LevrServlet
@@ -96,7 +100,7 @@ public class LevrResolverServlet extends LevrServlet
                         {
                             loadAdditionalConfigFilesFromServletContext("/WEB-INF/lib/", servletContext);
                             loadAdditionalConfigFilesFromServletContext("/WEB-INF/classes/", servletContext);
-                            loadAdditionalConfigFilesFromServletContext("/", servletContext);
+                            //loadAdditionalConfigFilesFromServletContext("/", servletContext);
                         }
                         loadAdditionalConfigFiles(new File(EwFileSystem.getWebConfigurationPath()));
                         codeFilesLastModifiedMs = getFilesLastModified(new File(EwFileSystem.getWebConfigurationPath()));
@@ -139,7 +143,7 @@ public class LevrResolverServlet extends LevrServlet
         {
             return;
         }
-        if (path.endsWith(".jar") && path.toLowerCase().contains("levr"))
+        if (path.endsWith(".jar") && (path.toLowerCase().contains("levr")))
         {
             ZipInputStream zip = new ZipInputStream(servletContext.getResourceAsStream(path));
             while (true)
@@ -152,7 +156,6 @@ public class LevrResolverServlet extends LevrServlet
                 String name = e.getName();
                 if (name.endsWith(".rs2"))
                 {
-
                     File createTempFile = File.createTempFile(path.replace("/", "").replace("\\", ""), e.getName().replace("/", "").replace("\\", ""));
                     FileWriter fileWriter = new FileWriter(createTempFile);
                     IOUtils.copy(zip, fileWriter);
@@ -271,6 +274,12 @@ public class LevrResolverServlet extends LevrServlet
                         scriptStreams.put(cleanFilename, scriptPack);
                         bindWebServices(resolvableWebServices, scriptStreams);
                     }
+                    if (codeFile.getName().endsWith(".js") && codeFile.getPath().contains("node_modules") == false)
+                    {
+                        log.debug("Loading: " + codeFile.getPath());
+                        codeFiles.add(codeFile);
+                        bindJavascriptFunctions(resolvableFunctions, LevrJsParser.decodeStreams(codeFile));
+                    }
                 } catch (NullPointerException ex)
                 {
                     System.out.println("Failed on " + codeFile.getPath());
@@ -301,10 +310,37 @@ public class LevrResolverServlet extends LevrServlet
     private static void bindWebServicesAndFunctions(Map<String, Resolvable> config2, Map<String, Resolvable> functions2,
             Tuple<Map<String, JSONObject>, Map<String, JSONObject>> decodeStreams) throws JSONException
     {
-        bindWebServices(config2, decodeStreams.getFirst());
         for (Entry<String, JSONObject> entry : decodeStreams.getSecond().entrySet())
         {
-            functions2.put(entry.getKey().substring(1), ResolverFactory.create(entry.getValue()));
+            final Resolvable resolverFunction = ResolverFactory.create(entry.getValue());
+            functions2.put(entry.getKey().substring(1), resolverFunction);
+            LevrJsParser.createJavascriptFunctionBinding(entry.getKey().substring(1), resolverFunction);
+        }
+        bindWebServices(config2, decodeStreams.getFirst());
+    }
+
+    private static void bindJavascriptFunctions(Map<String, Resolvable> resolvableFunctions, Bindings bindings)
+    {
+        CruncherJavascriptBinder cj = new CruncherJavascriptBinder();
+        for (String s : bindings.keySet())
+        {
+            CruncherJavascriptBinder jb = new CruncherJavascriptBinder();
+            jb.build("function", s);
+            if (ResolverFactory.cruncherSpecs.containsKey(s))
+            {
+                continue;
+            }
+            if (bindings.get(s) instanceof ScriptObjectMirror)
+            {
+                ScriptObjectMirror binding = (ScriptObjectMirror) bindings.get(s);
+                if (binding.isFunction())
+                {
+                    if (LevrResolverServlet.resolvableFunctions.get(s) == null || LevrResolverServlet.resolvableFunctions.get(s) instanceof CruncherJavascriptBinder)
+                    {
+                        resolvableFunctions.put(s, jb);
+                    }
+                }
+            }
         }
     }
 
@@ -521,10 +557,10 @@ public class LevrResolverServlet extends LevrServlet
             PrintStream pw, Map<String, InputStream> dataStreams) throws IOException, JSONException
     {
         HttpSession session = null;
-        try{
+        try
+        {
             session = request.getSession();
-        }
-        catch (IllegalStateException ex)
+        } catch (IllegalStateException ex)
         {
             log.warn("Could not create session as part of this request. Run-time-modification of LEVR scripts may be disabled.");
         }

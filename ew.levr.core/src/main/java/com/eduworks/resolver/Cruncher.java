@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.eduworks.lang.EwList;
+import com.eduworks.lang.json.impl.EwJsonObject;
 import com.eduworks.lang.util.EwUri;
 import com.eduworks.resolver.exception.EditableRuntimeException;
 
@@ -48,10 +49,10 @@ public abstract class Cruncher implements Resolvable
 
 	protected JSONObject jo(Object... strings) throws JSONException
 	{
-		JSONObject jo = new JSONObject();
+		JSONObject jo = new EwJsonObject();
 		for (int i = 0; i < strings.length; i += 2)
 		{
-			jo.put(strings[i].toString(), strings[i + 1]);
+                    jo.put(strings[i].toString(), strings[i + 1]);
 		}
 		return jo;
 	}
