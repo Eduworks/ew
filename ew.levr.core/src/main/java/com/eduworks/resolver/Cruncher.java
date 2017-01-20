@@ -194,6 +194,7 @@ public abstract class Cruncher implements Resolvable
 		{
 			if (!first)
 				b.append(",");
+			b.append("\n\t\t\t");
 			first = false;
 			Object o = os.get(key);
 			b.append(key);
@@ -203,7 +204,7 @@ public abstract class Cruncher implements Resolvable
 			else
 				b.append(o.toString());
 		}
-		b.append("}");
+		b.append("\n\t\t}");
 		return b.toString();
 	}
 
@@ -219,6 +220,7 @@ public abstract class Cruncher implements Resolvable
 				continue;
 			if (!first)
 				b.append(",");
+			b.append("\n\t\t\t");
 			first = false;
 			b.append(key);
 			b.append(":");
@@ -229,7 +231,7 @@ public abstract class Cruncher implements Resolvable
 				b.append(o[i]);
 			}
 		}
-		b.append("}");
+		b.append("\n\t\t}");
 		return b.toString();
 	}
 
