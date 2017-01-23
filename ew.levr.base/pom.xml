@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.eduworks</groupId>
 		<artifactId>ew</artifactId>
-		<version>5.0.0</version>
+		<version>5.0.1</version>
 	</parent>
 	<artifactId>ew.levr.base</artifactId>
 	<properties>
@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>com.eduworks</groupId>
 			<artifactId>ew.levr.core</artifactId>
-		<version>5.0.0</version>
+		<version>5.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
