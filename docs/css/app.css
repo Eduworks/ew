@@ -1,0 +1,183 @@
+.reveal .row {
+    margin-top: .25rem;
+    margin-bottom: .25rem;
+    font-family: monospace, monospace;
+    font-size: 1em;
+}
+div[property="rdfs:label"] {
+    font-weight: bold;
+}
+p[property="rdfs:comment"] {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+/*titles*/
+
+#index .c0,
+#index .c1,
+#index .c2,
+#index .c3,
+#index .c4,
+#index .c5,
+#index .c6,
+#index .c7,
+#index .c8 {}
+#index a {}
+#index p {
+    margin: 0px 0px 0px 1rem;
+    padding: 0px;
+}
+#siteloader h1,
+#siteloader h2,
+#siteloader h3,
+#siteloader h4,
+#siteloader h5 {
+    margin-top: .5rem;
+}
+#index h1,
+#index h2,
+#index h3,
+#index h4,
+#index h5 {
+    margin-top: .5rem;
+}
+ul,
+ol,
+dl {
+    margin-bottom: 0rem;
+}
+[class$="-1 start"],
+[class$="-1"] {
+    margin-left: 2.25rem;
+}
+[class$="-2 start"] {
+    margin-left: 3rem;
+}
+ul[class$="-1 start"],
+ul[class$="-1"] {
+    list-style-type: circle;
+}
+ol[class$="-1 start"],
+ol[class$="-1"] {
+    list-style-type: lower-latin;
+}
+[class$="-2 start"],
+[class$="-2"] {
+    margin-left: 3rem;
+}
+ul[class$="-2 start"],
+ul[class$="-2"] {
+    list-style-type: square;
+}
+ol[class$="-2 start"],
+ol[class$="-2"] {
+    list-style-type: lower-roman;
+}
+[class$="-3 start"],
+[class$="-3"] {
+    margin-left: 4rem;
+}
+ul[class$="-3 start"],
+ul[class$="-3"] {
+    list-style-type: disc;
+}
+ol[class$="-3 start"],
+ol[class$="-3"] {
+    list-style-type: decimal;
+}
+p span,
+li span {
+    text-align: justify;
+    text-justify: inter-word;
+}
+#siteloader p {
+    margin-bottom: 0px;
+}
+body {}
+.title {
+    font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+    font-size: 2.5rem;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 2.7rem;
+}
+h1 {
+    font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+    font-size: 2rem;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 2.2rem;
+    color: #980000;
+}
+h2 {
+    font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+    font-size: 1.75rem;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 1.85rem;
+    color: #666666;
+}
+h3 {
+    font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 1.6rem;
+}
+h4 {
+    font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 1.35rem;
+}
+h5 {
+    font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+    font-size: 1.1rem;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 1.2rem;
+}
+p,
+li {
+    font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+    font-size: 1.0rem;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+iframe {
+    border 0px;
+}
+#siteloader table {
+    margin-left: 1rem;
+    width: calc(100% - 1rem);
+}
+#siteloader table tr td p span {
+    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace !important;
+    font-size: 11px!important;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 12px!important;
+}
+#siteloader table tr td ul li span {
+    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace !important;
+    font-size: 11px!important;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 12px!important;
+}
