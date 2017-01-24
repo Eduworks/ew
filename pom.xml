@@ -83,6 +83,7 @@
 		<module>ew.ontology</module>
 		<module>ew.levr.core</module>
 		<module>ew.levr.base</module>
+		<module>ew.levr.db.sql</module>
 		<module>ew.levr.db.couchbase</module>
 		<module>ew.levr.db.couchdb</module>
 		<module>ew.levr.db.mapdb</module>

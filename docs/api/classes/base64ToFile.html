@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>cache - EW Library</title>
+    <title>base64ToFile - EW Library</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
@@ -48,7 +48,7 @@
             
             <div id="sections" class="sidebox">
               <div class="hd">
-                <h2 class="no-toc">cache</h2>
+                <h2 class="no-toc">base64ToFile</h2>
               </div>
               <div class="bd">
             
@@ -71,7 +71,7 @@
             
                   <div><a href="#public-methods">Public Methods</a></div>
                   <ul>
-                      <li><a href="#method_cache">cache</a></li>
+                      <li><a href="#method_base64ToFile">base64ToFile</a></li>
                   </ul>
             
             
@@ -88,16 +88,21 @@
 
         <div id="main" class="yui3-u">
             <div class="content"><div class="title">
-    <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_cache_CruncherCache.java.html#l15"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;cache&#x2F;CruncherCache.java:15</code></a></span>
-    <h1 class="class-name">cache</h1>
+    <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_file_CruncherBase64ToFile.java.html#l21"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;file&#x2F;CruncherBase64ToFile.java:21</code></a></span>
+    <h1 class="class-name">base64ToFile</h1>
 </div>
 
 
 
 
-<div class="class-description"><p>Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.<br>Cache, by default, persists over the web service request.</p>
-<p>rs2: result = obj.cache(name="unique name");<br>
-LevrJS: result = cache.call(this,obj,"unique name");</p>
+<div class="class-description"><p>Converts one or more base 64 encoded files (represented as a JSON Object) to one or more InMemoryFiles</p>
+<p>Representation:<br>
+{<br>
+name:"base64EncodedFileAsString"<br>
+,...
+}</p>
+<p>rs2: result = obj.base64ToFile();<br>
+LevrJS: result = base64ToFile.call(this,obj);</p>
 </div>
 
 
@@ -124,7 +129,7 @@ LevrJS: result = cache.call(this,obj,"unique name");</p>
           </td>
           <td>
             <div class="method-name ">
-              <a href="#method_cache">cache</a>(obj, name, [remove=false], [global=false], [justLock=false], [removeAllGlobal=false]): Object
+              <a href="#method_base64ToFile">base64ToFile</a>(obj, [mimeType]): InMemoryFile | List<InMemoryFile>
             </div>
             <div class="short-description">
               
@@ -151,13 +156,13 @@ LevrJS: result = cache.call(this,obj,"unique name");</p>
   <div id="methods public">
     <h2 id="public-methods">Public Methods</h2>
 <div class="method item">
-    <div id="method_cache" class="title">
-        <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_cache_CruncherCache.java.html#l25"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;cache&#x2F;CruncherCache.java:25</code></a></span>
+    <div id="method_base64ToFile" class="title">
+        <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_file_CruncherBase64ToFile.java.html#l37"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;file&#x2F;CruncherBase64ToFile.java:37</code></a></span>
         <h3 class="">
             public
             
             
-            cache(obj, name, [remove=false], [global=false], [justLock=false], [removeAllGlobal=false]): Object
+            base64ToFile(obj, [mimeType]): InMemoryFile | List<InMemoryFile>
         </h3>
     </div>
 
@@ -179,7 +184,7 @@ LevrJS: result = cache.call(this,obj,"unique name");</p>
           <tbody>
             <tr>
               <td>obj</td>
-              <td>Cruncher | Function</td>
+              <td>JSONObject</td>
               <td>
                 <ul>
                   
@@ -187,77 +192,21 @@ LevrJS: result = cache.call(this,obj,"unique name");</p>
                   
                 </ul>
               </td>
-              <td><p>Cruncher or Function that will return an object to cache.</p>
+              <td><p>JSON Object holding the Base64 representation of the file.</p>
 </td>
             </tr>
 
             <tr>
-              <td>name</td>
+              <td>mimeType</td>
               <td>String</td>
               <td>
                 <ul>
-                  
-                  
-                  
-                </ul>
-              </td>
-              <td><p>Unique name used to store and retrieve the cached object.</p>
-</td>
-            </tr>
-
-            <tr>
-              <td>remove</td>
-              <td>Boolean</td>
-              <td>
-                <ul>
                   <li>optional</li>
-                  <li>default: false</li>
+                  
                   
                 </ul>
               </td>
-              <td><p>Removes the cached value using the name. 'obj' can be null. May be combined with 'global'.</p>
-</td>
-            </tr>
-
-            <tr>
-              <td>global</td>
-              <td>Boolean</td>
-              <td>
-                <ul>
-                  <li>optional</li>
-                  <li>default: false</li>
-                  
-                </ul>
-              </td>
-              <td><p>Add to global cache, persists over web service requests.</p>
-</td>
-            </tr>
-
-            <tr>
-              <td>justLock</td>
-              <td>Boolean</td>
-              <td>
-                <ul>
-                  <li>optional</li>
-                  <li>default: false</li>
-                  
-                </ul>
-              </td>
-              <td><p>Don't deal with the cache, but use the cache locking mechanism to prevent recurrent entrance.</p>
-</td>
-            </tr>
-
-            <tr>
-              <td>removeAllGlobal</td>
-              <td>Boolean</td>
-              <td>
-                <ul>
-                  <li>optional</li>
-                  <li>default: false</li>
-                  
-                </ul>
-              </td>
-              <td><p>Clears all caches in LEVR.</p>
+              <td><p>Force the mime type of the resultant files to be this.</p>
 </td>
             </tr>
 
@@ -268,8 +217,8 @@ LevrJS: result = cache.call(this,obj,"unique name");</p>
       <div class="return">
         <h4>Return:</h4>
         <div>
-          <span class="return-type">Object</span>
-          <span class="return-description"><p>Cached value if in cache, computed value if not in cache.</p>
+          <span class="return-type">InMemoryFile | List<InMemoryFile></span>
+          <span class="return-description"><p>File Object.</p>
 </span>
         </div>
       </div>

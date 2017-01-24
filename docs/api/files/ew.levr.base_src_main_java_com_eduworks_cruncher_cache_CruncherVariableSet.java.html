@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ew.common/src/main/java/com/eduworks/lang/json/EwJsonEntity.java - EW Library</title>
+    <title>ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherVariableSet.java - EW Library</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
@@ -57,45 +57,68 @@
 
         <div id="main" class="yui3-u">
             <div class="content"><div class="title">
-  <h1 class="file-name">ew.common/src/main/java/com/eduworks/lang/json/EwJsonEntity.java</h1>
+  <h1 class="file-name">ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherVariableSet.java</h1>
 </div>
 
 <pre class="code prettyprint linenums">
-package com.eduworks.lang.json;
+package com.eduworks.cruncher.cache;
 
-import java.io.Writer;
+import java.io.InputStream;
+import java.util.Map;
 
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.eduworks.lang.EwMap;
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
 
 /**
- * Defines a basic, Eduworks JSON entity. Provides an API for methods that all
- * JSON based entities tend to have even though they are not related.
+ * Places a variable into a local store referenced by &#x27;key&#x27;. Use when in-memory state is absolutely required.
  * 
- * @author dharvey
- * @since September, 2011
+ * rs2: obj.variableSet(key=&quot;unique key&quot;);&lt;br&gt;
+ * LevrJS: variableSet.call(this,obj,&quot;unique key&quot;);
+ *
+ * @class variableSet
+ * @module ew.levr.base
+ * @author fritz.ray@eduworks.com
  */
-@Deprecated
-public interface EwJsonEntity
+/**
+ * @method variableSet
+ * @param obj {Cruncher|Function|Object} Resolved variable to store.
+ * @param key {String} Unique key used to store the variable.
+ */
+public class CruncherVariableSet extends Cruncher
 {
-	/***
-	 * Pretty prints the string.
-	 * 
-	 * @param indentFactor
-	 *            Indentation in spaces.
-	 * @return pretty-printed JSON text of this JSON.
-	 * @throws JSONException
-	 *             If the JSON is malformed.
-	 */
-	public String toString(int indentFactor) throws JSONException;
+	public static Map&lt;String,Object&gt; store = new EwMap&lt;String,Object&gt;();
+	@Override
+	public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
+	{
+		Object obj = getObj(c, parameters, dataStreams);
+		store.put(getAsString(&quot;key&quot;,c,parameters, dataStreams),obj);
+		return obj;
+	}
+	@Override
+	public String getDescription()
+	{
+		return &quot;Places a variable into a local state referenced by &#x27;key&#x27;. Use when in-memory state is absolutely required.&quot;;
+	}
+	@Override
+	public String getReturn()
+	{
+		return &quot;Object&quot;;
+	}
+	@Override
+	public String getAttribution()
+	{
+		return ATTRIB_NONE;
+	}
+	@Override
+	public JSONObject getParameters() throws JSONException
+	{
+		return jo(&quot;obj&quot;,&quot;Object&quot;,&quot;key&quot;,&quot;String&quot;);
+	}
 
-	/***
-	 * Write the contents of the JSON as text to a writer.
-	 * 
-	 * @param writer Writer to write to.
-	 * @return The writer we wrote to.
-	 * @throws JSONException If the JSON generated becomes malformed.
-	 */
-	public Writer write(Writer writer) throws JSONException;
 }
 
 </pre>

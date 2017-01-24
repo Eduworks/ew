@@ -10,6 +10,7 @@ import com.eduworks.lang.util.EwCache;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 
+@Deprecated
 public class CruncherCacheGet extends Cruncher
 {
 

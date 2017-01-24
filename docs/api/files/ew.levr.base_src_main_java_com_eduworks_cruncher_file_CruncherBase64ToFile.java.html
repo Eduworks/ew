@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java - EW Library</title>
+    <title>ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherBase64ToFile.java - EW Library</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
@@ -57,88 +57,95 @@
 
         <div id="main" class="yui3-u">
             <div class="content"><div class="title">
-  <h1 class="file-name">ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java</h1>
+  <h1 class="file-name">ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherBase64ToFile.java</h1>
 </div>
 
 <pre class="code prettyprint linenums">
-package com.eduworks.cruncher.math;
+package com.eduworks.cruncher.file;
 
 import java.io.InputStream;
-import java.text.NumberFormat;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.eduworks.lang.EwList;
+import com.eduworks.lang.util.EwJson;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
+import com.eduworks.resolver.io.CruncherMimeType;
+import com.eduworks.util.io.InMemoryFile;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * Adds any number of numbers or strings. Will default to returning a number if all parameters are numbers, will return string if not.
+ * Converts one or more base 64 encoded files (represented as a JSON Object) to one or more InMemoryFiles
+ * 
+ * Representation:&lt;br&gt;
+ * {&lt;br&gt;
+ *  name:&quot;base64EncodedFileAsString&quot;&lt;br&gt;
+ *  ,...
+ * }
+ * 
+ * rs2: result = obj.base64ToFile();&lt;br&gt;
+ * LevrJS: result = base64ToFile.call(this,obj);
  *
- * @class add
+ * @class base64ToFile
  * @module ew.levr.base
  * @author fritz.ray@eduworks.com
  */
 /**
- * @method add
- * @param [any] {Number|String} Elements to add together.
- * @param [_string=false] {boolean} Forces output as a string. Useful for parameters that could end up being numbers.
- * @param [_fancyNumber=false] {boolean} Outputs number as a locale formatted string.
+ * @method base64ToFile
+ * @param obj {JSONObject} JSON Object holding the Base64 representation of the file.
+ * @param [mimeType] {String} Force the mime type of the resultant files to be this.
+ * @return {InMemoryFile|List&lt;InMemoryFile&gt;} File Object.
  */
-public class CruncherAdd extends Cruncher
+public class CruncherBase64ToFile extends Cruncher
 {
 	@Override
 	public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
 	{
-		double result = 0.0;
-		boolean fancyNumber = optAsBoolean(&quot;_fancyNumber&quot;,false,c,parameters,dataStreams);
-		StringBuilder resultStr = new StringBuilder();
-		Iterator&lt;String&gt; i = this.sortedKeys();
-		boolean enforceString = optAsBoolean(&quot;_string&quot;,false,c,parameters, dataStreams);
-		while (i.hasNext())
+		JSONObject obj = getObjAsJsonObject(c, parameters, dataStreams);
+		
+		List&lt;InMemoryFile&gt; result = new EwList&lt;InMemoryFile&gt;();
+		for (String key : EwJson.getKeys(obj))
 		{
-			String key = i.next();
-			if (isSetting(key))
-				continue;
-			Object o = get(key,c,parameters, dataStreams);
-			if (o == null)
-				continue;
-			if (o instanceof String &amp;&amp; ((String) o).length() &gt; 0 &amp;&amp; Character.isLetter(((String) o).charAt(0)))
-				enforceString = true;
-			if (resultStr.length() == 0 &amp;&amp; !enforceString)
-				try
-				{
-					Double value = objectToDouble(o);
-					result += value;
-				}
-				catch (NumberFormatException ex)
-				{
-					if (result != 0.0)
-						resultStr.append(result);
-					resultStr.append(objectToString(o));
-				}
-			else
-				resultStr.append(objectToString(o));
+			InMemoryFile rf = new InMemoryFile();
+			rf.name = key;
+			rf.data = Base64.decodeBase64(obj.getString(key));
+            try
+            {
+                rf.mime = optAsString(&quot;mimeType&quot;, CruncherMimeType.getMimeType(rf,null), c, parameters, dataStreams);
+            } catch (IOException ex)
+            {
+                Logger.getLogger(CruncherBase64ToFile.class.getName()).log(Level.SEVERE, null, ex);
+            }
+			result.add(rf);
 		}
-		if (resultStr.length() &gt; 0 || enforceString)
-			return resultStr.toString();
-		if (fancyNumber)
-			return NumberFormat.getNumberInstance(java.util.Locale.US).format(result);
+		if (result.size() == 0) return null;
+		if (result.size() == 1) return result.get(0);
 		return result;
 	}
 
 	@Override
 	public String getDescription()
 	{
-		return &quot;Adds any number of numbers or strings. Will default to returning a number if all parameters are numbers, will return string if not.&quot;;
+		return &quot;Converts one or more base 64 files to an InMemoryFile&quot;;
+	}
+
+	@Override
+	public JSONObject getParameters() throws JSONException
+	{
+		return jo(&quot;obj&quot;,&quot;JSON Object, {name:&#x27;base64&#x27;,...}&quot;);
 	}
 
 	@Override
 	public String getReturn()
 	{
-		return &quot;Number|String&quot;;
+		return &quot;InMemoryFile|List&lt;InMemoryFile&gt;&quot;;
 	}
 
 	@Override
@@ -146,14 +153,7 @@ public class CruncherAdd extends Cruncher
 	{
 		return ATTRIB_NONE;
 	}
-
-	@Override
-	public JSONObject getParameters() throws JSONException
-	{
-		return jo(&quot;&lt;any&gt;&quot;,&quot;Number|String&quot;,&quot;_string&quot;,&quot;Boolean&quot;,&quot;_fancyNumber&quot;,&quot;Boolean&quot;);
-	}
 }
-
 </pre>
 
 </div>

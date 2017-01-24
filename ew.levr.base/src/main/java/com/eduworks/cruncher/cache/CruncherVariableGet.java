@@ -9,6 +9,21 @@ import org.json.JSONObject;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 
+/**
+ * Retreives a variable from the variable store (set by #variableGet). Used when simple internal state is absolutely necessary.
+ * 
+ * rs2: result = #variableGet(key="unique key");<br>
+ * LevrJS: result = variableGet.call(this,"unique key");
+ *
+ * @class variableGet
+ * @module ew.levr.base
+ * @author fritz.ray@eduworks.com
+ */
+/**
+ * @method variableGet
+ * @param key {String} Unique key used to retrieve the variable.
+ * @return {Object} Variable that was previously stored.
+ */
 public class CruncherVariableGet extends Cruncher
 {
 

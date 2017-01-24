@@ -39,7 +39,7 @@ public class CruncherMimeType extends Cruncher
 		}
 	}
 
-	public static Object getMimeType(InMemoryFile file, JSONObject extensions) throws IOException, JSONException
+	public static String getMimeType(InMemoryFile file, JSONObject extensions) throws IOException, JSONException
 	{
 		String mimeType = null;
 		File temporaryFile = file.toTemporaryFile();
@@ -50,7 +50,7 @@ public class CruncherMimeType extends Cruncher
 		return mimeType;
 	}
 
-	public static Object getMimeType(File file, JSONObject extensions) throws IOException, JSONException
+	public static String getMimeType(File file, JSONObject extensions) throws IOException, JSONException
 	{
 		String mimeType = null;
 		if (mimeType == null)

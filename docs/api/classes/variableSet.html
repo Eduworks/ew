@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>cache - EW Library</title>
+    <title>variableSet - EW Library</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
@@ -48,7 +48,7 @@
             
             <div id="sections" class="sidebox">
               <div class="hd">
-                <h2 class="no-toc">cache</h2>
+                <h2 class="no-toc">variableSet</h2>
               </div>
               <div class="bd">
             
@@ -71,7 +71,7 @@
             
                   <div><a href="#public-methods">Public Methods</a></div>
                   <ul>
-                      <li><a href="#method_cache">cache</a></li>
+                      <li><a href="#method_variableSet">variableSet</a></li>
                   </ul>
             
             
@@ -88,16 +88,16 @@
 
         <div id="main" class="yui3-u">
             <div class="content"><div class="title">
-    <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_cache_CruncherCache.java.html#l15"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;cache&#x2F;CruncherCache.java:15</code></a></span>
-    <h1 class="class-name">cache</h1>
+    <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_cache_CruncherVariableSet.java.html#l13"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;cache&#x2F;CruncherVariableSet.java:13</code></a></span>
+    <h1 class="class-name">variableSet</h1>
 </div>
 
 
 
 
-<div class="class-description"><p>Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.<br>Cache, by default, persists over the web service request.</p>
-<p>rs2: result = obj.cache(name="unique name");<br>
-LevrJS: result = cache.call(this,obj,"unique name");</p>
+<div class="class-description"><p>Places a variable into a local store referenced by 'key'. Use when in-memory state is absolutely required.</p>
+<p>rs2: obj.variableSet(key="unique key");<br>
+LevrJS: variableSet.call(this,obj,"unique key");</p>
 </div>
 
 
@@ -124,7 +124,7 @@ LevrJS: result = cache.call(this,obj,"unique name");</p>
           </td>
           <td>
             <div class="method-name ">
-              <a href="#method_cache">cache</a>(obj, name, [remove=false], [global=false], [justLock=false], [removeAllGlobal=false]): Object
+              <a href="#method_variableSet">variableSet</a>(obj, key)
             </div>
             <div class="short-description">
               
@@ -151,13 +151,13 @@ LevrJS: result = cache.call(this,obj,"unique name");</p>
   <div id="methods public">
     <h2 id="public-methods">Public Methods</h2>
 <div class="method item">
-    <div id="method_cache" class="title">
-        <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_cache_CruncherCache.java.html#l25"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;cache&#x2F;CruncherCache.java:25</code></a></span>
+    <div id="method_variableSet" class="title">
+        <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_cache_CruncherVariableSet.java.html#l23"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;cache&#x2F;CruncherVariableSet.java:23</code></a></span>
         <h3 class="">
             public
             
             
-            cache(obj, name, [remove=false], [global=false], [justLock=false], [removeAllGlobal=false]): Object
+            variableSet(obj, key)
         </h3>
     </div>
 
@@ -179,7 +179,7 @@ LevrJS: result = cache.call(this,obj,"unique name");</p>
           <tbody>
             <tr>
               <td>obj</td>
-              <td>Cruncher | Function</td>
+              <td>Cruncher | Function | Object</td>
               <td>
                 <ul>
                   
@@ -187,12 +187,12 @@ LevrJS: result = cache.call(this,obj,"unique name");</p>
                   
                 </ul>
               </td>
-              <td><p>Cruncher or Function that will return an object to cache.</p>
+              <td><p>Resolved variable to store.</p>
 </td>
             </tr>
 
             <tr>
-              <td>name</td>
+              <td>key</td>
               <td>String</td>
               <td>
                 <ul>
@@ -201,63 +201,7 @@ LevrJS: result = cache.call(this,obj,"unique name");</p>
                   
                 </ul>
               </td>
-              <td><p>Unique name used to store and retrieve the cached object.</p>
-</td>
-            </tr>
-
-            <tr>
-              <td>remove</td>
-              <td>Boolean</td>
-              <td>
-                <ul>
-                  <li>optional</li>
-                  <li>default: false</li>
-                  
-                </ul>
-              </td>
-              <td><p>Removes the cached value using the name. 'obj' can be null. May be combined with 'global'.</p>
-</td>
-            </tr>
-
-            <tr>
-              <td>global</td>
-              <td>Boolean</td>
-              <td>
-                <ul>
-                  <li>optional</li>
-                  <li>default: false</li>
-                  
-                </ul>
-              </td>
-              <td><p>Add to global cache, persists over web service requests.</p>
-</td>
-            </tr>
-
-            <tr>
-              <td>justLock</td>
-              <td>Boolean</td>
-              <td>
-                <ul>
-                  <li>optional</li>
-                  <li>default: false</li>
-                  
-                </ul>
-              </td>
-              <td><p>Don't deal with the cache, but use the cache locking mechanism to prevent recurrent entrance.</p>
-</td>
-            </tr>
-
-            <tr>
-              <td>removeAllGlobal</td>
-              <td>Boolean</td>
-              <td>
-                <ul>
-                  <li>optional</li>
-                  <li>default: false</li>
-                  
-                </ul>
-              </td>
-              <td><p>Clears all caches in LEVR.</p>
+              <td><p>Unique key used to store the variable.</p>
 </td>
             </tr>
 
@@ -265,14 +209,6 @@ LevrJS: result = cache.call(this,obj,"unique name");</p>
         </table>
       </div>
 
-      <div class="return">
-        <h4>Return:</h4>
-        <div>
-          <span class="return-type">Object</span>
-          <span class="return-description"><p>Cached value if in cache, computed value if not in cache.</p>
-</span>
-        </div>
-      </div>
 
 
 </div>

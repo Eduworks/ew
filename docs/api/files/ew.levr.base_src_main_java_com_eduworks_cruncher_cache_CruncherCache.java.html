@@ -37,7 +37,10 @@
                 <div class="bd">
                     <ul>
                             <li><a href="../classes/add.html">add</a></li>
+                            <li><a href="../classes/base64ToFile.html">base64ToFile</a></li>
                             <li><a href="../classes/cache.html">cache</a></li>
+                            <li><a href="../classes/variableGet.html">variableGet</a></li>
+                            <li><a href="../classes/variableSet.html">variableSet</a></li>
                     </ul>
                 </div>
             </div>
@@ -86,9 +89,10 @@ import com.eduworks.resolver.Cruncher;
  * @method cache
  * @param obj {Cruncher|Function} Cruncher or Function that will return an object to cache.
  * @param name {String} Unique name used to store and retrieve the cached object.
- * @param [remove=false] {Boolean} Removes the cached value using the name. &#x27;obj&#x27; can be null.
+ * @param [remove=false] {Boolean} Removes the cached value using the name. &#x27;obj&#x27; can be null. May be combined with &#x27;global&#x27;.
  * @param [global=false] {Boolean} Add to global cache, persists over web service requests.
  * @param [justLock=false] {Boolean} Don&#x27;t deal with the cache, but use the cache locking mechanism to prevent recurrent entrance.
+ * @param [removeAllGlobal=false] {Boolean} Clears all caches in LEVR.
  * @return {Object} Cached value if in cache, computed value if not in cache.
  */
 public class CruncherCache extends Cruncher
@@ -104,6 +108,7 @@ public class CruncherCache extends Cruncher
         if (optAsBoolean(&quot;removeAllGlobal&quot;, false, c, parameters, dataStreams))
         {
             EwCache.caches.clear();
+            obj.clear();
             return null;
         }
         synchronized (getClass())
@@ -168,7 +173,7 @@ public class CruncherCache extends Cruncher
     @Override
     public JSONObject getParameters() throws JSONException
     {
-        return jo(&quot;obj&quot;, &quot;Object&quot;, &quot;name&quot;, &quot;String&quot;,&quot;remove&quot;,&quot;Boolean&quot;,&quot;global&quot;,&quot;Boolean&quot;,&quot;justLock&quot;,&quot;Boolean&quot;);
+        return jo(&quot;obj&quot;, &quot;Object&quot;, &quot;name&quot;, &quot;String&quot;,&quot;remove&quot;,&quot;Boolean&quot;,&quot;global&quot;,&quot;Boolean&quot;,&quot;justLock&quot;,&quot;Boolean&quot;,&quot;removeAllGlobal&quot;,&quot;Boolean&quot;);
     }
 
     @Override

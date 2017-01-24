@@ -12,8 +12,34 @@ import com.eduworks.lang.EwList;
 import com.eduworks.lang.util.EwJson;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
+import com.eduworks.resolver.io.CruncherMimeType;
 import com.eduworks.util.io.InMemoryFile;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+/**
+ * Converts one or more base 64 encoded files (represented as a JSON Object) to one or more InMemoryFiles
+ * 
+ * Representation:<br>
+ * {<br>
+ *  name:"base64EncodedFileAsString"<br>
+ *  ,...
+ * }
+ * 
+ * rs2: result = obj.base64ToFile();<br>
+ * LevrJS: result = base64ToFile.call(this,obj);
+ *
+ * @class base64ToFile
+ * @module ew.levr.base
+ * @author fritz.ray@eduworks.com
+ */
+/**
+ * @method base64ToFile
+ * @param obj {JSONObject} JSON Object holding the Base64 representation of the file.
+ * @param [mimeType] {String} Force the mime type of the resultant files to be this.
+ * @return {InMemoryFile|List<InMemoryFile>} File Object.
+ */
 public class CruncherBase64ToFile extends Cruncher
 {
 	@Override
@@ -26,8 +52,14 @@ public class CruncherBase64ToFile extends Cruncher
 		{
 			InMemoryFile rf = new InMemoryFile();
 			rf.name = key;
-			rf.mime = optAsString("mimeType", null, c, parameters, dataStreams);
 			rf.data = Base64.decodeBase64(obj.getString(key));
+            try
+            {
+                rf.mime = optAsString("mimeType", CruncherMimeType.getMimeType(rf,null), c, parameters, dataStreams);
+            } catch (IOException ex)
+            {
+                Logger.getLogger(CruncherBase64ToFile.class.getName()).log(Level.SEVERE, null, ex);
+            }
 			result.add(rf);
 		}
 		if (result.size() == 0) return null;
@@ -38,19 +70,19 @@ public class CruncherBase64ToFile extends Cruncher
 	@Override
 	public String getDescription()
 	{
-		return "Converts one or more base 64 files to a ResolverFile";
+		return "Converts one or more base 64 files to an InMemoryFile";
 	}
 
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj","JSON Object, {filename:base64}");
+		return jo("obj","JSON Object, {name:'base64',...}");
 	}
 
 	@Override
 	public String getReturn()
 	{
-		return "List of ResolverFile";
+		return "InMemoryFile|List<InMemoryFile>";
 	}
 
 	@Override

@@ -10,6 +10,21 @@ import com.eduworks.lang.EwMap;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 
+/**
+ * Places a variable into a local store referenced by 'key'. Use when in-memory state is absolutely required.
+ * 
+ * rs2: obj.variableSet(key="unique key");<br>
+ * LevrJS: variableSet.call(this,obj,"unique key");
+ *
+ * @class variableSet
+ * @module ew.levr.base
+ * @author fritz.ray@eduworks.com
+ */
+/**
+ * @method variableSet
+ * @param obj {Cruncher|Function|Object} Resolved variable to store.
+ * @param key {String} Unique key used to store the variable.
+ */
 public class CruncherVariableSet extends Cruncher
 {
 	public static Map<String,Object> store = new EwMap<String,Object>();

@@ -2,7 +2,10 @@ YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
         "add",
-        "cache"
+        "base64ToFile",
+        "cache",
+        "variableGet",
+        "variableSet"
     ],
     "modules": [
         "ew.levr.base"

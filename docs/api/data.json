@@ -207,6 +207,33 @@
             "fors": {},
             "namespaces": {}
         },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherVariableGet.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherVariableGet.java",
+            "modules": {},
+            "classes": {
+                "variableGet": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherVariableSet.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherVariableSet.java",
+            "modules": {},
+            "classes": {
+                "variableSet": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherBase64ToFile.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherBase64ToFile.java",
+            "modules": {},
+            "classes": {
+                "base64ToFile": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java": {
             "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java",
             "modules": {},
@@ -357,6 +384,9 @@
             "elements": {},
             "classes": {
                 "cache": 1,
+                "variableGet": 1,
+                "variableSet": 1,
+                "base64ToFile": 1,
                 "add": 1
             },
             "fors": {},
@@ -380,6 +410,51 @@
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherCache.java",
             "line": 15,
             "description": "Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.<br>Cache, by default, persists over the web service request.\n\nrs2: result = obj.cache(name=\"unique name\");<br>\nLevrJS: result = cache.call(this,obj,\"unique name\");",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "variableGet": {
+            "name": "variableGet",
+            "shortname": "variableGet",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherVariableGet.java",
+            "line": 12,
+            "description": "Retreives a variable from the variable store (set by #variableGet). Used when simple internal state is absolutely necessary.\n\nrs2: result = #variableGet(key=\"unique key\");<br>\nLevrJS: result = variableGet.call(this,\"unique key\");",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "variableSet": {
+            "name": "variableSet",
+            "shortname": "variableSet",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherVariableSet.java",
+            "line": 13,
+            "description": "Places a variable into a local store referenced by 'key'. Use when in-memory state is absolutely required.\n\nrs2: obj.variableSet(key=\"unique key\");<br>\nLevrJS: variableSet.call(this,obj,\"unique key\");",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "base64ToFile": {
+            "name": "base64ToFile",
+            "shortname": "base64ToFile",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherBase64ToFile.java",
+            "line": 21,
+            "description": "Converts one or more base 64 encoded files (represented as a JSON Object) to one or more InMemoryFiles\n\nRepresentation:<br>\n{<br>\n name:\"base64EncodedFileAsString\"<br>\n ,...\n}\n\nrs2: result = obj.base64ToFile();<br>\nLevrJS: result = base64ToFile.call(this,obj);",
             "author": "fritz.ray@eduworks.com"
         },
         "add": {
@@ -3679,7 +3754,7 @@
                 },
                 {
                     "name": "remove",
-                    "description": "Removes the cached value using the name. 'obj' can be null.",
+                    "description": "Removes the cached value using the name. 'obj' can be null. May be combined with 'global'.",
                     "type": "Boolean",
                     "optional": true,
                     "optdefault": "false"
@@ -3697,6 +3772,13 @@
                     "type": "Boolean",
                     "optional": true,
                     "optdefault": "false"
+                },
+                {
+                    "name": "removeAllGlobal",
+                    "description": "Clears all caches in LEVR.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
                 }
             ],
             "return": {
@@ -3704,6 +3786,70 @@
                 "type": "Object"
             },
             "class": "cache",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherVariableGet.java",
+            "line": 22,
+            "itemtype": "method",
+            "name": "variableGet",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "Unique key used to retrieve the variable.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Variable that was previously stored.",
+                "type": "Object"
+            },
+            "class": "variableGet",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherVariableSet.java",
+            "line": 23,
+            "itemtype": "method",
+            "name": "variableSet",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "Resolved variable to store.",
+                    "type": "Cruncher|Function|Object"
+                },
+                {
+                    "name": "key",
+                    "description": "Unique key used to store the variable.",
+                    "type": "String"
+                }
+            ],
+            "class": "variableSet",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherBase64ToFile.java",
+            "line": 37,
+            "itemtype": "method",
+            "name": "base64ToFile",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "JSON Object holding the Base64 representation of the file.",
+                    "type": "JSONObject"
+                },
+                {
+                    "name": "mimeType",
+                    "description": "Force the mime type of the resultant files to be this.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "File Object.",
+                "type": "InMemoryFile|List<InMemoryFile>"
+            },
+            "class": "base64ToFile",
             "module": "ew.levr.base"
         },
         {
