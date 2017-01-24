@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.levr.core/src/main/java/com/eduworks/resolver/CruncherJavascriptBinder.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.levr.core/src/main/java/com/eduworks/resolver/CruncherJavascriptBinder.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.resolver;
+
+import com.eduworks.resolver.lang.LevrJsParser;
+import java.io.InputStream;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.script.Bindings;
+import javax.script.Invocable;
+import javax.script.ScriptContext;
+import javax.script.ScriptEngine;
+import javax.script.ScriptException;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+/**
+ *
+ * @author fray
+ */
+public class CruncherJavascriptBinder extends Cruncher
+{
+
+    @Override
+    public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
+    {
+        ScriptObjectMirror jo = null;
+        ScriptEngine e = LevrJsParser.engine;
+        try
+        {
+            jo = (ScriptObjectMirror) e.eval(&quot;new Object()&quot;);
+//            Invocable i = (Invocable)e;
+//            i.invokeMethod(e.eval(&quot;Object&quot;), &quot;bindProperties&quot;,jo, e.eval(&quot;this&quot;));
+//            jo = (ScriptObjectMirror) e.eval(&quot;new Object()&quot;);
+        } catch (ScriptException ex)
+        {
+            Logger.getLogger(CruncherJavascriptBinder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (String s : parameters.keySet())
+        {
+            if (parameters.get(s) != null)
+            {
+                if (parameters.get(s).length != 0)
+                {
+                    jo.put(s, parameters.get(s)[0]);
+                }
+            }
+        }
+        final ScriptObjectMirror som;
+        if (get(&quot;obj&quot;) instanceof ScriptObjectMirror)
+        {
+            som = (ScriptObjectMirror) get(&quot;obj&quot;);
+        } else
+        {
+            som = (ScriptObjectMirror) LevrJsParser.engine.get(getAsString(&quot;function&quot;, c, parameters, dataStreams));
+        }
+        ScriptObjectMirror newThis = null;
+        try
+        {
+            newThis = (ScriptObjectMirror) LevrJsParser.engine.eval(&quot;new Object()&quot;);
+        } catch (ScriptException ex)
+        {
+            Logger.getLogger(CruncherJavascriptBinder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        newThis.put(&quot;ctx&quot;, c);
+        newThis.put(&quot;params&quot;, jo);
+        newThis.put(&quot;parameters&quot;, parameters);
+        newThis.put(&quot;dataStreams&quot;, dataStreams);
+        return som.call(newThis);
+    }
+
+    @Override
+    public String getDescription()
+    {
+        return &quot;Executes a javascript binding with an object constructed from the parameters.&quot;;
+    }
+
+    @Override
+    public String getReturn()
+    {
+        return &quot;Any&quot;;
+    }
+
+    @Override
+    public String getAttribution()
+    {
+        return ATTRIB_NONE;
+    }
+
+    @Override
+    public JSONObject getParameters() throws JSONException
+    {
+        return jo(&quot;obj&quot;, &quot;Any&quot;);
+    }
+
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

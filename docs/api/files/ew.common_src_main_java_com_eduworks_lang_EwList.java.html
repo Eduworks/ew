@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.common/src/main/java/com/eduworks/lang/EwList.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.common/src/main/java/com/eduworks/lang/EwList.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.lang;
+
+import java.io.Serializable;
+import java.util.AbstractCollection;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+/***
+ * Helper methods attached on top of ArrayList.
+ * 
+ * @author Fritz
+ * 
+ * @param &lt;E&gt;
+ *            List type
+ */
+public class EwList&lt;E&gt; extends ArrayList&lt;E&gt; implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+
+	public EwList()
+	{
+	}
+
+	public EwList(int size)
+	{
+		super(size);
+	}
+
+	public EwList(E[] that)
+	{
+		this.addAll(that);
+	}
+
+	public EwList(Collection&lt;? extends E&gt; that)
+	{
+		if (that != null)
+			this.addAll(that);
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public EwList(List&lt;Object&gt; that)
+	{
+		for (Object o : that)
+			add((E) o);
+	}
+
+	public EwList(AbstractCollection&lt;E&gt; that)
+	{
+		addAll(that);
+	}
+
+	public EwList(JSONArray ja)
+	{
+		if (ja != null)
+		for (int i = 0; i &lt; ja.length(); i++)
+			if (!ja.isNull(i))
+			try
+			{
+				add((E) ja.get(i));
+			}
+			catch (JSONException e)
+			{
+				try
+				{
+					throw new RuntimeException(&quot;Types differ: &quot; + ja.get(i).toString());
+				}
+				catch (JSONException e1)
+				{
+					e1.printStackTrace();
+				}
+			}
+	}
+
+	public EwList(Object object)
+	{
+		if (object instanceof AbstractCollection)
+		{
+			addAll((AbstractCollection&lt;E&gt;) object);
+		}
+		else if (object instanceof JSONArray)
+		{
+			JSONArray ja = (JSONArray) object;
+			for (int i = 0; i &lt; ja.length(); i++)
+				if (!ja.isNull(i))
+				try
+				{
+					add((E) ja.get(i));
+				}
+				catch (JSONException e)
+				{
+					try
+					{
+						throw new RuntimeException(&quot;Types differ: &quot; + ja.get(i));
+					}
+					catch (JSONException e1)
+					{
+						e1.printStackTrace();
+					}
+				}
+		}
+		else
+			add((E) object);
+	}
+
+	/***
+	 * Returns true IFF this list contains an element in c, uses
+	 * {@link #contains(Object)}
+	 * 
+	 * @param c Other collection.
+	 * @return If any element in c is contained in this list.
+	 */
+	public boolean containsAny(Collection&lt;?&gt; c)
+	{
+		Iterator&lt;?&gt; e = c.iterator();
+		while (e.hasNext())
+			if (contains(e.next()))
+				return true;
+		return false;
+	}
+
+	/***
+	 * Returns true IFF this list contains an element in c, uses
+	 * {@link #contains(Object, Comparator)}
+	 * 
+	 * @param c Other collection.
+	 * @param comparator Comparator to compare this and c.
+	 * @return If any element in c is contained in this list according to the comparator.
+	 */
+	public boolean containsAny(Collection&lt;?&gt; c, Comparator&lt;E&gt; comparator)
+	{
+		Iterator&lt;?&gt; e = c.iterator();
+		while (e.hasNext())
+			if (contains((E) e.next(), comparator))
+				return true;
+		return false;
+	}
+
+	/***
+	 * Returns true IFF this list contains an element in c, uses
+	 * {@link #contains(Object)}
+	 * 
+	 * @param c Other array.
+	 * @return If any element in c is contained in this list.
+	 */
+	public boolean containsAny(E[] c)
+	{
+		for (int i = 0; i &lt; c.length; i++)
+			if (contains(c[i]))
+				return true;
+		return false;
+	}
+
+	/***
+	 * Returns true IFF this list contains an element who&#x27;s toString() is
+	 * String.equals(str)
+	 * 
+	 * @param str String to use in comparison.
+	 * @return If any element in this list, when passed through toString(), equals str.
+	 */
+	public boolean containsByToString(String str)
+	{
+		for (E e : this)
+			if (e.toString().equals(str))
+				return true;
+		return false;
+	}
+
+	public String join(String delimiter)
+	{
+		StringBuffer buffer = new StringBuffer();
+		Iterator&lt;E&gt; iter = iterator();
+		while (iter.hasNext())
+		{
+			buffer.append(iter.next().toString());
+			if (iter.hasNext())
+			{
+				buffer.append(delimiter);
+			}
+		}
+		return buffer.toString();
+	}
+
+	public int indexOfByObject(E e)
+	{
+		int i = 0;
+		for (E e2 : this)
+		{
+			if (e == e2)
+				return i;
+			i++;
+		}
+		return -1;
+	}
+
+	@Override
+	public boolean equals(Object o)
+	{
+		try
+		{
+			return super.equals(o);
+		}
+		catch (StackOverflowError e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public EwList&lt;E&gt; trimEmpty()
+	{
+		EwList&lt;E&gt; list = new EwList&lt;E&gt;();
+		for (E e : this)
+			if (e != null &amp;&amp; e.toString() != &quot;&quot;)
+				list.add(e);
+		return list;
+	}
+
+	public String combine(String delim)
+	{
+		StringBuilder sb = new StringBuilder();
+		for (E e : this)
+		{
+			if (e != this.get(0))
+				sb.append(delim);
+			sb.append(e.toString());
+		}
+		return sb.toString();
+	}
+
+	public AbstractCollection&lt;String&gt; toStrings()
+	{
+		EwList&lt;String&gt; list = new EwList&lt;String&gt;();
+		for (E e : this)
+			if (e != null)
+				list.add(e.toString());
+		return list;
+	}
+
+	public String[] toStringArray()
+	{
+		String[] list = new String[size()];
+		int i = 0;
+		for (E e : this)
+			list[i++] = e.toString();
+		return list;
+	}
+
+	public EwList&lt;String&gt; toStringsEwList()
+	{
+		return (EwList&lt;String&gt;) toStrings();
+	}
+
+	public Set&lt;String&gt; toStringsSet()
+	{
+		Set&lt;String&gt; list = new HashSet&lt;String&gt;();
+		for (E e : this)
+			list.add(e.toString());
+		return list;
+	}
+
+	public void addAll(AbstractCollection&lt;E&gt; objects)
+	{
+		for (E e : objects)
+			add(e);
+	}
+
+	public void addAll(E[] that)
+	{
+		for (E e : that)
+			add(e);
+	}
+
+	public void addAllNoDuplicate(AbstractCollection&lt;E&gt; objects)
+	{
+		for (E e : objects)
+			if (!contains(e))
+				add(e);
+	}
+
+	public void addAllNoDuplicate(List&lt;E&gt; objects)
+	{
+		for (E e : objects)
+			if (!contains(e))
+				add(e);
+	}
+
+	public void addAllNoDuplicate(AbstractCollection&lt;E&gt; objects, Comparator&lt;E&gt; comp)
+	{
+		for (E e : objects)
+			if (!contains(e, comp))
+				add(e);
+	}
+
+	public void addAllNoDuplicate(List&lt;E&gt; objects, Comparator&lt;E&gt; comp)
+	{
+		for (E e : objects)
+			if (!contains(e, comp))
+				add(e);
+	}
+
+	public boolean contains(E e, Comparator&lt;E&gt; comp)
+	{
+		for (E ee : this)
+			if (comp.compare(e, ee) == 0)
+				return true;
+		return false;
+	}
+
+	public void addAllNoDuplicateByToString(EwList&lt;E&gt; clone)
+	{
+		for (E e : clone)
+		{
+			AbstractCollection&lt;String&gt; strings = this.toStrings();
+			if (!strings.contains(e.toString()))
+				add(e);
+		}
+	}
+
+	public void addAllNoDuplicateByToString(E[] clone)
+	{
+		for (E e : clone)
+		{
+			AbstractCollection&lt;String&gt; strings = this.toStrings();
+			if (!strings.contains(e.toString()))
+				add(e);
+		}
+	}
+
+	public void addAllNoDuplicateByObjectReference(EwList&lt;E&gt; clone)
+	{
+		for (E e : clone)
+			if (!this.containsObjectReference(e))
+				add(e);
+	}
+
+	public void addAllNoDuplicateByObjectReferenceFast(EwList&lt;E&gt; clone)
+	{
+		LinkedHashSet&lt;E&gt; hs = new LinkedHashSet&lt;E&gt;(this);
+		for (E e : clone)
+			if (!hs.contains(e))
+			{
+				hs.add(e);
+				add(e);
+			}
+	}
+
+	public boolean containsObjectReference(E e)
+	{
+		for (E e2 : this)
+			if (e == e2)
+				return true;
+		return false;
+	}
+
+	public EwList&lt;E&gt; intersect(EwList&lt;E&gt; organizations, Comparator&lt;E&gt; comparator)
+	{
+		EwList&lt;E&gt; list = new EwList&lt;E&gt;();
+		for (E e : this)
+			if (organizations.contains(e, comparator))
+				list.add(e);
+		return list;
+	}
+
+	public EwList&lt;E&gt; intersect(AbstractCollection&lt;?&gt; organizations)
+	{
+		EwList&lt;E&gt; list = new EwList&lt;E&gt;();
+		for (E e : this)
+			if (organizations.contains(e))
+				list.add(e);
+		return list;
+	}
+
+	public EwList&lt;E&gt; intersect(JSONArray organizations) throws JSONException
+	{
+		EwList&lt;E&gt; list = new EwList&lt;E&gt;();
+		for (E e : this)
+			for (int i = 0; i &lt; organizations.length(); i++)
+				if (organizations.get(i).equals(e))
+					list.add(e);
+		return list;
+	}
+
+	public EwList&lt;E&gt; union(List&lt;E&gt; that)
+	{
+		EwList&lt;E&gt; list = new EwList&lt;E&gt;();
+		list.addAll(this);
+		if (that != null)
+			list.addAllNoDuplicate(that);
+		return list;
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public EwList&lt;E&gt; removeDuplicates()
+	{
+		List&lt;E&gt; clone = (List&lt;E&gt;) this.clone();
+		this.clear();
+		this.addAllNoDuplicate(clone);
+		return this;
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public EwList&lt;E&gt; removeDuplicates(Comparator&lt;E&gt; comp)
+	{
+		List&lt;E&gt; clone = (List&lt;E&gt;) this.clone();
+		this.clear();
+		this.addAllNoDuplicate(clone, comp);
+		return this;
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public EwList&lt;E&gt; removeDuplicatesCompareByToString()
+	{
+		EwList&lt;E&gt; clone = new EwList&lt;E&gt;((List&lt;E&gt;) this.clone());
+		this.clear();
+		this.addAllNoDuplicateByToString(clone);
+		return this;
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public EwList&lt;E&gt; removeDuplicatesByObjectReference()
+	{
+		for (int i = 0;i &lt; size();i++)
+			for (int j = i;j &lt; size();j++)
+			{
+				if (i == j) continue;
+				if (get(i) == get(j))
+				{
+					remove(j);
+					j = i;
+				}
+			}
+		return this;
+	}
+
+	public void printAll()
+	{
+		for (E e : this)
+			System.out.println(e);
+	}
+
+	public int indexOf(E e, int pos)
+	{
+		for (int i = pos; i &lt; size(); i++)
+			if (e.equals(get(i)))
+				return i;
+		return -1;
+	}
+
+	public EwList&lt;E&gt; removeWhiteSpace()
+	{
+		EwList&lt;E&gt; el = new EwList&lt;E&gt;();
+		for (E e : this)
+			if (!e.toString().trim().isEmpty())
+				el.add(e);
+		return el;
+	}
+
+	public EwList&lt;E&gt; removeEmpty()
+	{
+		EwList&lt;E&gt; el = new EwList&lt;E&gt;();
+		for (E e : this)
+			if (!e.toString().equals(&quot;&quot;))
+				el.add(e);
+		return el;
+	}
+
+	public EwList&lt;E&gt; removeEmptyOnThis()
+	{
+		List&lt;E&gt; e = new EwList&lt;E&gt;();
+		for (int i = 0; i &lt; size(); i++)
+			if (get(i).toString().equals(&quot;&quot;))
+				e.add(get(i));
+		for (E x : e)
+			remove(x);
+		return this;
+	}
+
+	public List&lt;E&gt; toNormalList()
+	{
+		return new ArrayList&lt;E&gt;(this);
+	}
+
+	public boolean containsType(Class&lt;? extends E&gt; class1)
+	{
+		for (E e : this)
+			if (class1.isInstance(e))
+				return true;
+		return false;
+	}
+
+	public E get(Class&lt;? extends E&gt; class1)
+	{
+		for (E e : this)
+			if (class1.isInstance(e))
+				return e;
+		return null;
+	}
+
+	public static &lt;E extends Comparable&lt;? super E&gt;&gt; List&lt;E&gt; sort(List&lt;E&gt; list)
+	{
+		Collections.sort(list);
+		return list;
+	}
+
+	public static &lt;E&gt; List&lt;E&gt; sort(List&lt;E&gt; list, Comparator&lt;E&gt; comparator)
+	{
+		Collections.sort(list, comparator);
+		return list;
+	}
+
+	public E last()
+	{
+		if (size() == 0)
+			return null;
+		return get(size() - 1);
+	}
+
+	public E first()
+	{
+		if (size() == 0)
+			return null;
+		return get(0);
+	}
+
+	public EwList&lt;E&gt; first(int count)
+	{
+		EwList&lt;E&gt; results = new EwList&lt;E&gt;();
+		for (int i = 0; i &lt; count &amp;&amp; i &lt; size(); i++)
+			results.add(get(i));
+		return results;
+	}
+
+	public boolean containsIgnoreCase(E e)
+	{
+		for (E e2 : this)
+			if (e.toString().equalsIgnoreCase(e2.toString()))
+				return true;
+		return false;
+	}
+
+	public int indexOfIgnoreCase(E e)
+	{
+		int i = 0;
+		for (E e2 : this)
+		{
+			if (e.toString().equalsIgnoreCase(e2.toString()))
+				return i;
+			i++;
+		}
+		return -1;
+	}
+
+	public boolean containsIgnoreCaseByToString(String e)
+	{
+		for (E e2 : this)
+			if (e.toString().equalsIgnoreCase(e2.toString()))
+				return true;
+		return false;
+	}
+
+	public boolean containsAnyIgnoreCase(AbstractCollection&lt;String&gt; organizationFragments)
+	{
+		for (E e2 : this)
+			for (String e : organizationFragments)
+				if (e.toString().equalsIgnoreCase(e2.toString()))
+					return true;
+		return false;
+	}
+
+	public EwList&lt;E&gt; reverse()
+	{
+		Collections.reverse(this);
+		return this;
+	}
+
+	public static void ensureSize(ArrayList&lt;?&gt; list, int size) {
+	    // Prevent excessive copying while we&#x27;re adding
+	    list.ensureCapacity(size);
+	    while (list.size() &lt; size) {
+	        list.add(null);
+	    }
+	}
+
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.common/src/main/java/com/eduworks/lang/json/EwJsonEntity.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.common/src/main/java/com/eduworks/lang/json/EwJsonEntity.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.lang.json;
+
+import java.io.Writer;
+
+import org.json.JSONException;
+
+/**
+ * Defines a basic, Eduworks JSON entity. Provides an API for methods that all
+ * JSON based entities tend to have even though they are not related.
+ * 
+ * @author dharvey
+ * @since September, 2011
+ */
+@Deprecated
+public interface EwJsonEntity
+{
+	/***
+	 * Pretty prints the string.
+	 * 
+	 * @param indentFactor
+	 *            Indentation in spaces.
+	 * @return pretty-printed JSON text of this JSON.
+	 * @throws JSONException
+	 *             If the JSON is malformed.
+	 */
+	public String toString(int indentFactor) throws JSONException;
+
+	/***
+	 * Write the contents of the JSON as text to a writer.
+	 * 
+	 * @param writer Writer to write to.
+	 * @return The writer we wrote to.
+	 * @throws JSONException If the JSON generated becomes malformed.
+	 */
+	public Writer write(Writer writer) throws JSONException;
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

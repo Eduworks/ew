@@ -1,0 +1,12 @@
+{
+    "name": "EW Library",
+    "description": "EW Library API: ",
+    "version": "5.0.0",
+    "url": "http://ew.eduworks.org/",
+    "logo": "http://eduworks.com/img/eduworkslogo-menu.png",
+    "options": {
+        "exclude": "base64toArrayBuffer.js,base64x-1.1.js,blobHelper.js,FileSaver.js,forgeAsync.js,openpgp.js,papaparse.js,random.js,stjs.js,xml2json.js",
+        "themedir": "node_modules/yuidoc-ember-cli-theme",
+        "helpers": ["node_modules/yuidoc-ember-cli-theme/helpers.js"]
+    }
+}

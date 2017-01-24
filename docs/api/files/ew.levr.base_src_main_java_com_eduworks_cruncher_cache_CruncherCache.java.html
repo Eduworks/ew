@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherCache.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherCache.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.cruncher.cache;
+
+import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.eduworks.lang.util.EwCache;
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
+
+/**
+ * Caches a result, and fetches it automatically if it is in cache. Use Name to
+ * specify cache key.
+ *
+ * @class CruncherCache
+ * @module ew.levr.base
+ * @author fritz.ray@eduworks.com
+ * @author devlin.junker@eduworks.com
+ *
+ */
+public class CruncherCache extends Cruncher
+{
+
+    public static Map&lt;String, Object&gt; obj = Collections.synchronizedMap(new HashMap&lt;String, Object&gt;());
+
+    @Override
+    /**
+     * @method cache
+     * @param obj {object} Thing to cache.
+     * @param name {string} Unique name used to store and retrieve the cached object.
+     */
+    public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
+    {
+        String cacheName = &quot;cruncherCache&quot; + getAsString(&quot;name&quot;, c, parameters, dataStreams);
+        Object result = null;
+        Object lock = null;
+        if (optAsBoolean(&quot;removeAllGlobal&quot;, false, c, parameters, dataStreams))
+        {
+            EwCache.caches.clear();
+            return null;
+        }
+        synchronized (getClass())
+        {
+            lock = obj.get(cacheName);
+            if (lock == null)
+            {
+                obj.put(cacheName, lock = cacheName);
+            }
+        }
+        synchronized (lock)
+        {
+            if (optAsBoolean(&quot;remove&quot;, false, c, parameters, dataStreams))
+            {
+                if (optAsBoolean(&quot;global&quot;, false, c, parameters, dataStreams))
+                {
+                    EwCache.getCache(&quot;GlobalCache&quot;).remove(cacheName);
+                } else
+                {
+                    c.remove(cacheName);
+                }
+            } else
+            {
+                if (optAsBoolean(&quot;global&quot;, false, c, parameters, dataStreams))
+                {
+                    result = EwCache.getCache(&quot;GlobalCache&quot;).get(cacheName);
+                } else
+                {
+                    result = c.get(cacheName);
+                }
+                if (result == null)
+                {
+                    result = getObj(c, parameters, dataStreams);
+                    if (!optAsBoolean(&quot;justLock&quot;, false, c, parameters, dataStreams))
+                    {
+                        if (optAsBoolean(&quot;global&quot;, false, c, parameters, dataStreams))
+                        {
+                            EwCache.getCache(&quot;GlobalCache&quot;).put(cacheName, result);
+                        } else
+                        {
+                            c.put(cacheName, result);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public String getDescription()
+    {
+        return &quot;Caches a result, and fetches it automatically if it is in cache. Use Name to specify cache key.&quot;;
+    }
+
+    @Override
+    public String getReturn()
+    {
+        return &quot;Object&quot;;
+    }
+
+    @Override
+    public JSONObject getParameters() throws JSONException
+    {
+        return jo(&quot;obj&quot;, &quot;Object&quot;, &quot;name&quot;, &quot;String&quot;);
+    }
+
+    @Override
+    public String getAttribution()
+    {
+        return ATTRIB_NONE;
+    }
+
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

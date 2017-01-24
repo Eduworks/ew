@@ -12,79 +12,106 @@ import com.eduworks.lang.util.EwCache;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 
+/**
+ * Caches a result, and fetches it automatically if it is in cache. Use Name to
+ * specify cache key.
+ *
+ * @class CruncherCache
+ * @module ew.levr.base
+ * @author fritz.ray@eduworks.com
+ * @author devlin.junker@eduworks.com
+ *
+ */
 public class CruncherCache extends Cruncher
 {
-	public static Map<String, Object> obj = Collections.synchronizedMap(new HashMap<String, Object>());
 
-	@Override
-	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
-	{
-		String cacheName = "cruncherCache" + getAsString("name", c, parameters, dataStreams);
-		Object result = null;
-		Object lock = null;
-		if (optAsBoolean("removeAllGlobal", false, c, parameters, dataStreams))
-		{
-			EwCache.caches.clear();
-			return null;
-		}
-		synchronized (getClass())
-		{
-			lock = obj.get(cacheName);
-			if (lock == null)
-			{
-				obj.put(cacheName, lock = cacheName);
-			}
-		}
-		synchronized (lock)
-		{
-			if (optAsBoolean("remove", false, c, parameters, dataStreams))
-			{
-				if (optAsBoolean("global", false, c, parameters, dataStreams))
-					EwCache.getCache("GlobalCache").remove(cacheName);
-				else
-					c.remove(cacheName);
-			} else
-			{
-				if (optAsBoolean("global", false, c, parameters, dataStreams))
-					result = EwCache.getCache("GlobalCache").get(cacheName);
-				else
-					result = c.get(cacheName);
-				if (result == null)
-				{
-					result = getObj(c, parameters, dataStreams);
-					if (!optAsBoolean("justLock", false, c, parameters, dataStreams))
-						if (optAsBoolean("global", false, c, parameters, dataStreams))
-							EwCache.getCache("GlobalCache").put(cacheName, result);
-						else
-							c.put(cacheName, result);
-				}
-			}
-		}
-		return result;
-	}
+    public static Map<String, Object> obj = Collections.synchronizedMap(new HashMap<String, Object>());
 
-	@Override
-	public String getDescription()
-	{
-		return "Caches a result, and fetches it automatically if it is in cache. Use Name to specify cache key.";
-	}
+    @Override
+    /**
+     * @method cache
+     * @param obj {object} Thing to cache.
+     * @param name {string} Unique name used to store and retrieve the cached object.
+     */
+    public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
+    {
+        String cacheName = "cruncherCache" + getAsString("name", c, parameters, dataStreams);
+        Object result = null;
+        Object lock = null;
+        if (optAsBoolean("removeAllGlobal", false, c, parameters, dataStreams))
+        {
+            EwCache.caches.clear();
+            return null;
+        }
+        synchronized (getClass())
+        {
+            lock = obj.get(cacheName);
+            if (lock == null)
+            {
+                obj.put(cacheName, lock = cacheName);
+            }
+        }
+        synchronized (lock)
+        {
+            if (optAsBoolean("remove", false, c, parameters, dataStreams))
+            {
+                if (optAsBoolean("global", false, c, parameters, dataStreams))
+                {
+                    EwCache.getCache("GlobalCache").remove(cacheName);
+                } else
+                {
+                    c.remove(cacheName);
+                }
+            } else
+            {
+                if (optAsBoolean("global", false, c, parameters, dataStreams))
+                {
+                    result = EwCache.getCache("GlobalCache").get(cacheName);
+                } else
+                {
+                    result = c.get(cacheName);
+                }
+                if (result == null)
+                {
+                    result = getObj(c, parameters, dataStreams);
+                    if (!optAsBoolean("justLock", false, c, parameters, dataStreams))
+                    {
+                        if (optAsBoolean("global", false, c, parameters, dataStreams))
+                        {
+                            EwCache.getCache("GlobalCache").put(cacheName, result);
+                        } else
+                        {
+                            c.put(cacheName, result);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
-	@Override
-	public String getReturn()
-	{
-		return "Object";
-	}
+    @Override
+    public String getDescription()
+    {
+        return "Caches a result, and fetches it automatically if it is in cache. Use Name to specify cache key.";
+    }
 
-	@Override
-	public JSONObject getParameters() throws JSONException
-	{
-		return jo("obj", "Object", "name", "String");
-	}
+    @Override
+    public String getReturn()
+    {
+        return "Object";
+    }
 
-	@Override
-	public String getAttribution()
-	{
-		return ATTRIB_NONE;
-	}
+    @Override
+    public JSONObject getParameters() throws JSONException
+    {
+        return jo("obj", "Object", "name", "String");
+    }
+
+    @Override
+    public String getAttribution()
+    {
+        return ATTRIB_NONE;
+    }
 
 }

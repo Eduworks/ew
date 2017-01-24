@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+/*
+   Copyright 2007 Fourspaces Consulting, LLC
+
+   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
+
+package com.fourspaces.couchdb;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.ProtocolException;
+import java.net.SocketException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpException;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpRequestInterceptor;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthScheme;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.AuthState;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.params.AllClientPNames;
+import org.apache.http.client.params.ClientPNames;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.conn.params.ConnManagerPNames;
+import org.apache.http.conn.routing.HttpRoute;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.AbstractHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.ExecutionContext;
+import org.apache.http.protocol.HttpContext;
+import org.json.JSONArray;
+import org.json.JSONException;
+
+/**
+ * The Session is the main connection to the CouchDB instance. However, you&#x27;ll
+ * only use the Session to obtain a reference to a CouchDB Database. All of the
+ * main work happens at the Database level.
+ * &lt;p&gt;
+ * It uses the Apache&#x27;s HttpClient library for all communication with the
+ * server. This is a little more robust than the standard URLConnection.
+ * &lt;p&gt;
+ * Ex usage: &lt;br&gt;
+ * Session session = new Session(host,port); Database db =
+ * session.getDatabase(&quot;dbname&quot;);
+ *
+ * @author mbreese
+ * @author brennanjubb - HTTP-Auth username/pass
+ */
+public class Session
+{
+	private static final String DEFAULT_CHARSET = &quot;UTF-8&quot;;
+
+	private static final String MIME_TYPE_JSON = &quot;application/json&quot;;
+
+	protected Log log = LogFactory.getLog(Session.class);
+	protected final String host;
+	protected final int port;
+	protected final String user;
+	protected final String pass;
+	protected final boolean secure;
+	protected final boolean usesAuth;
+
+	protected CouchResponse lastResponse;
+
+	BasicHttpContext localContext = new BasicHttpContext();
+
+	BasicScheme basicAuth = new BasicScheme();
+
+	protected HttpClient httpClient;
+	protected HttpParams httpParams;
+
+	static class PreemptiveAuthInterceptor implements HttpRequestInterceptor
+	{
+
+		public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException
+		{
+			AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
+
+			// If no auth scheme avaialble yet, try to initialize it
+			// preemptively
+			if (authState.getAuthScheme() == null)
+			{
+				AuthScheme authScheme = (AuthScheme) context.getAttribute(&quot;preemptive-auth&quot;);
+				CredentialsProvider credsProvider = (CredentialsProvider) context.getAttribute(ClientContext.CREDS_PROVIDER);
+				HttpHost targetHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
+				if (authScheme != null)
+				{
+					Credentials creds = credsProvider.getCredentials(new AuthScope(targetHost.getHostName(), targetHost.getPort()));
+					if (creds == null)
+					{
+						throw new HttpException(&quot;No credentials for preemptive authentication&quot;);
+					}
+					authState.setAuthScheme(authScheme);
+					authState.setCredentials(creds);
+				}
+			}
+
+		}
+
+	}
+
+	/**
+	 * Constructor for obtaining a Session with an HTTP-AUTH username/password
+	 * and (optionally) a secure connection This isn&#x27;t supported by CouchDB -
+	 * you need a proxy in front to use this
+	 *
+	 * @param host
+	 *            - hostname
+	 * @param port
+	 *            - port to use
+	 * @param user
+	 *            - username
+	 * @param pass
+	 *            - password
+	 * @param usesAuth Uses basic auth?
+	 * @param secure
+	 *            - use an SSL connection?
+	 */
+	public Session(String host, int port, String user, String pass, boolean usesAuth, boolean secure)
+	{
+		this.host = host;
+		this.port = port;
+		this.user = user;
+		this.pass = pass;
+		this.usesAuth = usesAuth;
+		this.secure = secure;
+
+		localContext.setAttribute(&quot;preemptive-auth&quot;, basicAuth);
+		httpParams = new BasicHttpParams();
+		httpParams.setIntParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 200);
+		httpParams.setParameter(CoreConnectionPNames.TCP_NODELAY, true);
+		httpParams.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new org.apache.http.conn.params.ConnPerRoute()
+		{
+
+			@Override
+			public int getMaxForRoute(HttpRoute arg0)
+			{
+				return 1000;
+			}
+		});
+		SchemeRegistry schemeRegistry = new SchemeRegistry();
+
+		schemeRegistry.register(new Scheme(&quot;http&quot;, PlainSocketFactory.getSocketFactory(), 80));
+		schemeRegistry.register(new Scheme(&quot;https&quot;, org.apache.http.conn.ssl.SSLSocketFactory.getSocketFactory(), 443));
+
+		ThreadSafeClientConnManager connManager = new ThreadSafeClientConnManager(httpParams, schemeRegistry);
+
+		DefaultHttpClient defaultClient = new DefaultHttpClient(connManager, httpParams);
+		if (user != null)
+		{
+			defaultClient.addRequestInterceptor(new PreemptiveAuthInterceptor(), 0);
+			defaultClient.getCredentialsProvider().setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(user, pass));
+		}
+
+		this.httpClient = defaultClient;
+
+		((AbstractHttpClient) httpClient).addRequestInterceptor(new PreemptiveAuthInterceptor(), 0);
+
+		setUserAgent(&quot;couchdb4j&quot;);
+		setSocketTimeout((60 * 1000));
+		setConnectionTimeout((60 * 1000));
+
+	}
+
+	/**
+	 * Constructor for obtaining a Session with an HTTP-AUTH username/password
+	 * This isn&#x27;t supported by CouchDB - you need a proxy in front to use this
+	 *
+	 * @param host
+	 *            Host or IP of the remote machine
+	 * @param port
+	 *            Port of the remote machine
+	 * @param user
+	 *            - username
+	 * @param pass
+	 *            - password
+	 */
+	public Session(String host, int port, String user, String pass)
+	{
+		this(host, port, user, pass, false, false);
+	}
+
+	/**
+	 * Main constructor for obtaining a Session.
+	 *
+	 * @param host
+	 *            Hostname or IP of the server
+	 * @param port
+	 *            Port to access
+	 */
+	public Session(String host, int port)
+	{
+		this(host, port, null, null, false, false);
+	}
+
+	/**
+	 * Optional constructor that indicates an HTTPS connection should be used.
+	 * This isn&#x27;t supported by CouchDB - you need a proxy in front to use this
+	 *
+	 * @param host
+	 *            Hostname or IO of the server
+	 * @param port
+	 *            Port to access
+	 * @param secure
+	 *            Whether the connection is secure (HTTPS)
+	 */
+	public Session(String host, int port, boolean secure)
+	{
+		this(host, port, null, null, false, secure);
+	}
+
+	/**
+	 * Read-only
+	 *
+	 * @return the host name
+	 */
+	public String getHost()
+	{
+		return host;
+	}
+
+	/**
+	 * read-only
+	 *
+	 * @return the port
+	 */
+	public int getPort()
+	{
+		return port;
+	}
+
+	/**
+	 * Is this a secured connection (set in constructor)
+	 *
+	 * @return True if secured.
+	 */
+	public boolean isSecure()
+	{
+		return secure;
+	}
+
+	/**
+	 * Retrieves a list of all database names from the server
+	 *
+	 * @return List of database names.
+	 * @throws JSONException
+	 *             JSON formatting issues.
+	 */
+	public List&lt;String&gt; getDatabaseNames() throws JSONException
+	{
+		CouchResponse resp = get(&quot;_all_dbs&quot;);
+		JSONArray ar = resp.getBodyAsJSONArray();
+
+		List&lt;String&gt; dbs = new ArrayList&lt;String&gt;(ar.length());
+		for (int i = 0; i &lt; ar.length(); i++)
+		{
+			dbs.add(ar.getString(i));
+		}
+		return dbs;
+	}
+
+	/**
+	 * Loads a database instance from the server
+	 *
+	 * @param name
+	 *            Name of the database.
+	 * @return the database (or null if it doesn&#x27;t exist)
+	 * @throws JSONException
+	 *             JSON formatting issues.
+	 */
+	public Database getDatabase(String name) throws JSONException
+	{
+		CouchResponse resp = get(name);
+		if (resp.isOk())
+		{
+			return new Database(resp.getBodyAsJSONObject(), this);
+		}
+		else
+		{
+			log.warn(&quot;Error getting database: &quot; + name);
+		}
+		return null;
+	}
+
+	/**
+	 * Creates a new database (if the name doesn&#x27;t already exist)
+	 *
+	 * @param name
+	 *            Name of the database.
+	 * @return the new database (or null if there was an error)
+	 * @throws JSONException
+	 *             JSON formatting issues
+	 */
+	public Database createDatabase(String name) throws JSONException
+	{
+		String dbname = name.toLowerCase().replaceAll(&quot;[^a-z0-9_$()+\\-/]&quot;, &quot;_&quot;);
+		if (!dbname.endsWith(&quot;/&quot;))
+		{
+			dbname += &quot;/&quot;;
+		}
+		CouchResponse resp = put(dbname);
+		if (resp.isOk())
+		{
+			return getDatabase(dbname);
+		}
+		else
+		{
+			log.warn(&quot;Error creating database: &quot; + name);
+			return null;
+		}
+	}
+
+	/**
+	 * Deletes a database (by name) from the CouchDB server.
+	 *
+	 * @param name
+	 *            Name of the database
+	 * @return true = successful, false = an error occurred (likely the database
+	 *         named didn&#x27;t exist)
+	 * @throws JSONException
+	 *             JSON formatting issues.
+	 */
+	public boolean deleteDatabase(String name) throws JSONException
+	{
+		return delete(name).isOk();
+	}
+
+	/**
+	 * Deletes a database from the CouchDB server
+	 *
+	 * @param db
+	 *            Database to delete
+	 * @return was successful
+	 * @throws JSONException
+	 *             JSON formatting issues
+	 */
+	public boolean deleteDatabase(Database db) throws JSONException
+	{
+		return deleteDatabase(db.getName());
+	}
+
+	/**
+	 * For a given url (such as /_all_dbs/), build the database connection url
+	 *
+	 * @param url
+	 * @return the absolute URL (hostname/port/etc)
+	 */
+	protected String buildUrl(String url)
+	{
+		return ((secure) ? &quot;https&quot; : &quot;http&quot;) + &quot;://&quot; + host + &quot;:&quot; + port + &quot;/&quot; + url;
+	}
+
+	protected String buildUrl(String url, String queryString)
+	{
+		return (queryString != null) ? buildUrl(url) + &quot;?&quot; + queryString : buildUrl(url);
+	}
+
+	protected String buildUrl(String url, NameValuePair[] params)
+	{
+
+		url = ((secure) ? &quot;https&quot; : &quot;http&quot;) + &quot;://&quot; + host + &quot;:&quot; + port + &quot;/&quot; + url;
+
+		if (params.length &gt; 0)
+		{
+			url += &quot;?&quot;;
+		}
+		for (NameValuePair param : params)
+		{
+			url += param.getName() + &quot;=&quot; + param.getValue();
+		}
+
+		return url;
+
+	}
+
+	/**
+	 * Package level access to send a DELETE request to the given URL
+	 *
+	 * @param url
+	 * @return
+	 * @throws JSONException
+	 */
+	CouchResponse delete(String url) throws JSONException
+	{
+		HttpDelete del = new HttpDelete(buildUrl(url));
+		return http(del);
+	}
+
+	/**
+	 * Send a POST with no body / parameters
+	 *
+	 * @param url
+	 * @return
+	 * @throws JSONException
+	 */
+	CouchResponse post(String url) throws JSONException
+	{
+		return post(url, null, null);
+	}
+
+	/**
+	 * Send a POST with body
+	 *
+	 * @param url
+	 * @param content
+	 * @return
+	 * @throws JSONException
+	 */
+	CouchResponse post(String url, String content) throws JSONException
+	{
+		return post(url, content, null);
+	}
+
+	/**
+	 * Send a POST with a body and query string
+	 *
+	 * @param url
+	 * @param content
+	 * @param queryString
+	 * @return
+	 * @throws JSONException
+	 */
+	CouchResponse post(String url, String content, String queryString) throws JSONException
+	{
+		HttpPost post = new HttpPost(buildUrl(url, queryString));
+		if (content != null)
+		{
+			HttpEntity entity;
+			try
+			{
+				entity = new StringEntity(content, DEFAULT_CHARSET);
+				post.setEntity(entity);
+				post.setHeader(new BasicHeader(&quot;Content-Type&quot;, MIME_TYPE_JSON));
+			}
+			catch (UnsupportedEncodingException e)
+			{
+				log.error(ExceptionUtils.getStackTrace(e));
+			}
+		}
+
+		return http(post);
+	}
+
+	/**
+	 * Send a PUT (for creating databases)
+	 *
+	 * @param url
+	 * @return
+	 * @throws JSONException
+	 */
+	CouchResponse put(String url) throws JSONException
+	{
+		return put(url, null);
+	}
+
+	/**
+	 * Send a PUT with a body (for creating documents)
+	 *
+	 * @param url
+	 * @param content
+	 * @return
+	 * @throws JSONException
+	 */
+	CouchResponse put(String url, String content) throws JSONException
+	{
+		HttpPut put = new HttpPut(buildUrl(url));
+		if (content != null)
+		{
+			HttpEntity entity;
+			try
+			{
+				entity = new StringEntity(content, DEFAULT_CHARSET);
+				put.setEntity(entity);
+				put.setHeader(new BasicHeader(&quot;Content-Type&quot;, MIME_TYPE_JSON));
+			}
+			catch (UnsupportedEncodingException e)
+			{
+				log.error(ExceptionUtils.getStackTrace(e));
+			}
+		}
+		return http(put);
+	}
+
+	/**
+	 * Overloaded Put using by attachments
+	 *
+	 * @throws JSONException
+	 */
+	CouchResponse put(String url, String ctype, InputStream attachment) throws JSONException
+	{
+		HttpPut put = new HttpPut(buildUrl(url));
+		if (attachment != null)
+		{
+			HttpEntity entity;
+			try
+			{
+				entity = new ByteArrayEntity(IOUtils.toByteArray(attachment));
+				put.setEntity(entity);
+				put.setHeader(new BasicHeader(&quot;Content-Type&quot;, ctype));
+			}
+			catch (UnsupportedEncodingException e)
+			{
+				log.error(ExceptionUtils.getStackTrace(e));
+			}
+			catch (IOException e)
+			{
+				log.error(ExceptionUtils.getStackTrace(e));
+			}
+		}
+		return http(put);
+	}
+
+	/**
+	 * Send a GET request
+	 *
+	 * @param url
+	 * @return
+	 * @throws JSONException
+	 */
+	CouchResponse get(String url) throws JSONException
+	{
+		HttpGet get = new HttpGet(buildUrl(url));
+		return http(get);
+	}
+
+	public CouchResponse getSoft(String url) throws JSONException
+	{
+		HttpGet get = new HttpGet(buildUrl(url));
+		return http(get, 30);
+	}
+
+	/**
+	 * Send a GET request with a number of name/value pairs as a query string
+	 *
+	 * @param url
+	 * @param queryParams
+	 * @return
+	 * @throws JSONException
+	 */
+	CouchResponse get(String url, NameValuePair[] queryParams) throws JSONException
+	{
+		HttpGet get = new HttpGet(buildUrl(url, queryParams));
+		return http(get);
+	}
+
+	/**
+	 * Send a GET request with a queryString (?foo=bar)
+	 *
+	 * @param url
+	 * @param queryString
+	 * @return
+	 * @throws JSONException
+	 */
+	CouchResponse get(String url, String queryString) throws JSONException
+	{
+		HttpGet get = new HttpGet(buildUrl(url, queryString));
+		return http(get);
+	}
+
+	/**
+	 * Method that actually performs the GET/PUT/POST/DELETE calls. Executes the
+	 * given HttpMethod on the HttpClient object (one HttpClient per Session).
+	 * &lt;p&gt;
+	 * This returns a CouchResponse, which can be used to get the status of the
+	 * call (isOk), and any headers / body that was sent back.
+	 *
+	 * @param req
+	 * @return the CouchResponse (status / error / json document)
+	 * @throws JSONException
+	 */
+	protected CouchResponse http(HttpRequestBase req) throws JSONException
+	{
+		return http(req, 0);
+	}
+
+	protected CouchResponse http(HttpRequestBase req, int attempt) throws JSONException
+	{
+		HttpResponse httpResponse = null;
+		HttpEntity entity = null;
+		CouchResponse response = null;
+		try
+		{
+			if (usesAuth)
+			{
+				req.getParams().setBooleanParameter(ClientPNames.HANDLE_AUTHENTICATION, true);
+			}
+			httpResponse = httpClient.execute(req, localContext);
+			entity = httpResponse.getEntity();
+			response = new CouchResponse(req, httpResponse);
+		}
+		catch (ProtocolException e)
+		{
+			log.error(ExceptionUtils.getStackTrace(e));
+			return null;
+		}
+		catch (IllegalStateException e)
+		{
+			log.error(ExceptionUtils.getStackTrace(e));
+			if (attempt &lt; 30)
+				http(req, attempt + 1);
+		}
+		catch (IllegalArgumentException e)
+		{
+			if (attempt &lt; 30)
+				http(req, attempt + 1);
+		}
+		catch (SocketException e)
+		{
+			if (attempt &lt; 30)
+				http(req, attempt + 1);
+			else
+				log.error(e.getMessage());
+		}
+		catch (IOException e)
+		{
+			log.error(ExceptionUtils.getStackTrace(e));
+			if (attempt &lt; 30)
+				http(req, attempt + 1);
+		}
+		finally
+		{
+			if (entity != null)
+			{
+				try
+				{
+					entity.consumeContent();
+				}
+				catch (IOException e)
+				{
+					// throw new RuntimeException(e);
+				}
+			}
+		}
+		if (response != null)
+			if (&quot;unauthorized&quot;.equals(response.getErrorId()))
+				return http(req);
+		return response;
+	}
+
+	public void setUserAgent(String ua)
+	{
+		httpParams.setParameter(AllClientPNames.USER_AGENT, ua);
+	}
+
+	public void setConnectionTimeout(int milliseconds)
+	{
+		httpParams.setIntParameter(AllClientPNames.CONNECTION_TIMEOUT, milliseconds);
+	}
+
+	public void setSocketTimeout(int milliseconds)
+	{
+		httpParams.setIntParameter(AllClientPNames.SO_TIMEOUT, milliseconds);
+	}
+
+	protected String encodeParameter(String paramValue)
+	{
+		try
+		{
+			return URLEncoder.encode(paramValue, DEFAULT_CHARSET);
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+}
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

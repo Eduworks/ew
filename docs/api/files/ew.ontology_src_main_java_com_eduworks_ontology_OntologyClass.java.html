@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.ontology;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLDatatype;
+
+import com.hp.hpl.jena.ontology.OntClass;
+import com.hp.hpl.jena.ontology.OntProperty;
+import com.hp.hpl.jena.ontology.OntResource;
+import com.hp.hpl.jena.ontology.Restriction;
+import com.hp.hpl.jena.rdf.model.RDFList;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.vocabulary.OWL;
+import com.hp.hpl.jena.vocabulary.OWL2;
+import com.hp.hpl.jena.vocabulary.XSD;
+
+public class OntologyClass extends OntologyWrapper
+{
+
+	public static OntologyClass createClass(Ontology ont, String classId, JSONObject vals)
+	{
+		String newClassIri = ont.getBaseIRI() + &quot;#&quot; + classId;
+
+		OntClass jenaClass = ont.getJenaModel().createClass(newClassIri);
+
+		try
+		{
+			JSONArray superClassIds = new JSONArray();
+
+			// Add Super Classes
+			boolean hasThingSuper = false;
+			if (vals.has(&quot;subclassOf&quot;))
+			{
+				String superclassIdString = vals.getString(&quot;subclassOf&quot;);
+
+				if (superclassIdString.contains(idCharacter + &quot;Thing&quot;))
+				{
+					hasThingSuper = true;
+				}
+
+				if (superclassIdString.startsWith(&quot;[&quot;) &amp;&amp; superclassIdString.endsWith(&quot;]&quot;))
+				{
+					superClassIds = vals.getJSONArray(&quot;subclassOf&quot;);
+				}
+				else
+				{
+					superClassIds.put(superclassIdString);
+				}
+			}
+
+			// Class always has superclass of Thing!
+			if (!hasThingSuper)
+			{
+				superClassIds.put(idCharacter + &quot;Thing&quot;);
+			}
+
+			getSubclassAxioms(ont, jenaClass, superClassIds);
+
+			// Class Requirements
+			if (vals.has(&quot;requirements&quot;))
+			{
+				try
+				{
+					JSONObject req = vals.getJSONObject(&quot;requirements&quot;);
+
+					getRestrictionAxioms(ont, jenaClass, superClassIds, req, true);
+				}
+				catch (JSONException e)
+				{
+					throw new RuntimeException(
+							&quot;Requirements must be in the form of a JSONObject {&quot; + idCharacter + &quot;&lt;propertyId&gt;: [intersect-value1, intersect-value2, ...]}&quot;);
+				}
+			}
+
+			// Class Restrictions
+			if (vals.has(&quot;restrictions&quot;))
+			{
+				try
+				{
+					JSONObject res = vals.getJSONObject(&quot;restrictions&quot;);
+
+					getRestrictionAxioms(ont, jenaClass, superClassIds, res, false);
+				}
+				catch (JSONException e)
+				{
+					throw new RuntimeException(
+							&quot;Requirements must be in the form of a JSONObject {&quot; + idCharacter + &quot;&lt;propertyId&gt;: [intersect-value1, intersect-value2, ...]}&quot;);
+				}
+			}
+		}
+		catch (JSONException e)
+		{
+			throw new RuntimeException(&quot;Not sure why this happened, error accessing Values JSONObject: &quot; + e.getMessage());
+		}
+
+		// Make Disjoint from sibling classes, why should we have two classes
+		// with the same hierarchy who are the same?
+		for (OntClass sup : jenaClass.listSuperClasses(true).toSet())
+		{
+			for (OntClass sibling : sup.listSubClasses(true).toSet())
+			{
+				if (!jenaClass.equals(sibling))
+				{
+					jenaClass.addDisjointWith(sibling);
+				}
+			}
+		}
+
+		return new OntologyClass(ont, jenaClass);
+	}
+
+	private static void getRestrictionAxioms(Ontology ont, OntClass jenaClass, JSONArray superClassIds, JSONObject requirements, boolean required)
+	{
+		Iterator&lt;String&gt; k = requirements.keys();
+
+		while (k.hasNext())
+		{
+			String key = k.next();
+
+			if (!key.startsWith(idCharacter))
+			{
+				throw new RuntimeException(&quot;requirements Property Id does is not an &#x27;&quot; + idCharacter + &quot;&#x27;-formatted ID&quot;);
+			}
+			else
+			{
+				OntologyProperty prop = ont.getProperty(key);
+
+				JSONArray restrictionValues = new JSONArray();
+
+				try
+				{
+					String restrictionValueString = requirements.getString(key);
+					if (restrictionValueString.startsWith(&quot;[&quot;) &amp;&amp; restrictionValueString.endsWith(&quot;]&quot;))
+					{
+						restrictionValues = requirements.getJSONArray(key);
+					}
+					else
+					{
+						restrictionValues.put(restrictionValueString);
+					}
+				}
+				catch (JSONException e)
+				{
+					throw new RuntimeException(&quot;error reading from requirements object: &quot; + requirements);
+				}
+
+				getRestrictionAxiom(ont, jenaClass, prop, superClassIds, restrictionValues, required);
+			}
+		}
+	}
+
+	private static void getRestrictionAxiom(Ontology ont, OntClass jenaClass, OntologyProperty prop, JSONArray superClasses, JSONArray values, boolean required)
+	{
+		JSONArray propDomains = prop.getDomain();
+		JSONArray propRanges = prop.getRange();
+
+		if (propDomains.length() &gt; 0)
+		{
+			for (int i = 0; i &lt; propDomains.length(); i++)
+			{
+				boolean inDomain = false;
+				for (int j = 0; j &lt; superClasses.length(); j++)
+				{
+					try
+					{
+						if (superClasses.getString(j).equals(propDomains.get(i)))
+						{
+							inDomain = true;
+							break;
+						}
+					}
+					catch (JSONException e)
+					{
+						throw new RuntimeException(&quot;Error reading index &quot; + j + &quot; from superClasses &quot; + superClasses);
+					}
+				}
+
+				if (inDomain)
+				{
+					break;
+				}
+				else if (i == (propDomains.length() - 1))
+				{
+					throw new RuntimeException(&quot;Property&lt;&quot; + prop.getId() + &quot;&gt; has domain &quot; + propDomains + &quot; that the new class (superClasses: &quot; + superClasses
+							+ &quot;) does not satisfy&quot;);
+				}
+			}
+		}
+
+		if (propRanges.length() &gt; 0)
+		{
+			for (int i = 0; i &lt; values.length(); i++)
+			{
+				try
+				{
+					String valString = values.getString(i);
+
+					boolean inRange = false;
+
+					if (valString.startsWith(&quot;xsd:&quot;))
+					{
+						if (prop.isDataProperty())
+						{
+							try
+							{
+								if (values.length() &gt; 1)
+								{
+									throw new RuntimeException(&quot;Data Properties cannot have more than one DataRange requirement&quot;);
+								}
+								else if (propRanges.length() == 0 || valString.equals(propRanges.getString(0)))
+								{
+									inRange = true;
+								}
+							}
+							catch (JSONException e)
+							{
+								throw new RuntimeException(&quot;Error Reading first value from property ranges: &quot; + propRanges);
+							}
+						}
+						else
+						{
+							throw new RuntimeException(&quot;Cannot set Object Property Requirement to a dataType&quot;);
+						}
+					}
+					else if (valString.startsWith(idCharacter))
+					{
+						if (prop.isObjectProperty())
+						{
+							if (propRanges.length() == 0)
+							{
+								inRange = true;
+							}
+							else
+							{
+								for (int j = 0; j &lt; propRanges.length(); j++)
+								{
+									try
+									{
+										Set&lt;String&gt; superIds = new HashSet&lt;String&gt;();
+										for (OntologyClass cls : ont.getClass(valString).getSuperClasses())
+										{
+											superIds.add(cls.getId());
+										}
+										if (superIds.contains(propRanges.getString(j)))
+										{
+											inRange = true;
+										}
+										else if (!inRange &amp;&amp; j == propRanges.length() - 1)
+										{
+											throw new RuntimeException(&quot;Error property (&quot; + prop.getId() + &quot;)has range (&quot; + propRanges
+													+ &quot;), but restriction value class (&quot; + valString + &quot;) doesn&#x27;t have super (&quot; + superIds + &quot;) in range&quot;);
+										}
+									}
+									catch (JSONException e)
+									{
+										throw new RuntimeException(&quot;Error reading index &quot; + j + &quot; from property ranges: &quot; + propRanges);
+									}
+								}
+							}
+						}
+						else
+						{
+							// TODO: Probably not true in the case of defined
+							// datatypes....
+							throw new RuntimeException(&quot;Cannot set Data Property Requirement to an identifier&quot;);
+						}
+					}
+					else
+					{
+						throw new RuntimeException(&quot;Unknown value&lt;&quot; + valString + &quot;&gt; for Property&lt;&quot; + prop.getId() + &quot;&gt;&quot;);
+					}
+
+					if (inRange)
+					{
+						break;
+					}
+					else if (i == (values.length() - 1))
+					{
+						throw new RuntimeException(
+								&quot;Property&lt;&quot; + prop.getId() + &quot;&gt; has range &quot; + propRanges + &quot; that the value&lt;&quot; + valString + &quot;&gt; does not satisfy&quot;);
+					}
+
+				}
+				catch (JSONException e)
+				{
+					throw new RuntimeException(&quot;Error Reading index &quot; + i + &quot; from values: &quot; + values);
+				}
+
+			}
+		}
+
+		if (prop.isDataProperty())
+		{
+			OWLDatatype type;
+			Resource dataType;
+
+			try
+			{
+				String valString = values.getString(0);
+				// TODO: Add more Data Types
+				if (valString.equalsIgnoreCase(&quot;xsd:string&quot;))
+				{
+					dataType = XSD.xstring;
+				}
+				else if (valString.equalsIgnoreCase(&quot;xsd:integer&quot;))
+				{
+					dataType = XSD.xint;
+				}
+				else if (valString.equalsIgnoreCase(&quot;xsd:double&quot;))
+				{
+					dataType = XSD.xdouble;
+				}
+				else
+				{
+					throw new RuntimeException(&quot;Unrecognized Data Type&lt;&quot; + valString + &quot;&gt; for Property&lt;&quot; + prop.getId() + &quot;&gt;&quot;);
+				}
+			}
+			catch (JSONException e)
+			{
+				throw new RuntimeException(&quot;Error Reading first value from value array: &quot; + values);
+			}
+
+			if (required)
+			{
+				jenaClass.addSuperClass(ont.getJenaModel().createSomeValuesFromRestriction(null, prop.getJenaProperty(), dataType));
+			}
+			else
+			{
+				jenaClass.addSuperClass(ont.getJenaModel().createAllValuesFromRestriction(null, prop.getJenaProperty(), dataType));
+			}
+		}
+		else
+		{
+			OntClass restrictedIntersection = null;
+
+			for (int i = 0; i &lt; values.length(); i++)
+			{
+				try
+				{
+					OntologyClass cls = ont.getClass(values.getString(i));
+
+					// TODO: THIS NEEDS TO BE CHECKED!
+					if (restrictedIntersection == null)
+					{
+						restrictedIntersection = cls.getJenaClass();
+					}
+					else
+					{
+						RDFList list = ont.getJenaModel().createList(restrictedIntersection.listRDFTypes(false));
+						restrictedIntersection = ont.getJenaModel().createIntersectionClass(null, list.append(cls.getJenaClass().listRDFTypes(false)));
+					}
+
+				}
+				catch (JSONException e)
+				{
+					throw new RuntimeException(&quot;Error Reading index &quot; + i + &quot; from Values :&quot; + values);
+				}
+			}
+
+			if (required)
+			{
+				Set&lt;OntClass&gt; supers = jenaClass.listSuperClasses().toSet();
+				Resource restriction = ont.getJenaModel().createSomeValuesFromRestriction(null, prop.getJenaProperty(), restrictedIntersection);
+				jenaClass.addSuperClass(restriction);
+
+				supers = jenaClass.listSuperClasses().toSet();
+
+			}
+			else
+			{
+				jenaClass.addSuperClass(ont.getJenaModel().createAllValuesFromRestriction(null, prop.getJenaProperty(), restrictedIntersection));
+
+			}
+		}
+	}
+
+	private static void getSubclassAxioms(Ontology ont, OntClass jenaClass, JSONArray superClassIds)
+	{
+
+		// Iterate through superclassIds adding them as superclasses
+		for (int i = 0; i &lt; superClassIds.length(); i++)
+		{
+			try
+			{
+				String superclassIdString = superClassIds.getString(i);
+				if (!superclassIdString.equals(idCharacter + &quot;Thing&quot;))
+				{
+					jenaClass.addSuperClass(ont.getClass(superclassIdString).getJenaClass());
+				}
+			}
+			catch (JSONException e)
+			{
+				throw new RuntimeException(&quot;Error Extracting SuperClass Id from List of Ids&quot;);
+			}
+		}
+	}
+
+	private Ontology ont;
+	private OntClass jenaClass;
+
+	/**
+	 * Creates a new Ontology Class Object, saving the necessary data for future
+	 * manipulation/querying of the class. There is no guarantee that the class
+	 * already exists in the ontology, this could be creating a new class right
+	 * now
+	 * 
+	 * @param o
+	 *            - Ontology that the class belongs to
+	 * @param identifier
+	 *            - IRI of the Class that will be returned
+	 */
+	public OntologyClass(Ontology o, IRI identifier)
+	{
+		// TODO Check that class exists already somehow? (referencing axioms
+		// trick?)
+
+		ont = o;
+		// _class = ont.getOWLDataFactory().getOWLClass(identifier);
+	}
+
+	public OntologyClass(Ontology o, OntClass cls)
+	{
+		ont = o;
+		if (cls == null)
+		{
+			throw new RuntimeException(&quot;Jena Class cannot be null&quot;);
+		}
+		jenaClass = cls;
+	}
+
+	public OntologyClass(Ontology o, OWLClass cls, OntClass jenaCls)
+	{
+		this(o, jenaCls);
+	}
+
+	public JSONObject update(JSONObject newVals)
+	{
+		// Not yet completed!
+
+		JSONObject oldValues = this.getJSONRepresentation();
+		oldValues.remove(&quot;instanceId&quot;);
+		JSONObject currentValues = new JSONObject();
+
+		Iterator&lt;String&gt; k = oldValues.keys();
+
+		// TODO: look for empty values (to be deleted props)
+		while (k.hasNext())
+		{
+			String key = k.next();
+			try
+			{
+				currentValues.put(key, oldValues.get(key));
+			}
+			catch (JSONException e)
+			{
+				throw new RuntimeException(&quot;error copying current values to old values&quot;);
+			}
+		}
+
+		JSONArray superclassIds = new JSONArray();
+
+		jenaClass.removeProperties();
+		jenaClass.addSuperClass(OWL.Thing);
+
+		try
+		{
+			if (newVals.has(&quot;subclassOf&quot;))
+			{
+
+				String superclassIdString = newVals.getString(&quot;subclassOf&quot;);
+				if (superclassIdString.startsWith(&quot;[&quot;) &amp;&amp; superclassIdString.endsWith(&quot;]&quot;))
+				{
+					superclassIds = newVals.getJSONArray(&quot;subclassOf&quot;);
+				}
+				else
+				{
+					superclassIds.put(superclassIdString);
+				}
+
+				getSubclassAxioms(ont, jenaClass, superclassIds);
+			}
+			else
+			{
+				for (OntologyClass cls : getSuperClasses())
+				{
+					superclassIds.put(cls.getId());
+				}
+			}
+
+			if (newVals.has(&quot;requirements&quot;))
+			{
+				getRestrictionAxioms(ont, jenaClass, superclassIds, newVals.getJSONObject(&quot;requirements&quot;), true);
+			}
+
+			if (newVals.has(&quot;restrictions&quot;))
+			{
+				getRestrictionAxioms(ont, jenaClass, superclassIds, newVals.getJSONObject(&quot;restrictions&quot;), false);
+			}
+		}
+		catch (JSONException e)
+		{
+			throw new RuntimeException(&quot;Error getting values from newvalue object:&quot; + newVals);
+		}
+
+		return this.getJSONRepresentation();
+	}
+
+	/**
+	 * 
+	 */
+	public void delete()
+	{
+		jenaClass.remove();
+
+	}
+
+	/**
+	 * Returns all of the Ontology Instances of this class in a map
+	 * 
+	 * @return a Map of String (InstanceId) to the OntologyInstance it
+	 *         identifies
+	 */
+	public Map&lt;String, OntologyInstance&gt; getAllInstances()
+	{
+		return getAllInstances(true);
+	}
+
+	public Map&lt;String, OntologyInstance&gt; getAllInstances(boolean local)
+	{
+		Map&lt;String, OntologyInstance&gt; instances = new HashMap&lt;String, OntologyInstance&gt;();
+
+		String classId = getIdentifierString(jenaClass.getURI());
+
+		OntologyClass cls = ont.getClass(classId);
+
+		// TODO: Make sure this finds inferred instances
+		for (OntResource ind : jenaClass.listInstances().toSet())
+		{
+			if (ind.isIndividual() &amp;&amp; (!local || ind.getURI().startsWith(ont.getBaseIRI())))
+			{
+				OntologyInstance instance = new OntologyInstance(ind.asIndividual(), ont);
+				instances.put(instance.getId(), instance);
+			}
+		}
+
+		return instances;
+	}
+
+	/**
+	 * Returns a JSONObject that contains the information that represents this
+	 * class of the form: Where propId is an (idChar)-formatted Id of a property
+	 * @return JSON representation of the ontology.
+	 */
+	public JSONObject getJSONRepresentation()
+	{
+
+		/*
+		 * { classId &lt;classId&gt;, requirements: { (idChar)&lt;propId&gt;:
+		 * [(idChar)&lt;valueType&gt;, ...] }, restrictions: { (idChar)&lt;propId&gt;:
+		 * [(idChar)&lt;valueType&gt;, ...] } }
+		 */
+		JSONObject obj = new JSONObject();
+
+		JSONObject req = new JSONObject(), rest = new JSONObject();
+
+		// TODO: NEED TO USE REASONER TO GET PARENT CLASS PROPERTY RESTRICTIONS
+
+		// Class&#x27;s Necessary and Sufficient conditions are stored in superclass
+		// assertions
+
+		List&lt;OntClass&gt; supers = jenaClass.listSuperClasses().toList();
+
+		for (int index = 0; index &lt; supers.size(); index++)
+		{
+			OntClass cls = supers.get(index);
+
+			if (cls.isRestriction())
+			{
+				Restriction r = cls.asRestriction();
+				String valueId = &quot;&quot;;
+
+				OntProperty prop = r.getOnProperty();
+				Resource restrictionValue;
+
+				if (r.isAllValuesFromRestriction())
+				{
+					restrictionValue = r.asAllValuesFromRestriction().getAllValuesFrom();
+				}
+				else if (r.isSomeValuesFromRestriction())
+				{
+					restrictionValue = r.asSomeValuesFromRestriction().getSomeValuesFrom();
+				}
+				else
+				{
+					// TODO: Implement Cardinality Restrictions
+					throw new RuntimeException(&quot;Unexpected Restriction Type&quot;);
+				}
+
+				if (!prop.isObjectProperty() &amp;&amp; prop.isDatatypeProperty())
+				{
+					// TODO: More DataTypes
+					if (restrictionValue.equals(XSD.xint) || restrictionValue.equals(XSD.integer))
+					{
+						valueId = &quot;xsd:integer&quot;;
+					}
+					else if (restrictionValue.equals(XSD.xstring))
+					{
+						valueId = &quot;xsd:string&quot;;
+					}
+					else if (restrictionValue.equals(XSD.xdouble))
+					{
+						valueId = &quot;xsd:double&quot;;
+					}
+					else if (restrictionValue.equals(XSD.dateTime))
+					{
+						valueId = &quot;xsd:dateTime&quot;;
+					}
+					else
+					{
+						throw new RuntimeException(&quot;Unrecognized DataType: &quot; + restrictionValue.toString());
+					}
+				}
+				else
+				{
+					valueId = getIdentifier(restrictionValue.getURI());
+				}
+
+				try
+				{
+					if (r.isAllValuesFromRestriction())
+					{
+						JSONArray restriction = rest.optJSONArray(getIdentifier(prop.getURI()));
+						if (restriction == null || !restriction.toString().contains(valueId))
+						{
+							rest.append(getIdentifier(prop.getURI()), valueId);
+						}
+					}
+					else if (r.isSomeValuesFromRestriction())
+					{
+						JSONArray requirement = req.optJSONArray(getIdentifier(prop.getURI()));
+						// TODO: HACK (For some reason during update I am
+						// getting duplicate of the some value restrictions)
+						if (requirement == null || !requirement.toString().contains(valueId))
+						{
+							req.append(getIdentifier(prop.getURI()), valueId);
+						}
+					}
+					else
+					{
+						// TODO: Implement Cardinality Restrictions
+						throw new RuntimeException(&quot;Unexpected Restriction Type&quot;);
+					}
+				}
+				catch (JSONException e)
+				{
+					throw new RuntimeException(&quot;Error Creating JSON Object for Property &quot; + prop);
+				}
+			}
+		}
+
+		JSONObject subclasses = new JSONObject();
+		for (OntologyClass cls : getSubClasses())
+		{
+			try
+			{
+				subclasses.put(cls.getId(), cls.getJSONRepresentation());
+			}
+			catch (JSONException e)
+			{
+				throw new RuntimeException(&quot;Error getting subclasses of: &quot; + getId());
+			}
+		}
+
+		JSONArray superclasses = new JSONArray();
+		for (OntologyClass cls : getSuperClasses())
+		{
+			superclasses.put(cls.getId());
+		}
+
+		JSONArray disjointClasses = new JSONArray();
+		for (OntClass cls : jenaClass.listDisjointWith().toSet())
+		{
+			disjointClasses.put(new OntologyClass(ont, null, cls).getId());
+		}
+
+		try
+		{
+			obj.put(&quot;subclasses&quot;, subclasses);
+			obj.put(&quot;superclasses&quot;, superclasses);
+			obj.put(&quot;requirements&quot;, req);
+			obj.put(&quot;restrictions&quot;, rest);
+			obj.put(&quot;disjoints&quot;, disjointClasses);
+		}
+		catch (JSONException e)
+		{
+			throw new RuntimeException(&quot;Error adding class details to JSONObject for class &quot; + getIdentifierString(jenaClass.getURI()));
+		}
+
+		return obj;
+	}
+
+	public Set&lt;OntologyProperty&gt; getPropertiesWithDomain(boolean direct)
+	{
+		Set&lt;OntologyProperty&gt; props = new HashSet&lt;OntologyProperty&gt;();
+
+		for (OntProperty prop : jenaClass.listDeclaredProperties(direct).toSet())
+		{
+			props.add(new OntologyProperty(ont, prop));
+		}
+
+		return props;
+	}
+
+	public Set&lt;OntologyProperty&gt; getPropertiesWithRange()
+	{
+
+		throw new RuntimeException(&quot;Not Implemented Yet&quot;);
+	}
+
+	public Set&lt;OntologyClass&gt; getSuperClasses()
+	{
+		// TODO: Needs to Include @Thing, all object properties require
+		Set&lt;OntologyClass&gt; superclassObjects = new HashSet&lt;OntologyClass&gt;();
+
+		for (OntClass cls : jenaClass.listSuperClasses().toSet())
+		{
+			if (!cls.isRestriction() &amp;&amp; !cls.isAnon())
+			{
+				superclassObjects.add(new OntologyClass(ont, cls));
+			}
+		}
+
+		return superclassObjects;
+	}
+
+	public Set&lt;OntologyClass&gt; getSubClasses()
+	{
+		Set&lt;OntologyClass&gt; subclassObjects = new HashSet&lt;OntologyClass&gt;();
+
+		for (OntClass cls : jenaClass.listSubClasses().toSet())
+		{
+			if (!cls.equals(OWL2.Nothing) &amp;&amp; !cls.isAnon())
+			{
+				subclassObjects.add(new OntologyClass(ont, cls));
+			}
+		}
+
+		return subclassObjects;
+	}
+
+	/**
+	 * Returns the Ontology that this class is a part of
+	 * 
+	 * @return Ontology object that this class is described in
+	 */
+	public Ontology getOntology()
+	{
+		return ont;
+	}
+
+	public OntClass getJenaClass()
+	{
+		return jenaClass;
+	}
+
+	@Override
+	public String getId()
+	{
+		return getIdentifier(getFullId());
+	}
+
+	@Override
+	public String getFullId()
+	{
+		return jenaClass.getURI();// .toStringID();
+	}
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

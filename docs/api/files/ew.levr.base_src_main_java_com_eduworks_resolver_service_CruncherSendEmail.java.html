@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.levr.base/src/main/java/com/eduworks/resolver/service/CruncherSendEmail.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.levr.base/src/main/java/com/eduworks/resolver/service/CruncherSendEmail.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.resolver.service;
+
+import java.io.InputStream;
+import java.util.Map;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.eduworks.lang.json.impl.EwJsonObject;
+import com.eduworks.net.mail.EwMail;
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
+
+public class CruncherSendEmail extends Cruncher
+{
+
+	/**
+	 * Sends an email using the parameters passed in.
+	 * 
+	 * The template value searches for &quot;${from}&quot; Email sending has no return
+	 * value, so this method just returns the body of the email sent.
+	 *
+	 * @return the body of the email sent
+	 */
+	@Override
+	public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
+	{
+		final String fromEmail = getAsString(&quot;_from&quot;, c, parameters, dataStreams);
+		final String toEmail = getAsString(&quot;_to&quot;, c, parameters, dataStreams);
+		final String subject = format(getAsString(&quot;_subject&quot;, c, parameters, dataStreams), c, parameters, dataStreams);
+		final String template = format(getAsString(&quot;_template&quot;, c, parameters, dataStreams), c, parameters, dataStreams);
+		final String smtpHost = getAsString(&quot;_smtpHost&quot;,c, parameters, dataStreams);
+		final String smtpPort = getAsString(&quot;_smtpPort&quot;,c, parameters, dataStreams);
+		final String smtpUser = getAsString(&quot;_smtpUser&quot;,c, parameters, dataStreams);
+		final String smtpPass = getAsString(&quot;_smtpPass&quot;,c, parameters, dataStreams);
+
+		if (optAsBoolean(&quot;html&quot;, false, c, parameters, dataStreams))
+			try
+			{
+				EwMail.sendHtmlEmail(smtpHost,smtpPort,smtpUser,smtpPass,fromEmail, toEmail, subject, template);
+			}
+			catch (AddressException e)
+			{
+				throw new RuntimeException(e);
+			}
+			catch (MessagingException e)
+			{
+				throw new RuntimeException(e);
+			}
+		else
+			try
+			{
+				EwMail.sendEmail(smtpHost,smtpPort,smtpUser,smtpPass,fromEmail, toEmail, subject, template);
+			}
+			catch (AddressException e)
+			{
+				throw new RuntimeException(e);
+			}
+			catch (MessagingException e)
+			{
+				throw new RuntimeException(e);
+			}
+
+		final EwJsonObject obj = new EwJsonObject();
+
+		obj.put(&quot;from&quot;, fromEmail);
+		obj.put(&quot;to&quot;, toEmail);
+		obj.put(&quot;subject&quot;, subject);
+		obj.put(&quot;body&quot;, template);
+
+		return obj;
+	}
+
+	/**
+	 * Replaces $(key) in the format string with the corresponding value from this JSONObject,
+	 * or the attached parameters. Setting keys and any keys specified in the ignore array may
+	 * not be referenced in the format string, or an exception is thrown.
+	 * @param format Formatted string used to compose the email, with {variables}
+	 * @param c Context of the Web Service Call
+	 * @param parameters Parameters to the Cruncher
+	 * @param dataStreams Datastreams we can access
+	 * @param ignore Variables to ignore
+	 * @return Formatted string with filled in variables.
+	 */
+	public String format(String format, Context c, Map&lt;String,String[]&gt; parameters, Map&lt;String,InputStream&gt; dataStreams, String ... ignore)
+	{
+		// Approximate the result length: format string + 16 character args
+	    final StringBuilder sb = new StringBuilder(format.length() + (parameters.size()*16));
+
+	    final char escChar = &#x27;\\&#x27;;
+	    final char derefChar = &#x27;$&#x27;;
+	    final char openDelim = &#x27;(&#x27;;
+	    final char closeDelim = &#x27;)&#x27;;
+
+	    int cur = 0;
+	    int len = format.length();
+	    int open;
+	    int close;
+
+	    WHILE:
+	    while (cur &lt; len)
+	    {
+	        switch (open = format.indexOf(openDelim, cur))
+	        {
+	        	case -1:
+	        		// No open paren: just append the string as is
+	        		sb.append(format.substring(cur, len));
+	        		break WHILE;
+
+	        	default:
+	        		// Found open paren: append everything leading up to it
+		            sb.append(format.substring(cur, open));
+
+		            switch (close = format.indexOf(closeDelim, open))
+		            {
+		            	case -1:
+			        		// No close paren: append the rest of the string
+		            		sb.append(format.substring(open));
+			        		break WHILE;
+
+	            		default:
+	            			// Does a dollar sign precede the open paren?
+	            			if (open &gt; 0 &amp;&amp; format.charAt(open-1) == derefChar)
+	            			{
+	            				// Is the dollar escaped?
+	            				if (open &gt; 1 &amp;&amp; format.charAt(open-2) == escChar)
+	            				{
+            						// Remove escape and dollar sign
+            						sb.setLength(sb.length() - 2);
+
+	            					// Append escaped dollar and open, and continue from there
+	            					sb.append(derefChar).append(openDelim);
+
+	            					cur = (open + 1);
+
+	            					continue;
+	            				}
+	            				else
+	            				{
+	            					// Parse the paren delimited key: &quot;$(key)&quot;
+	            					final String fmtKey = format.substring(open + 1, close);
+
+	            					try
+	            					{
+	            						if (isSetting(fmtKey)) throw new Exception(&quot;Key is Setting.&quot;);
+
+	            						for (int i = 0; i &lt; ignore.length; i++)
+	            							if (fmtKey.equals(ignore[i]))
+	            								throw new Exception(&quot;Key is Ignored.&quot;);
+
+	            						// Remove preceding dollar sign
+	            						sb.setLength(sb.length() - 1);
+
+	            						// Append the corresponding param value
+	            						sb.append(getAsString(fmtKey, c,parameters,dataStreams));
+	            					}
+	            					catch (Exception e)
+	            					{
+	            						// Append the dollar sign, the parens and the original delimited value
+	            						sb.append(derefChar).append(openDelim).append(fmtKey).append(closeDelim);
+	            					}
+	            				}
+
+	            				cur = close + 1; // Continue after the closing paren
+	            			}
+	            			else
+	            			{
+	            				/* No dollar sign before open: find next one and continue from there */
+
+	            				final int nextOpen = format.indexOf(openDelim, open + 1);
+
+	            				if (nextOpen != -1 &amp;&amp; nextOpen &lt; close)
+									cur = nextOpen;		// Continue at next open paren before close
+								else
+									cur = (close + 1);	// No open before close: continue after close
+
+	            				sb.append(format.substring(open, cur));
+	            			}
+		            }
+	        }
+	    }
+
+	    return sb.toString();
+	}
+
+	@Override
+	public String getDescription()
+	{
+		return &quot;Sends an email (TODO: This)&quot;;
+	}
+
+	@Override
+	public String getReturn()
+	{
+		return &quot;JSONObject&quot;;
+	}
+
+	@Override
+	public String getAttribution()
+	{
+		return ATTRIB_NONE;
+	}
+
+	@Override
+	public JSONObject getParameters() throws JSONException
+	{
+		return jo();
+	}
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.levr.base/src/main/java/com/eduworks/resolver/io/CruncherDisplayXml.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.levr.base/src/main/java/com/eduworks/resolver/io/CruncherDisplayXml.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.resolver.io;
+
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.eduworks.interfaces.EwJsonSerializable;
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
+
+public class CruncherDisplayXml extends Cruncher
+{
+	@Override
+	public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
+	{
+		String name = &quot;result&quot;;
+
+		JSONObject result = new JSONObject();
+		for (String key : keySet())
+		{
+			if (isSetting(key) || !has(key))
+			{
+				continue;
+			}
+			if (key.equals(&quot;enclosingTagName&quot;))
+			{
+				name = getAsString(&quot;enclosingTagName&quot;, c, parameters, dataStreams);
+				continue;
+			}
+
+			Object value = get(key, c, parameters, dataStreams);
+			if (value instanceof EwJsonSerializable)
+				result.put(key, ((EwJsonSerializable) value).toJsonObject());
+			else
+				result.put(key,value);
+		}
+		return &quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot; ?&gt;\n&quot; + toString(result, name);
+	}
+
+	/**
+	 * Replace special characters with XML escapes:
+	 * 
+	 * @param string
+	 *            The string to be escaped.
+	 * @return The escaped string.
+	 */
+	public static String escape(String string)
+	{
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0, length = string.length(); i &lt; length; i++)
+		{
+			char c = string.charAt(i);
+			switch (c)
+			{
+				case &#x27;&amp;&#x27;:
+					sb.append(&quot;&amp;amp;&quot;);
+					break;
+				case &#x27;&lt;&#x27;:
+					sb.append(&quot;&amp;lt;&quot;);
+					break;
+				case &#x27;&gt;&#x27;:
+					sb.append(&quot;&amp;gt;&quot;);
+					break;
+				case &#x27;&quot;&#x27;:
+					sb.append(&quot;&amp;quot;&quot;);
+					break;
+				case &#x27;\&#x27;&#x27;:
+					sb.append(&quot;&amp;apos;&quot;);
+					break;
+				default:
+					sb.append(c);
+			}
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * Convert a JSONObject into a well-formed, element-normal XML string.
+	 * 
+	 * @param object
+	 *            A JSONObject.
+	 * @return A string.
+	 * @throws JSONException JSON Formatting Exception
+	 */
+	public static String toString(Object object) throws JSONException
+	{
+		return toString(object, null);
+	}
+
+	/**
+	 * Convert a JSONObject into a well-formed, element-normal XML string.
+	 * 
+	 * @param object
+	 *            A JSONObject.
+	 * @param tagName
+	 *            The optional name of the enclosing tag.
+	 * @return A string.
+	 * @throws JSONException JSON Formatting Exception
+	 */
+	public static String toString(Object object, String tagName) throws JSONException
+	{
+		StringBuffer sb = new StringBuffer();
+		int i;
+		JSONArray ja;
+		JSONObject jo;
+		String key;
+		Iterator keys;
+		int length;
+		String string;
+		StringBuilder header = new StringBuilder();
+		Object value;
+		if (object instanceof JSONObject)
+		{
+
+			// Emit &lt;tagName&gt;
+
+			if (tagName != null)
+			{
+				header.append(&#x27;&lt;&#x27;);
+				header.append(tagName);
+			}
+
+			// Loop thru the keys.
+
+			jo = (JSONObject) object;
+			keys = jo.keys();
+			while (keys.hasNext())
+			{
+				key = keys.next().toString();
+				value = jo.opt(key);
+				if (value == null)
+				{
+					value = &quot;&quot;;
+				}
+				if (value instanceof String)
+				{
+					string = (String) value;
+				}
+				else
+				{
+					string = null;
+				}
+
+				if (key.startsWith(&quot;attr&quot;))
+				{
+					header.append(&quot; &quot;+key.substring(&quot;attr&quot;.length()) + &quot;=\&quot;&quot;+value+&quot;\&quot;&quot;);
+				}
+				else if (value instanceof JSONArray)
+				{
+					ja = (JSONArray) value;
+					length = ja.length();
+					for (i = 0; i &lt; length; i += 1)
+					{
+						value = ja.get(i);
+						if (value instanceof JSONArray)
+						{
+							sb.append(&#x27;&lt;&#x27;);
+							sb.append(key);
+							sb.append(&#x27;&gt;&#x27;);
+							sb.append(toString(value));
+							sb.append(&quot;&lt;/&quot;);
+							sb.append(key);
+							sb.append(&#x27;&gt;&#x27;);
+						}
+						else
+						{
+							sb.append(toString(value, key));
+						}
+					}
+				}
+				else if (&quot;&quot;.equals(value))
+				{
+					sb.append(&#x27;&lt;&#x27;);
+					sb.append(key);
+					sb.append(&quot;/&gt;&quot;);
+
+					// Emit a new tag &lt;k&gt;
+
+				}
+				else
+				{
+					sb.append(toString(value, key));
+				}
+			}
+			if (tagName != null)
+			{
+
+				// Emit the &lt;/tagname&gt; close tag
+
+				sb.append(&quot;&lt;/&quot;);
+				sb.append(tagName);
+				sb.append(&#x27;&gt;&#x27;);
+			}
+			header.append(&#x27;&gt;&#x27;);
+			return header.toString()+sb.toString();
+
+			// XML does not have good support for arrays. If an array appears in
+			// a place
+			// where XML is lacking, synthesize an &lt;array&gt; element.
+
+		}
+		else
+		{
+			if (object.getClass().isArray())
+			{
+				object = new JSONArray(object);
+			}
+			if (object instanceof JSONArray)
+			{
+				ja = (JSONArray) object;
+				length = ja.length();
+				for (i = 0; i &lt; length; i += 1)
+				{
+					sb.append(toString(ja.opt(i), tagName == null ? &quot;array&quot; : tagName));
+				}
+				return sb.toString();
+			}
+			else
+			{
+				string = (object == null) ? &quot;null&quot; : escape(object.toString());
+				return (tagName == null) ? &quot;\&quot;&quot; + string + &quot;\&quot;&quot; : (string.length() == 0) ? &quot;&lt;&quot; + tagName + &quot;/&gt;&quot; : &quot;&lt;&quot; + tagName + &quot;&gt;&quot; + string + &quot;&lt;/&quot; + tagName
+						+ &quot;&gt;&quot;;
+			}
+		}
+	}
+
+	@Override
+	public String getDescription()
+	{
+		return &quot;Returns the resultant data as JSON converted to XML.&quot; + &quot;enclosingTagName = The tag to wrap the XML object in, instead of &#x27;obj&#x27;&quot;;
+	}
+
+	@Override
+	public String getReturn()
+	{
+		return &quot;String&quot;;
+	}
+
+	@Override
+	public String getAttribution()
+	{
+		return &quot;ATTRIB_NONE&quot;;
+	}
+
+	@Override
+	public JSONObject getParameters() throws JSONException
+	{
+		return jo(&quot;&lt;any&gt;&quot;, &quot;Object|Array|String|Number|Boolean&quot;);
+	}
+
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

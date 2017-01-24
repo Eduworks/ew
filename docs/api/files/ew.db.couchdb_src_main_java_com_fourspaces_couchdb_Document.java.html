@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Document.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Document.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+/*
+   Copyright 2007 Fourspaces Consulting, LLC
+
+   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
+
+package com.fourspaces.couchdb;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Iterator;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.eduworks.lang.json.impl.EwJsonObject;
+import com.fourspaces.couchdb.util.JSONUtils;
+
+/**
+ * Everything in CouchDB is a Document. In this case, the document is an object
+ * backed by a JSONObject. The Document is also aware of the database that it is
+ * connected to. This allows the Document to reload it&#x27;s properties when needed.
+ * The only special fields are &quot;_id&quot;, &quot;_rev&quot;, &quot;_revisions&quot;, and &quot;_view_*&quot;.
+ * &lt;p&gt;
+ * All document have an _id and a _rev. If this is a new document those fields
+ * are populated when they are saved to the CouchDB server.
+ * &lt;p&gt;
+ * _revisions is only populated if the document has been retrieved via
+ * database.getDocumentWithRevisions(); So, if this document wasn&#x27;t, then when
+ * you call document.getRevisions(), it will go back to the server to reload
+ * itself via database.getDocumentWithRevisions().
+ * &lt;p&gt;
+ * The Document can be treated like a JSONObject, eventhough it doesn&#x27;t extend
+ * JSONObject (it&#x27;s final).
+ * &lt;p&gt;
+ * You can also get/set values by calling document.get(key),
+ * document.put(key,value), just like a Map.
+ * &lt;p&gt;
+ * You can get a handle on the backing JSONObject by calling
+ * document.getJSONObject(); If this hasn&#x27;t been loaded yet, it will load the
+ * data itself using the given database connection.
+ * &lt;p&gt;
+ * If you got this Document from a view, you are likely missing elements. To
+ * load them you can call document.load().
+ *
+ * @author mbreese
+ *
+ */
+@SuppressWarnings({ &quot;rawtypes&quot;, &quot;serial&quot; })
+public class Document implements Serializable
+{
+	Log							log						= LogFactory.getLog(Document.class);
+
+	public static final String	REVISION_HISTORY_PROP	= &quot;_revisions&quot;;
+
+	protected Database			database				= null;
+	protected EwJsonObject		object;
+
+	boolean						loaded					= false;
+
+	/**
+	 * Create a new Document
+	 *
+	 */
+	public Document()
+	{
+		this.object = new EwJsonObject();
+	}
+
+	/**
+	 * Create a new Document from a JSONObject
+	 *
+	 * @param obj JSON object to convert into a document
+	 */
+	public Document(JSONObject obj)
+	{
+		this.object = EwJsonObject.convert(obj);
+		loaded = true;
+	}
+
+	/**
+	 * Load data into this document from a differing JSONObject
+	 * &lt;p&gt;
+	 * This is mainly for reloading data for an object that was retrieved from a
+	 * view. This version doesn&#x27;t overwrite any unsaved data that is currently
+	 * present in this object.
+	 *
+	 * @param object2
+	 * @throws JSONException
+	 */
+	protected void load(JSONObject object2) throws JSONException
+	{
+		if (!loaded)
+		{
+			Iterator i = object2.keys();
+			while (i.hasNext())
+			{
+				String key = i.next().toString();
+				object.put(key, object2.get(key));
+			}
+			loaded = true;
+		}
+	}
+
+	/**
+	 * This document&#x27;s id (if saved)
+	 *
+	 * @return ID of the document (with subpath)
+	 */
+	public String getId()
+	{
+		if (StringUtils.isNotBlank(object.optString(&quot;_id&quot;)))
+		{
+			return object.optString(&quot;_id&quot;);
+		}
+		else
+		{
+			return object.optString(&quot;id&quot;);
+		}
+	}
+
+	public void setId(String id) throws JSONException
+	{
+		object.put(&quot;_id&quot;, id);
+	}
+
+	/**
+	 * This strips _design from the document id
+	 * @return ID of the view (without the preamble path)
+	 */
+	public String getViewDocumentId()
+	{
+		String id = getId();
+		int pos = id.lastIndexOf(&quot;/&quot;);
+		if (pos == -1)
+		{
+			return id;
+		}
+		else
+		{
+			return id.substring(pos + 1);
+		}
+	}
+
+	/**
+	 * This document&#x27;s Revision (if saved)
+	 *
+	 * @return Revision of the document
+	 */
+	public String getRev()
+	{
+		if (StringUtils.isNotBlank(object.optString(&quot;_rev&quot;)))
+		{
+			return object.optString(&quot;_rev&quot;);
+		}
+		else
+		{
+			return object.optString(&quot;rev&quot;);
+		}
+	}
+
+	public void setRev(String rev) throws JSONException
+	{
+		if (rev == null || rev.isEmpty())
+			object.remove(&quot;_rev&quot;);
+		else
+			object.put(&quot;_rev&quot;, rev);
+	}
+
+	/**
+	 * A list of the revision numbers that this document has. If this hasn&#x27;t
+	 * been populated with a &quot;full=true&quot; query, then the database will be
+	 * re-queried
+	 *
+	 * @return Array of revisions of the document.
+	 * @throws IOException HTTP issues
+	 * @throws JSONException JSON formatting issues
+	 */
+	public String[] getRevisions() throws IOException, JSONException
+	{
+		String[] revs = null;
+		if (!object.has(&quot;_revs&quot;))
+		{
+			populateRevisions();
+		}
+		// System.out.println(object);
+		JSONArray ar = object.getJSONObject(REVISION_HISTORY_PROP).getJSONArray(&quot;ids&quot;);
+		if (ar != null)
+		{
+			revs = new String[ar.length()];
+			for (int i = 0; i &lt; ar.length(); i++)
+			{
+				revs[i] = ar.getString(i);
+			}
+		}
+		return revs;
+	}
+
+	/**
+	 * Get a named view that is stored in the document.
+	 *
+	 * @param name Name of the view
+	 * @return View object
+	 * @throws JSONException JSON formatting issues
+	 */
+	public View getView(String name) throws JSONException
+	{
+		if (object.has(&quot;views&quot;))
+		{
+			JSONObject views = object.getJSONObject(&quot;views&quot;);
+			if (views.has(name))
+			{
+				return new View(this, name);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Add a view to this document. If a view function already exists with the
+	 * given viewName it is overwritten.
+	 * &lt;p&gt;
+	 * This isn&#x27;t persisted until the document is saved.
+	 *
+	 * @param designDoc
+	 *            document name
+	 * @param viewName Name of the view
+	 * @param function Name of the function to store the view in
+	 * @return View created by the action
+	 * @throws JSONException JSON formatting exception
+	 */
+	public View addView(String designDoc, String viewName, String function) throws JSONException
+	{
+		object.put(&quot;_id&quot;, &quot;_design/&quot; + designDoc); // Not sure if _id or id
+													// should be used
+		object.put(&quot;language&quot;, &quot;javascript&quot;); // FIXME specify language
+
+		EwJsonObject funcs = new EwJsonObject();
+		// System.err.println(&quot;JSON String: &quot; +
+		// JSONUtils.stringSerializedFunction(function));
+		// funcs.put(&quot;map&quot;, JSONUtils.stringSerializedFunction(function));
+		funcs.accumulate(&quot;map&quot;, JSONUtils.stringSerializedFunction(function));
+
+		System.err.println(&quot;FUNCS: &quot; + funcs.toString());
+
+		EwJsonObject viewMap = new EwJsonObject();
+		viewMap.put(viewName, funcs);
+
+		object.put(&quot;views&quot;, viewMap);
+
+		return new View(this, viewName, function);
+
+	}
+
+	/**
+	 * Removes a view from this document.
+	 * &lt;p&gt;
+	 * This isn&#x27;t persisted until the document is saved.
+	 *
+	 * @param viewName Name of the view.
+	 */
+	public void deleteView(String viewName)
+	{
+		object.remove(&quot;_design/&quot; + viewName);
+	}
+
+	void setDatabase(Database database)
+	{
+		this.database = database;
+	}
+
+	/**
+	 * Loads data from the server for this document. Actually requests a new
+	 * copy of data from the server and uses that to populate this document.
+	 * This doesn&#x27;t overwrite any unsaved data.
+	 *
+	 * @throws JSONException JSON formatting issues.
+	 * @throws IOException HTTP issues.
+	 */
+	public void refresh() throws IOException, JSONException
+	{
+		if (database != null)
+		{
+			Document doc = database.getDocument(getId());
+			if (doc == null)
+				return;
+			// log.info(&quot;Loading: &quot;+doc.getJSONObject());
+			load(doc.getJSONObject());
+		}
+	}
+
+	protected void populateRevisions() throws IOException, JSONException
+	{
+		if (database != null)
+		{
+			Document doc = database.getDocumentWithRevisions(getId());
+			log.info(&quot;Loading: &quot; + doc.getJSONObject());
+			load(doc.getJSONObject());
+		}
+	}
+
+	/**
+	 * Retrieves the backing JSONObject
+	 *
+	 * @return Backing JSON object.
+	 * @throws JSONException JSON formatting issues
+	 */
+	public JSONObject getJSONObject() throws JSONException
+	{
+		if (!loaded &amp;&amp; database != null &amp;&amp; getId() != null &amp;&amp; !getId().equals(&quot;&quot;))
+		{
+			try
+			{
+				refresh();
+			}
+			catch (IOException e)
+			{
+				throw new RuntimeException(&quot;error in refreshing Document&quot;, e);
+			}
+		}
+		return object;
+	}
+
+	@Override
+	public String toString()
+	{
+		return object.toString();
+	}
+
+	/*
+	 * Delegate methods to the JSON Object.
+	 */
+	public JSONObject accumulate(String arg0, boolean arg1) throws JSONException
+	{
+		return getJSONObject().accumulate(arg0, arg1);
+	}
+
+	public JSONObject accumulate(String arg0, double arg1) throws JSONException
+	{
+		return getJSONObject().accumulate(arg0, arg1);
+	}
+
+	public JSONObject accumulate(String arg0, int arg1) throws JSONException
+	{
+		return getJSONObject().accumulate(arg0, arg1);
+	}
+
+	public JSONObject accumulate(String arg0, long arg1) throws JSONException
+	{
+		return getJSONObject().accumulate(arg0, arg1);
+	}
+
+	public JSONObject accumulate(String arg0, Object arg1) throws JSONException
+	{
+		return getJSONObject().accumulate(arg0, arg1);
+	}
+
+	public boolean containsKey(Object arg0)
+	{
+		try
+		{
+			return getJSONObject().has(arg0.toString());
+		}
+		catch (JSONException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean containsValue(Object arg0)
+	{
+		try
+		{
+			return getJSONObject().has(arg0.toString());
+		}
+		catch (JSONException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	// public JSONObject element(String arg0, boolean arg1) throws JSONException
+	// {
+	// return getJSONObject().element(arg0, arg1);
+	// }
+	// public JSONObject element(String arg0, Collection arg1) throws
+	// JSONException {
+	// return getJSONObject().element(arg0, arg1);
+	// }
+	// public JSONObject element(String arg0, double arg1) throws JSONException
+	// {
+	// return getJSONObject().element(arg0, arg1);
+	// }
+	// public JSONObject element(String arg0, int arg1) throws JSONException {
+	// return getJSONObject().element(arg0, arg1);
+	// }
+	// public JSONObject element(String arg0, long arg1) throws JSONException {
+	// return getJSONObject().element(arg0, arg1);
+	// }
+	// public JSONObject element(String arg0, Map arg1) throws JSONException {
+	// return getJSONObject().element(arg0, arg1);
+	// }
+	// public JSONObject element(String arg0, Object arg1) throws JSONException
+	// {
+	// return getJSONObject().element(arg0, arg1);
+	// }
+	// public JSONObject elementOpt(String arg0, Object arg1) throws
+	// JSONException {
+	// return getJSONObject().elementOpt(arg0, arg1);
+	// }
+
+	public Object get(Object arg0)
+	{
+		try
+		{
+			return getJSONObject().get(arg0.toString());
+		}
+		catch (JSONException e)
+		{
+			return null;
+		}
+	}
+
+	public Object getComplex(String path) throws JSONException
+	{
+		return get(path);
+	}
+
+	public boolean hasComplex(String path) throws JSONException
+	{
+		return object.hasComplex(path);
+	}
+
+	public Object get(String arg0) throws JSONException
+	{
+		return getJSONObject().get(arg0);
+	}
+
+	public boolean getBoolean(String arg0) throws JSONException
+	{
+		return getJSONObject().getBoolean(arg0);
+	}
+
+	public double getDouble(String arg0) throws JSONException
+	{
+		return getJSONObject().getDouble(arg0);
+	}
+
+	public int getInt(String arg0) throws JSONException
+	{
+		return getJSONObject().getInt(arg0);
+	}
+
+	public JSONArray getJSONArray(String arg0) throws JSONException
+	{
+		return getJSONObject().getJSONArray(arg0);
+	}
+
+	public JSONObject getJSONObject(String arg0) throws JSONException
+	{
+		return getJSONObject().getJSONObject(arg0);
+	}
+
+	public long getLong(String arg0) throws JSONException
+	{
+		return getJSONObject().getLong(arg0);
+	}
+
+	public String getString(String arg0) throws JSONException
+	{
+		return getJSONObject().getString(arg0);
+	}
+
+	public boolean has(String arg0) throws JSONException
+	{
+		return getJSONObject().has(arg0);
+	}
+
+	public Iterator keys() throws JSONException
+	{
+		return getJSONObject().keys();
+	}
+
+	public JSONArray names() throws JSONException
+	{
+		return getJSONObject().names();
+	}
+
+	public Object opt(String arg0) throws JSONException
+	{
+		return getJSONObject().opt(arg0);
+	}
+
+	public boolean optBoolean(String arg0, boolean arg1) throws JSONException
+	{
+		return getJSONObject().optBoolean(arg0, arg1);
+	}
+
+	public boolean optBoolean(String arg0) throws JSONException
+	{
+		return getJSONObject().optBoolean(arg0);
+	}
+
+	public double optDouble(String arg0, double arg1) throws JSONException
+	{
+		return getJSONObject().optDouble(arg0, arg1);
+	}
+
+	public double optDouble(String arg0) throws JSONException
+	{
+		return getJSONObject().optDouble(arg0);
+	}
+
+	public int optInt(String arg0, int arg1) throws JSONException
+	{
+		return getJSONObject().optInt(arg0, arg1);
+	}
+
+	public int optInt(String arg0) throws JSONException
+	{
+		return getJSONObject().optInt(arg0);
+	}
+
+	public JSONArray optJSONArray(String arg0) throws JSONException
+	{
+		return getJSONObject().optJSONArray(arg0);
+	}
+
+	public JSONObject optJSONObject(String arg0) throws JSONException
+	{
+		return getJSONObject().optJSONObject(arg0);
+	}
+
+	public long optLong(String arg0, long arg1) throws JSONException
+	{
+		return getJSONObject().optLong(arg0, arg1);
+	}
+
+	public long optLong(String arg0) throws JSONException
+	{
+		return getJSONObject().optLong(arg0);
+	}
+
+	public String optString(String arg0, String arg1) throws JSONException
+	{
+		return getJSONObject().optString(arg0, arg1);
+	}
+
+	public String optString(String arg0) throws JSONException
+	{
+		return getJSONObject().optString(arg0);
+	}
+
+	public Object put(Object arg0, Object arg1) throws JSONException
+	{
+		return getJSONObject().put(arg0.toString(), arg1);
+	}
+
+	public void putAll(Map arg0) throws JSONException
+	{
+		for (Object o : arg0.keySet())
+			getJSONObject().put(o.toString(), arg0.get(o));
+	}
+
+	public Object remove(Object arg0) throws JSONException
+	{
+		return getJSONObject().remove(arg0.toString());
+	}
+
+	public Object remove(String arg0) throws JSONException
+	{
+		return getJSONObject().remove(arg0);
+	}
+
+	public int size() throws JSONException
+	{
+		return getJSONObject().length();
+	}
+
+	public boolean isEmpty() throws JSONException
+	{
+		return (object == null)
+			? true
+			: getJSONObject().length() == 0;
+	}
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

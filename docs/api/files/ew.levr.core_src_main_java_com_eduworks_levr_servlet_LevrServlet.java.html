@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.levr.servlet;
+
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+
+import com.eduworks.levr.servlet.impl.LevrResolverServlet;
+
+public abstract class LevrServlet extends HttpServlet
+{
+	protected static final String HTTP_DELETE = &quot;DELETE&quot;;
+
+	protected static final String HTTP_POST = &quot;POST&quot;;
+
+	protected static final String HTTP_GET = &quot;GET&quot;;
+
+	private static final long serialVersionUID = 1L;
+
+	protected static Logger log = Logger.getLogger(LevrResolverServlet.class);
+
+	/* ABSTRACT METHODS */
+
+	public abstract void go(String methodType, HttpServletRequest request, HttpServletResponse response, ServletOutputStream outputStream) throws IOException;
+
+	public abstract String getServletPath();
+
+	/* OVERRIDDEN METHODS */
+
+	/**
+	 * Both GET and POST execute in the same fashion. The only difference is
+	 * that a GET is guaranteed not to have datastreams (files) attached to it.
+	 */
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		ServletOutputStream outputStream = response.getOutputStream();
+		try
+		{
+			go(HTTP_GET, request, response, outputStream);
+		}
+		catch (Throwable e)
+		{
+			handleException(response, outputStream, e);
+		}
+		finally
+		{
+			closeOutputStream(request, outputStream);
+		}
+	}
+
+	/**
+	 * Both GET and POST execute in the same fashion. The only difference is
+	 * that a GET is guaranteed not to have datastreams (files) attached to it.
+	 */
+	@Override
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		ServletOutputStream outputStream = response.getOutputStream();
+		try
+		{
+			go(HTTP_POST, request, response, outputStream);
+		}
+		catch (Throwable e)
+		{
+			handleException(response, outputStream, e);
+		}
+		finally
+		{
+			closeOutputStream(request, outputStream);
+		}
+	}
+
+	@Override
+	public void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		ServletOutputStream outputStream = response.getOutputStream();
+		try
+		{
+			response.setHeader(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);
+			response.setHeader(&quot;Access-Control-Allow-Methods&quot;, &quot;GET, PUT, POST, DELETE, OPTIONS&quot;);
+			response.setHeader(&quot;Access-Control-Allow-Headers&quot;, &quot;If-Modified-Since, Content-Type, Content-Range, Content-Disposition, Content-Description, signatureSheet&quot;);
+		}
+		catch (Throwable e)
+		{
+			handleException(response, outputStream, e);
+		}
+		finally
+		{
+			closeOutputStream(request, outputStream);
+		}
+	}
+
+	@Override
+	public void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		ServletOutputStream outputStream = response.getOutputStream();
+		try
+		{
+			go(HTTP_DELETE, request, response, outputStream);
+		}
+		catch (Throwable e)
+		{
+			handleException(response, outputStream, e);
+		}
+		finally
+		{
+			closeOutputStream(request, outputStream);
+		}
+	}
+
+	/* PROTECTED/PUBLIC METHODS */
+
+	/**
+	 * Appropriately wraps a JSONP call if the request has a callback parameter.
+	 * This is required by cross-domain ajax service calls. See: &lt;a
+	 * href=&quot;http://bob.pythonmac.org/archives/2005/12/05/remote-json-jsonp/&quot;
+	 * &gt;this link&lt;/a&gt;
+	 * 
+	 * @param request
+	 *            HTTP Request
+	 * @param resultsAsString
+	 *            The JSONP object to return.
+	 * @return If appropriate, a JSONP object.
+	 */
+	protected String crossDomainFix(HttpServletRequest request, String resultsAsString)
+	{
+		String callback = getStringFromParameter(request, &quot;callback&quot;, &quot;&quot;);
+
+		return (callback.isEmpty()) ? resultsAsString : callback + &quot;(&quot; + resultsAsString + &quot;)&quot;;
+	}
+
+	protected void startJsonpPayload(HttpServletRequest request, PrintStream pw)
+	{
+		String callback = getStringFromParameter(request, &quot;callback&quot;, &quot;&quot;);
+		if (!callback.isEmpty())
+			pw.append(callback + &quot;(&quot;);
+	}
+
+	protected void finishJsonpPayload(HttpServletRequest request, PrintStream pw)
+	{
+		String callback = getStringFromParameter(request, &quot;callback&quot;, &quot;&quot;);
+		if (!callback.isEmpty())
+			pw.append(&quot;)&quot;);
+	}
+
+	/**
+	 * Get an integer value from the request object, defaulting to a known value
+	 * if it is not present.
+	 * 
+	 * @param request
+	 *            HTTP request
+	 * @param key
+	 *            HTTP request parameter name
+	 * @param defValue
+	 *            the default value if key does not exist
+	 * @return the value corresponding to key parsed as an int, or the default
+	 *         value
+	 */
+	protected int getIntFromParameter(HttpServletRequest request, String key, int defValue)
+	{
+		String param = getStringFromParameter(request, key, null);
+		return (param == null) ? defValue : Integer.parseInt(param);
+	}
+
+	/**
+	 * Get value from the request object, defaulting to a known value if it is
+	 * not present.
+	 * 
+	 * @param request
+	 *            HTTP request
+	 * @param key
+	 *            HTTP request parameter name
+	 * @param defValue
+	 *            the default value if key does not exist
+	 * @return the value corresponding to key, or the default value
+	 */
+	protected static String getStringFromParameter(HttpServletRequest request, String key, String defValue)
+	{
+		String param;
+		if ((param = request.getParameter(key)) != null)
+			return param;
+		else
+			return defValue;
+	}
+
+	/**
+	 * Get an string value from the request object, defaulting to a known value
+	 * if it is not present.
+	 * 
+	 * @param request
+	 *            HTTP request
+	 * @param key
+	 *            HTTP request parameter name
+	 * @param defValue
+	 *            the value to return if the key doesn&#x27;t exist
+	 * @return the param, attrib, or header value corresponding to the key, or
+	 *         defValue
+	 */
+	protected String getStringFromRequest(HttpServletRequest request, String key, String defValue)
+	{
+		String param;
+		if ((param = (String) request.getAttribute(key)) != null)
+			return param;
+		else if ((param = request.getParameter(key)) != null)
+			return param;
+		else if ((param = request.getHeader(key)) != null)
+			return param;
+		else
+			return defValue;
+	}
+
+	private void closeOutputStream(HttpServletRequest request, ServletOutputStream outputStream) throws IOException
+	{
+		outputStream.close();
+	}
+
+	private void handleException(HttpServletResponse response, ServletOutputStream outputStream, Throwable e) throws IOException
+	{
+		if (e instanceof HttpErrorException)
+			response.setStatus(((HttpErrorException) e).httpStatus);
+		else
+			response.setStatus(500);
+		e.printStackTrace();
+		if (outputStream != null &amp;&amp; e.getMessage() != null)
+		{
+			outputStream.println(e.getMessage());
+			outputStream.flush();
+		}
+	}
+
+	protected Map&lt;String, String[]&gt; getParams(HttpServletRequest request)
+	{
+		return request.getParameterMap();
+	}
+
+	public String getServletPathExample()
+	{
+		return getServletPath();
+	}
+
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

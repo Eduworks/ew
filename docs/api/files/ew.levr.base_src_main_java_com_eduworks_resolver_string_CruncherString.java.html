@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.levr.base/src/main/java/com/eduworks/resolver/string/CruncherString.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.levr.base/src/main/java/com/eduworks/resolver/string/CruncherString.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.resolver.string;
+
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
+import com.eduworks.resolver.enumeration.CruncherStringOp;
+
+
+public class CruncherString extends Cruncher
+{
+	public static final String OP_KEY = &quot;op&quot;;
+	public static final String REGEX_KEY = &quot;regex&quot;;
+
+	@Override
+	public Object resolve(Context c, Map&lt;String,String[]&gt; parameters, Map&lt;String,InputStream&gt; dataStreams) throws JSONException
+	{
+		final String strKey = CruncherStringOp.DEFAULT_KEY;
+		String string = getAsString(strKey, c, parameters, dataStreams);
+		if (string == null || string.isEmpty())
+			string = getAsString(&quot;obj&quot;,c, parameters, dataStreams);
+		final CruncherStringOp operation = CruncherStringOp.operationForKeyValue(getAsString(OP_KEY, c, parameters, dataStreams));
+
+		switch (operation)
+		{
+			case CAPITALIZE:
+				if (string == null) return null;
+				return capitalize(string);
+
+			case FORMAT:
+				if (string == null) return null;
+				return format(string, c,parameters,dataStreams, strKey);
+
+			case REPLACE:
+				if (string == null) return null;
+				return string.replaceAll(
+						decodeValue(optAsString(REGEX_KEY,null, c, parameters, dataStreams)),
+						optAsString(&quot;with&quot;,null, c, parameters, dataStreams)
+					);
+
+			case REVERSE:
+				if (string == null) return null;
+				return new StringBuilder(string).reverse().toString();
+
+			case SPLIT:
+				if (string == null) return null;
+				return Arrays.asList(string.split(optAsString(REGEX_KEY,null, c, parameters, dataStreams)));
+
+			case SUBSTR:
+				if (string == null) return null;
+				int optInt = optAsInteger(&quot;begin&quot;,0, c, parameters, dataStreams);
+				int optInt2 = optAsInteger(&quot;end&quot;, string.length(), c, parameters, dataStreams);
+				return string.substring(Math.min(optInt,string.length()), Math.min(optInt2,string.length()));
+
+			case TRIM:
+				if (string == null) return null;
+				return trim(string, optAsString(&quot;chars&quot;,null, c, parameters, dataStreams), optAsBoolean(&quot;trimQuotes&quot;, false, c, parameters, dataStreams));
+
+			case TO_LOWER:
+				if (string == null) return null;
+				return string.toLowerCase();
+
+			case TO_TITLE:
+				if (string == null) return null;
+				return toTitleCase(string, optAsBoolean(&quot;lowerFirst&quot;, false, c, parameters, dataStreams));
+
+			case TO_UPPER:
+				if (string == null) return null;
+				return string.toUpperCase();
+				
+			case LENGTH:
+				if (string == null) return null;
+				return string.length();
+		}
+
+		return string;
+	}
+
+	/**
+	 * Capitalizes a single word, or all the words in a string
+	 * (does not handle camel-case, acronyms, or special chars).
+	 * @see #toTitleCase(String, boolean)
+	 * */
+	protected String capitalize(String string)
+	{
+		if (string == null || string.isEmpty()) return string;
+
+		final StringBuilder capitalized = new StringBuilder(string.length());
+		final String[] words = string.split(&quot;\\s&quot;);
+
+		for (int i = 0;;)
+		{
+			final String word = words[i];
+			final char first = word.charAt(0);
+
+			if (Character.isLowerCase(first))
+			{
+				capitalized.append(Character.toUpperCase(first));
+				capitalized.append(word.substring(1));
+			}
+			else
+				capitalized.append(word);
+
+			if (++i &lt; words.length)
+				capitalized.append(&#x27; &#x27;);
+
+			else break;
+		}
+
+		return capitalized.toString();
+	}
+
+	/**
+	 * Replaces $(key) in the format string with the corresponding value from this JSONObject,
+	 * or the attached parameters. Setting keys and any keys specified in the ignore array may
+	 * not be referenced in the format string, or an exception is thrown.
+	 * 
+	 * @param format String to use to format. 
+	 * @param c Context of the Web Service Call
+	 * @param parameters Parameters to the Cruncher
+	 * @param dataStreams Datastreams we can access
+	 * @param ignore Tags in the string to ignore.
+	 * @return Formatted string
+	 */
+	public String format(String format, Context c, Map&lt;String,String[]&gt; parameters, Map&lt;String,InputStream&gt; dataStreams, String ... ignore)
+	{
+		// Approximate the result length: format string + 16 character args
+	    final StringBuilder sb = new StringBuilder(format.length() + (parameters.size()*16));
+
+	    final char escChar = &#x27;\\&#x27;;
+	    final char derefChar = &#x27;$&#x27;;
+	    final char openDelim = &#x27;(&#x27;;
+	    final char closeDelim = &#x27;)&#x27;;
+
+	    int cur = 0;
+	    int len = format.length();
+	    int open;
+	    int close;
+
+	    WHILE:
+	    while (cur &lt; len)
+	    {
+	        switch (open = format.indexOf(openDelim, cur))
+	        {
+	        	case -1:
+	        		// No open paren: just append the string as is
+	        		sb.append(format.substring(cur, len));
+	        		break WHILE;
+
+	        	default:
+	        		// Found open paren: append everything leading up to it
+		            sb.append(format.substring(cur, open));
+
+		            switch (close = format.indexOf(closeDelim, open))
+		            {
+		            	case -1:
+			        		// No close paren: append the rest of the string
+		            		sb.append(format.substring(open));
+			        		break WHILE;
+
+	            		default:
+	            			// Does a dollar sign precede the open paren?
+	            			if (open &gt; 0 &amp;&amp; format.charAt(open-1) == derefChar)
+	            			{
+	            				// Is the dollar escaped?
+	            				if (open &gt; 1 &amp;&amp; format.charAt(open-2) == escChar)
+	            				{
+            						// Remove escape and dollar sign
+            						sb.setLength(sb.length() - 2);
+
+	            					// Append escaped dollar and open, and continue from there
+	            					sb.append(derefChar).append(openDelim);
+
+	            					cur = (open + 1);
+
+	            					continue;
+	            				}
+	            				else
+	            				{
+	            					// Parse the paren delimited key: &quot;$(key)&quot;
+	            					final String fmtKey = format.substring(open + 1, close);
+
+	            					try
+	            					{
+	            						if (isSetting(fmtKey)) throw new Exception(&quot;Key is Setting.&quot;);
+
+	            						for (int i = 0; i &lt; ignore.length; i++)
+	            							if (fmtKey.equals(ignore[i]))
+	            								throw new Exception(&quot;Key is Ignored.&quot;);
+
+	            						// Remove preceding dollar sign
+	            						sb.setLength(sb.length() - 1);
+
+	            						// Append the corresponding param value
+	            						sb.append(getAsString(fmtKey, c,parameters,dataStreams));
+	            					}
+	            					catch (Exception e)
+	            					{
+	            						// Append the dollar sign, the parens and the original delimited value
+	            						sb.append(derefChar).append(openDelim).append(fmtKey).append(closeDelim);
+	            					}
+	            				}
+
+	            				cur = close + 1; // Continue after the closing paren
+	            			}
+	            			else
+	            			{
+	            				/* No dollar sign before open: find next one and continue from there */
+
+	            				final int nextOpen = format.indexOf(openDelim, open + 1);
+
+	            				if (nextOpen != -1 &amp;&amp; nextOpen &lt; close)
+									cur = nextOpen;		// Continue at next open paren before close
+								else
+									cur = (close + 1);	// No open before close: continue after close
+
+	            				sb.append(format.substring(open, cur));
+	            			}
+		            }
+	        }
+	    }
+
+	    return sb.toString();
+	}
+
+	/**
+	 * Title case sentence, or capitalize a word: if lowerFirst is false,
+	 * camel-cased words are parsed, and acronyms such as &quot;JSONObject&quot; are separated:
+	 * &quot;JSON Object&quot;. In either case, underscores &#x27;_&#x27; and spaces delimit words,
+	 * whereas words with dashes &#x27;-&#x27; and single quotes are considered single words.
+	 * @param string String to titleCase
+	 * @param lowerFirst Lowercase the string first?
+	 * @return Titlecased String
+	 */
+	public String toTitleCase(String string, boolean lowerFirst)
+	{
+		if (string == null || string.isEmpty()) return string;
+
+		final char nullChar = &#x27;\0&#x27;;
+
+		char[] chars = (lowerFirst)
+			? string.toLowerCase().toCharArray()
+			: string.toCharArray();
+
+		int length = chars.length;
+
+		boolean capNext = true;
+		boolean skipNext = false;
+		boolean spaceBefore = false;
+		boolean spaceAfter = false;
+
+		char last;
+		char next;
+
+		StringBuilder title = new StringBuilder(length * 2);
+
+		for (int i = 0, n = 1; i &lt; length; i++, n++)
+		{
+			last = (i &gt; 0) ? chars[i-1] : nullChar;
+			next = (n &lt; length) ? chars[n] : nullChar;
+
+			switch (chars[i])
+			{
+				case &#x27;_&#x27;:
+					chars[i] = &#x27; &#x27;; // Fall through as space
+
+				case &#x27;\t&#x27;:
+				case &#x27; &#x27;:
+					title.append(chars[i]);
+					capNext = true;
+					skipNext = true;
+					break;
+
+				default:
+					if (isWordChar(chars[i]))
+					{
+						if (capNext)
+						{
+							/* Capitalize only words with more than one letter, excepting &#x27;i&#x27; */
+							if (i == 0 || i == length - 1 || isWordChar(next) || chars[i] == &#x27;i&#x27;)
+							{
+								chars[i] = Character.toUpperCase(chars[i]);
+								capNext = false;
+							}
+						}
+						else if (!skipNext)
+						{
+							/* Consider previous and following letter case when inserting spaces */
+							if (Character.isUpperCase(chars[i]))
+							{
+								if (Character.isLowerCase(last) || Character.isLowerCase(next))
+									spaceBefore = true;
+							}
+							else if (Character.isUpperCase(next))
+								spaceAfter = true;
+
+							skipNext = (spaceBefore || spaceAfter);
+						}
+						else skipNext = false;
+
+						/* Append character and spaces before and/or after */
+
+						if (spaceBefore) title.append(&#x27; &#x27;);
+
+						title.append(chars[i]);
+
+						if (spaceAfter) title.append(&#x27; &#x27;);
+					}
+					else // Not a word character
+					{
+						title.append(chars[i]);
+
+						/* Insert space after if not a word char and next is a letter */
+						if (Character.isLetter(next)) title.append(&#x27; &#x27;);
+
+						capNext = true;
+					}
+
+					spaceBefore = false;
+					spaceAfter = false;
+					break;
+			}
+		}
+
+		return title.toString();
+	}
+
+    /** @return true if ch is a character that may appear in a single word. */
+	private static boolean isWordChar(char ch)
+	{
+		switch (ch)
+		{
+			case &#x27;-&#x27;:
+			case &#x27;\&#x27;&#x27;:
+				return true;
+			default:
+				return Character.isLetter(ch);
+		}
+	}
+
+	protected String trim(String string, String chars, boolean trimQuotes)
+	{
+		if (string == null) return null;
+
+		if(trimQuotes){
+			chars = chars.concat(&quot;\&quot;&quot;);
+		}
+		
+		if (chars == null || chars.isEmpty()) return string.trim();		
+		
+		int beginIndex = 0;
+		int endIndex = string.length();
+		int length = string.length();
+
+		for (int i = 0; i &lt; length; i++)
+		{
+			if (chars.indexOf(string.charAt(i)) == -1)
+				break;
+			else beginIndex++;
+		}
+
+		for (int j = length-1; j &gt;= beginIndex ; j--)
+		{
+			if (chars.indexOf(string.charAt(j)) == -1)
+				break;
+			else endIndex--;
+		}
+
+		return string.substring(beginIndex, endIndex);
+	}
+
+	@Override
+	public String getDescription()
+	{
+		return &quot;Performs string operations. Input is &#x27;str&#x27;, operation depends on &#x27;op&#x27;.&quot; +
+
+	&quot;\ncaps - Capitalize all words.&quot; +
+	&quot;\nformat - Formats the words according to standard $1...$n formatting seen in C and C++&quot; +
+	&quot;\nreplace - Replaces a regex &#x27;regex&#x27; string with &#x27;with&#x27;.&quot; +
+	&quot;\nreverse - Reverses the string.&quot; +
+	&quot;\nsplit - Splits the string based on &#x27;regex&#x27;&quot; +
+	&quot;\nsubstr - Gets a substring of the string based on &#x27;begin&#x27; and &#x27;end&#x27;&quot; +
+	&quot;\ntrim - Trims the string.&quot; +
+	&quot;\nlower - Lowercases the string.&quot; +
+	&quot;\ntitle - Converts the string to title case.&quot; +
+	&quot;\nupper - Converts the string to upper case.&quot;;
+	}
+
+	@Override
+	public String getReturn()
+	{
+		return &quot;String&quot;;
+	}
+
+	@Override
+	public String getAttribution()
+	{
+		return ATTRIB_NONE;
+	}
+
+	@Override
+	public JSONObject getParameters() throws JSONException
+	{
+		return jo(&quot;str&quot;,&quot;String&quot;,&quot;op&quot;,&quot;String&quot;,&quot;?&lt;any&gt;&quot;,&quot;String|Number&quot;);
+	}
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

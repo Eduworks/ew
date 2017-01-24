@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.db.couchdb/src/main/java/com/fourspaces/couchdb/ViewResults.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.db.couchdb/src/main/java/com/fourspaces/couchdb/ViewResults.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+/*
+   Copyright 2007 Fourspaces Consulting, LLC
+
+   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
+package com.fourspaces.couchdb;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+/**
+ * The results of a view request is just a specialized Document object.
+ * You can use ViewResults to retrieve information about the results (such as the 
+ * number of rows returned).
+ * &lt;p&gt;
+ * The ViewResults document contains a JSONArray named &quot;rows&quot;.  This JSON array contains
+ * further sub-Documents.  These documents include the _id and _rev of the matched Documents as
+ * well as any other fields that the View function returns -- it is not the full Document.
+ * &lt;p&gt;
+ * In order to retrieve the full document, you must call database.getDocument(id).
+ * 
+ * @author mbreese
+ *
+ */
+public class ViewResults extends Document {
+	Log log = LogFactory.getLog(ViewResults.class);
+	private View calledView;
+
+	/**
+	 * Builds the ViewResults object from the given JSON object. (called only from Database.view())
+	 * This shouldn&#x27;t be called by user code. 
+	 * @param calledView
+	 * @param obj
+	 */
+	ViewResults(View calledView, JSONObject obj) {
+		super(obj);
+		this.calledView=calledView;
+	}
+	
+	/**
+	 * Retrieves a list of documents that matched this View.
+	 * These documents only contain the data that the View has returned (not the full document).
+	 * &lt;p&gt;
+	 * You can load the remaining information from Document.reload();
+	 * 
+	 * @return List of Document objects.
+	 * @throws JSONException JSON Formatting Exception
+	 */
+	public List&lt;Document&gt; getResults() throws JSONException {
+		JSONArray ar = getJSONObject().getJSONArray(&quot;rows&quot;);
+		List&lt;Document&gt; docs = new ArrayList&lt;Document&gt;(ar.length());
+		for (int i=0 ; i&lt; ar.length(); i++) {
+//			log.info(ar.getString(i));
+			if (ar.get(i)!=null &amp;&amp; !ar.getString(i).equals(&quot;null&quot;)) {
+				Document d = new Document(ar.getJSONObject(i));
+				d.setDatabase(database);
+				docs.add(d);
+			}
+		}
+		return docs;	
+
+	}
+
+	/**
+	 * The new that created this results list.
+	 * @return View object
+	 */
+	public View getView() {
+		return calledView;
+	}
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

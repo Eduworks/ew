@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.levr.core/src/main/java/com/eduworks/resolver/CruncherBindWebService.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.levr.core/src/main/java/com/eduworks/resolver/CruncherBindWebService.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.eduworks.resolver;
+
+import com.eduworks.levr.servlet.impl.LevrResolverServlet;
+import java.io.InputStream;
+import java.util.Map;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+/**
+ *
+ * @author fray
+ */
+public class CruncherBindWebService extends Cruncher
+{
+
+    @Override
+    public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
+    {
+        final Object get = get(&quot;obj&quot;);
+        if (get instanceof Resolvable)
+        {
+            LevrResolverServlet.resolvableWebServices.put(getAsString(&quot;endpoint&quot;, c, parameters, dataStreams), (Resolvable) get);
+            return null;
+        }
+        if (get instanceof ScriptObjectMirror)
+        {
+            ScriptObjectMirror m = (ScriptObjectMirror) get;
+            if (m.isFunction())
+            {
+                CruncherJavascriptBinder b = new CruncherJavascriptBinder();
+                b.build(&quot;obj&quot;, m);
+
+                LevrResolverServlet.resolvableWebServices.put(getAsString(&quot;endpoint&quot;, c, parameters, dataStreams), b);
+                return null;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getDescription()
+    {
+        return &quot;Creates a binding of a web service endpoint, specified by endpoint, to the function chain defined by obj.&quot;;
+    }
+
+    @Override
+    public String getReturn()
+    {
+        return null;
+    }
+
+    @Override
+    public String getAttribution()
+    {
+        return ATTRIB_NONE;
+    }
+
+    @Override
+    public JSONObject getParameters() throws JSONException
+    {
+        return jo(&quot;endpoint&quot;, &quot;String&quot;, &quot;obj&quot;, &quot;Resolvable&quot;);
+    }
+
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

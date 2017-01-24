@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+/*
+   Copyright 2007 Fourspaces Consulting, LLC
+
+   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
+
+package com.fourspaces.couchdb;
+
+import java.net.URLEncoder;
+
+
+/**
+ * The View is the mechanism for performing Querys on a CouchDB instance. The
+ * view can be named or ad-hoc (see AdHocView). (Currently [14 Sept 2007] named
+ * view aren&#x27;t working in the mainline CouchDB code... but this _should_ work.)
+ *&lt;p&gt;
+ * The View object exists mainly to apply filtering to the view. Otherwise,
+ * views can be called directly from the database object by using their names
+ * (or given an ad-hoc query).
+ * 
+ * @author mbreese
+ */
+public class View
+{
+	protected String	key;
+	protected String	startKey;
+	protected String	endKey;
+	protected Integer	limit;
+	protected Boolean	update;
+	protected Boolean	reverse;
+	protected String	skip;
+	protected Boolean	group;
+	protected Boolean	includeDocs;
+	protected Boolean	stale	= null;
+
+	protected String	name;
+	protected Document	document;
+	protected String	function;
+
+	/**
+	 * Build a view given a document and a name
+	 * 
+	 * @param doc Document to use to create a view.
+	 * @param name Name of the view
+	 */
+	public View(Document doc, String name)
+	{
+		this.document = doc;
+		this.name = name;
+	}
+
+	/**
+	 * Build a view given only a fullname ex: (&quot;_add_docs&quot;, &quot;_temp_view&quot;)
+	 * 
+	 * @param fullname Full name of the view (no document)
+	 */
+	public View(String fullname)
+	{
+		this.name = fullname;
+		this.document = null;
+	}
+
+	/**
+	 * Builds a new view for a document, a given name, and the function
+	 * definition. This &lt;i&gt;does not actually add it to the document&lt;/i&gt;. That is
+	 * handled by Document.addView()
+	 * &lt;p&gt;
+	 * This constructor should only be called by Document.addView();
+	 * 
+	 * @param doc
+	 * @param name
+	 * @param function
+	 */
+	View(Document doc, String name, String function)
+	{
+		this.name = name;
+		this.document = doc;
+		this.function = function;
+	}
+
+	/**
+	 * Based upon settings, builds the queryString to add to the URL for this
+	 * view.
+	 * 
+	 * @return Query String
+	 */
+	public String getQueryString()
+	{
+		String queryString = &quot;&quot;;
+		if (key != null)
+		{
+			queryString = addAndpersand(queryString);
+			queryString += &quot;key=&quot; + key;
+		}
+		if (startKey != null)
+		{
+			queryString = addAndpersand(queryString);
+			queryString += &quot;startkey=&quot;+URLEncoder.encode(&quot;\&quot;&quot; + startKey + &quot;\&quot;&quot;);
+		}
+		if (endKey != null)
+		{
+			queryString = addAndpersand(queryString);
+			queryString += &quot;endkey=&quot; + URLEncoder.encode(&quot;\&quot;&quot; + endKey + &quot;\&quot;&quot;);
+		}
+		if (skip != null)
+		{
+			queryString = addAndpersand(queryString);
+			queryString += &quot;skip=&quot; + skip;
+		}
+		if (limit != null)
+		{
+			queryString = addAndpersand(queryString);
+			queryString += &quot;limit=&quot; + limit;
+		}
+		if (update != null &amp;&amp; update.booleanValue())
+		{
+			queryString = addAndpersand(queryString);
+			queryString += &quot;update=true&quot;;
+		}
+		if (includeDocs != null &amp;&amp; includeDocs.booleanValue())
+		{
+			queryString = addAndpersand(queryString);
+			queryString += &quot;include_docs=true&quot;;
+		}
+		if (reverse != null &amp;&amp; reverse.booleanValue())
+		{
+			queryString = addAndpersand(queryString);
+			queryString += &quot;descending=true&quot;;
+		}
+		if (stale != null &amp;&amp; stale.booleanValue())
+		{
+			queryString = addAndpersand(queryString);
+			queryString += &quot;stale=&quot; + (stale ? &quot;ok&quot; : &quot;&quot;);
+		}
+		if (group != null &amp;&amp; group.booleanValue())
+		{
+			queryString = addAndpersand(queryString);
+			queryString += &quot;group=true&quot;;
+		}
+		return queryString.equals(&quot;&quot;) ? null : queryString;
+
+	}
+
+	private String addAndpersand(String queryString)
+	{
+		if (!queryString.equals(&quot;&quot;))
+		{
+			queryString += &quot;&amp;&quot;;
+		}
+		return queryString;
+	}
+
+	/**
+	 * The number of entries to return
+	 * 
+	 * @param count number of items.
+	 * @deprecated CouchDB 0.9 uses limit instead
+	 */
+	public void setCount(Integer count)
+	{
+		// this.count = count;
+		setLimit(count);
+	}
+
+	public void setKey(String key)
+	{
+		this.key = key;
+	}
+
+	public void setLimit(Integer limit)
+	{
+		this.limit = limit;
+	}
+
+	public void setGroup(Boolean group)
+	{
+		this.group = group;
+	}
+
+	/**
+	 * Stop listing at this key
+	 * 
+	 * @param endKey End key.
+	 */
+	public void setEndKey(String endKey)
+	{
+		this.endKey = endKey;
+	}
+
+	/**
+	 * Reverse the listing
+	 * 
+	 * @param reverse Reverse the listing.
+	 * @deprecated CouchDB 0.9 uses &quot;descending&quot; instead
+	 */
+	public void setReverse(Boolean reverse)
+	{
+		this.reverse = reverse;
+	}
+
+	public void setDescending(Boolean descending)
+	{
+		this.reverse = descending;
+	}
+
+	/**
+	 * Skip listing these keys (not sure if this works, or the format)
+	 * 
+	 * @param skip Whether to skip.
+	 */
+	public void setSkip(String skip)
+	{
+		this.skip = skip;
+	}
+
+	/**
+	 * Start listing at this key
+	 * 
+	 * @param startKey The Start Key
+	 */
+	public void setStartKey(String startKey)
+	{
+		this.startKey = startKey;
+	}
+
+	/**
+	 * Not sure... might be for batch updates, but not sure.
+	 * 
+	 * @param update whether to update
+	 */
+	public void setUpdate(Boolean update)
+	{
+		this.update = update;
+	}
+
+	public void setWithDocs(Boolean withDocs)
+	{
+		this.includeDocs = withDocs;
+	}
+
+	public void setStale(Boolean stale)
+	{
+		this.stale = stale;
+	}
+
+	/**
+	 * The name for this view (w/o doc id)
+	 * 
+	 * @return Name of the view.
+	 */
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * the full name for this view (w/ doc id, if avail) in the form of :
+	 * &quot;docid:name&quot; or &quot;name&quot;
+	 * 
+	 * @return Name of the view.
+	 */
+	public String getFullName()
+	{
+		return (document == null) ? name : document.getViewDocumentId() + &quot;/&quot; + name;
+	}
+
+	/**
+	 * The function definition for this view, if it is available.
+	 * 
+	 * @return Function definition of the view.
+	 */
+	public String getFunction()
+	{
+		return function;
+	}
+
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

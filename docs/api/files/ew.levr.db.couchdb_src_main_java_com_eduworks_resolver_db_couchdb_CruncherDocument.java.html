@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.levr.db.couchdb/src/main/java/com/eduworks/resolver/db/couchdb/CruncherDocument.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.levr.db.couchdb/src/main/java/com/eduworks/resolver/db/couchdb/CruncherDocument.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.resolver.db.couchdb;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.eduworks.lang.EwList;
+import com.eduworks.lang.json.impl.EwJsonObject;
+import com.eduworks.lang.threading.EwThreading;
+import com.eduworks.lang.util.EwJson;
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
+import com.fourspaces.couchdb.Document;
+
+public abstract class CruncherDocument extends Cruncher
+{
+	public static final List&lt;String&gt; lockArray = Collections.synchronizedList(new EwList&lt;String&gt;());
+
+	private final static String BYPASS_VALUE = &quot;__bypass&quot;;
+	private final static String NEW_PASS_KEY = &quot;_newPassword&quot;;
+	private final static String PASS_KEY = &quot;password&quot;;
+
+	public CruncherDocument()
+	{
+		super();
+	}
+
+	public static String getId(JSONObject object)
+	{
+		final String id = object.optString(&quot;_id&quot;).trim();
+
+		return (id != null &amp;&amp; id.length() &gt; 0) ? object.optString(&quot;_id&quot;) : object.optString(&quot;id&quot;);
+	}
+	
+	/** @return true if the password is the {@link #BYPASS_VALUE}, false otherwise */
+	protected boolean bypassLogin(Context c,Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
+	{
+		return BYPASS_VALUE.equals(getAsString(PASS_KEY, c,parameters,dataStreams));
+	}
+
+	/** @return true if there is a new password in play, false otherwise */
+	protected boolean creatingNewLogin(Context c,Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
+	{
+		return (!getAsString(NEW_PASS_KEY, c,parameters,dataStreams).isEmpty());
+	}
+
+	/** @return true if there is no current user and no new password, false otherwise */
+	protected boolean isLogging(Context c,Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
+	{
+		return (getAsString(&quot;_id&quot;, c,parameters,dataStreams).isEmpty() &amp;&amp; !creatingNewLogin(c,parameters,dataStreams));
+	}
+
+	/** @return true if there is a new password in play, false otherwise */
+	protected boolean isMD5(String password)
+	{
+		return password.startsWith(&quot;MD5&quot;);
+	}
+
+	/**
+	 * Checks the security of the document, throwing a security exception if the
+	 * password has been violated.
+	 * @param d The document to check.
+	 * @param parameters
+	 * @throws JSONException
+	 */
+	protected void security(Document d, Context c,Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
+	{
+		if (!bypassLogin(c,parameters,dataStreams) &amp;&amp; d.containsKey(PASS_KEY))
+		{
+			final String curPassValue = getAsString(PASS_KEY, c,parameters,dataStreams);
+			final String docPassValue = d.getString(PASS_KEY);
+			final String invalidPassMsg = &quot;Password not provided or invalid.&quot;;
+
+			if (isMD5(curPassValue))
+			{
+				if (!docPassValue.equals(curPassValue))
+					throw new SecurityException(invalidPassMsg);
+			}
+			else
+				try
+				{
+					if (!docPassValue.equals(MessageDigest.getInstance(&quot;MD5&quot;).digest(curPassValue.getBytes())))
+						throw new SecurityException(invalidPassMsg);
+				}
+				catch (NoSuchAlgorithmException e)
+				{
+					e.printStackTrace();
+				}
+		}
+	}
+
+	/** Updates the document with an MD5 of the current password if it hasn&#x27;t already been hashed. */
+	protected void updatePasswordIfNecessary(Document d, String key, Context c,Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams)
+			throws JSONException
+	{
+		final String password = getAsString(NEW_PASS_KEY, c,parameters,dataStreams);
+
+		if (key.equals(NEW_PASS_KEY) &amp;&amp; !password.isEmpty())
+			try
+			{
+				d.put(PASS_KEY, (isMD5(password)) ? password : MessageDigest.getInstance(&quot;MD5&quot;).digest(password.getBytes()));
+			}
+			catch (NoSuchAlgorithmException e)
+			{
+				e.printStackTrace();
+			}
+	}
+
+	protected JSONObject dataToJsonObject(Map&lt;String, InputStream&gt; dataStreams) throws JSONException
+	{
+		JSONObject jo = new EwJsonObject();
+		if (dataStreams == null)
+			return jo;
+		for (String key : dataStreams.keySet())
+		{
+			byte[] byteArray = null;
+			try
+			{
+				InputStream input = dataStreams.get(key);
+				input.reset();
+				byteArray = IOUtils.toByteArray(input);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+			JSONArray ja = new JSONArray(byteArray);
+			jo.put(key,ja);
+		}
+		return jo;
+	}
+
+	protected Map&lt;String, InputStream&gt; jsonObjectToDataStreams(JSONObject dataStreams) throws JSONException
+	{
+		Map&lt;String, InputStream&gt; jo = new HashMap&lt;String, InputStream&gt;();
+		for (String key : EwJson.getKeys(dataStreams))
+		{
+			JSONArray ja = dataStreams.getJSONArray(key);
+			byte[] byteArray = new byte[ja.length()];
+			for (int i = 0;i&lt;ja.length();i++)
+			byteArray[i] = (byte) ja.getInt(i);
+			jo.put(key,new ByteArrayInputStream(byteArray));
+		}
+		return jo;
+	}
+
+	protected JSONObject paramsToJsonObject(Map&lt;String, String[]&gt; parameters) throws JSONException
+	{
+		JSONObject jo = new EwJsonObject();
+		for (String key : parameters.keySet())
+		{
+			JSONArray ja = new JSONArray(parameters.get(key));
+			jo.put(key,ja);
+		}
+		return jo;
+	}
+	protected Map&lt;String, String[]&gt; jsonObjectToParams(JSONObject parameters) throws JSONException
+	{
+		Map&lt;String, String[]&gt; jo = new HashMap&lt;String,String[]&gt;();
+		for (String key : EwJson.getKeys(parameters))
+		{
+			JSONArray jsonArray = parameters.getJSONArray(key);
+			String[] ja = new String[jsonArray.length()];
+			for (int i = 0;i &lt; ja.length;i++)
+				ja[i] = jsonArray.getString(i);
+			jo.put(key,ja);
+		}
+		return jo;
+	}
+
+	protected void lockDocument(String id)
+	{
+		boolean go = true;
+		while (go)
+		{
+			synchronized (lockArray)
+			{
+				if (lockArray.contains(id))
+				{
+					// return;
+				}
+				else
+				{
+					lockArray.add(id);
+					return;
+				}
+			}
+			EwThreading.sleep(10);
+		}
+	}
+
+	protected void unlockDocument(String id)
+	{
+		lockArray.remove(id);
+	}
+}
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

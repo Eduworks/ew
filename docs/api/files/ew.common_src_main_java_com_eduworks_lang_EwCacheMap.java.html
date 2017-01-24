@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.common/src/main/java/com/eduworks/lang/EwCacheMap.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.common/src/main/java/com/eduworks/lang/EwCacheMap.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.lang;
+
+import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.ConcurrentModificationException;
+import java.util.Map;
+import java.util.Set;
+
+import sun.misc.GC;
+
+/***
+ * A map to be used to cache objects. Objects may vanish at any point based on
+ * memory available and garbage collection.
+ * 
+ * @author Fritz
+ * 
+ * @param &lt;E&gt;
+ *            Key type
+ * @param &lt;T&gt;
+ *            Value type
+ */
+public class EwCacheMap&lt;E, T&gt; implements Map&lt;E, T&gt;
+{
+	private static final long serialVersionUID = 1L;
+
+	Map&lt;E, SoftReference&lt;T&gt;&gt; map = Collections.synchronizedMap(new EwMap&lt;E, SoftReference&lt;T&gt;&gt;());
+
+	long lastCleaned = System.currentTimeMillis();
+
+	public void clear()
+	{
+		map.clear();
+	}
+
+	/***
+	 * Removes all dangling soft references.
+	 */
+	private void cull()
+	{
+		long current = System.currentTimeMillis() - GC.maxObjectInspectionAge();
+		if (current == lastCleaned)
+			return;
+		if (current &lt; lastCleaned + 5 * 1000 * 60)
+			return;
+
+		lastCleaned = current;
+		try
+		{
+			EwList&lt;E&gt; removeThese = new EwList&lt;E&gt;();
+			for (Map.Entry&lt;E, SoftReference&lt;T&gt;&gt; e : map.entrySet())
+				if (e.getValue().get() == null)
+					removeThese.add(e.getKey());
+			while (removeThese.isEmpty() == false)
+				remove(removeThese.remove(0));
+		}
+		catch (ConcurrentModificationException ex)
+		{
+		}
+
+	}
+
+	public boolean containsKey(Object arg0)
+	{
+		return map.get(arg0) != null;
+	}
+
+	public boolean containsValue(Object arg0)
+	{
+		return map.containsValue(new WeakReference&lt;T&gt;((T) arg0));
+	}
+
+	public Set&lt;java.util.Map.Entry&lt;E, T&gt;&gt; entrySet()
+	{
+		EwHashMap&lt;E, T&gt; set = new EwHashMap&lt;E, T&gt;();
+		for (Entry&lt;E, SoftReference&lt;T&gt;&gt; r : map.entrySet())
+		{
+			T value = r.getValue().get();
+			if (value == null)
+				continue;
+			set.put(r.getKey(), value);
+		}
+		return set.entrySet();
+	}
+
+	public T get(Object arg0)
+	{
+		cull();
+		return getInner(arg0);
+	}
+
+	/***
+	 * Returns the inner object of a soft reference, if it exists and is not
+	 * null.
+	 * 
+	 * @param arg0
+	 *            The key object
+	 * @return The value object
+	 */
+	private T getInner(Object arg0)
+	{
+		SoftReference&lt;T&gt; weakReference = map.get(arg0);
+		if (weakReference != null)
+			return weakReference.get();
+		return null;
+	}
+
+	public boolean isEmpty()
+	{
+		for (SoftReference&lt;T&gt; t : map.values())
+			if (t.get() != null)
+				return false;
+		return true;
+	}
+
+	public Set&lt;E&gt; keySet()
+	{
+		return map.keySet();
+	}
+
+	public T put(E arg0, T arg1)
+	{
+		cull();
+		map.put(arg0, new SoftReference&lt;T&gt;(arg1));
+		return arg1;
+	}
+
+	public void putAll(Map&lt;? extends E, ? extends T&gt; arg0)
+	{
+		for (E e : arg0.keySet())
+			put(e, arg0.get(e));
+	}
+
+	public T remove(Object arg0)
+	{
+		SoftReference&lt;T&gt; remove = map.remove(arg0);
+		if (remove == null)
+			return null;
+		return remove.get();
+	}
+
+	public int size()
+	{
+		int i = 0;
+		for (SoftReference&lt;T&gt; t : map.values())
+			if (t.get() != null)
+				i++;
+		return i;
+	}
+
+	public Collection&lt;T&gt; values()
+	{
+		EwList&lt;T&gt; results = new EwList&lt;T&gt;();
+		for (SoftReference&lt;T&gt; t : map.values())
+		{
+			T t2 = t.get();
+			if (t2 != null)
+				results.add(t2);
+		}
+		return results;
+	}
+
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.resolver.security;
+
+import java.io.InputStream;
+import java.security.GeneralSecurityException;
+import java.util.Map;
+import java.util.Random;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
+
+public class CruncherEncrypt extends Cruncher
+{
+	@Override
+	public Object resolve(Context c, Map&lt;String,String[]&gt; parameters, Map&lt;String,InputStream&gt; dataStreams) throws JSONException
+	{
+	    try
+		{
+	    	return encrypt(getAsString(&quot;salt&quot;,c,parameters,dataStreams),c,parameters,dataStreams);
+		}
+		catch (GeneralSecurityException gse)
+		{
+			throw new RuntimeException(gse);
+		}
+	}
+	/* STATIC MEMBERS */
+
+	protected static final char DELIM = &#x27;|&#x27;;
+
+	protected static final String KEY	= &quot;key&quot;;
+	protected static final String VALUE	= &quot;value&quot;;
+	protected static final String SALT	= &quot;levr&quot;;
+
+	protected static final int BYTES = 16;
+
+	/** Converts value from encode encryption to the original byte array. */
+	private static byte[] decode(String string)
+	{
+		if (string == null) return null;
+
+		final char[] encoded = string.toCharArray();
+		final byte[] decoded = new byte[encoded.length];
+
+		final StringBuilder next = new StringBuilder(4);
+		int index = 0;
+
+		for (char c : encoded)
+			if (c != DELIM)
+				next.append(c);
+			else
+			{
+				decoded[index++] = Byte.parseByte(next.toString());
+				next.setLength(0);
+			}
+
+		decoded[index++] = Byte.parseByte(next.toString());
+
+		final byte[] trimmed = new byte[index];
+
+		System.arraycopy(decoded, 0, trimmed, 0, index);
+
+		return trimmed;
+
+	}
+
+	public static String decrypt(String encrypted, String key,String salt) throws GeneralSecurityException
+	{
+		if (encrypted == null || encrypted.isEmpty()) return null;
+
+		return new String(getCipher(false, key,salt).doFinal(decode(encrypted)));
+	}
+
+	/** Converts encrypted bytes to a consistent format not affected by url encoding. */
+	private static String encode(byte[] bytes)
+	{
+		if (bytes == null) return null;
+
+		// Longest encoded byte value is five chars in length: -128|
+		final StringBuilder encoded = new StringBuilder(bytes.length * 5);
+
+		for (final byte b : bytes)
+			encoded.append(Byte.toString(b)).append(DELIM);
+
+		return encoded.substring(0, encoded.length() - 1);
+	}
+
+	public static String encrypt(String decrypted, String key,String salt) throws GeneralSecurityException
+	{
+		if (decrypted == null || decrypted.isEmpty()) return null;
+
+		return encode(getCipher(true, key,salt).doFinal(decrypted.getBytes()));
+	}
+
+	private static Cipher getCipher(boolean encrypt, String key,String salt) throws GeneralSecurityException
+	{
+		final String algorithm = &quot;AES&quot;;
+
+		final SecretKeySpec skeySpec = new SecretKeySpec(getKeyBytes(key,salt), algorithm);
+		final Cipher cipher = Cipher.getInstance(algorithm);
+
+	    if (encrypt)
+	    	cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
+	    else
+	    	cipher.init(Cipher.DECRYPT_MODE, skeySpec);
+
+	    return cipher;
+	}
+
+	/** Generates an unpredictable, but consistent byte sequence for consistent decoding. */
+	private static byte[] getKeyBytes()
+	{
+		final byte[] key = new byte[BYTES];
+
+		for (int i = 0; i &lt; key.length; i++)
+			key[i] = (i % 2 == 0)
+				? (byte) (Byte.MAX_VALUE - (i % 7 * 10))
+				: (byte) (Byte.MIN_VALUE + (i % 7 * 10));
+
+		return key;
+	}
+
+	/** Generates an unpredictable, but consistent byte sequence from key. */
+	private static byte[] getKeyBytes(String key,String salt) throws GeneralSecurityException
+	{
+		if (key == null || key.isEmpty()) return getKeyBytes();
+
+		final byte[] randomized = new byte[BYTES];
+
+		final String salted = getSaltedKey(key,salt);
+
+		new Random(salted.hashCode()).nextBytes(randomized);
+
+		return randomized;
+	}
+
+	/** Salts a key with a constant value that is relative to the key itself. */
+	private static String getSaltedKey(String key,String salt) throws GeneralSecurityException
+	{
+		if (key == null || key.isEmpty()) key = SALT;
+
+		final StringBuilder salted = new StringBuilder(key.length() + 36);
+
+		salted.append(key);
+
+		while (salted.length() &lt; 32)
+			salted.append(SALT);
+
+		return salted.substring(0, 32);
+	}
+
+
+	/* INSTANCE METHODS */
+
+	public String decrypt(String salt,Context c, Map&lt;String,String[]&gt; parameters, Map&lt;String,InputStream&gt; dataStreams) throws GeneralSecurityException, JSONException
+	{
+    	return decrypt(getAsString(VALUE, c,parameters,dataStreams), optAsString(KEY, null,c,parameters,dataStreams),salt);
+	}
+
+	public String encrypt(String salt,Context c, Map&lt;String,String[]&gt; parameters, Map&lt;String,InputStream&gt; dataStreams) throws GeneralSecurityException, JSONException
+	{
+    	return encrypt(getAsString(VALUE, c,parameters,dataStreams), optAsString(KEY, null,c,parameters,dataStreams),salt);
+	}
+
+	@Override
+	public String getDescription()
+	{
+		return &quot;Encrypts &#x27;value&#x27; using &#x27;key&#x27;&quot;;
+	}
+
+	@Override
+	public String getReturn()
+	{
+		return &quot;String&quot;;
+	}
+
+	@Override
+	public String getAttribution()
+	{
+		return ATTRIB_NONE;
+	}
+
+	@Override
+	public JSONObject getParameters() throws JSONException
+	{
+		return jo(&quot;key&quot;,&quot;String&quot;,&quot;value&quot;,&quot;String&quot;);
+	}
+
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

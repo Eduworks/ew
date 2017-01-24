@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.common/src/main/java/com/eduworks/util/io/EwFileSystem.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.common/src/main/java/com/eduworks/util/io/EwFileSystem.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.util.io;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.net.URLConnection;
+import java.net.URLDecoder;
+import java.util.Collection;
+import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.zip.DeflaterInputStream;
+import java.util.zip.GZIPInputStream;
+
+import org.apache.commons.io.IOUtils;
+import org.reflections.Reflections;
+import org.reflections.scanners.ResourcesScanner;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
+
+import com.eduworks.lang.EwSet;
+import com.google.common.base.Predicate;
+
+public class EwFileSystem
+{
+	private static String OS = System.getProperty(&quot;os.name&quot;).toLowerCase();
+
+	public static boolean isWindows()
+	{
+		return (OS.indexOf(&quot;win&quot;) &gt;= 0);
+	}
+
+	public static boolean isMac()
+	{
+		return (OS.indexOf(&quot;mac&quot;) &gt;= 0);
+	}
+
+	public static boolean isUnix()
+	{
+		return (OS.indexOf(&quot;nix&quot;) &gt;= 0 || OS.indexOf(&quot;nux&quot;) &gt;= 0 || OS.indexOf(&quot;aix&quot;) &gt; 0);
+	}
+
+	public static boolean isSolaris()
+	{
+		return (OS.indexOf(&quot;sunos&quot;) &gt;= 0);
+	}
+
+	public static String webConfigurationPath = null;
+
+	public static String getWebConfigurationPath()
+	{
+		try
+		{
+			getDefaultLocationPath(true);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		if (webConfigurationPath == null)
+			if (System.getProperty(&quot;eduworks.webapp.config&quot;) != null)
+				webConfigurationPath = new File(System.getProperty(&quot;eduworks.webapp.config&quot;)).getParent();
+		return webConfigurationPath;
+	}
+
+	public static File tryFindFile(String estimatedPath, Class&lt;? extends Object&gt; inThisClassJar, boolean permanantFile, boolean isWebResource)
+	{
+		try
+		{
+			return findFile(estimatedPath, inThisClassJar, permanantFile, isWebResource);
+		}
+		catch (IOException e)
+		{
+			return null;
+		}
+	}
+
+	public static File copyPackage(final String pkg, final Class&lt;? extends Object&gt; inThisClassJar) throws IOException
+	{
+		Collection&lt;URL&gt; urlsForCurrentClasspath = ClasspathHelper.forManifest();// forPackage(pkg,
+																			// ClassLoader.getSystemClassLoader());
+		EwSet&lt;URL&gt; urls = new EwSet&lt;URL&gt;();
+		for (URL url : urlsForCurrentClasspath)
+			urls.add(url);
+
+		Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(urls).setScanners(
+				new ResourcesScanner().filterResultsBy(new Predicate&lt;String&gt;()
+				{
+					@Override
+					public boolean apply(String input)
+					{
+						try
+						{
+							findFile(input, inThisClassJar, true, false);
+						}
+						catch (IOException e)
+						{
+							e.printStackTrace();
+						}
+						return true;
+					}
+				})));
+		Set&lt;String&gt; resources = reflections.getResources(Pattern.compile(&quot;.*&quot;));
+		for (String s : resources)
+			if (s.startsWith(pkg))
+				findFile(s, inThisClassJar, true, false);
+		return new File(getDefaultLocationPath(false), pkg);
+	}
+
+	public static File copyPackageToRoot(final String pkg, final Class&lt;? extends Object&gt; inThisClassJar) throws IOException
+	{
+		Collection&lt;URL&gt; urlsForCurrentClasspath = ClasspathHelper.forManifest();// forPackage(pkg,
+																			// ClassLoader.getSystemClassLoader());
+		EwSet&lt;URL&gt; urls = new EwSet&lt;URL&gt;();
+		for (URL url : urlsForCurrentClasspath)
+			urls.add(url);
+
+		Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(urls).setScanners(
+				new ResourcesScanner().filterResultsBy(new Predicate&lt;String&gt;()
+				{
+					@Override
+					public boolean apply(String input)
+					{
+						try
+						{
+							findFileIn(input, input, inThisClassJar, true, false);
+						}
+						catch (IOException e)
+						{
+							e.printStackTrace();
+						}
+						return true;
+					}
+				})));
+		Set&lt;String&gt; resources = reflections.getResources(Pattern.compile(&quot;.*&quot;));
+		for (String s : resources)
+			if (s.startsWith(pkg))
+				findFileIn(s, s, inThisClassJar, true, false);
+		return new File(pkg);
+	}
+
+	public static File copyPackageChildrenToRoot(final String pkg, final Class&lt;? extends Object&gt; inThisClassJar) throws IOException
+	{
+		Collection&lt;URL&gt; urlsForCurrentClasspath = ClasspathHelper.forManifest();// forPackage(pkg,
+																			// ClassLoader.getSystemClassLoader());
+		EwSet&lt;URL&gt; urls = new EwSet&lt;URL&gt;();
+		for (URL url : urlsForCurrentClasspath)
+			urls.add(url);
+
+		Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(urls).setScanners(
+				new ResourcesScanner().filterResultsBy(new Predicate&lt;String&gt;()
+				{
+					@Override
+					public boolean apply(String input)
+					{
+						try
+						{
+							findFileIn(input.replace(pkg + &quot;/&quot;, &quot;&quot;), input, inThisClassJar, true, false);
+						}
+						catch (IOException e)
+						{
+							e.printStackTrace();
+						}
+						return true;
+					}
+				})));
+		Set&lt;String&gt; resources = reflections.getResources(Pattern.compile(&quot;.*&quot;));
+		for (String s : resources)
+			if (s.startsWith(pkg))
+				findFileIn(s.replace(pkg + &quot;/&quot;, &quot;&quot;), s, inThisClassJar, true, false);
+		return new File(&quot;.&quot;);
+	}
+
+	/*
+	 * Estimated Path should not include &#x27;/&#x27;.
+	 */
+	public static File findFileIn(String desiredPath, String estimatedPath, Class&lt;? extends Object&gt; inThisClassJar, boolean permanantFile, boolean isWebResource)
+			throws IOException
+	{
+
+		File targetPath = new File(desiredPath);
+		if (targetPath.exists())
+			return targetPath;
+
+		URL possibleFile = null;
+		InputStream possibleInputStream = null;
+		if (inThisClassJar != null)
+		{
+			possibleFile = inThisClassJar.getResource(estimatedPath);
+			possibleInputStream = inThisClassJar.getResourceAsStream(estimatedPath);
+			if (possibleFile == null)
+			{
+				possibleFile = inThisClassJar.getResource(&quot;/&quot; + estimatedPath);
+				possibleInputStream = inThisClassJar.getResourceAsStream(&quot;/&quot; + estimatedPath);
+			}
+		}
+		if (possibleFile == null)
+		{
+			possibleFile = EwFileSystem.class.getResource(estimatedPath);
+			possibleInputStream = EwFileSystem.class.getResourceAsStream(estimatedPath);
+		}
+		if (possibleFile == null)
+		{
+			possibleFile = EwFileSystem.class.getResource(&quot;/&quot; + estimatedPath);
+			possibleInputStream = EwFileSystem.class.getResourceAsStream(&quot;/&quot; + estimatedPath);
+		}
+		if (possibleFile == null)
+		{
+			File file = new File(desiredPath);
+			if (file.exists())
+			{
+				possibleFile = file.toURI().toURL();
+				possibleInputStream = new FileInputStream(file);
+			}
+		}
+		if (possibleFile == null)
+			throw new IOException(&quot;Could not find file: &quot; + estimatedPath);
+
+		if (possibleInputStream != null)
+		{
+			if (targetPath.exists() == false)
+			{
+				if (targetPath.getParentFile() != null)
+					targetPath.getParentFile().mkdirs();
+				targetPath.createNewFile();
+			}
+			FileOutputStream targetOutputStream = new FileOutputStream(targetPath);
+			IOUtils.copy(possibleInputStream, targetOutputStream);
+			IOUtils.closeQuietly(targetOutputStream);
+			IOUtils.closeQuietly(possibleInputStream);
+		}
+		targetPath.mkdirs();
+
+		if (!permanantFile)
+			targetPath.deleteOnExit();
+
+		return targetPath;
+	}
+	
+	public static File findFile(String estimatedPath, Class&lt;? extends Object&gt; inThisClassJar, boolean permanantFile, boolean isWebResource) throws IOException
+	{
+		String rootPath = null;
+
+		if (isWebResource)
+			rootPath = getWebConfigurationPath();
+
+		if (rootPath == null)
+		{
+			rootPath = getDefaultLocationPath(isWebResource);
+		}
+
+		File targetPath = new File(rootPath, estimatedPath);
+		if (targetPath.exists())
+			return targetPath;
+
+		URL possibleFile = null;
+		InputStream possibleInputStream = null;
+		if (inThisClassJar != null)
+		{
+			possibleFile = inThisClassJar.getResource(estimatedPath);
+			possibleInputStream = inThisClassJar.getResourceAsStream(estimatedPath);
+			if (possibleFile == null)
+			{
+				possibleFile = inThisClassJar.getResource(&quot;/&quot; + estimatedPath);
+				possibleInputStream = inThisClassJar.getResourceAsStream(&quot;/&quot; + estimatedPath);
+			}
+		}
+		if (possibleFile == null)
+		{
+			possibleFile = EwFileSystem.class.getResource(estimatedPath);
+			possibleInputStream = EwFileSystem.class.getResourceAsStream(estimatedPath);
+		}
+		if (possibleFile == null)
+		{
+			possibleFile = EwFileSystem.class.getResource(&quot;/&quot; + estimatedPath);
+			possibleInputStream = EwFileSystem.class.getResourceAsStream(&quot;/&quot; + estimatedPath);
+		}
+		if (possibleFile == null)
+		{
+			File file = new File(estimatedPath);
+			if (file.exists())
+			{
+				possibleFile = file.toURI().toURL();
+				possibleInputStream = new FileInputStream(file);
+			}
+		}
+		if (possibleFile == null)
+			throw new IOException(&quot;Could not find file: &quot; + estimatedPath);
+
+		System.out.println(possibleFile);
+		
+		if (possibleInputStream != null)
+		{
+			if (targetPath.exists() == false)
+			{
+				targetPath.getParentFile().mkdirs();
+				targetPath.createNewFile();
+			}
+			FileOutputStream targetOutputStream = new FileOutputStream(targetPath);
+			IOUtils.copy(possibleInputStream, targetOutputStream);
+			IOUtils.closeQuietly(targetOutputStream);
+			IOUtils.closeQuietly(possibleInputStream);
+		}
+		targetPath.mkdirs();
+
+		// TODO: If this thing is a directory, and it is in a jar, then we want
+		// to copy all the files in the directory in the jar into the target
+		// location.
+
+		if (!permanantFile)
+			targetPath.deleteOnExit();
+
+		return targetPath;
+	}
+
+	/**
+	 * Close a stream or reader/writer object.
+	 * @param stream Stream to close.
+	 */
+	public static void closeIt(Object stream)
+	{
+		try
+		{
+			if (stream instanceof InputStream)
+				((InputStream) stream).close();
+			else if (stream instanceof OutputStream)
+				((OutputStream) stream).close();
+			else if (stream instanceof Reader)
+				((Reader) stream).close();
+			else if (stream instanceof Writer)
+				((Writer) stream).close();
+		}
+		catch (IOException e)
+		{
+			// TODO: log this instead?
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Download the content of a URL to a specific local file or a temporary
+	 * file if no local file is specified. Returns the local file used.
+	 * 
+	 * @param path URL to download.
+	 * @param localFile To this local file.
+	 * @param timeout Timeout for download.
+	 * @return Downloaded file or null.
+	 * @throws IOException Error in downloading or writing file.
+	 */
+	public static File downloadFile(String path, File localFile, int timeout) throws IOException
+	{
+		URL uri;
+		FileOutputStream fileOutputStream = null;
+		InputStream inputStream = null;
+		try
+		{
+			try
+			{
+				uri = new URL(path);
+			}
+			catch (MalformedURLException e)
+			{
+				uri = new URL(URLDecoder.decode(path));
+			}
+			URLConnection connection = uri.openConnection();
+			connection.setConnectTimeout(timeout);
+			connection.setReadTimeout(timeout);
+			connection.setRequestProperty(&quot;Accept&quot;, &quot;*/*&quot;);
+			connection.connect();
+			inputStream = connection.getInputStream();
+			// If the local file is null, create a temporary file to hold the
+			// content
+			if (localFile == null)
+			{
+				String ext = null;
+				try
+				{
+					String headerField = connection.getHeaderField(&quot;content-disposition&quot;);
+					if (headerField != null &amp;&amp; headerField.split(&quot;;&quot;)[0].equals(&quot;attachment&quot;))
+					{
+						String filename = headerField.split(&quot;;&quot;)[1].split(&quot;=&quot;)[1];
+						if (filename.contains(&quot;.&quot;))
+							ext = filename.split(&quot;\\.&quot;)[filename.split(&quot;\\.&quot;).length-1];
+					}
+				}
+				catch (Exception ex)
+				{
+					System.out.println(&quot;Download of File: Could not determine extension appropriately from header.&quot;);
+					System.out.println(uri);
+					ex.printStackTrace();
+				}
+				if (ext == null)
+					ext = uri.getPath().substring(uri.getPath().lastIndexOf(&quot;/&quot;) + 1);
+				if (ext == null || ext.isEmpty())
+					if (connection.getContentType() != null)
+						if (!connection.getContentType().endsWith(&quot;/&quot;))
+							ext = connection.getContentType().substring(connection.getContentType().lastIndexOf(&#x27;/&#x27;) + 1);
+				if (ext.contains(&quot;.&quot;))
+					ext = ext.substring(ext.indexOf(&quot;.&quot;));
+				localFile = File.createTempFile(&quot;foo&quot;, &quot;.&quot; + removeNonazAZStatic(ext));
+			}
+			fileOutputStream = new FileOutputStream(localFile);
+			if (connection.getContentEncoding() != null &amp;&amp; connection.getContentEncoding().equals(&quot;gzip&quot;))
+				inputStream = new GZIPInputStream(inputStream);
+			if (connection.getContentEncoding() != null &amp;&amp; connection.getContentEncoding().equals(&quot;deflate&quot;))
+				inputStream = new DeflaterInputStream(inputStream);
+			IOUtils.copy(inputStream, fileOutputStream);
+			return localFile;
+		}
+		finally
+		{
+			closeIt(inputStream);
+			closeIt(fileOutputStream);
+		}
+	}
+
+	private static String removeNonazAZStatic(String _text)
+	{
+		for (int i = 0; i &lt; _text.length(); i++)
+		{
+			char k = _text.charAt(i);
+			if (!(k &gt;= &#x27;a&#x27; &amp;&amp; k &lt;= &#x27;z&#x27;) &amp;&amp; !(k &gt;= &#x27;A&#x27; &amp;&amp; k &lt;= &#x27;Z&#x27;))
+			{
+				StringBuilder sb = new StringBuilder();
+				for (int j = 0; j &lt; _text.length(); j++)
+				{
+					char c = _text.charAt(j);
+					if ((c &gt;= &#x27;a&#x27; &amp;&amp; c &lt;= &#x27;z&#x27;) || (c &gt;= &#x27;A&#x27; &amp;&amp; c &lt;= &#x27;Z&#x27;))
+						sb.append(_text.charAt(j));
+				}
+				return sb.toString();
+			}
+		}
+		return _text;
+	}
+
+	public static String resolve(URL uri) throws IOException
+	{
+		ByteArrayOutputStream baos = null;
+		InputStream inputStream = null;
+		try
+		{
+			URLConnection connection = uri.openConnection();
+			inputStream = connection.getInputStream();
+			connection.connect();
+			baos = new ByteArrayOutputStream();
+			if (connection.getContentEncoding() != null &amp;&amp; connection.getContentEncoding().equals(&quot;gzip&quot;))
+				inputStream = new GZIPInputStream(inputStream);
+			if (connection.getContentEncoding() != null &amp;&amp; connection.getContentEncoding().equals(&quot;deflate&quot;))
+				inputStream = new DeflaterInputStream(inputStream);
+			IOUtils.copy(inputStream, baos);
+			return new String(baos.toByteArray());
+		}
+		finally
+		{
+			closeIt(inputStream);
+			closeIt(baos);
+		}
+	}
+
+	public static File downloadFile(String path) throws IOException
+	{
+		return downloadFile(path, null, 5 * 60 * 1000);
+	}
+
+	public static File downloadFile(String path, int timeoutms) throws IOException
+	{
+		return downloadFile(path, null, timeoutms);
+	}
+
+	private static String getDefaultLocationPath(boolean isWebResource) throws IOException
+	{
+		if (webConfigurationPath != null)
+			return webConfigurationPath;
+		String rootPath;
+		rootPath = createTempDirectory().getName();
+		if (isWebResource)
+			webConfigurationPath = rootPath;
+		return rootPath;
+	}
+
+	private static File createTempDirectory() throws IOException
+	{
+		File createTempFile = File.createTempFile(&quot;ewww&quot;, &quot;tmp&quot;);
+		createTempFile.delete();
+		createTempFile = new File(createTempFile.getParentFile(), &quot;etc&quot;);
+		createTempFile.mkdirs();
+		createTempFile.mkdir();
+		createTempFile.deleteOnExit();
+		return createTempFile;
+	}
+
+	public static void deleteEventually(File file)
+	{
+		if (file == null)
+			return;
+		if (!file.exists())
+			return;
+		if (!file.delete())
+			file.deleteOnExit();
+	}
+
+	public static void placeInWorkingDirectoryTemporarily(File findFile, String relativePath)
+	{
+		File dest = new File(relativePath);
+		if (dest.exists())
+			return;
+		dest.getParentFile().mkdirs();
+		FileInputStream input;
+		try
+		{
+			input = new FileInputStream(findFile);
+			dest.createNewFile();
+			FileOutputStream output = new FileOutputStream(dest);
+			IOUtils.copy(input, output);
+			IOUtils.closeQuietly(input);
+			IOUtils.closeQuietly(output);
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		dest.deleteOnExit();
+	}
+
+	public static void copyPackage(String path, String string, Class&lt;? extends Object&gt; class1)
+	{
+
+	}
+
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

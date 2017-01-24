@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.levr.core/src/main/java/com/eduworks/resolver/ResolverFactory.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.levr.core/src/main/java/com/eduworks/resolver/ResolverFactory.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.resolver;
+
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.reflections.Reflections;
+import org.reflections.scanners.ResourcesScanner;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.scanners.TypeAnnotationsScanner;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
+
+import com.eduworks.lang.EwMap;
+import com.eduworks.lang.EwSet;
+import com.eduworks.lang.json.impl.EwJsonArray;
+import com.eduworks.lang.util.EwJson;
+import com.eduworks.resolver.lang.LevrJsParser;
+import com.google.common.base.Predicate;
+
+public class ResolverFactory
+{
+	public static Map&lt;String, Class&lt;? extends Cruncher&gt;&gt; cruncherSpecs = null;
+	public static Map&lt;String, Class&lt;? extends Scripter&gt;&gt; scripterSpecs = null;
+
+	// static { populateFactorySpecsDynamically(); }
+
+	/** Cast or parse object as JSON object, or return the object */
+	private static Object cast(Object o) throws JSONException
+	{
+		JSONArray ja = EwJson.getInstanceOfJsonArray(o);
+		if (ja != null)
+			return create(ja);
+
+		JSONObject jo = EwJson.getInstanceOfJsonObject(o);
+		if (jo != null)
+			return create(jo);
+
+		if (o instanceof Cruncher)
+			return create((Cruncher) o);
+
+		return o;
+	}
+
+	private static Object create(JSONArray array) throws JSONException
+	{
+		if (array.length() == 0)
+			return new EwJsonArray();
+
+		EwJsonArray ja = new EwJsonArray();
+		for (int i = 0; i &lt; array.length(); i++)
+			ja.put(cast(array.get(i)));
+
+		return ja;
+	}
+
+	private static Object create(Cruncher c) throws JSONException
+	{
+		return c;
+	}
+
+	@SuppressWarnings(&quot;rawtypes&quot;)
+	public static Resolvable create(JSONObject obj) throws JSONException
+	{
+		Resolvable r = null;
+
+		if (r == null)
+			r = getCorrectResolver(obj.getString(&quot;function&quot;));
+		if (r != null)
+			r.setLineAndColAndSource(obj.getInt(&quot;_lineNumber&quot;), obj.getInt(&quot;_colNumber&quot;), obj.getString(&quot;_codeFile&quot;),obj.getString(&quot;_codeMethod&quot;));
+
+		Iterator i = obj.keys();
+		while (i.hasNext())
+		{
+			final String key = i.next().toString();
+
+			if (&quot;function&quot;.equals(key))
+				continue;
+			if (&quot;_lineNumber&quot;.equals(key))
+				continue;
+			if (&quot;_colNumber&quot;.equals(key))
+				continue;
+			if (&quot;_codeFile&quot;.equals(key))
+				continue;
+			if (&quot;_codeMethod&quot;.equals(key))
+				continue;
+
+			r.build(key, cast(obj.get(key)));
+		}
+		return r;
+	}
+
+	public static synchronized void populateFactorySpecsDynamically()
+	{
+		if (cruncherSpecs != null)
+			return;
+		Collection&lt;URL&gt; urlsForCurrentClasspath = new ArrayList&lt;URL&gt;(ClasspathHelper.forManifest());
+		urlsForCurrentClasspath.addAll(ClasspathHelper.forJavaClassPath());
+		urlsForCurrentClasspath.addAll(ClasspathHelper.forClassLoader());
+		EwSet&lt;URL&gt; urls = new EwSet&lt;URL&gt;();
+		for (URL url : urlsForCurrentClasspath)
+		{
+			if (url.toString().contains(&quot;icu4j&quot;))
+				continue;
+			if (!url.toString().contains(&quot;levr&quot;) &amp;&amp; url.toString().contains(&quot;.jar&quot;))
+				continue;
+			urls.add(url);
+		}
+		System.out.println(urls.toString());
+		System.out.println(&quot;We are now going to scan for any Resolvers, Crunchers, or Scripters.&quot;);
+		List&lt;ClassLoader&gt; classLoadersList = new ArrayList&lt;ClassLoader&gt;();
+		classLoadersList.add(ClasspathHelper.contextClassLoader());
+		classLoadersList.add(ClasspathHelper.staticClassLoader());
+		classLoadersList.add(new URLClassLoader(urls.toArray(new URL[0])));
+		Reflections reflections = new Reflections(new ConfigurationBuilder().addClassLoaders(classLoadersList).setUrls(urls).setScanners(new SubTypesScanner(),
+				new TypeAnnotationsScanner().filterResultsBy(new Predicate&lt;String&gt;()
+				{
+					@Override
+					public boolean apply(String input)
+					{
+						if (input.contains(&quot;Cruncher&quot;))
+							return true;
+						if (input.contains(&quot;Scripter&quot;))
+							return true;
+						if (input.startsWith(&quot;Command&quot;))
+							return true;
+						return false;
+					}
+				}), new ResourcesScanner()));
+		System.out.println(&quot;Finished Scanning. Getting subtypes and initializing classes.&quot;);
+		int crunchers = 0, scripters = 0;
+		Set&lt;Class&lt;? extends Cruncher&gt;&gt; csubTypesOf = reflections.getSubTypesOf(Cruncher.class);
+		cruncherSpecs = new EwMap&lt;String, Class&lt;? extends Cruncher&gt;&gt;();
+
+		for (Class&lt;? extends Cruncher&gt; c : csubTypesOf)
+		{
+			try
+			{
+				Cruncher newInstance = c.newInstance();
+				for (String s : newInstance.getResolverNames())
+				{
+					if (cruncherSpecs.containsKey(s))
+						System.out.println(&quot;Duplicate Cruncher Found: &quot; + s);
+					cruncherSpecs.put(s, c);
+				}
+				crunchers++;
+			}
+			catch (InstantiationException ex)
+			{
+			}
+			catch (NoClassDefFoundError e)
+			{
+                            System.err.println(&quot;Error initializing &quot; + c.getName());
+				e.printStackTrace();
+			}
+			catch (IllegalAccessException e)
+			{
+                            System.err.println(&quot;Error initializing &quot; + c.getName());
+				e.printStackTrace();
+			}
+			catch (Throwable t)
+			{
+                            System.err.println(&quot;Error initializing &quot; + c.getName());
+				t.printStackTrace();
+			}
+		}
+
+		System.out.println(crunchers + &quot; Crunchers.&quot;);
+
+		Set&lt;Class&lt;? extends Scripter&gt;&gt; ssubTypesOf = reflections.getSubTypesOf(Scripter.class);
+		scripterSpecs = new EwMap&lt;String, Class&lt;? extends Scripter&gt;&gt;();
+
+		for (Class&lt;? extends Scripter&gt; s : ssubTypesOf)
+		{
+			try
+			{
+				Scripter newInstance = s.newInstance();
+				for (String key : newInstance.getResolverNames())
+				{
+					scripterSpecs.put(key, s);
+				}
+				scripters++;
+			}
+			catch (InstantiationException ex)
+			{
+
+			}
+			catch (NoClassDefFoundError e)
+			{
+
+			}
+			catch (IllegalAccessException e)
+			{
+
+			}
+		}
+		System.out.println(scripters + &quot; Scripters.&quot;);
+                LevrJsParser j = new LevrJsParser();
+		System.out.println(&quot;Free Memory - &quot; + ((Runtime.getRuntime().freeMemory() / 1024) / 1024));
+		System.out.println(&quot;Total Memory - &quot; + ((Runtime.getRuntime().totalMemory() / 1024) / 1024));
+		System.out.println(&quot;Max Memory - &quot; + ((Runtime.getRuntime().maxMemory() / 1024) / 1024));
+		System.out.println(&quot;Available CPU - &quot; + (Runtime.getRuntime().availableProcessors()));
+	}
+
+	private static Resolvable getCorrectResolver(String name) throws JSONException
+	{
+		if (cruncherSpecs == null)
+			populateFactorySpecsDynamically();
+
+		Class&lt;? extends Cruncher&gt; c2 = cruncherSpecs.get(name);
+		Class&lt;? extends Scripter&gt; s = scripterSpecs.get(name);
+
+		try
+		{
+			if (c2 == null &amp;&amp; s == null)
+			{
+				c2 = cruncherSpecs.get(&quot;execute&quot;);
+				if (c2 == null)
+					throw new RuntimeException(&quot;Neither cruncher nor function exist: &quot; + name);
+				Cruncher cruncher = c2.newInstance();
+				cruncher.build(&quot;service&quot;, name);
+				return cruncher;
+			}
+
+			if (c2 == null &amp;&amp; s == null)
+				throw new JSONException(&quot;Cannot resolve name: &quot; + name);
+
+			if (c2 == null)
+				return s.newInstance();
+			else
+				return c2.newInstance();
+		}
+		catch (InstantiationException e)
+		{
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		catch (IllegalAccessException e)
+		{
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

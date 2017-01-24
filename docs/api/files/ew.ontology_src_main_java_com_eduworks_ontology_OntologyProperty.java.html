@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.ontology/src/main/java/com/eduworks/ontology/OntologyProperty.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.ontology/src/main/java/com/eduworks/ontology/OntologyProperty.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.ontology;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLProperty;
+
+import com.hp.hpl.jena.ontology.DatatypeProperty;
+import com.hp.hpl.jena.ontology.ObjectProperty;
+import com.hp.hpl.jena.ontology.OntClass;
+import com.hp.hpl.jena.ontology.OntProperty;
+import com.hp.hpl.jena.ontology.OntResource;
+import com.hp.hpl.jena.vocabulary.OWL;
+import com.hp.hpl.jena.vocabulary.OWL2;
+import com.hp.hpl.jena.vocabulary.RDF;
+import com.hp.hpl.jena.vocabulary.RDFS;
+import com.hp.hpl.jena.vocabulary.XSD;
+
+@SuppressWarnings(&quot;rawtypes&quot;)
+public class OntologyProperty extends OntologyWrapper
+{
+
+	public static OntologyProperty createProperty(Ontology ont, String identifier, JSONObject vals)
+	{
+		// TODO: look through vals for things that indicate the type (range
+		// types, specific object property flags)
+		throw new RuntimeException(&quot;Not implemented yet&quot;);
+	}
+
+	// TODO: All Value Keys should be case-insensitive
+	public static OntologyProperty createDataProperty(Ontology ont, String identifier, JSONObject vals)
+	{
+		IRI iri = IRI.create(&quot;#&quot; + identifier);
+		String newPropIri = ont.getBaseIRI() + &quot;#&quot; + identifier;
+
+		DatatypeProperty newJenaProp;
+
+		// TODO: Check Existence for Jena
+
+		try
+		{
+			if (vals.has(&quot;functional&quot;) &amp;&amp; vals.getBoolean(&quot;functional&quot;))
+			{
+				newJenaProp = ont.getJenaModel().createDatatypeProperty(newPropIri, true);
+			}
+			else
+			{
+				newJenaProp = ont.getJenaModel().createDatatypeProperty(newPropIri, false);
+			}
+
+			if (vals.has(&quot;domain&quot;))
+			{
+				JSONArray domainIds = new JSONArray();
+
+				String domainIdString = vals.getString(&quot;domain&quot;);
+				if (domainIdString.startsWith(&quot;[&quot;) &amp;&amp; domainIdString.endsWith(&quot;]&quot;))
+				{
+					domainIds = vals.getJSONArray(&quot;domain&quot;);
+				}
+				else
+				{
+					domainIds.put(domainIdString);
+				}
+
+				getDataDomainAxioms(ont, newJenaProp, domainIds);
+			}
+
+			if (vals.has(&quot;range&quot;))
+			{
+				getDataRangeAxiom(ont, newJenaProp, vals.getString(&quot;range&quot;));
+			}
+
+			if (vals.has(&quot;subpropertyOf&quot;))
+			{
+				JSONArray superPropIds = new JSONArray();
+
+				String domainIdString = vals.getString(&quot;subpropertyOf&quot;);
+				if (domainIdString.startsWith(&quot;[&quot;) &amp;&amp; domainIdString.endsWith(&quot;]&quot;))
+				{
+					superPropIds = vals.getJSONArray(&quot;subpropertyOf&quot;);
+				}
+				else
+				{
+					superPropIds.put(domainIdString);
+				}
+
+				getDataSubPropertyAxioms(ont, newJenaProp, superPropIds);
+			}
+		}
+		catch (JSONException e)
+		{
+			throw new RuntimeException(&quot;Shouldn&#x27;t happen, we check that the key exists&quot;);
+		}
+
+		return new OntologyProperty(ont, newJenaProp);
+	}
+
+	// TODO: All Value Keys should be case-insensitive
+	public static OntologyProperty createObjectProperty(Ontology ont, String identifier, JSONObject vals)
+	{
+
+		IRI iri = IRI.create(&quot;#&quot; + identifier);
+		String newPropIri = ont.getBaseIRI() + &quot;#&quot; + identifier;
+
+		ObjectProperty newJenaProp;
+
+		// TODO: Check existence in Jena
+
+		try
+		{
+			if (vals.has(&quot;functional&quot;) &amp;&amp; vals.getBoolean(&quot;functional&quot;))
+			{
+				newJenaProp = ont.getJenaModel().createObjectProperty(newPropIri, true);
+			}
+			else
+			{
+				newJenaProp = ont.getJenaModel().createObjectProperty(newPropIri, false);
+			}
+
+			if (vals.has(&quot;domain&quot;))
+			{
+				JSONArray domainIds = new JSONArray();
+
+				String domainIdString = vals.getString(&quot;domain&quot;);
+				if (domainIdString.startsWith(&quot;[&quot;) &amp;&amp; domainIdString.endsWith(&quot;]&quot;))
+				{
+					domainIds = vals.getJSONArray(&quot;domain&quot;);
+				}
+				else
+				{
+					domainIds.put(domainIdString);
+				}
+
+				getObjectDomainAxioms(ont, newJenaProp, domainIds);
+			}
+
+			if (vals.has(&quot;range&quot;))
+			{
+				JSONArray rangeIds = new JSONArray();
+
+				String rangeIdString = vals.getString(&quot;range&quot;);
+				if (rangeIdString.startsWith(&quot;[&quot;) &amp;&amp; rangeIdString.endsWith(&quot;]&quot;))
+				{
+					rangeIds = vals.getJSONArray(&quot;range&quot;);
+				}
+				else
+				{
+					rangeIds.put(rangeIdString);
+				}
+
+				getObjectRangeAxioms(ont, newJenaProp, rangeIds);
+			}
+
+			if (vals.has(&quot;subpropertyOf&quot;))
+			{
+				JSONArray superPropIds = new JSONArray();
+
+				String domainIdString = vals.getString(&quot;subpropertyOf&quot;);
+				if (domainIdString.startsWith(&quot;[&quot;) &amp;&amp; domainIdString.endsWith(&quot;]&quot;))
+				{
+					superPropIds = vals.getJSONArray(&quot;subpropertyOf&quot;);
+				}
+				else
+				{
+					superPropIds.put(domainIdString);
+				}
+
+				getObjectSubPropertyAxioms(ont, newJenaProp, superPropIds);
+			}
+
+			if (vals.has(&quot;inverses&quot;))
+			{
+				JSONArray inversePropIds = new JSONArray();
+
+				// TODO: Probably shouldn&#x27;t be an array.
+				String invPropIdString = vals.getString(&quot;inverses&quot;);
+				if (invPropIdString.startsWith(&quot;[&quot;) &amp;&amp; invPropIdString.endsWith(&quot;]&quot;))
+				{
+					inversePropIds = vals.getJSONArray(&quot;inverses&quot;);
+				}
+				else
+				{
+					inversePropIds.put(invPropIdString);
+				}
+				getInversePropertyAxioms(ont, newJenaProp, inversePropIds);
+			}
+
+			if (vals.has(&quot;symmetric&quot;) &amp;&amp; vals.getBoolean(&quot;symmetric&quot;))
+			{
+				newJenaProp.addProperty(RDF.type, OWL.SymmetricProperty);
+			}
+
+			if (vals.has(&quot;inverse-functional&quot;) &amp;&amp; vals.getBoolean(&quot;inverse-functional&quot;))
+			{
+				newJenaProp.addProperty(RDF.type, OWL.InverseFunctionalProperty);
+			}
+
+			if (vals.has(&quot;transitive&quot;) &amp;&amp; vals.getBoolean(&quot;transitive&quot;))
+			{
+				newJenaProp.addProperty(RDF.type, OWL.TransitiveProperty);
+			}
+			if (vals.has(&quot;asymmetric&quot;) &amp;&amp; vals.getBoolean(&quot;asymmetric&quot;))
+			{
+				newJenaProp.addProperty(RDF.type, OWL2.AsymmetricProperty);
+			}
+			if (vals.has(&quot;reflexive&quot;) &amp;&amp; vals.getBoolean(&quot;reflexive&quot;))
+			{
+				newJenaProp.addProperty(RDF.type, OWL2.ReflexiveProperty);
+			}
+			if (vals.has(&quot;irreflexive&quot;) &amp;&amp; vals.getBoolean(&quot;irreflexive&quot;))
+			{
+				newJenaProp.addProperty(RDF.type, OWL2.IrreflexiveProperty);
+			}
+
+		}
+		catch (JSONException e)
+		{
+			throw new RuntimeException(&quot;Shouldn&#x27;t happen, we check that the key exists&quot;);
+		}
+
+		return new OntologyProperty(ont, newJenaProp);
+	}
+
+	private static void getDataDomainAxioms(Ontology ont, DatatypeProperty jenaProp, JSONArray domainIds)
+	{
+		for (int i = 0; i &lt; domainIds.length(); i++)
+		{
+			try
+			{
+				OntologyClass cls = ont.getClass(domainIds.getString(i));
+
+				OntClass jenaCls = cls.getJenaClass();
+				jenaProp.addDomain(jenaCls);
+			}
+			catch (JSONException e)
+			{
+				throw new RuntimeException(&quot;Shouldn&#x27;t happen, we loop only through the size of the array&quot;);
+			}
+		}
+	}
+
+	private static void getObjectDomainAxioms(Ontology ont, ObjectProperty jenaProp, JSONArray domainIds)
+	{
+		for (int i = 0; i &lt; domainIds.length(); i++)
+		{
+			try
+			{
+				OntologyClass cls = ont.getClass(domainIds.getString(i));
+
+				OntClass jenaCls = ont.getJenaModel().getOntClass(cls.getFullId());
+				jenaProp.addDomain(jenaCls);
+			}
+			catch (JSONException e)
+			{
+				throw new RuntimeException(&quot;Shouldn&#x27;t happen, we loop only through the size of the array&quot;);
+			}
+		}
+	}
+
+	private static void getDataRangeAxiom(Ontology ont, DatatypeProperty jenaProp, String dataRange)
+	{
+
+		if (dataRange.startsWith(&quot;xsd:&quot;))
+		{
+			if (dataRange.equals(&quot;xsd:string&quot;))
+			{
+				jenaProp.addRange(XSD.xstring);
+			}
+			else if (dataRange.equals(&quot;xsd:integer&quot;))
+			{
+				jenaProp.addRange(XSD.xint);
+			}
+			else if (dataRange.equals(&quot;xsd:double&quot;))
+			{
+				jenaProp.addRange(XSD.xdouble);
+			}
+			else
+			{
+				throw new RuntimeException(&quot;unknown data property range: &quot; + dataRange);
+			}
+
+		}
+		else
+		{
+			throw new RuntimeException(&quot;unknown data property range: &quot; + dataRange);
+		}
+	}
+
+	private static void getObjectRangeAxioms(Ontology ont, ObjectProperty jenaProp, JSONArray rangeIds)
+	{
+		for (int i = 0; i &lt; rangeIds.length(); i++)
+		{
+			try
+			{
+				OntologyClass cls = ont.getClass(rangeIds.getString(i));
+
+				OntClass jenaCls = ont.getJenaModel().getOntClass(cls.getFullId());
+				jenaProp.addDomain(jenaCls);
+			}
+			catch (JSONException e)
+			{
+				throw new RuntimeException(&quot;Shouldn&#x27;t happen, we loop only through the size of the array&quot;);
+			}
+		}
+	}
+
+	private static void getDataSubPropertyAxioms(Ontology ont, DatatypeProperty jenaProp, JSONArray superPropIds)
+	{
+		try
+		{
+			for (int i = 0; i &lt; superPropIds.length(); i++)
+			{
+				OntologyProperty superProp = ont.getProperty(superPropIds.getString(i));
+
+				if (superProp.getJenaProperty().isDatatypeProperty())
+				{
+					jenaProp.addSuperProperty(superProp.getJenaProperty());
+				}
+				else
+				{
+					throw new RuntimeException(&quot;Data Property &lt;&quot; + getIdentifier(jenaProp.getURI()) + &quot;&gt; cannot be a subProperty of non-data property &lt;&quot;
+							+ superPropIds.getString(i) + &quot;&gt;&quot;);
+				}
+			}
+		}
+		catch (JSONException e)
+		{
+			throw new RuntimeException(&quot;Error getting super-property Id&quot;);
+		}
+
+	}
+
+	private static void getObjectSubPropertyAxioms(Ontology ont, ObjectProperty jenaProp, JSONArray superPropIds)
+	{
+		try
+		{
+			for (int i = 0; i &lt; superPropIds.length(); i++)
+			{
+				OntologyProperty superProp = ont.getProperty(superPropIds.getString(i));
+
+				if (superProp.isObjectProperty())
+				{
+					jenaProp.addSuperProperty(superProp.getJenaProperty());
+				}
+				else
+				{
+					throw new RuntimeException(&quot;Object Property &lt;&quot; + getIdentifier(jenaProp.getURI()) + &quot;&gt; cannot be a subProperty of non-object property &lt;&quot;
+							+ superPropIds.getString(i) + &quot;&gt;&quot;);
+				}
+			}
+		}
+		catch (JSONException e)
+		{
+			throw new RuntimeException(&quot;Error getting super-property Id&quot;);
+		}
+	}
+
+	private static void getInversePropertyAxioms(Ontology ont, ObjectProperty jenaProp, JSONArray inversePropIds)
+	{
+		for (int i = 0; i &lt; inversePropIds.length(); i++)
+		{
+			try
+			{
+				String invPropId = inversePropIds.getString(i);
+
+				OntologyProperty invP = ont.getProperty(invPropId);
+
+				if (invP.isObjectProperty())
+				{
+					jenaProp.addInverseOf(invP.getJenaProperty());
+				}
+				else
+				{
+					throw new RuntimeException(&quot;Property (&quot; + invPropId + &quot;) is not an Object Property and cannot be an inverse property&quot;);
+				}
+
+			}
+			catch (JSONException e)
+			{
+				throw new RuntimeException(&quot;This shouldn&#x27;t occur, we test how many items before looping&quot;);
+			}
+		}
+	}
+
+	Ontology ont;
+	OntProperty jenaProp;
+
+	/**
+	 * Creates an OntologyProperty Wrapper to wrap the OWLAPI OWLProperty passed
+	 * in, assumes that the ontology passed in is the owner of the property
+	 * 
+	 * @param prop
+	 *            Property to wrap
+	 * @param o
+	 *            Ontology to use to wrap the property
+	 * @param jena
+	 *            Jena based property
+	 */
+	public OntologyProperty(Ontology o, OWLProperty prop, OntProperty jena)
+	{
+		// TODO: May want to check whether ontology contains the property
+		o.getJenaModel().enterCriticalSection(true);
+		if (!o.getJenaModel().containsResource(jena))
+		{
+			throw new RuntimeException(&quot;Property (&quot; + jena.getId() + &quot;) is not contained in the ontology at: &quot; + o.getTDBDir());
+		}
+		o.getJenaModel().leaveCriticalSection();
+
+		ont = o;
+		jenaProp = jena;
+	}
+
+	public OntologyProperty(Ontology o, OntProperty prop)
+	{
+		this(o, null, prop);
+	}
+
+	public void update(JSONObject newVals)
+	{
+		JSONObject oldValues = this.getJSONRepresentation();
+		JSONObject currentValues = new JSONObject();
+
+		Iterator&lt;String&gt; k = oldValues.keys();
+
+		while (k.hasNext())
+		{
+			String key = k.next();
+			try
+			{
+				currentValues.put(key, oldValues.get(key));
+			}
+			catch (JSONException e)
+			{
+				throw new RuntimeException(&quot;error copying current values to old values&quot;);
+			}
+		}
+
+		try
+		{
+			// Data Property
+			if (isDataProperty())
+			{
+
+				if (newVals.has(&quot;domain&quot;))
+				{
+					for (OntResource domain : jenaProp.listDomain().toSet())
+					{
+						if (!domain.equals(OWL2.Thing) &amp;&amp; !domain.equals(RDFS.Resource))
+						{
+							jenaProp.removeDomain(domain);
+						}
+					}
+
+					JSONArray domainIds = new JSONArray();
+
+					String domainIdString = newVals.getString(&quot;domain&quot;);
+					if (domainIdString.startsWith(&quot;[&quot;) &amp;&amp; domainIdString.endsWith(&quot;]&quot;))
+					{
+						domainIds = newVals.getJSONArray(&quot;domain&quot;);
+					}
+					else if (!domainIdString.isEmpty())
+					{
+						domainIds.put(domainIdString);
+					}
+
+					if (domainIds.length() != 0 &amp;&amp; !domainIds.getString(0).isEmpty())
+					{
+						getDataDomainAxioms(ont, jenaProp.asDatatypeProperty(), domainIds);
+					}
+				}
+
+				if (newVals.has(&quot;range&quot;))
+				{
+					for (OntResource range : jenaProp.listRange().toSet())
+					{
+						jenaProp.removeRange(range);
+					}
+
+					if (!newVals.getString(&quot;range&quot;).isEmpty())
+					{
+						getDataRangeAxiom(ont, jenaProp.asDatatypeProperty(), newVals.getString(&quot;range&quot;));
+					}
+				}
+
+				if (newVals.has(&quot;functional&quot;))
+				{
+					if (newVals.getBoolean(&quot;functional&quot;) &amp;&amp; !oldValues.getBoolean(&quot;functional&quot;))
+					{
+						jenaProp.addProperty(RDF.type, OWL.FunctionalProperty);
+					}
+					else if (!newVals.getBoolean(&quot;functional&quot;) &amp;&amp; oldValues.getBoolean(&quot;functional&quot;))
+					{
+						jenaProp.removeProperty(RDF.type, OWL.FunctionalProperty);
+					}
+				}
+
+				if (newVals.has(&quot;subpropertyOf&quot;))
+				{
+					for (OntProperty superProp : jenaProp.listSuperProperties().toSet())
+					{
+						jenaProp.removeSuperProperty(superProp);
+					}
+
+					JSONArray superPropIds = new JSONArray();
+
+					String superPropIdString = newVals.getString(&quot;subpropertyOf&quot;);
+					if (superPropIdString.startsWith(&quot;[&quot;) &amp;&amp; superPropIdString.endsWith(&quot;]&quot;))
+					{
+						superPropIds = newVals.getJSONArray(&quot;subpropertyOf&quot;);
+					}
+					else if (!superPropIdString.isEmpty())
+					{
+						superPropIds.put(superPropIdString);
+					}
+
+					if (superPropIds.length() != 0 &amp;&amp; !superPropIds.getString(0).isEmpty())
+					{
+						getDataSubPropertyAxioms(ont, jenaProp.asDatatypeProperty(), superPropIds);
+					}
+				}
+
+				// Object Property
+			}
+			else
+			{
+				if (newVals.has(&quot;domain&quot;))
+				{
+					for (OntResource domain : jenaProp.listDomain().toSet())
+					{
+						jenaProp.removeDomain(domain);
+					}
+
+					JSONArray domainIds = new JSONArray();
+
+					String domainIdString = newVals.getString(&quot;domain&quot;);
+					if (domainIdString.startsWith(&quot;[&quot;) &amp;&amp; domainIdString.endsWith(&quot;]&quot;))
+					{
+						domainIds = newVals.getJSONArray(&quot;domain&quot;);
+					}
+					else if (!domainIdString.isEmpty())
+					{
+						domainIds.put(domainIdString);
+					}
+
+					if (domainIds.length() != 0 &amp;&amp; !domainIds.getString(0).isEmpty())
+					{
+						getObjectDomainAxioms(ont, jenaProp.asObjectProperty(), domainIds);
+					}
+				}
+
+				if (newVals.has(&quot;range&quot;))
+				{
+					for (OntResource range : jenaProp.listRange().toSet())
+					{
+						jenaProp.removeRange(range);
+					}
+
+					JSONArray rangeIds = new JSONArray();
+
+					String rangeIdString = newVals.getString(&quot;range&quot;);
+					if (rangeIdString.startsWith(&quot;[&quot;) &amp;&amp; rangeIdString.endsWith(&quot;]&quot;))
+					{
+						rangeIds = newVals.getJSONArray(&quot;range&quot;);
+					}
+					else if (!rangeIdString.isEmpty())
+					{
+						rangeIds.put(rangeIdString);
+					}
+
+					if (rangeIds.length() != 0 &amp;&amp; !rangeIds.getString(0).isEmpty())
+					{
+						getObjectRangeAxioms(ont, jenaProp.asObjectProperty(), rangeIds);
+					}
+				}
+
+				if (newVals.has(&quot;inverse&quot;))
+				{
+					if (jenaProp.getInverse() != null)
+					{
+						jenaProp.removeInverseProperty(jenaProp.getInverse());
+					}
+
+					JSONArray inversePropIds = new JSONArray();
+
+					String invPropIdString = newVals.getString(&quot;inverse&quot;);
+					if (invPropIdString.startsWith(&quot;[&quot;) &amp;&amp; invPropIdString.endsWith(&quot;]&quot;))
+					{
+						inversePropIds = newVals.getJSONArray(&quot;inverse&quot;);
+					}
+					else if (!invPropIdString.isEmpty())
+					{
+						inversePropIds.put(invPropIdString);
+					}
+
+					if (inversePropIds.length() != 0 &amp;&amp; !inversePropIds.getString(0).isEmpty())
+					{
+						getInversePropertyAxioms(ont, jenaProp.asObjectProperty(), inversePropIds);
+					}
+				}
+
+				if (newVals.has(&quot;subpropertyOf&quot;))
+				{
+
+					for (OntProperty superProp : jenaProp.listSuperProperties().toSet())
+					{
+						jenaProp.removeSuperProperty(superProp);
+					}
+
+					JSONArray superPropIds = new JSONArray();
+
+					String superPropIdString = newVals.getString(&quot;subpropertyOf&quot;);
+					if (superPropIdString.startsWith(&quot;[&quot;) &amp;&amp; superPropIdString.endsWith(&quot;]&quot;))
+					{
+						superPropIds = newVals.getJSONArray(&quot;subpropertyOf&quot;);
+					}
+					else if (!superPropIdString.isEmpty())
+					{
+						superPropIds.put(superPropIdString);
+					}
+
+					if (superPropIds.length() != 0 &amp;&amp; !superPropIds.getString(0).isEmpty())
+					{
+						getObjectSubPropertyAxioms(ont, jenaProp.asObjectProperty(), superPropIds);
+					}
+				}
+
+				if (newVals.has(&quot;functional&quot;))
+				{
+					if (newVals.getBoolean(&quot;functional&quot;) &amp;&amp; !oldValues.getBoolean(&quot;functional&quot;))
+					{
+						jenaProp.addProperty(RDF.type, OWL.FunctionalProperty);
+					}
+					else if (!newVals.getBoolean(&quot;functional&quot;) &amp;&amp; oldValues.getBoolean(&quot;functional&quot;))
+					{
+						jenaProp.removeProperty(RDF.type, OWL.FunctionalProperty);
+					}
+				}
+
+				if (newVals.has(&quot;symmetric&quot;))
+				{
+					if (newVals.getBoolean(&quot;symmetric&quot;) &amp;&amp; !oldValues.getBoolean(&quot;symmetric&quot;))
+					{
+						jenaProp.addProperty(RDF.type, OWL.SymmetricProperty);
+					}
+					else if (!newVals.getBoolean(&quot;symmetric&quot;) &amp;&amp; oldValues.getBoolean(&quot;symmetric&quot;))
+					{
+						jenaProp.removeProperty(RDF.type, OWL.SymmetricProperty);
+					}
+				}
+
+				if (newVals.has(&quot;inverse-functional&quot;))
+				{
+					if (newVals.getBoolean(&quot;inverse-functional&quot;) &amp;&amp; !oldValues.getBoolean(&quot;inverse-functional&quot;))
+					{
+						jenaProp.addProperty(RDF.type, OWL.InverseFunctionalProperty);
+					}
+					else if (!newVals.getBoolean(&quot;inverse-functional&quot;) &amp;&amp; oldValues.getBoolean(&quot;inverse-functional&quot;))
+					{
+						jenaProp.removeProperty(RDF.type, OWL.InverseFunctionalProperty);
+					}
+				}
+
+				if (newVals.has(&quot;transitive&quot;))
+				{
+					if (newVals.getBoolean(&quot;transitive&quot;) &amp;&amp; !oldValues.getBoolean(&quot;transitive&quot;))
+					{
+						jenaProp.addProperty(RDF.type, OWL.TransitiveProperty);
+					}
+					else if (!newVals.getBoolean(&quot;transitive&quot;) &amp;&amp; oldValues.getBoolean(&quot;transitive&quot;))
+					{
+						jenaProp.removeProperty(RDF.type, OWL.TransitiveProperty);
+					}
+				}
+
+				if (newVals.has(&quot;asymmetric&quot;))
+				{
+					if (newVals.getBoolean(&quot;asymmetric&quot;) &amp;&amp; !oldValues.getBoolean(&quot;asymmetric&quot;))
+					{
+						jenaProp.addProperty(RDF.type, OWL2.AsymmetricProperty);
+					}
+					else if (!newVals.getBoolean(&quot;asymmetric&quot;) &amp;&amp; oldValues.getBoolean(&quot;asymmetric&quot;))
+					{
+						jenaProp.removeProperty(RDF.type, OWL2.AsymmetricProperty);
+					}
+				}
+
+				if (newVals.has(&quot;reflexive&quot;))
+				{
+					if (newVals.getBoolean(&quot;reflexive&quot;) &amp;&amp; !oldValues.getBoolean(&quot;reflexive&quot;))
+					{
+						jenaProp.addProperty(RDF.type, OWL2.ReflexiveProperty);
+					}
+					else if (!newVals.getBoolean(&quot;reflexive&quot;) &amp;&amp; oldValues.getBoolean(&quot;reflexive&quot;))
+					{
+						jenaProp.removeProperty(RDF.type, OWL2.ReflexiveProperty);
+					}
+				}
+
+				if (newVals.has(&quot;irreflexive&quot;))
+				{
+					if (newVals.getBoolean(&quot;irreflexive&quot;) &amp;&amp; !oldValues.getBoolean(&quot;irreflexive&quot;))
+					{
+						jenaProp.addProperty(RDF.type, OWL2.IrreflexiveProperty);
+					}
+					else if (!newVals.getBoolean(&quot;irreflexive&quot;) &amp;&amp; oldValues.getBoolean(&quot;irreflexive&quot;))
+					{
+						jenaProp.removeProperty(RDF.type, OWL2.IrreflexiveProperty);
+					}
+				}
+			}
+		}
+		catch (JSONException e)
+		{
+			throw new RuntimeException(&quot;Error Reading New Values: &quot; + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * Delete&#x27;s the property and removes any references to it from the ontology
+	 */
+	public void delete()
+	{
+		jenaProp.remove();
+	}
+
+	/**
+	 * Returns a JSONObject representing this property of the form: If the
+	 * property is an object property it will also have the following true/false
+	 * fields: symmetric, inverse-functional, transitive, asymmetric, reflexive,
+	 * and irreflexive. It will also have the following &#x27;inverses&#x27; @
+	 * propertyId field
+	 * @return JSON Representation of the property.
+	 */
+	public JSONObject getJSONRepresentation()
+	{
+		/*
+		 * 
+		 * { domain: [@&lt;classId&gt;, ...] range: [&lt;type&gt;, ...] functional:
+		 * &lt;true/false&gt; }
+		 */
+		JSONObject obj = new JSONObject();
+
+		try
+		{
+			obj.put(&quot;domain&quot;, getDomain());
+			obj.put(&quot;range&quot;, getRange());
+
+			// obj.put(&quot;functional&quot;, _prop.isFunctional(ont.getOWLOntology()));
+			obj.put(&quot;functional&quot;, jenaProp.isFunctionalProperty());
+
+			JSONObject subProperties = new JSONObject();
+			for (OntologyProperty subProp : getSubProperties())
+			{
+				subProperties.put(subProp.getId(), subProp.getJSONRepresentation());
+			}
+			obj.put(&quot;subproperties&quot;, subProperties);
+
+			JSONArray superProperties = new JSONArray();
+			for (OntologyProperty superProp : getSuperProperties())
+			{
+				superProperties.put(superProp.getId());
+			}
+			obj.put(&quot;superproperties&quot;, superProperties);
+
+			if (isObjectProperty())
+			{
+				// OWLObjectProperty p = _prop.asOWLObjectProperty();
+
+				// JSONArray inverses = new JSONArray();
+				// for (OWLObjectPropertyExpression invP :
+				// p.getInverses(ont.getOWLOntology())){
+				// if(!invP.isAnonymous()){
+				// inverses.put(new OntologyProperty(ont,
+				// invP.asOWLObjectProperty()).getId());
+				// }
+				// }
+
+				OntProperty inverse = jenaProp.getInverse();
+				if (inverse == null)
+				{
+					obj.put(&quot;inverse&quot;, &quot;&quot;);
+				}
+				else
+				{
+					obj.put(&quot;inverse&quot;, new OntologyProperty(ont, null, inverse).getId());
+				}
+
+				// obj.put(&quot;symmetric&quot;, p.isSymmetric(ont.getOWLOntology()));
+				obj.put(&quot;symmetric&quot;, jenaProp.isSymmetricProperty());
+
+				// obj.put(&quot;inverse-functional&quot;,
+				// p.isInverseFunctional(ont.getOWLOntology()));
+				obj.put(&quot;inverse-functional&quot;, jenaProp.isInverseFunctionalProperty());
+
+				// obj.put(&quot;transitive&quot;, p.isTransitive(ont.getOWLOntology()));
+				obj.put(&quot;transitive&quot;, jenaProp.isTransitiveProperty());
+
+				// obj.put(&quot;asymmetric&quot;, p.isAsymmetric(ont.getOWLOntology()));
+				obj.put(&quot;asymmetric&quot;, jenaProp.hasProperty(RDF.type, OWL2.AsymmetricProperty));
+
+				// obj.put(&quot;reflexive&quot;, p.isReflexive(ont.getOWLOntology()));
+				obj.put(&quot;reflexive&quot;, jenaProp.hasProperty(RDF.type, OWL2.ReflexiveProperty));
+
+				// obj.put(&quot;irreflexive&quot;,
+				// p.isIrreflexive(ont.getOWLOntology()));
+				obj.put(&quot;irreflexive&quot;, jenaProp.hasProperty(RDF.type, OWL2.IrreflexiveProperty));
+
+			}
+
+		}
+		catch (JSONException e1)
+		{
+
+		}
+
+		return obj;
+	}
+
+	public boolean isDataProperty()
+	{
+		return jenaProp.isDatatypeProperty();
+	}
+
+	public boolean isObjectProperty()
+	{
+		return jenaProp.isObjectProperty();
+	}
+
+	public Set&lt;OntologyProperty&gt; getSubProperties()
+	{
+		Set&lt;OntologyProperty&gt; subPropertyObjects = new HashSet&lt;OntologyProperty&gt;();
+
+		// TODO: MAKE SURE NULL IS OKAY UNTIL DELETE
+		for (OntProperty p : jenaProp.listSubProperties().toSet())
+		{
+			if (p.getURI() != jenaProp.getURI())
+			{
+				subPropertyObjects.add(new OntologyProperty(ont, null, p));
+			}
+		}
+		// Set&lt;OWLObjectPropertyExpression&gt; subProps =
+		// _prop.getSubProperties(ont.getOWLOntology());
+		// for(OWLObjectPropertyExpression expr : subProps){
+		//
+		// //subPropertyObjects.add(new OntologyProperty(ont,
+		// expr.getNamedProperty()));
+		// }
+
+		return subPropertyObjects;
+	}
+
+	public Set&lt;OntologyProperty&gt; getSuperProperties()
+	{
+		Set&lt;OntologyProperty&gt; superPropertyObjects = new HashSet&lt;OntologyProperty&gt;();
+
+		// TODO: MAKE SURE NULL IS OKAY UNTIL DELETE
+		for (OntProperty p : jenaProp.listSuperProperties().toSet())
+		{
+			superPropertyObjects.add(new OntologyProperty(ont, null, p));
+		}
+
+		// Set&lt;OWLObjectPropertyExpression&gt; superProps =
+		// _prop.getSuperProperties(ont.getOWLOntology());
+		// for(OWLObjectPropertyExpression expr : superProps){
+		// //superPropertyObjects.add(new OntologyProperty(ont,
+		// expr.getNamedProperty()));
+		// }
+
+		return superPropertyObjects;
+	}
+
+	public JSONArray getDomain()
+	{
+		JSONArray arr = new JSONArray();
+
+		for (OntResource r : jenaProp.listDomain().toSet())
+		{
+			if (r.isClass() &amp;&amp; !r.isAnon())
+			{
+				// TODO: REMOVE IRI REFERENCE
+				arr.put(new OntologyClass(ont, r.asClass()).getId());
+			}
+		}
+
+		// OntologyReasoner reasoner = ont.getReasoner();
+		//
+		// Set&lt;OntologyClass&gt; set = reasoner.getPropertyDomains(this);
+		//
+		// // TODO: Going to need to use a reasoner
+		// //Set&lt;OWLClassExpression&gt; set =
+		// _prop.getDomains(ont.getOWLOntology());
+		// for(OntologyClass cls : set){
+		// arr.put(cls.getId());
+		// }
+		//
+		// reasoner.dispose();
+
+		return arr;
+	}
+
+	public JSONArray getRange()
+	{
+		JSONArray arr = new JSONArray();
+
+		// if(_prop instanceof OWLDataProperty){
+		if (jenaProp.isDatatypeProperty())
+		{
+			for (OntResource r : jenaProp.listRange().toSet())
+			{
+				// TODO: ALL OTHER DATA RANGES
+				if (r.equals(XSD.xstring))
+				{
+					arr.put(&quot;xsd:string&quot;);
+				}
+				else if (r.equals(XSD.xint))
+				{
+					arr.put(&quot;xsd:integer&quot;);
+				}
+				else if (r.equals(XSD.xdouble))
+				{
+					arr.put(&quot;xsd:double&quot;);
+				}
+				else if (r.equals(XSD.dateTime))
+				{
+					arr.put(&quot;xsd:dateTime&quot;);
+				}
+			}
+
+		}
+		else
+		{
+			for (OntResource r : jenaProp.listRange().toSet())
+			{
+				if (r.isClass() &amp;&amp; !r.isAnon())
+				{
+					arr.put(new OntologyClass(ont, null, r.asClass()).getId());
+				}
+			}
+		}
+
+		return arr;
+	}
+
+	public OntProperty getJenaProperty()
+	{
+		return jenaProp;
+	}
+
+	@Override
+	public String getId()
+	{
+		return getIdentifier(getFullId());
+	}
+
+	@Override
+	public String getFullId()
+	{
+		return jenaProp.getURI();
+	}
+
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

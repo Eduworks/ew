@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.db.couchdb/src/main/java/com/fourspaces/couchdb/CouchResponse.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworkslogo-menu.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/CruncherCache.html">CruncherCache</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.db.couchdb/src/main/java/com/fourspaces/couchdb/CouchResponse.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+/*
+   Copyright 2007 Fourspaces Consulting, LLC
+
+   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
+
+package com.fourspaces.couchdb;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.ParseException;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.CharArrayBuffer;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+/**
+ * The CouchResponse parses the HTTP response returned by the CouchDB server.
+ * This is almost never called directly by the user, but indirectly through the
+ * Session and Database objects.
+ * &lt;p&gt;
+ * Given a CouchDB response, it will determine if the request was successful
+ * (status 200,201,202), or was an error. If there was an error, it parses the
+ * returned json error message.
+ * 
+ * @author mbreese
+ */
+public class CouchResponse
+{
+	Log log = LogFactory.getLog(CouchResponse.class);
+
+	private String body;
+	private byte[] bodybytes;
+	private String path;
+	private Header[] headers;
+	private int statusCode;
+	private String methodName;
+	boolean ok = false;
+
+	private String error_id;
+	private String error_reason;
+
+	/**
+	 * C-tor parses the method results to build the CouchResponse object. First,
+	 * it reads the body (hence the IOException) from the method Next, it checks
+	 * the status codes to determine if the request was successful. If there was
+	 * an error, it parses the error codes.
+	 * 
+	 * @param method
+	 * @throws IOException
+	 * @throws JSONException
+	 */
+	CouchResponse(HttpRequestBase req, HttpResponse response) throws IOException, JSONException
+	{
+		headers = response.getAllHeaders();
+
+		HttpEntity entity = response.getEntity();
+
+		bodybytes = IOUtils.toByteArray(entity.getContent());
+		ByteArrayInputStream bais = new ByteArrayInputStream(bodybytes);
+		body = toString(entity, null, bais);
+
+		path = req.getURI().getPath();
+
+		statusCode = response.getStatusLine().getStatusCode();
+
+		boolean isGet = (req instanceof HttpGet);
+
+		boolean isPut = (req instanceof HttpPut);
+
+		boolean isPost = (req instanceof HttpPost);
+
+		boolean isDelete = (req instanceof HttpDelete);
+
+		if ((isGet &amp;&amp; statusCode == 404) || (statusCode == 401) || (isPut &amp;&amp; statusCode == 409) || (isPost &amp;&amp; statusCode == 404)
+				|| (isDelete &amp;&amp; statusCode == 404))
+		{
+			JSONObject jbody = new JSONObject(body);
+			error_id = jbody.getString(&quot;error&quot;);
+			error_reason = jbody.getString(&quot;reason&quot;);
+		}
+		else if ((isPut &amp;&amp; 199 &lt; statusCode &amp;&amp; statusCode &lt; 300) || (isPost &amp;&amp; statusCode == 201) || (isPost &amp;&amp; statusCode == 202)
+				|| (isDelete &amp;&amp; statusCode == 202) || (isDelete &amp;&amp; statusCode == 200))
+		{
+
+			if (path.endsWith(&quot;_bulk_docs&quot;))
+			{ // Handle bulk doc update differently
+				ok = new JSONArray(body).length() &gt; 0;
+			}
+			else
+			{
+				ok = new JSONObject(body).getBoolean(&quot;ok&quot;);
+			}
+
+		}
+		else if ((req instanceof HttpGet) || ((req instanceof HttpPost) &amp;&amp; statusCode == 200))
+		{
+			ok = true;
+		}
+		// log.debug(toString());
+	}
+
+	public static String toString(final HttpEntity entity, final String defaultCharset, final InputStream bais) throws IOException, ParseException
+	{
+		if (entity == null)
+		{
+			throw new IllegalArgumentException(&quot;HTTP entity may not be null&quot;);
+		}
+		InputStream instream = bais == null ? entity.getContent() : bais;
+		if (instream == null)
+		{
+			return &quot;&quot;;
+		}
+		if (entity.getContentLength() &gt; Integer.MAX_VALUE)
+		{
+			throw new IllegalArgumentException(&quot;HTTP entity too large to be buffered in memory&quot;);
+		}
+		int i = (int) entity.getContentLength();
+		if (i &lt; 0)
+		{
+			i = 4096;
+		}
+		String charset = EntityUtils.getContentCharSet(entity);
+		if (charset == null)
+		{
+			charset = defaultCharset;
+		}
+		if (charset == null)
+		{
+			charset = HTTP.DEFAULT_CONTENT_CHARSET;
+		}
+		Reader reader = new InputStreamReader(instream, charset);
+		CharArrayBuffer buffer = new CharArrayBuffer(i);
+		try
+		{
+			char[] tmp = new char[1024];
+			int l;
+			while ((l = reader.read(tmp)) != -1)
+			{
+				buffer.append(tmp, 0, l);
+			}
+		}
+		finally
+		{
+			reader.close();
+		}
+		return buffer.toString();
+	}
+
+	@Override
+	/**
+	 * A better toString for this object... can be very verbose though.
+	 * @return String form of this object.
+	 */
+	public String toString()
+	{
+		return &quot;[&quot; + methodName + &quot;] &quot; + path + &quot; [&quot; + statusCode + &quot;] &quot; + &quot; =&gt; &quot; + body;
+	}
+
+	/**
+	 * Retrieves the body of the request as a JSONArray object. (such as listing
+	 * database names)
+	 * 
+	 * @return Body of the request.
+	 * @throws JSONException Malformed parse.
+	 */
+	public JSONArray getBodyAsJSONArray() throws JSONException
+	{
+		if (body == null)
+			return null;
+		return new JSONArray(body);
+	}
+
+	/**
+	 * Was the request successful?
+	 * 
+	 * @return Is Ok.
+	 */
+	public boolean isOk()
+	{
+		return ok;
+	}
+
+	/**
+	 * What was the error id?
+	 * 
+	 * @return Error ID.
+	 */
+	public String getErrorId()
+	{
+		if (error_id != null)
+		{
+			return error_id;
+		}
+		return null;
+	}
+
+	/**
+	 * what was the error reason given?
+	 * 
+	 * @return Error Reason.
+	 */
+	public String getErrorReason()
+	{
+		if (error_reason != null)
+		{
+			return error_reason;
+		}
+		return null;
+	}
+
+	/**
+	 * Returns the body of the response as a JSON Object (such as for a
+	 * document)
+	 * 
+	 * @return Body of the response as a JSON object.
+	 * @throws JSONException Malformed JSON.
+	 */
+	public JSONObject getBodyAsJSONObject() throws JSONException
+	{
+		if (body == null)
+		{
+			return null;
+		}
+		return new JSONObject(body);
+	}
+
+	/**
+	 * Retrieves a specific header from the response (not really used anymore)
+	 * 
+	 * @param key Key into the header of the HTTP request.
+	 * @return Header of the HTTP request.
+	 */
+	public String getHeader(String key)
+	{
+		for (Header h : headers)
+		{
+			if (h.getName().equals(key))
+			{
+				return h.getValue();
+			}
+		}
+		return null;
+	}
+
+	public String getBody()
+	{
+		return body;
+	}
+
+	public byte[] getBodyBytes()
+	{
+		return bodybytes;
+	}
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>
