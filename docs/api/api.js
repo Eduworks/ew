@@ -1,7 +1,8 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
-        "CruncherCache"
+        "add",
+        "cache"
     ],
     "modules": [
         "ew.levr.base"

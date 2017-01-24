@@ -16,23 +16,20 @@ import com.eduworks.resolver.Cruncher;
  * Caches a result, and fetches it automatically if it is in cache. Use Name to
  * specify cache key.
  *
- * @class CruncherCache
+ * @class cache
  * @module ew.levr.base
  * @author fritz.ray@eduworks.com
- * @author devlin.junker@eduworks.com
- *
+ */
+/**
+ * @method cache
+ * @param obj {object} Thing to cache.
+ * @param name {string} Unique name used to store and retrieve the cached object.
  */
 public class CruncherCache extends Cruncher
 {
-
     public static Map<String, Object> obj = Collections.synchronizedMap(new HashMap<String, Object>());
 
     @Override
-    /**
-     * @method cache
-     * @param obj {object} Thing to cache.
-     * @param name {string} Unique name used to store and retrieve the cached object.
-     */
     public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
     {
         String cacheName = "cruncherCache" + getAsString("name", c, parameters, dataStreams);

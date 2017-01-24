@@ -11,6 +11,19 @@ import org.json.JSONObject;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 
+/**
+ * Adds any number of numbers or strings. Will default to returning a number if all parameters are numbers, will return string if not.
+ *
+ * @class add
+ * @module ew.levr.base
+ * @author fritz.ray@eduworks.com
+ */
+/**
+ * @method add
+ * @param [any] {Number|String} Elements to add together.
+ * @param [_string=false] {boolean} Forces output as a string. Useful for parameters that could end up being numbers.
+ * @param [_fancyNumber=false] {boolean} Outputs number as a locale formatted string.
+ */
 public class CruncherAdd extends Cruncher
 {
 	@Override
@@ -74,6 +87,6 @@ public class CruncherAdd extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("<any>","Number|String");
+		return jo("<any>","Number|String","_string","Boolean","_fancyNumber","Boolean");
 	}
 }

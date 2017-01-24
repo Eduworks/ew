@@ -4,7 +4,7 @@
         "description": "EW Library API: ",
         "version": "5.0.0",
         "url": "http://ew.eduworks.org/",
-        "logo": "http://eduworks.com/img/eduworkslogo-menu.png"
+        "logo": "http://eduworks.com/img/eduworks-ring-e.png"
     },
     "files": {
         "ew.common/src/main/java/com/eduworks/interfaces/EwDisplayable.java": {
@@ -202,7 +202,16 @@
                 "ew.levr.base": 1
             },
             "classes": {
-                "CruncherCache": 1
+                "cache": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java",
+            "modules": {},
+            "classes": {
+                "add": 1
             },
             "fors": {},
             "namespaces": {}
@@ -347,20 +356,21 @@
             "submodules": {},
             "elements": {},
             "classes": {
-                "CruncherCache": 1
+                "cache": 1,
+                "add": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherCache.java",
-            "line": 15,
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java",
+            "line": 14,
             "description": "Caches a result, and fetches it automatically if it is in cache. Use Name to\nspecify cache key."
         }
     },
     "classes": {
-        "CruncherCache": {
-            "name": "CruncherCache",
-            "shortname": "CruncherCache",
+        "cache": {
+            "name": "cache",
+            "shortname": "cache",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -370,7 +380,22 @@
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherCache.java",
             "line": 15,
             "description": "Caches a result, and fetches it automatically if it is in cache. Use Name to\nspecify cache key.",
-            "author": "devlin.junker@eduworks.com"
+            "author": "fritz.ray@eduworks.com"
+        },
+        "add": {
+            "name": "add",
+            "shortname": "add",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java",
+            "line": 14,
+            "description": "Adds any number of numbers or strings. Will default to returning a number if all parameters are numbers, will return string if not.",
+            "author": "fritz.ray@eduworks.com"
         }
     },
     "elements": {},
@@ -380,7 +405,7 @@
             "line": 3,
             "description": "Typically, toString is used to describe things in a debug way. Displayable\nprovides a user-friendly representation of the object.",
             "author": "fray",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/interfaces/EwDisplayable.java",
@@ -389,14 +414,14 @@
             "return": {
                 "description": "User readable string."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/interfaces/EwJsonSerializable.java",
             "line": 6,
             "description": "Allow an object to serialize into a JSON Object.",
             "author": "Fritz",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/interfaces/EwJsonSerializable.java",
@@ -408,7 +433,7 @@
             "throws": {
                 "description": "JSONException If the JSON object being constructed is malformed."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -416,7 +441,7 @@
             "description": "A class to extend {@link JSONArray} and implement {@link EwJsonCollection}.\nProvides the following features and functionality:\n<ul>\n<li>enhances all JSONArray behavior even when JSONArray methods are called\n</li>\n<li>processes complex array keys \"key[0][1]\" against nested JSON objects</li>\n<li>wraps incoming/outgoing {@link JSONArray}s as EwJsonArrays</li>\n<li>wraps incoming/outgoing {@link JSONObject}s as {@link EwJsonObject}s</li>\n</ul>\n<p>\nThis list can and should grow as Eduworks applications have need of new JSON\narray functionality.\n</p>",
             "author": "dharvey",
             "since": "September, 2011",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -439,7 +464,7 @@
                 "description": "JSONException\n            if key is not found or value cannot be converted to\n",
                 "type": "@link JSONArray"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -465,7 +490,7 @@
             "throws": {
                 "description": "JSONException\n            If the data becomes malformed."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -488,7 +513,7 @@
             "throws": {
                 "description": "JSONException\n            If the JSON parse is malformed."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -514,7 +539,7 @@
             "throws": {
                 "description": "JSONException\n            If the JSON parse is malformed."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -547,7 +572,7 @@
             "throws": {
                 "description": "JSONException\n            Malformed JSON in from."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -562,7 +587,7 @@
             "throws": {
                 "description": "JSONException\n            Malformed collection."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -577,35 +602,35 @@
             "throws": {
                 "description": "JSONException\n            Malformed object."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
             "line": 376,
             "description": "Calls {@link #opt(Object)} to parse any array keys.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
             "line": 439,
             "description": "Overridden to convert Strings or {@link JSONArray}s to\n{@link EwJsonArray}s",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
             "line": 455,
             "description": "Overridden to convert Strings or {@link JSONObject}s to\n{@link EwJsonObject}s",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
             "line": 545,
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
             "line": 558,
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -614,19 +639,19 @@
             "see": [
                 "EwJson#wrap(Object)"
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
             "line": 576,
             "description": "Overridden to ensure complex keys are dereferenced by all getters. This\nmethod is what enables all gets and opts to parse array keys.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
             "line": 586,
             "description": "Referenced by overridden {@link #opt(int)}, which is called throughout\nparent code.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -634,7 +659,7 @@
             "return": {
                 "description": "the value corresponding to \"ref\", or false if key/index does not\n        exist"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -643,7 +668,7 @@
                 "description": "the value corresponding to \"ref\", or  if\n        key/index does not exist",
                 "type": "@link Double#NaN"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -651,13 +676,13 @@
             "return": {
                 "description": "the value corresponding to \"ref\", or false if key/index does not\n        exist"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
             "line": 685,
             "description": "Overridden to convert Strings or {@link JSONArray}s to\n{@link EwJsonArray}s",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -665,13 +690,13 @@
             "return": {
                 "description": "the EwJsonArray corresponding to \"ref\", or null if key is not\n        valid"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
             "line": 719,
             "description": "Overridden to convert Strings or {@link JSONObject}s to\n{@link EwJsonObject}s",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -679,18 +704,18 @@
             "return": {
                 "description": "the EwJsonObject corresponding to \"ref\", or null if key is not\n        valid"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
             "line": 815,
             "description": "Overridden to avoid conversion of {@link Collection}s to\n{@link JSONArray}s",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
             "line": 867,
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -713,18 +738,18 @@
             "return": {
                 "description": "this object after insertion has been attempted"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
             "line": 897,
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
             "line": 906,
             "description": "Overridden to first try wrapping as a valid JSON value. All index-based\nputs in parent call this method. All index-based puts also pad the\nunderlying {@link ArrayList} with null values when index is beyond the\ncurrent range of the array.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -747,7 +772,7 @@
             "return": {
                 "description": "this object after insertion has been attempted"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
@@ -772,13 +797,13 @@
             "return": {
                 "description": "this object after insertion has been attempted"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonArray.java",
             "line": 983,
             "description": "Compares this with object, after it has been wrapped by\n{@link EwJson#wrap(Object)}.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
@@ -786,7 +811,7 @@
             "description": "A class to extend {@link JSONObject} and implement {@link EwJsonCollection}.\nProvides the following features and functionality:\n<ul>\n<li>enhances all JSONObject behavior even when JSONObject methods are called\n</li>\n<li>processes complex array keys \"key[0].key[next]\" against nested JSON\nobjects</li>\n<li>wraps incoming/outgoing {@link JSONArray}s as EwJsonArrays</li>\n<li>wraps incoming/outgoing {@link JSONObject}s as {@link EwJsonObject}s</li>\n</ul>\n<p>\nThis list can and should grow as Eduworks applications have need of new JSON\narray functionality.\n</p>",
             "author": "dharvey",
             "since": "September, 2011",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
@@ -809,7 +834,7 @@
                 "description": "JSONException\n            if key is not found or value cannot be converted to\n",
                 "type": "@link JSONObject"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
@@ -835,7 +860,7 @@
             "throws": {
                 "description": "JSONException\n            If the data becomes malformed."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
@@ -858,7 +883,7 @@
             "throws": {
                 "description": "JSONException\n            If the JSON parse is malformed."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
@@ -884,7 +909,7 @@
             "throws": {
                 "description": "JSONException\n            If the JSON parse is malformed."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
@@ -917,7 +942,7 @@
             "throws": {
                 "description": "JSONException\n            Malformed JSON in from."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
@@ -935,62 +960,62 @@
             "throws": {
                 "description": "JSONException\n            Malformed object."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 399,
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 471,
             "description": "Overridden to convert Strings or {@link JSONArray}s to\n{@link EwJsonArray}s",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 494,
             "description": "Overridden to convert Strings or {@link JSONObject}s to\n{@link EwJsonObject}s",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 553,
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 571,
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 587,
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 600,
             "description": "Iterates over sorted keys and inserts separators between corresponding\nvalues",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 652,
             "description": "Overridden to ensure complex keys are dereferenced by all getters. This\nmethod is what enables all gets and opts to parse complex keys.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 662,
             "description": "Referenced by overridden {@link #opt(String)}, which is called throughout\nparent code.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 672,
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
@@ -998,7 +1023,7 @@
             "return": {
                 "description": "the boolean value corresponding to \"ref\", or false if key does\n        not exist or is not a String"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
@@ -1007,7 +1032,7 @@
                 "description": "the value corresponding to \"ref\", or  if key\n        does not exist or is not a String",
                 "type": "@link Double#NaN"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
@@ -1015,13 +1040,13 @@
             "return": {
                 "description": "the value corresponding to \"ref\", or zero if key does not exist\n        or is not a String"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 755,
             "description": "Overridden to convert Strings or {@link JSONArray}s to\n{@link EwJsonArray}s",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
@@ -1029,13 +1054,13 @@
             "return": {
                 "description": "the EwJsonArray corresponding to \"ref\", or null if key does not\n        exist or is not a String"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 789,
             "description": "Overridden to convert Strings or {@link JSONObject}s to\n{@link EwJsonObject}s",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
@@ -1043,7 +1068,7 @@
             "return": {
                 "description": "the EwJsonObject corresponding to \"ref\", or null if key does not\n        exist or is not a String"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
@@ -1051,7 +1076,7 @@
             "return": {
                 "description": "the value corresponding to \"ref\", or zero if key does not exist\n        or is not a String"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
@@ -1059,52 +1084,52 @@
             "return": {
                 "description": "the value corresponding to \"ref\", or the empty string if key does\n        not exist or is not a String"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 879,
             "description": "Overridden to avoid conversion of {@link Collection}s to\n{@link JSONArray}s",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 889,
             "description": "Inserts a {@link JSONArray} created from the {@link Collection} at the\nspecified key.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 917,
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 930,
             "description": "Overridden to first try parsing value as an EwJsonCollection. All puts\nexecuted in the parent call this method. Null values result in the\nremoval of any existing value at key.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 950,
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 960,
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 1012,
             "description": "Compares this with object, after it has been wrapped by\n{@link EwJson#wrap(Object)}.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
             "line": 1064,
             "description": "Joins next key and value, and returns the key -- does not check nulls or\nif keys has next",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/EwJsonCollection.java",
@@ -1112,7 +1137,7 @@
             "description": "Defines a common API for classes extending members of the org.json library,\nsuch that the underlying functionality can be manipulated as an\nEwJsonCollection.\n\nProvides these basic features and functionality (see implementations for\nspecifics):\n<ul>\n<li>an extensible API of customized JSON functionality</li>\n<li>an API for converting or merging common classes into JSON</li>\n<li>an API for encoding and decoding string values</li>\n</ul>\nKnown implementations:\n<ul>\n<li>{@link EwJsonArray}</li>\n<li>{@link EwJsonObject}</li>\n</ul>",
             "author": "dharvey",
             "since": "September, 2011",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/EwJsonCollection.java",
@@ -1134,7 +1159,7 @@
             "throws": {
                 "description": "JSONException\n            If the JSON becomes malformed due to the values."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/EwJsonCollection.java",
@@ -1149,7 +1174,7 @@
             "return": {
                 "description": "true if the object is stored as a value in the collection"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/EwJsonCollection.java",
@@ -1159,7 +1184,7 @@
                 "description": "A newly instantiated  of the same type as\n        this one",
                 "type": "@link EwJsonCollection"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/EwJsonCollection.java",
@@ -1174,7 +1199,7 @@
             "return": {
                 "description": "True IFF the value was found."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/EwJsonCollection.java",
@@ -1189,7 +1214,7 @@
             "return": {
                 "description": "True IFF the value was found."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/EwJsonCollection.java",
@@ -1198,7 +1223,7 @@
             "return": {
                 "description": "the number of keys or indices stored in this collection."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/EwJsonCollection.java",
@@ -1216,7 +1241,7 @@
             "throws": {
                 "description": "JSONException\n            If objects from the other collection malformed this\n            collection."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/EwJsonCollection.java",
@@ -1234,7 +1259,7 @@
             "throws": {
                 "description": "JSONException\n            If objects from the other collection malformed this\n            collection."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/EwJsonCollection.java",
@@ -1246,7 +1271,7 @@
             "see": [
                 "EwJson#reduce(Object)"
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/EwJsonCollection.java",
@@ -1261,7 +1286,7 @@
             "return": {
                 "description": "The URL decoded value."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/EwJsonCollection.java",
@@ -1276,7 +1301,7 @@
             "return": {
                 "description": "The URL encoded value."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/EwJsonEntity.java",
@@ -1284,7 +1309,7 @@
             "description": "Defines a basic, Eduworks JSON entity. Provides an API for methods that all\nJSON based entities tend to have even though they are not related.",
             "author": "dharvey",
             "since": "September, 2011",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/EwJsonEntity.java",
@@ -1302,7 +1327,7 @@
             "throws": {
                 "description": "JSONException\n            If the JSON is malformed."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/EwJsonEntity.java",
@@ -1320,7 +1345,7 @@
             "throws": {
                 "description": "JSONException If the JSON generated becomes malformed."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/util/EwJson.java",
@@ -1328,7 +1353,7 @@
             "description": "Provides general helper methods for {@link JSONArray} and {@link JSONObject}.\nWhen methods deal in specific {@link EwJsonCollection}s, they should be put\nin their respective classes. This class is reserved specifically for the\nbasic classes in org.json.*.",
             "author": "dharvey",
             "since": "September, 2011",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/util/EwJson.java",
@@ -1343,7 +1368,7 @@
             "return": {
                 "description": "Set of all elements."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/util/EwJson.java",
@@ -1362,7 +1387,7 @@
             "return": {
                 "description": "Set of elements."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/util/EwJson.java",
@@ -1377,7 +1402,7 @@
             "return": {
                 "description": "a JSONArray object if it can be converted, or null"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/util/EwJson.java",
@@ -1392,7 +1417,7 @@
             "return": {
                 "description": "a JSONObject object if it can be converted, or null"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/util/EwJson.java",
@@ -1410,7 +1435,7 @@
             "throws": {
                 "description": "JSONException Malformed object."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/util/EwJson.java",
@@ -1435,7 +1460,7 @@
             "return": {
                 "description": "Wrapped object."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/util/EwJson.java",
@@ -1453,7 +1478,7 @@
             "throws": {
                 "description": "JSONException Malformed object."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/util/EwJson.java",
@@ -1471,7 +1496,7 @@
             "throws": {
                 "description": "JSONException Malformed object."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/EwCacheMap.java",
@@ -1488,13 +1513,13 @@
                     "description": "Value type"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/EwCacheMap.java",
             "line": 37,
             "description": "Removes all dangling soft references.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/EwCacheMap.java",
@@ -1509,7 +1534,7 @@
             "return": {
                 "description": "The value object"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/EwFactory.java",
@@ -1522,7 +1547,7 @@
                     "description": "Type to create."
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/EwFactory.java",
@@ -1537,7 +1562,7 @@
             "return": {
                 "description": "The new object."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/EwHashMap.java",
@@ -1554,7 +1579,7 @@
                     "description": "Value type"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/EwHashSet.java",
@@ -1567,7 +1592,7 @@
                     "description": "Set type"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/EwHashSet.java",
@@ -1582,7 +1607,7 @@
             "return": {
                 "description": "If the collection contains any element in coll."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/EwList.java",
@@ -1595,7 +1620,7 @@
                     "description": "List type"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/EwList.java",
@@ -1610,7 +1635,7 @@
             "return": {
                 "description": "If any element in c is contained in this list."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/EwList.java",
@@ -1629,7 +1654,7 @@
             "return": {
                 "description": "If any element in c is contained in this list according to the comparator."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/EwList.java",
@@ -1644,7 +1669,7 @@
             "return": {
                 "description": "If any element in c is contained in this list."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/EwList.java",
@@ -1659,21 +1684,21 @@
             "return": {
                 "description": "If any element in this list, when passed through toString(), equals str."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/EwText.java",
             "line": 3,
             "description": "Represents a string with positional information about where it appears within\na tokenized series of strings.",
             "author": "mhald",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/EwTextSpan.java",
             "line": 6,
             "description": "An text span contains text that includes more than one words and therefore\nspans a series of positions within a sentence.",
             "author": "mhald",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/util/io/EwFileSystem.java",
@@ -1685,7 +1710,7 @@
                     "description": "Stream to close."
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/util/io/EwFileSystem.java",
@@ -1711,7 +1736,7 @@
             "throws": {
                 "description": "IOException Error in downloading or writing file."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/util/Tuple.java",
@@ -1728,7 +1753,7 @@
                     "description": "Type of the second object"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/util/Tuple.java",
@@ -1744,7 +1769,7 @@
                     "description": "second object"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/util/Tuple.java",
@@ -1752,7 +1777,7 @@
             "return": {
                 "description": "the first object in the tuple"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/util/Tuple.java",
@@ -1760,38 +1785,38 @@
             "return": {
                 "description": "the second object in the tuple"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/util/Tuple.java",
             "line": 62,
             "description": "Returns the hash code. Has to match the way equals() works.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/util/Tuple.java",
             "line": 70,
             "description": "Return true if the given object represents the same information as\nmyself. True only if it is a tuple and the first and second items are\nequal to the first and second items in the original.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/util/Tuple.java",
             "line": 93,
             "description": "Return a humnan-readable representation of myself.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/util/Tuple.java",
             "line": 101,
             "description": "Compare with another tuple. This works only if the first (T) type is a\ncomparable, otherwise it throws an exception.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/EwVersion.java",
             "line": 9,
             "description": "Helper class to get the version number from the version file.",
             "author": "fray",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/EwVersion.java",
@@ -1800,7 +1825,7 @@
             "return": {
                 "description": "Version String"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/util/JSONUtils.java",
@@ -1808,21 +1833,21 @@
             "description": "Couch specific JSON utility. For more general JSON utility see {@link EwJson}",
             "author": "Ilya Sterin",
             "version": "1.0",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/AdHocView.java",
             "line": 19,
             "description": "Creates an AdHoc view... this basically just creates a new View with a name\nof \"_temp_view\" and a defined function.",
             "author": "mbreese",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/CouchResponse.java",
             "line": 44,
             "description": "The CouchResponse parses the HTTP response returned by the CouchDB server.\nThis is almost never called directly by the user, but indirectly through the\nSession and Database objects.\n<p>\nGiven a CouchDB response, it will determine if the request was successful\n(status 200,201,202), or was an error. If there was an error, it parses the\nreturned json error message.",
             "author": "mbreese",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/CouchResponse.java",
@@ -1837,7 +1862,7 @@
             "throws": {
                 "description": "JSONException"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/CouchResponse.java",
@@ -1846,7 +1871,7 @@
             "return": {
                 "description": "String form of this object."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/CouchResponse.java",
@@ -1858,7 +1883,7 @@
             "throws": {
                 "description": "JSONException Malformed parse."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/CouchResponse.java",
@@ -1867,7 +1892,7 @@
             "return": {
                 "description": "Is Ok."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/CouchResponse.java",
@@ -1876,7 +1901,7 @@
             "return": {
                 "description": "Error ID."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/CouchResponse.java",
@@ -1885,7 +1910,7 @@
             "return": {
                 "description": "Error Reason."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/CouchResponse.java",
@@ -1897,7 +1922,7 @@
             "throws": {
                 "description": "JSONException Malformed JSON."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/CouchResponse.java",
@@ -1912,14 +1937,14 @@
             "return": {
                 "description": "Header of the HTTP request."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
             "line": 38,
             "description": "This represents a particular database on the CouchDB server\n\nUsing this object, you can get/create/update/delete documents. You can also\ncall views (named and adhoc) to query the underlying database.",
             "author": "mbreese",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -1938,7 +1963,7 @@
             "throws": {
                 "description": "JSONException"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -1947,7 +1972,7 @@
             "return": {
                 "description": "Name of the database."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -1956,7 +1981,7 @@
             "return": {
                 "description": "Document count."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -1968,7 +1993,7 @@
             "see": [
                 "#getAllDocuments()"
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -1980,7 +2005,7 @@
             "throws": {
                 "description": "JSONException Malformed Parse."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -1992,7 +2017,7 @@
             "throws": {
                 "description": "JSONException Malformed Parse."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2010,7 +2035,7 @@
             "throws": {
                 "description": "JSONException Malformed Parse."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2028,7 +2053,7 @@
             "throws": {
                 "description": "JSONException Malformed Parse."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2046,7 +2071,7 @@
             "throws": {
                 "description": "JSONException Malformed Parse."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2068,7 +2093,7 @@
             "throws": {
                 "description": "JSONException Malformed Parse."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2090,7 +2115,7 @@
             "throws": {
                 "description": "JSONException Malformed Parse."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2105,7 +2130,7 @@
             "return": {
                 "description": "results"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2120,7 +2145,7 @@
             "return": {
                 "description": ""
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2142,7 +2167,7 @@
             "return": {
                 "description": "True if document saved."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2160,7 +2185,7 @@
             "throws": {
                 "description": "JSONException Encoding issues."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2178,7 +2203,7 @@
             "throws": {
                 "description": "IOException HTTP issues"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2196,7 +2221,7 @@
             "throws": {
                 "description": "IOException HTTP issues"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2218,7 +2243,7 @@
             "throws": {
                 "description": "IOException HTTP issues"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2244,7 +2269,7 @@
             "throws": {
                 "description": "IOException HTTP issues"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2262,7 +2287,7 @@
             "throws": {
                 "description": "IllegalArgumentException\n            for blank document id"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2284,7 +2309,7 @@
             "throws": {
                 "description": "IOException HTTP issues."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Database.java",
@@ -2314,20 +2339,20 @@
             "throws": {
                 "description": "IOException HTTP issues"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Document.java",
             "line": 34,
             "description": "Everything in CouchDB is a Document. In this case, the document is an object\nbacked by a JSONObject. The Document is also aware of the database that it is\nconnected to. This allows the Document to reload it's properties when needed.\nThe only special fields are \"_id\", \"_rev\", \"_revisions\", and \"_view_*\".\n<p>\nAll document have an _id and a _rev. If this is a new document those fields\nare populated when they are saved to the CouchDB server.\n<p>\n_revisions is only populated if the document has been retrieved via\ndatabase.getDocumentWithRevisions(); So, if this document wasn't, then when\nyou call document.getRevisions(), it will go back to the server to reload\nitself via database.getDocumentWithRevisions().\n<p>\nThe Document can be treated like a JSONObject, eventhough it doesn't extend\nJSONObject (it's final).\n<p>\nYou can also get/set values by calling document.get(key),\ndocument.put(key,value), just like a Map.\n<p>\nYou can get a handle on the backing JSONObject by calling\ndocument.getJSONObject(); If this hasn't been loaded yet, it will load the\ndata itself using the given database connection.\n<p>\nIf you got this Document from a view, you are likely missing elements. To\nload them you can call document.load().",
             "author": "mbreese",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Document.java",
             "line": 76,
             "description": "Create a new Document",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Document.java",
@@ -2339,7 +2364,7 @@
                     "description": "JSON object to convert into a document"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Document.java",
@@ -2354,7 +2379,7 @@
             "throws": {
                 "description": "JSONException"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Document.java",
@@ -2363,7 +2388,7 @@
             "return": {
                 "description": "ID of the document (with subpath)"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Document.java",
@@ -2372,7 +2397,7 @@
             "return": {
                 "description": "ID of the view (without the preamble path)"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Document.java",
@@ -2381,7 +2406,7 @@
             "return": {
                 "description": "Revision of the document"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Document.java",
@@ -2393,7 +2418,7 @@
             "throws": {
                 "description": "JSONException JSON formatting issues"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Document.java",
@@ -2411,7 +2436,7 @@
             "throws": {
                 "description": "JSONException JSON formatting issues"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Document.java",
@@ -2437,7 +2462,7 @@
             "throws": {
                 "description": "JSONException JSON formatting exception"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Document.java",
@@ -2449,7 +2474,7 @@
                     "description": "Name of the view."
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Document.java",
@@ -2458,7 +2483,7 @@
             "throws": {
                 "description": "IOException HTTP issues."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Document.java",
@@ -2470,14 +2495,14 @@
             "throws": {
                 "description": "JSONException JSON formatting issues"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
             "line": 75,
             "description": "The Session is the main connection to the CouchDB instance. However, you'll\nonly use the Session to obtain a reference to a CouchDB Database. All of the\nmain work happens at the Database level.\n<p>\nIt uses the Apache's HttpClient library for all communication with the\nserver. This is a little more robust than the standard URLConnection.\n<p>\nEx usage: <br>\nSession session = new Session(host,port); Database db =\nsession.getDatabase(\"dbname\");",
             "author": "brennanjubb - HTTP-Auth username/pass",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2509,7 +2534,7 @@
                     "description": "- use an SSL connection?"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2533,7 +2558,7 @@
                     "description": "- password"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2549,7 +2574,7 @@
                     "description": "Port to access"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2569,7 +2594,7 @@
                     "description": "Whether the connection is secure (HTTPS)"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2578,7 +2603,7 @@
             "return": {
                 "description": "the host name"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2587,7 +2612,7 @@
             "return": {
                 "description": "the port"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2596,7 +2621,7 @@
             "return": {
                 "description": "True if secured."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2608,7 +2633,7 @@
             "throws": {
                 "description": "JSONException\n            JSON formatting issues."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2626,7 +2651,7 @@
             "throws": {
                 "description": "JSONException\n            JSON formatting issues."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2644,7 +2669,7 @@
             "throws": {
                 "description": "JSONException\n            JSON formatting issues"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2662,7 +2687,7 @@
             "throws": {
                 "description": "JSONException\n            JSON formatting issues."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2680,7 +2705,7 @@
             "throws": {
                 "description": "JSONException\n            JSON formatting issues"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2695,7 +2720,7 @@
             "return": {
                 "description": "the absolute URL (hostname/port/etc)"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2713,7 +2738,7 @@
             "throws": {
                 "description": "JSONException"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2731,7 +2756,7 @@
             "throws": {
                 "description": "JSONException"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2753,7 +2778,7 @@
             "throws": {
                 "description": "JSONException"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2779,7 +2804,7 @@
             "throws": {
                 "description": "JSONException"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2797,7 +2822,7 @@
             "throws": {
                 "description": "JSONException"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2819,7 +2844,7 @@
             "throws": {
                 "description": "JSONException"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2828,7 +2853,7 @@
             "throws": {
                 "description": "JSONException"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2846,7 +2871,7 @@
             "throws": {
                 "description": "JSONException"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2868,7 +2893,7 @@
             "throws": {
                 "description": "JSONException"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2890,7 +2915,7 @@
             "throws": {
                 "description": "JSONException"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
@@ -2908,14 +2933,14 @@
             "throws": {
                 "description": "JSONException"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java",
             "line": 22,
             "description": "The View is the mechanism for performing Querys on a CouchDB instance. The\nview can be named or ad-hoc (see AdHocView). (Currently [14 Sept 2007] named\nview aren't working in the mainline CouchDB code... but this _should_ work.)\n<p>\nThe View object exists mainly to apply filtering to the view. Otherwise,\nviews can be called directly from the database object by using their names\n(or given an ad-hoc query).",
             "author": "mbreese",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java",
@@ -2931,7 +2956,7 @@
                     "description": "Name of the view"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java",
@@ -2943,7 +2968,7 @@
                     "description": "Full name of the view (no document)"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java",
@@ -2963,7 +2988,7 @@
                     "description": ""
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java",
@@ -2972,7 +2997,7 @@
             "return": {
                 "description": "Query String"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java",
@@ -2986,7 +3011,7 @@
             ],
             "deprecated": true,
             "deprecationMessage": "CouchDB 0.9 uses limit instead",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java",
@@ -2998,7 +3023,7 @@
                     "description": "End key."
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java",
@@ -3012,7 +3037,7 @@
             ],
             "deprecated": true,
             "deprecationMessage": "CouchDB 0.9 uses \"descending\" instead",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java",
@@ -3024,7 +3049,7 @@
                     "description": "Whether to skip."
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java",
@@ -3036,7 +3061,7 @@
                     "description": "The Start Key"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java",
@@ -3048,7 +3073,7 @@
                     "description": "whether to update"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java",
@@ -3057,7 +3082,7 @@
             "return": {
                 "description": "Name of the view."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java",
@@ -3066,7 +3091,7 @@
             "return": {
                 "description": "Name of the view."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/View.java",
@@ -3075,14 +3100,14 @@
             "return": {
                 "description": "Function definition of the view."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/ViewResults.java",
             "line": 28,
             "description": "The results of a view request is just a specialized Document object.\nYou can use ViewResults to retrieve information about the results (such as the \nnumber of rows returned).\n<p>\nThe ViewResults document contains a JSONArray named \"rows\".  This JSON array contains\nfurther sub-Documents.  These documents include the _id and _rev of the matched Documents as\nwell as any other fields that the View function returns -- it is not the full Document.\n<p>\nIn order to retrieve the full document, you must call database.getDocument(id).",
             "author": "mbreese",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/ViewResults.java",
@@ -3098,7 +3123,7 @@
                     "description": ""
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/ViewResults.java",
@@ -3110,7 +3135,7 @@
             "throws": {
                 "description": "JSONException JSON Formatting Exception"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/ViewResults.java",
@@ -3119,7 +3144,7 @@
             "return": {
                 "description": "View object"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3127,7 +3152,7 @@
             "description": "Class AnimatedGifEncoder - Encodes a GIF file consisting of one or more\nframes.\n\n<pre>\nExample:\n   AnimatedGifEncoder e = new AnimatedGifEncoder();\n   e.start(outputFileName);\n   e.setDelay(1000);   // 1 frame per sec\n   e.addFrame(image1);\n   e.addFrame(image2);\n   e.finish();\n</pre>\n\nNo copyright asserted on the source code of this class. May be used for any\npurpose, however, refer to the Unisys LZW patent for restrictions on use of\nthe associated LZWEncoder class. Please forward any corrections to questions\nat fmsware.com.",
             "author": "Kevin Weiner, FM Software",
             "version": "1.03 November 2003",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3139,7 +3164,7 @@
                     "description": "int delay time in milliseconds"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3151,7 +3176,7 @@
                     "description": "int disposal code."
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3163,7 +3188,7 @@
                     "description": "int number of iterations."
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3175,7 +3200,7 @@
                     "description": "Color to be treated as transparent on display."
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3190,7 +3215,7 @@
             "return": {
                 "description": "true if successful."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3199,7 +3224,7 @@
             "return": {
                 "description": "If saving was successful."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3211,7 +3236,7 @@
                     "description": "float frame rate (frames per second)"
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3223,7 +3248,7 @@
                     "description": "int greater than 0."
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3239,7 +3264,7 @@
                     "description": "int frame width."
                 }
             ],
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3254,7 +3279,7 @@
             "return": {
                 "description": "false if initial write failed."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3269,13 +3294,13 @@
             "return": {
                 "description": "false if open or initial write failed."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
             "line": 316,
             "description": "Analyzes image colors and creates color map.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3290,13 +3315,13 @@
             "return": {
                 "description": "Closest palette color index."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
             "line": 387,
             "description": "Extracts image pixels into byte array \"pixels\"",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3305,7 +3330,7 @@
             "throws": {
                 "description": "IOException\n            File writing exception."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3314,7 +3339,7 @@
             "throws": {
                 "description": "IOException\n            File writing exception."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3323,7 +3348,7 @@
             "throws": {
                 "description": "IOException\n            File writing exception."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3332,7 +3357,7 @@
             "throws": {
                 "description": "IOException\n            File writing exception."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3341,7 +3366,7 @@
             "throws": {
                 "description": "IOException\n            File writing exception."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3350,7 +3375,7 @@
             "throws": {
                 "description": "IOException\n            File writing exception."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3365,7 +3390,7 @@
             "throws": {
                 "description": "IOException\n            File writing exception."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/AnimatedGifEncoder.java",
@@ -3380,7 +3405,7 @@
             "throws": {
                 "description": "IOException\n            File writing exception."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
@@ -3388,25 +3413,25 @@
             "description": "Class GifDecoder - Decodes a GIF file into one or more frames.\n \n \nNo copyright asserted on the source code of this class.  May be used for\nany purpose, however, refer to the Unisys LZW patent for any additional\nrestrictions.  Please forward any corrections to questions at fmsware.com.",
             "author": "Kevin Weiner, FM Software; LZW decoder adapted from John Cristy's ImageMagick.",
             "version": "1.03 November 2003",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
             "line": 32,
             "description": "File read status: No errors.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
             "line": 37,
             "description": "File read status: Error decoding file (may be partially decoded)",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
             "line": 42,
             "description": "File read status: Unable to open source.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
@@ -3421,7 +3446,7 @@
             "return": {
                 "description": "delay in milliseconds"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
@@ -3430,7 +3455,7 @@
             "return": {
                 "description": "frame count"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
@@ -3439,7 +3464,7 @@
             "return": {
                 "description": "BufferedImage containing first frame, or null if none."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
@@ -3448,13 +3473,13 @@
             "return": {
                 "description": "iteration count if one was specified, else 1."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
             "line": 148,
             "description": "Creates new frame image from current data (and previous\nframes as specified by their disposition codes).",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
@@ -3469,7 +3494,7 @@
             "return": {
                 "description": "BufferedImage representation of frame, or null if n is invalid."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
@@ -3478,7 +3503,7 @@
             "return": {
                 "description": "GIF image dimensions"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
@@ -3493,7 +3518,7 @@
             "return": {
                 "description": "read status code (0 = no errors)"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
@@ -3508,7 +3533,7 @@
             "return": {
                 "description": "read status code (0 = no errors)"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
@@ -3523,13 +3548,13 @@
             "return": {
                 "description": "read status code (0 = no errors)"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
             "line": 344,
             "description": "Decodes LZW image data into pixel array.\nAdapted from John Cristy's ImageMagick.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
@@ -3538,13 +3563,13 @@
             "return": {
                 "description": "Error occurred"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
             "line": 484,
             "description": "Initializes or re-initializes reader",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
@@ -3553,7 +3578,7 @@
             "return": {
                 "description": "Byte as integer"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
@@ -3562,7 +3587,7 @@
             "return": {
                 "description": "number of bytes stored in \"buffer\""
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
@@ -3577,43 +3602,43 @@
             "return": {
                 "description": "int array containing 256 colors (packed ARGB with full alpha)"
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
             "line": 567,
             "description": "Main file parser.  Reads GIF content blocks.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
             "line": 619,
             "description": "Reads Graphics Control Extension values",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
             "line": 635,
             "description": "Reads GIF file header information.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
             "line": 655,
             "description": "Reads next frame image",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
             "line": 713,
             "description": "Reads Logical Screen Descriptor",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
             "line": 733,
             "description": "Reads Netscape extenstion to obtain iteration count",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
@@ -3622,23 +3647,23 @@
             "return": {
                 "description": "Two bytes as short."
             },
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
             "line": 757,
             "description": "Resets frame state for reading next image.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java",
             "line": 771,
             "description": "Skips variable length blocks up to and including\nnext zero length block.",
-            "class": "CruncherCache"
+            "class": "cache"
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherCache.java",
-            "line": 31,
+            "line": 23,
             "itemtype": "method",
             "name": "cache",
             "params": [
@@ -3653,7 +3678,37 @@
                     "type": "String"
                 }
             ],
-            "class": "CruncherCache",
+            "class": "cache",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java",
+            "line": 21,
+            "itemtype": "method",
+            "name": "add",
+            "params": [
+                {
+                    "name": "any",
+                    "description": "Elements to add together.",
+                    "type": "Number|String",
+                    "optional": true
+                },
+                {
+                    "name": "_string",
+                    "description": "Forces output as a string. Useful for parameters that could end up being numbers.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                },
+                {
+                    "name": "_fancyNumber",
+                    "description": "Outputs number as a locale formatted string.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "class": "add",
             "module": "ew.levr.base"
         },
         {
