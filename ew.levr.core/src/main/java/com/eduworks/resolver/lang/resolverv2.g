@@ -42,7 +42,8 @@ FUNCTIONID  :	'#'('a'..'z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
 DOTFUNCTIONID  :	'.'('a'..'z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
 
-COMMENT : '//' ( ~('\n') )* '\n'
+COMMENT : '//' ~('\n'|'\r')* '\r'? '\n'
+    | '/*' ( options {greedy=false;} : . )* '*/'
 	;
 
 INT :	'0'..'9'+
@@ -97,12 +98,12 @@ decl
 
 
 functioncall
-	:	x=FUNCTIONID WS?'('				{try{obj.put("function",x.getText().substring(1));}catch(JSONException e){}}
+	:	x=FUNCTIONID WS?'('				{try{obj.put("function",x.getText().substring(1));obj.put("_lineNumber", x.getLine());obj.put("_colNumber", x.getCharPositionInLine());}catch(JSONException e){}}
 		param')' dotfunctioncall?
 	;
 	
 dotfunctioncall
-	:	y=DOTFUNCTIONID WS?'('				{try{stk.push(obj);obj = new EwJsonObject();obj.put("function",y.getText().substring(1));}catch(JSONException e){}}
+	:	y=DOTFUNCTIONID WS?'('				{try{stk.push(obj);obj = new EwJsonObject();obj.put("function",y.getText().substring(1));obj.put("_lineNumber", y.getLine());obj.put("_colNumber", y.getCharPositionInLine());}catch(JSONException e){}}
 		param						{try{obj.put("obj",stk.pop());}catch(JSONException e){}}
 		')' dotfunctioncall?				
 	;
@@ -110,7 +111,7 @@ dotfunctioncall
 param
 	:	WS? (x=ID WS? '=' WS?
 			 (
-			  y=FUNCTIONID WS?'('			{try{stk.push(obj);obj = new EwJsonObject();obj.put("function",y.getText().substring(1));}catch(JSONException e){}}
+			  y=FUNCTIONID WS?'('			{try{stk.push(obj);obj = new EwJsonObject();obj.put("function",y.getText().substring(1));obj.put("_lineNumber", y.getLine());obj.put("_colNumber", y.getCharPositionInLine());}catch(JSONException e){}}
 			  param					
 			  ')' dotfunctioncall?			{try{JSONObject jo = obj;obj=stk.pop();obj.put(x.getText(),jo);}catch(JSONException e){}}
 			| y=STRING				{try{obj.put(x.getText(),y.getText().substring(1,y.getText().length()-1));}catch(JSONException e){}} 

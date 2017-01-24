@@ -37,7 +37,7 @@ public class LevrResolverV2Parser
 			{
 				rp.parse();
 			}
-			catch (RecognitionException e)
+			catch (Exception e)
 			{
 				e.printStackTrace();
 			}
