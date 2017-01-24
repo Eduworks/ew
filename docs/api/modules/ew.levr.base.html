@@ -58,8 +58,9 @@
   <h1 class="module-name">ew.levr.base</h1>
 </div>
 
-<div style="display:none;" class="intro"><p>Caches a result, and fetches it automatically if it is in cache. Use Name to
-specify cache key.</p>
+<div style="display:none;" class="intro"><p>Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.<br>Cache, by default, persists over the web service request.</p>
+<p>rs2: result = obj.cache(name="unique name");<br>
+LevrJS: result = cache.call(this,obj,"unique name");</p>
 </div>
 
 <div class="yui3-g">

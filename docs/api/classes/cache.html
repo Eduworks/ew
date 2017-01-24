@@ -92,8 +92,9 @@
 
 
 
-<div class="class-description"><p>Caches a result, and fetches it automatically if it is in cache. Use Name to
-specify cache key.</p>
+<div class="class-description"><p>Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.<br>Cache, by default, persists over the web service request.</p>
+<p>rs2: result = obj.cache(name="unique name");<br>
+LevrJS: result = cache.call(this,obj,"unique name");</p>
 </div>
 
 
@@ -120,7 +121,7 @@ specify cache key.</p>
           </td>
           <td>
             <div class="method-name ">
-              <a href="#method_cache">cache</a>(obj, name)
+              <a href="#method_cache">cache</a>(obj, name, [remove=false], [global=false], [justLock=false]): Object
             </div>
             <div class="short-description">
               
@@ -148,12 +149,12 @@ specify cache key.</p>
     <h2 id="public-methods">Public Methods</h2>
 <div class="method item">
     <div id="method_cache" class="title">
-        <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_cache_CruncherCache.java.html#l23"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;cache&#x2F;CruncherCache.java:23</code></a></span>
+        <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_cache_CruncherCache.java.html#l25"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;cache&#x2F;CruncherCache.java:25</code></a></span>
         <h3 class="">
             public
             
             
-            cache(obj, name)
+            cache(obj, name, [remove=false], [global=false], [justLock=false]): Object
         </h3>
     </div>
 
@@ -175,7 +176,7 @@ specify cache key.</p>
           <tbody>
             <tr>
               <td>obj</td>
-              <td>Object</td>
+              <td>Cruncher | Function</td>
               <td>
                 <ul>
                   
@@ -183,7 +184,7 @@ specify cache key.</p>
                   
                 </ul>
               </td>
-              <td><p>Thing to cache.</p>
+              <td><p>Cruncher or Function that will return an object to cache.</p>
 </td>
             </tr>
 
@@ -201,10 +202,60 @@ specify cache key.</p>
 </td>
             </tr>
 
+            <tr>
+              <td>remove</td>
+              <td>Boolean</td>
+              <td>
+                <ul>
+                  <li>optional</li>
+                  <li>default: false</li>
+                  
+                </ul>
+              </td>
+              <td><p>Removes the cached value using the name. 'obj' can be null.</p>
+</td>
+            </tr>
+
+            <tr>
+              <td>global</td>
+              <td>Boolean</td>
+              <td>
+                <ul>
+                  <li>optional</li>
+                  <li>default: false</li>
+                  
+                </ul>
+              </td>
+              <td><p>Add to global cache, persists over web service requests.</p>
+</td>
+            </tr>
+
+            <tr>
+              <td>justLock</td>
+              <td>Boolean</td>
+              <td>
+                <ul>
+                  <li>optional</li>
+                  <li>default: false</li>
+                  
+                </ul>
+              </td>
+              <td><p>Don't deal with the cache, but use the cache locking mechanism to prevent recurrent entrance.</p>
+</td>
+            </tr>
+
           </tbody>
         </table>
       </div>
 
+      <div class="return">
+        <h4>Return:</h4>
+        <div>
+          <span class="return-type">Object</span>
+          <span class="return-description"><p>Cached value if in cache, computed value if not in cache.</p>
+</span>
+        </div>
+      </div>
 
 
 </div>

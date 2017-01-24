@@ -73,8 +73,10 @@ import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 
 /**
- * Caches a result, and fetches it automatically if it is in cache. Use Name to
- * specify cache key.
+ * Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.&lt;br&gt;Cache, by default, persists over the web service request.
+ * 
+ * rs2: result = obj.cache(name=&quot;unique name&quot;);&lt;br&gt;
+ * LevrJS: result = cache.call(this,obj,&quot;unique name&quot;);
  *
  * @class cache
  * @module ew.levr.base
@@ -82,8 +84,12 @@ import com.eduworks.resolver.Cruncher;
  */
 /**
  * @method cache
- * @param obj {object} Thing to cache.
- * @param name {string} Unique name used to store and retrieve the cached object.
+ * @param obj {Cruncher|Function} Cruncher or Function that will return an object to cache.
+ * @param name {String} Unique name used to store and retrieve the cached object.
+ * @param [remove=false] {Boolean} Removes the cached value using the name. &#x27;obj&#x27; can be null.
+ * @param [global=false] {Boolean} Add to global cache, persists over web service requests.
+ * @param [justLock=false] {Boolean} Don&#x27;t deal with the cache, but use the cache locking mechanism to prevent recurrent entrance.
+ * @return {Object} Cached value if in cache, computed value if not in cache.
  */
 public class CruncherCache extends Cruncher
 {
@@ -162,7 +168,7 @@ public class CruncherCache extends Cruncher
     @Override
     public JSONObject getParameters() throws JSONException
     {
-        return jo(&quot;obj&quot;, &quot;Object&quot;, &quot;name&quot;, &quot;String&quot;);
+        return jo(&quot;obj&quot;, &quot;Object&quot;, &quot;name&quot;, &quot;String&quot;,&quot;remove&quot;,&quot;Boolean&quot;,&quot;global&quot;,&quot;Boolean&quot;,&quot;justLock&quot;,&quot;Boolean&quot;);
     }
 
     @Override

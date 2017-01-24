@@ -364,7 +364,7 @@
             "tag": "module",
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java",
             "line": 14,
-            "description": "Caches a result, and fetches it automatically if it is in cache. Use Name to\nspecify cache key."
+            "description": "Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.<br>Cache, by default, persists over the web service request.\n\nrs2: result = obj.cache(name=\"unique name\");<br>\nLevrJS: result = cache.call(this,obj,\"unique name\");"
         }
     },
     "classes": {
@@ -379,7 +379,7 @@
             "module": "ew.levr.base",
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherCache.java",
             "line": 15,
-            "description": "Caches a result, and fetches it automatically if it is in cache. Use Name to\nspecify cache key.",
+            "description": "Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.<br>Cache, by default, persists over the web service request.\n\nrs2: result = obj.cache(name=\"unique name\");<br>\nLevrJS: result = cache.call(this,obj,\"unique name\");",
             "author": "fritz.ray@eduworks.com"
         },
         "add": {
@@ -3663,21 +3663,46 @@
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherCache.java",
-            "line": 23,
+            "line": 25,
             "itemtype": "method",
             "name": "cache",
             "params": [
                 {
                     "name": "obj",
-                    "description": "Thing to cache.",
-                    "type": "Object"
+                    "description": "Cruncher or Function that will return an object to cache.",
+                    "type": "Cruncher|Function"
                 },
                 {
                     "name": "name",
                     "description": "Unique name used to store and retrieve the cached object.",
                     "type": "String"
+                },
+                {
+                    "name": "remove",
+                    "description": "Removes the cached value using the name. 'obj' can be null.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                },
+                {
+                    "name": "global",
+                    "description": "Add to global cache, persists over web service requests.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                },
+                {
+                    "name": "justLock",
+                    "description": "Don't deal with the cache, but use the cache locking mechanism to prevent recurrent entrance.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
                 }
             ],
+            "return": {
+                "description": "Cached value if in cache, computed value if not in cache.",
+                "type": "Object"
+            },
             "class": "cache",
             "module": "ew.levr.base"
         },

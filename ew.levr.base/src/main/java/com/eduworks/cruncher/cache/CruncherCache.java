@@ -13,8 +13,10 @@ import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 
 /**
- * Caches a result, and fetches it automatically if it is in cache. Use Name to
- * specify cache key.
+ * Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.<br>Cache, by default, persists over the web service request.
+ * 
+ * rs2: result = obj.cache(name="unique name");<br>
+ * LevrJS: result = cache.call(this,obj,"unique name");
  *
  * @class cache
  * @module ew.levr.base
@@ -22,8 +24,13 @@ import com.eduworks.resolver.Cruncher;
  */
 /**
  * @method cache
- * @param obj {object} Thing to cache.
- * @param name {string} Unique name used to store and retrieve the cached object.
+ * @param obj {Cruncher|Function} Cruncher or Function that will return an object to cache.
+ * @param name {String} Unique name used to store and retrieve the cached object.
+ * @param [remove=false] {Boolean} Removes the cached value using the name. 'obj' can be null. May be combined with 'global'.
+ * @param [global=false] {Boolean} Add to global cache, persists over web service requests.
+ * @param [justLock=false] {Boolean} Don't deal with the cache, but use the cache locking mechanism to prevent recurrent entrance.
+ * @param [removeAllGlobal=false] {Boolean} Clears all caches in LEVR.
+ * @return {Object} Cached value if in cache, computed value if not in cache.
  */
 public class CruncherCache extends Cruncher
 {
@@ -38,6 +45,7 @@ public class CruncherCache extends Cruncher
         if (optAsBoolean("removeAllGlobal", false, c, parameters, dataStreams))
         {
             EwCache.caches.clear();
+            obj.clear();
             return null;
         }
         synchronized (getClass())
@@ -102,7 +110,7 @@ public class CruncherCache extends Cruncher
     @Override
     public JSONObject getParameters() throws JSONException
     {
-        return jo("obj", "Object", "name", "String");
+        return jo("obj", "Object", "name", "String","remove","Boolean","global","Boolean","justLock","Boolean","removeAllGlobal","Boolean");
     }
 
     @Override

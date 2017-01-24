@@ -11,7 +11,7 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "ew.levr.base",
             "name": "ew.levr.base",
-            "description": "Caches a result, and fetches it automatically if it is in cache. Use Name to\nspecify cache key."
+            "description": "Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.<br>Cache, by default, persists over the web service request.\n\nrs2: result = obj.cache(name=\"unique name\");<br>\nLevrJS: result = cache.call(this,obj,\"unique name\");"
         }
     ],
     "elements": []
