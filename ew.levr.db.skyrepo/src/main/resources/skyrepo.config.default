@@ -2,3 +2,8 @@ urlBase=#add(
 	a="http://localhost:9200"
 );
 #urlBase=urlBase;
+
+indexBase=#add(
+	a="data"
+);
+#indexBase=indexBase;
