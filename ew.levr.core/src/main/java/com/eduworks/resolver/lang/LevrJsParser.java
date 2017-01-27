@@ -290,7 +290,7 @@ public class LevrJsParser
             }
             try
             {
-                o = engine.eval("JSON.parse('" + o.toString() + "')");
+                o = engine.eval("JSON.parse('" + o.toString().replaceAll("'", "\\\\'") + "')");
             }
             catch (ScriptException ex)
             {
