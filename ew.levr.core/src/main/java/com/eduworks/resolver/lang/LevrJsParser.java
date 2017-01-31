@@ -162,6 +162,8 @@ public class LevrJsParser
                 }
             }
 
+            jsTemplate += "\tif (this.parameters === undefined)\n\t\tthrow new java.lang.NullPointerException(\"Cruncher invoked without appropriate 'this'. Please use fun.call to pass 'this' from invocation source to the current function.\");\n";
+            
             jsTemplate += "\treturn com.eduworks.resolver.lang.LevrJsParser.javaToJs(cru.resolve("
                     + "this === undefined ? new com.eduworks.resolver.Context() : this.ctx,"
                     + "this === undefined ? null : this.parameters,"
@@ -197,6 +199,8 @@ public class LevrJsParser
             jsTemplate += "\tcru.build('service','" + cruncherName + "');\n";
             jsTemplate += "\tif (vany != null) for(var k in vany) cru.build(k,com.eduworks.resolver.lang.LevrJsParser.jsToJava(vany[k]));\n";
 
+            jsTemplate += "\tif (this.parameters === undefined)\n\t\tthrow new java.lang.NullPointerException(\"Levr Function invoked without appropriate 'this'. Please use fun.call to pass 'this' from invocation source to the current function.\");\n";
+            
             jsTemplate += "\treturn com.eduworks.resolver.lang.LevrJsParser.javaToJs(cru.resolve("
                     + "this === undefined ? new com.eduworks.resolver.Context() : this.ctx,"
                     + "this === undefined ? null : this.parameters,"
