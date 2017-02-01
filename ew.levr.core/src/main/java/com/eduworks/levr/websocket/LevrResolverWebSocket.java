@@ -35,7 +35,6 @@ import javax.websocket.EndpointConfig;
 @ServerEndpoint(value = "/ws/custom")
 public class LevrResolverWebSocket implements ServletContextListener
 {
-
     protected static Logger log = Logger.getLogger(LevrResolverWebSocket.class);
     public static List<Session> sessions = Collections.synchronizedList(new ArrayList<Session>());
 

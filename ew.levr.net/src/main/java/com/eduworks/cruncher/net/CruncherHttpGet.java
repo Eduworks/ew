@@ -141,7 +141,7 @@ public class CruncherHttpGet extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj", "String");
+		return jo("obj", "String","<any>","String");
 	}
 
 }

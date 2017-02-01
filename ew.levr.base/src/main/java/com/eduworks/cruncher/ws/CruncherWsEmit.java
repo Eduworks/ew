@@ -12,29 +12,32 @@ import org.json.JSONObject;
 /**
  * Broadcasts a message to all websockets connected to this machine.
  * 
- * rs2: obj.wsBroadcast();<br>
- * LevrJS: wsBroadcast.call(this,obj);
+ * rs2: obj.wsBroadcast(to="@wsId");<br>
+ * LevrJS: wsBroadcast.call(this,params.wsId,obj);
  *
- * @class wsBroadcast
+ * @class wsEmit
  * @module ew.levr.base
  * @author fritz.ray@eduworks.com
  */
 /**
- * @method wsBroadcast
- * @param obj {Cruncher|Function|Object} Thing to broadcast. Will be converted to a string.
+ * @method wsEmit
+ * @param to {String} ID to emit to, set by the WebSocket Session. (comes in on "@wsId")
+ * @param obj {Cruncher|Function|Object} Thing to emit. Will be converted to a string.
  * @return {Object} Returns obj.
  */
-public class CruncherWsBroadcast extends Cruncher
+public class CruncherWsEmit extends Cruncher
 {
 
     @Override
     public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
     {
+        String to = getAsString("to", c, parameters, dataStreams);
         Object obj = getObj(c, parameters, dataStreams);
         if (obj == null) return null;
         for (Session s : LevrResolverWebSocket.sessions)
         {
-            s.getAsyncRemote().sendText(obj.toString());
+            if (s.getId().equals(to))
+                s.getAsyncRemote().sendText(obj.toString());
         }
         return obj;
     }
@@ -42,7 +45,7 @@ public class CruncherWsBroadcast extends Cruncher
     @Override
     public String getDescription()
     {
-        return "Broadcasts a message to all websockets connected to this machine.";
+        return "Sends a message to the session identified by 'to', connected to this machine.";
     }
 
     @Override
@@ -60,7 +63,7 @@ public class CruncherWsBroadcast extends Cruncher
     @Override
     public JSONObject getParameters() throws JSONException
     {
-        return jo("obj","Object");
+        return jo("to","String","obj","Object");
     }
     
 }

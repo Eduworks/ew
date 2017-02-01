@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
@@ -163,7 +164,7 @@ public class LevrJsParser
             }
 
             jsTemplate += "\tif (this.parameters === undefined)\n\t\tthrow new java.lang.NullPointerException(\"Cruncher invoked without appropriate 'this'. Please use fun.call to pass 'this' from invocation source to the current function.\");\n";
-            
+
             jsTemplate += "\treturn com.eduworks.resolver.lang.LevrJsParser.javaToJs(cru.resolve("
                     + "this === undefined ? new com.eduworks.resolver.Context() : this.ctx,"
                     + "this === undefined ? null : this.parameters,"
@@ -200,7 +201,7 @@ public class LevrJsParser
             jsTemplate += "\tif (vany != null) for(var k in vany) cru.build(k,com.eduworks.resolver.lang.LevrJsParser.jsToJava(vany[k]));\n";
 
             jsTemplate += "\tif (this.parameters === undefined)\n\t\tthrow new java.lang.NullPointerException(\"Levr Function invoked without appropriate 'this'. Please use fun.call to pass 'this' from invocation source to the current function.\");\n";
-            
+
             jsTemplate += "\treturn com.eduworks.resolver.lang.LevrJsParser.javaToJs(cru.resolve("
                     + "this === undefined ? new com.eduworks.resolver.Context() : this.ctx,"
                     + "this === undefined ? null : this.parameters,"
@@ -247,19 +248,27 @@ public class LevrJsParser
             if (o instanceof JSONArray)
             {
                 JSONArray ary = (JSONArray) o;
-                for (int i = 0;i < ary.length();i++)
+                for (int i = 0; i < ary.length(); i++)
                 {
                     try
                     {
                         Object test = ary.get(i);
                         if (test.getClass().isPrimitive())
+                        {
                             continue;
+                        }
                         if (test instanceof JSONArray)
+                        {
                             continue;
+                        }
                         if (test instanceof JSONObject)
+                        {
                             continue;
+                        }
                         if (test instanceof String)
+                        {
                             continue;
+                        }
                         return o;
                     }
                     catch (JSONException ex)
@@ -277,13 +286,21 @@ public class LevrJsParser
                     {
                         Object test = obj.get(key);
                         if (test.getClass().isPrimitive())
+                        {
                             continue;
+                        }
                         if (test instanceof JSONArray)
+                        {
                             continue;
+                        }
                         if (test instanceof JSONObject)
+                        {
                             continue;
+                        }
                         if (test instanceof String)
+                        {
                             continue;
+                        }
                         return o;
                     }
                     catch (JSONException ex)
@@ -294,7 +311,8 @@ public class LevrJsParser
             }
             try
             {
-                o = engine.eval("JSON.parse('" + o.toString().replaceAll("'", "\\\\'") + "')");
+                ScriptObjectMirror som = (ScriptObjectMirror) engine.eval("JSON.parse");
+                o = som.call(null, o.toString());
             }
             catch (ScriptException ex)
             {

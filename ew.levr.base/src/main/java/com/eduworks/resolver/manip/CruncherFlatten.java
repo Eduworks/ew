@@ -95,7 +95,7 @@ public class CruncherFlatten extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj","JSONArray|JSONObject|String","?_delimiter","Boolean","?_trim","Boolean","?_trimLeadingPunctuation","Boolean");
+		return jo("obj","JSONArray|JSONObject|String","?_delimiter","String","?_trim","Boolean","?_trimLeadingPunctuation","Boolean");
 	}
 
 }
