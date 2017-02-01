@@ -265,7 +265,7 @@ public class LevrJsParser
                         {
                             continue;
                         }
-                        if (test instanceof String)
+                        if (test instanceof String || test instanceof Boolean)
                         {
                             continue;
                         }
@@ -297,7 +297,7 @@ public class LevrJsParser
                         {
                             continue;
                         }
-                        if (test instanceof String)
+                        if (test instanceof String || test instanceof Boolean)
                         {
                             continue;
                         }
