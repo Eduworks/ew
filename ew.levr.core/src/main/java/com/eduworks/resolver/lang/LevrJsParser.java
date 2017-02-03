@@ -51,6 +51,7 @@ public class LevrJsParser
         String allCruncherBindings = "";
         for (String cruncherName : ResolverFactory.cruncherSpecs.keySet())
         {
+            if (cruncherName.equals("toString")) continue; 
             String cruncherBinding = generateCruncherBinding(cruncherName);
             if (cruncherBinding != null)
             {
@@ -252,6 +253,8 @@ public class LevrJsParser
                 {
                     try
                     {
+                        if (ary.isNull(i))
+                            continue;
                         Object test = ary.get(i);
                         if (test.getClass().isPrimitive())
                         {
@@ -265,7 +268,7 @@ public class LevrJsParser
                         {
                             continue;
                         }
-                        if (test instanceof String || test instanceof Boolean)
+                        if (test instanceof String || test instanceof Boolean || test instanceof Number)
                         {
                             continue;
                         }
@@ -284,6 +287,8 @@ public class LevrJsParser
                 {
                     try
                     {
+                        if (obj.isNull(key))
+                            continue;
                         Object test = obj.get(key);
                         if (test.getClass().isPrimitive())
                         {
@@ -297,7 +302,7 @@ public class LevrJsParser
                         {
                             continue;
                         }
-                        if (test instanceof String || test instanceof Boolean)
+                        if (test instanceof String || test instanceof Boolean || test instanceof Number)
                         {
                             continue;
                         }
