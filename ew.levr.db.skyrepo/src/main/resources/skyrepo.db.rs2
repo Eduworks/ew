@@ -356,7 +356,8 @@ nonSigSearchObj = #object(
 
 searchUrl=#add(
 	a=urlBase,
-	b="/_search"
+	b="/",bb=#indexBase(),
+	c="/_search"
 );
 
 signatureSearch=searchObj.httpPost(url=searchUrl,multipart="false").toObject().cget(hits="").cget(hits="").cforEach(

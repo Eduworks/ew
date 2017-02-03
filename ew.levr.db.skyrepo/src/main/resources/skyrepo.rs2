@@ -69,19 +69,19 @@ search=#skyrepoSearch(
 		eq="50",
 		ne="@size"
 	).ccall(
-		size=searchParamObj.cget(size="")
+		size=#if(operator="@size",operand="",eq=searchParamObj.cget(size=""),ne="@size")
 	), 
 	start=#if(operator="@start", operand="",
 		eq="0",
 		ne="@start"
 	).ccall(
-		start=searchParamObj.cget(start="")
+		start=#if(operator="@start",operand="",eq=searchParamObj.cget(start=""),ne="@start")
 	), 
 	ownership=#if(operator="@ownership", operand="",
 		eq="all",
 		ne="@ownership"
 	).ccall(
-		ownership=searchParamObj.cget(ownership=""),
+		ownership=#if(operator="@ownership",operand="",eq=searchParamObj.cget(ownership=""),ne="@ownership")
 	), 
 	types=searchParamObj.cget(types="")
 );
