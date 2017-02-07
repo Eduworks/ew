@@ -16,7 +16,9 @@ public class CruncherUrlDecode extends Cruncher
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
-		return EwUri.decodeValue(getAsString("obj",c, parameters, dataStreams).toString());
+        final String obj = getAsString("obj",c, parameters, dataStreams);
+        if (obj == null) return null;
+		return EwUri.decodeValue(obj.toString());
 	}
 
 	@Override

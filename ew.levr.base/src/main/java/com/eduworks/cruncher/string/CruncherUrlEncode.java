@@ -16,7 +16,9 @@ public class CruncherUrlEncode extends Cruncher
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
-		return EwUri.encodeValue(getAsString("obj", c, parameters, dataStreams));
+        final String obj = getAsString("obj", c, parameters, dataStreams);
+        if (obj == null) return null;
+		return EwUri.encodeValue(obj);
 	}
 
 	@Override
