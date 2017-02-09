@@ -154,7 +154,7 @@ public class LevrResolverServlet extends LevrServlet
                     break;
                 }
                 String name = e.getName();
-                if (name.endsWith(".rs2"))
+                if (name.endsWith(".rs2") || (name.endsWith(".js") && name.contains("node_modules") == false))
                 {
                     File createTempFile = File.createTempFile(path.replace("/", "").replace("\\", ""), e.getName().replace("/", "").replace("\\", ""));
                     FileWriter fileWriter = new FileWriter(createTempFile);
