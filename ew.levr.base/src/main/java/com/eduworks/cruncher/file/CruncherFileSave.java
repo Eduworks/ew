@@ -39,6 +39,13 @@ public class CruncherFileSave extends Cruncher
 					else
 						FileUtils.writeByteArrayToFile(f, ((InMemoryFile) o).data);
 				}
+                else if (o instanceof File)
+				{
+					if (f.isDirectory())
+						FileUtils.copyFile(((File) o),new File(f, ((File) o).getName()));
+					else
+						FileUtils.copyFile((File)o,f);
+				}
 				else if (o instanceof String)
 				{
 					FileUtils.writeStringToFile(f, o.toString());
