@@ -66,7 +66,7 @@ public class CruncherJavascriptBinder extends Cruncher
         newThis.put("params", jo);
         newThis.put("parameters", parameters);
         newThis.put("dataStreams", dataStreams);
-        return som.call(newThis);
+        return LevrJsParser.jsToJava(som.call(newThis));
     }
 
     @Override
