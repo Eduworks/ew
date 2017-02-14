@@ -24,6 +24,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import jdk.nashorn.internal.runtime.Undefined;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -239,6 +240,10 @@ public class LevrJsParser
                 return b;
             }
         }
+        else if (o instanceof Boolean)
+            return o.toString();
+        else if (o instanceof Undefined)
+            return null;
         return o;
     }
 
