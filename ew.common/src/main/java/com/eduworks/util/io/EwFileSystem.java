@@ -30,516 +30,615 @@ import org.reflections.util.ConfigurationBuilder;
 
 import com.eduworks.lang.EwSet;
 import com.google.common.base.Predicate;
+import java.util.Enumeration;
 
 public class EwFileSystem
 {
-	private static String OS = System.getProperty("os.name").toLowerCase();
 
-	public static boolean isWindows()
-	{
-		return (OS.indexOf("win") >= 0);
-	}
+    private static String OS = System.getProperty("os.name").toLowerCase();
 
-	public static boolean isMac()
-	{
-		return (OS.indexOf("mac") >= 0);
-	}
+    public static boolean isWindows()
+    {
+        return (OS.indexOf("win") >= 0);
+    }
 
-	public static boolean isUnix()
-	{
-		return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0);
-	}
+    public static boolean isMac()
+    {
+        return (OS.indexOf("mac") >= 0);
+    }
 
-	public static boolean isSolaris()
-	{
-		return (OS.indexOf("sunos") >= 0);
-	}
+    public static boolean isUnix()
+    {
+        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0);
+    }
 
-	public static String webConfigurationPath = null;
+    public static boolean isSolaris()
+    {
+        return (OS.indexOf("sunos") >= 0);
+    }
 
-	public static String getWebConfigurationPath()
-	{
-		try
-		{
-			getDefaultLocationPath(true);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		if (webConfigurationPath == null)
-			if (System.getProperty("eduworks.webapp.config") != null)
-				webConfigurationPath = new File(System.getProperty("eduworks.webapp.config")).getParent();
-		return webConfigurationPath;
-	}
+    public static String webConfigurationPath = null;
 
-	public static File tryFindFile(String estimatedPath, Class<? extends Object> inThisClassJar, boolean permanantFile, boolean isWebResource)
-	{
-		try
-		{
-			return findFile(estimatedPath, inThisClassJar, permanantFile, isWebResource);
-		}
-		catch (IOException e)
-		{
-			return null;
-		}
-	}
+    public static String getWebConfigurationPath()
+    {
+        try
+        {
+            getDefaultLocationPath(true);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        if (webConfigurationPath == null)
+        {
+            if (System.getProperty("eduworks.webapp.config") != null)
+            {
+                webConfigurationPath = new File(System.getProperty("eduworks.webapp.config")).getParent();
+            }
+        }
+        return webConfigurationPath;
+    }
 
-	public static File copyPackage(final String pkg, final Class<? extends Object> inThisClassJar) throws IOException
-	{
-		Collection<URL> urlsForCurrentClasspath = ClasspathHelper.forManifest();// forPackage(pkg,
-																			// ClassLoader.getSystemClassLoader());
-		EwSet<URL> urls = new EwSet<URL>();
-		for (URL url : urlsForCurrentClasspath)
-			urls.add(url);
+    public static File tryFindFile(String estimatedPath, Class<? extends Object> inThisClassJar, boolean permanantFile, boolean isWebResource)
+    {
+        try
+        {
+            return findFile(estimatedPath, inThisClassJar, permanantFile, isWebResource);
+        }
+        catch (IOException e)
+        {
+            return null;
+        }
+    }
 
-		Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(urls).setScanners(
-				new ResourcesScanner().filterResultsBy(new Predicate<String>()
-				{
-					@Override
-					public boolean apply(String input)
-					{
-						try
-						{
-							findFile(input, inThisClassJar, true, false);
-						}
-						catch (IOException e)
-						{
-							e.printStackTrace();
-						}
-						return true;
-					}
-				})));
-		Set<String> resources = reflections.getResources(Pattern.compile(".*"));
-		for (String s : resources)
-			if (s.startsWith(pkg))
-				findFile(s, inThisClassJar, true, false);
-		return new File(getDefaultLocationPath(false), pkg);
-	}
+    public static File copyPackage(final String pkg, final Class<? extends Object> inThisClassJar) throws IOException
+    {
+        Collection<URL> urlsForCurrentClasspath = ClasspathHelper.forManifest();// forPackage(pkg,
+        // ClassLoader.getSystemClassLoader());
+        EwSet<URL> urls = new EwSet<URL>();
+        for (URL url : urlsForCurrentClasspath)
+        {
+            urls.add(url);
+        }
 
-	public static File copyPackageToRoot(final String pkg, final Class<? extends Object> inThisClassJar) throws IOException
-	{
-		Collection<URL> urlsForCurrentClasspath = ClasspathHelper.forManifest();// forPackage(pkg,
-																			// ClassLoader.getSystemClassLoader());
-		EwSet<URL> urls = new EwSet<URL>();
-		for (URL url : urlsForCurrentClasspath)
-			urls.add(url);
+        Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(urls).setScanners(
+                new ResourcesScanner().filterResultsBy(new Predicate<String>()
+                {
+                    @Override
+                    public boolean apply(String input)
+                    {
+                        try
+                        {
+                            findFile(input, inThisClassJar, true, false);
+                        }
+                        catch (IOException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        return true;
+                    }
+                })));
+        Set<String> resources = reflections.getResources(Pattern.compile(".*"));
+        for (String s : resources)
+        {
+            if (s.startsWith(pkg))
+            {
+                findFile(s, inThisClassJar, true, false);
+            }
+        }
+        return new File(getDefaultLocationPath(false), pkg);
+    }
 
-		Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(urls).setScanners(
-				new ResourcesScanner().filterResultsBy(new Predicate<String>()
-				{
-					@Override
-					public boolean apply(String input)
-					{
-						try
-						{
-							findFileIn(input, input, inThisClassJar, true, false);
-						}
-						catch (IOException e)
-						{
-							e.printStackTrace();
-						}
-						return true;
-					}
-				})));
-		Set<String> resources = reflections.getResources(Pattern.compile(".*"));
-		for (String s : resources)
-			if (s.startsWith(pkg))
-				findFileIn(s, s, inThisClassJar, true, false);
-		return new File(pkg);
-	}
+    public static File copyPackageToRoot(final String pkg, final Class<? extends Object> inThisClassJar) throws IOException
+    {
+        Collection<URL> urlsForCurrentClasspath = ClasspathHelper.forManifest();// forPackage(pkg,
+        // ClassLoader.getSystemClassLoader());
+        EwSet<URL> urls = new EwSet<URL>();
+        for (URL url : urlsForCurrentClasspath)
+        {
+            urls.add(url);
+        }
 
-	public static File copyPackageChildrenToRoot(final String pkg, final Class<? extends Object> inThisClassJar) throws IOException
-	{
-		Collection<URL> urlsForCurrentClasspath = ClasspathHelper.forManifest();// forPackage(pkg,
-																			// ClassLoader.getSystemClassLoader());
-		EwSet<URL> urls = new EwSet<URL>();
-		for (URL url : urlsForCurrentClasspath)
-			urls.add(url);
+        Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(urls).setScanners(
+                new ResourcesScanner().filterResultsBy(new Predicate<String>()
+                {
+                    @Override
+                    public boolean apply(String input)
+                    {
+                        try
+                        {
+                            findFileIn(input, input, inThisClassJar, true, false);
+                        }
+                        catch (IOException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        return true;
+                    }
+                })));
+        Set<String> resources = reflections.getResources(Pattern.compile(".*"));
+        for (String s : resources)
+        {
+            if (s.startsWith(pkg))
+            {
+                findFileIn(s, s, inThisClassJar, true, false);
+            }
+        }
+        return new File(pkg);
+    }
 
-		Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(urls).setScanners(
-				new ResourcesScanner().filterResultsBy(new Predicate<String>()
-				{
-					@Override
-					public boolean apply(String input)
-					{
-						try
-						{
-							findFileIn(input.replace(pkg + "/", ""), input, inThisClassJar, true, false);
-						}
-						catch (IOException e)
-						{
-							e.printStackTrace();
-						}
-						return true;
-					}
-				})));
-		Set<String> resources = reflections.getResources(Pattern.compile(".*"));
-		for (String s : resources)
-			if (s.startsWith(pkg))
-				findFileIn(s.replace(pkg + "/", ""), s, inThisClassJar, true, false);
-		return new File(".");
-	}
+    public static File copyPackageChildrenToRoot(final String pkg, final Class<? extends Object> inThisClassJar) throws IOException
+    {
+        Collection<URL> urlsForCurrentClasspath = ClasspathHelper.forManifest();// forPackage(pkg,
+        // ClassLoader.getSystemClassLoader());
+        EwSet<URL> urls = new EwSet<URL>();
+        for (URL url : urlsForCurrentClasspath)
+        {
+            urls.add(url);
+        }
 
-	/*
+        Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(urls).setScanners(
+                new ResourcesScanner().filterResultsBy(new Predicate<String>()
+                {
+                    @Override
+                    public boolean apply(String input)
+                    {
+                        try
+                        {
+                            findFileIn(input.replace(pkg + "/", ""), input, inThisClassJar, true, false);
+                        }
+                        catch (IOException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        return true;
+                    }
+                })));
+        Set<String> resources = reflections.getResources(Pattern.compile(".*"));
+        for (String s : resources)
+        {
+            if (s.startsWith(pkg))
+            {
+                findFileIn(s.replace(pkg + "/", ""), s, inThisClassJar, true, false);
+            }
+        }
+        return new File(".");
+    }
+
+    /*
 	 * Estimated Path should not include '/'.
-	 */
-	public static File findFileIn(String desiredPath, String estimatedPath, Class<? extends Object> inThisClassJar, boolean permanantFile, boolean isWebResource)
-			throws IOException
-	{
+     */
+    public static File findFileIn(String desiredPath, String estimatedPath, Class<? extends Object> inThisClassJar, boolean permanantFile, boolean isWebResource)
+            throws IOException
+    {
 
-		File targetPath = new File(desiredPath);
-		if (targetPath.exists())
-			return targetPath;
+        File targetPath = new File(desiredPath);
+        if (targetPath.exists())
+        {
+            return targetPath;
+        }
 
-		URL possibleFile = null;
-		InputStream possibleInputStream = null;
-		if (inThisClassJar != null)
-		{
-			possibleFile = inThisClassJar.getResource(estimatedPath);
-			possibleInputStream = inThisClassJar.getResourceAsStream(estimatedPath);
-			if (possibleFile == null)
-			{
-				possibleFile = inThisClassJar.getResource("/" + estimatedPath);
-				possibleInputStream = inThisClassJar.getResourceAsStream("/" + estimatedPath);
-			}
-		}
-		if (possibleFile == null)
-		{
-			possibleFile = EwFileSystem.class.getResource(estimatedPath);
-			possibleInputStream = EwFileSystem.class.getResourceAsStream(estimatedPath);
-		}
-		if (possibleFile == null)
-		{
-			possibleFile = EwFileSystem.class.getResource("/" + estimatedPath);
-			possibleInputStream = EwFileSystem.class.getResourceAsStream("/" + estimatedPath);
-		}
-		if (possibleFile == null)
-		{
-			File file = new File(desiredPath);
-			if (file.exists())
-			{
-				possibleFile = file.toURI().toURL();
-				possibleInputStream = new FileInputStream(file);
-			}
-		}
-		if (possibleFile == null)
-			throw new IOException("Could not find file: " + estimatedPath);
+        URL possibleFile = null;
+        InputStream possibleInputStream = null;
+        if (inThisClassJar != null)
+        {
+            possibleFile = inThisClassJar.getResource(estimatedPath);
+            possibleInputStream = inThisClassJar.getResourceAsStream(estimatedPath);
+            if (possibleFile == null)
+            {
+                possibleFile = inThisClassJar.getResource("/" + estimatedPath);
+                possibleInputStream = inThisClassJar.getResourceAsStream("/" + estimatedPath);
+            }
+        }
+        if (possibleFile == null)
+        {
+            possibleFile = EwFileSystem.class.getResource(estimatedPath);
+            possibleInputStream = EwFileSystem.class.getResourceAsStream(estimatedPath);
+        }
+        if (possibleFile == null)
+        {
+            possibleFile = EwFileSystem.class.getResource("/" + estimatedPath);
+            possibleInputStream = EwFileSystem.class.getResourceAsStream("/" + estimatedPath);
+        }
+        if (possibleFile == null)
+        {
+            File file = new File(desiredPath);
+            if (file.exists())
+            {
+                possibleFile = file.toURI().toURL();
+                possibleInputStream = new FileInputStream(file);
+            }
+        }
+        if (possibleFile == null)
+        {
+            throw new IOException("Could not find file: " + estimatedPath);
+        }
 
-		if (possibleInputStream != null)
-		{
-			if (targetPath.exists() == false)
-			{
-				if (targetPath.getParentFile() != null)
-					targetPath.getParentFile().mkdirs();
-				targetPath.createNewFile();
-			}
-			FileOutputStream targetOutputStream = new FileOutputStream(targetPath);
-			IOUtils.copy(possibleInputStream, targetOutputStream);
-			IOUtils.closeQuietly(targetOutputStream);
-			IOUtils.closeQuietly(possibleInputStream);
-		}
-		targetPath.mkdirs();
+        if (possibleInputStream != null)
+        {
+            if (targetPath.exists() == false)
+            {
+                if (targetPath.getParentFile() != null)
+                {
+                    targetPath.getParentFile().mkdirs();
+                }
+                targetPath.createNewFile();
+            }
+            FileOutputStream targetOutputStream = new FileOutputStream(targetPath);
+            IOUtils.copy(possibleInputStream, targetOutputStream);
+            IOUtils.closeQuietly(targetOutputStream);
+            IOUtils.closeQuietly(possibleInputStream);
+        }
+        targetPath.mkdirs();
 
-		if (!permanantFile)
-			targetPath.deleteOnExit();
+        if (!permanantFile)
+        {
+            targetPath.deleteOnExit();
+        }
 
-		return targetPath;
-	}
-	
-	public static File findFile(String estimatedPath, Class<? extends Object> inThisClassJar, boolean permanantFile, boolean isWebResource) throws IOException
-	{
-		String rootPath = null;
+        return targetPath;
+    }
 
-		if (isWebResource)
-			rootPath = getWebConfigurationPath();
+    public static File findFile(String estimatedPath, Class<? extends Object> inThisClassJar, boolean permanantFile, boolean isWebResource) throws IOException
+    {
+        String rootPath = null;
 
-		if (rootPath == null)
-		{
-			rootPath = getDefaultLocationPath(isWebResource);
-		}
+        if (isWebResource)
+        {
+            rootPath = getWebConfigurationPath();
+        }
 
-		File targetPath = new File(rootPath, estimatedPath);
-		if (targetPath.exists())
-			return targetPath;
+        if (rootPath == null)
+        {
+            rootPath = getDefaultLocationPath(isWebResource);
+        }
 
-		URL possibleFile = null;
-		InputStream possibleInputStream = null;
-		if (inThisClassJar != null)
-		{
-			possibleFile = inThisClassJar.getResource(estimatedPath);
-			possibleInputStream = inThisClassJar.getResourceAsStream(estimatedPath);
-			if (possibleFile == null)
-			{
-				possibleFile = inThisClassJar.getResource("/" + estimatedPath);
-				possibleInputStream = inThisClassJar.getResourceAsStream("/" + estimatedPath);
-			}
-		}
-		if (possibleFile == null)
-		{
-			possibleFile = EwFileSystem.class.getResource(estimatedPath);
-			possibleInputStream = EwFileSystem.class.getResourceAsStream(estimatedPath);
-		}
-		if (possibleFile == null)
-		{
-			possibleFile = EwFileSystem.class.getResource("/" + estimatedPath);
-			possibleInputStream = EwFileSystem.class.getResourceAsStream("/" + estimatedPath);
-		}
-		if (possibleFile == null)
-		{
-			File file = new File(estimatedPath);
-			if (file.exists())
-			{
-				possibleFile = file.toURI().toURL();
-				possibleInputStream = new FileInputStream(file);
-			}
-		}
-		if (possibleFile == null)
-			throw new IOException("Could not find file: " + estimatedPath);
+        File targetPath = new File(rootPath, estimatedPath);
+        if (targetPath.exists())
+        {
+            return targetPath;
+        }
 
-		System.out.println(possibleFile);
-		
-		if (possibleInputStream != null)
-		{
-			if (targetPath.exists() == false)
-			{
-				targetPath.getParentFile().mkdirs();
-				targetPath.createNewFile();
-			}
-			FileOutputStream targetOutputStream = new FileOutputStream(targetPath);
-			IOUtils.copy(possibleInputStream, targetOutputStream);
-			IOUtils.closeQuietly(targetOutputStream);
-			IOUtils.closeQuietly(possibleInputStream);
-		}
-		targetPath.mkdirs();
+        URL possibleFile = null;
+        InputStream possibleInputStream = null;
+        if (inThisClassJar != null)
+        {
+            String jar = inThisClassJar.getProtectionDomain().getCodeSource().getLocation().toString().split("!")[0];
+            Enumeration<URL> resources = inThisClassJar.getClassLoader().getResources(estimatedPath);
+            while (resources.hasMoreElements())
+            {
+                URL url = resources.nextElement();
+                if (url.toString().contains(jar))
+                {
+                    possibleFile = url;
+                    possibleInputStream = url.openStream();
+                }
+            }
+            if (possibleFile == null)
+            {
+                resources = inThisClassJar.getClassLoader().getResources("/" + estimatedPath);
+                while (resources.hasMoreElements())
+                {
+                    URL url = resources.nextElement();
+                    if (url.toString().contains(jar))
+                    {
+                        possibleFile = url;
+                        possibleInputStream = url.openStream();
+                    }
+                }
+            }
+        }
+        if (possibleFile == null)
+        {
+            possibleFile = EwFileSystem.class.getResource(estimatedPath);
+            possibleInputStream = EwFileSystem.class.getResourceAsStream(estimatedPath);
+        }
+        if (possibleFile == null)
+        {
+            possibleFile = EwFileSystem.class.getResource("/" + estimatedPath);
+            possibleInputStream = EwFileSystem.class.getResourceAsStream("/" + estimatedPath);
+        }
+        if (possibleFile == null)
+        {
+            File file = new File(estimatedPath);
+            if (file.exists())
+            {
+                possibleFile = file.toURI().toURL();
+                possibleInputStream = new FileInputStream(file);
+            }
+        }
+        if (possibleFile == null && possibleInputStream == null)
+        {
+            throw new IOException("Could not find file: " + estimatedPath);
+        }
 
-		// TODO: If this thing is a directory, and it is in a jar, then we want
-		// to copy all the files in the directory in the jar into the target
-		// location.
+        System.out.println(possibleFile);
 
-		if (!permanantFile)
-			targetPath.deleteOnExit();
+        if (possibleInputStream != null)
+        {
+            if (targetPath.exists() == false)
+            {
+                targetPath.getParentFile().mkdirs();
+                targetPath.createNewFile();
+            }
+            FileOutputStream targetOutputStream = new FileOutputStream(targetPath);
+            IOUtils.copy(possibleInputStream, targetOutputStream);
+            IOUtils.closeQuietly(targetOutputStream);
+            IOUtils.closeQuietly(possibleInputStream);
+        }
+        targetPath.mkdirs();
 
-		return targetPath;
-	}
+        // TODO: If this thing is a directory, and it is in a jar, then we want
+        // to copy all the files in the directory in the jar into the target
+        // location.
+        if (!permanantFile)
+        {
+            targetPath.deleteOnExit();
+        }
 
-	/**
-	 * Close a stream or reader/writer object.
-	 * @param stream Stream to close.
-	 */
-	public static void closeIt(Object stream)
-	{
-		try
-		{
-			if (stream instanceof InputStream)
-				((InputStream) stream).close();
-			else if (stream instanceof OutputStream)
-				((OutputStream) stream).close();
-			else if (stream instanceof Reader)
-				((Reader) stream).close();
-			else if (stream instanceof Writer)
-				((Writer) stream).close();
-		}
-		catch (IOException e)
-		{
-			// TODO: log this instead?
-			e.printStackTrace();
-		}
-	}
+        return targetPath;
+    }
 
-	/**
-	 * Download the content of a URL to a specific local file or a temporary
-	 * file if no local file is specified. Returns the local file used.
-	 * 
-	 * @param path URL to download.
-	 * @param localFile To this local file.
-	 * @param timeout Timeout for download.
-	 * @return Downloaded file or null.
-	 * @throws IOException Error in downloading or writing file.
-	 */
-	public static File downloadFile(String path, File localFile, int timeout) throws IOException
-	{
-		URL uri;
-		FileOutputStream fileOutputStream = null;
-		InputStream inputStream = null;
-		try
-		{
-			try
-			{
-				uri = new URL(path);
-			}
-			catch (MalformedURLException e)
-			{
-				uri = new URL(URLDecoder.decode(path));
-			}
-			URLConnection connection = uri.openConnection();
-			connection.setConnectTimeout(timeout);
-			connection.setReadTimeout(timeout);
-			connection.setRequestProperty("Accept", "*/*");
-			connection.connect();
-			inputStream = connection.getInputStream();
-			// If the local file is null, create a temporary file to hold the
-			// content
-			if (localFile == null)
-			{
-				String ext = null;
-				try
-				{
-					String headerField = connection.getHeaderField("content-disposition");
-					if (headerField != null && headerField.split(";")[0].equals("attachment"))
-					{
-						String filename = headerField.split(";")[1].split("=")[1];
-						if (filename.contains("."))
-							ext = filename.split("\\.")[filename.split("\\.").length-1];
-					}
-				}
-				catch (Exception ex)
-				{
-					System.out.println("Download of File: Could not determine extension appropriately from header.");
-					System.out.println(uri);
-					ex.printStackTrace();
-				}
-				if (ext == null)
-					ext = uri.getPath().substring(uri.getPath().lastIndexOf("/") + 1);
-				if (ext == null || ext.isEmpty())
-					if (connection.getContentType() != null)
-						if (!connection.getContentType().endsWith("/"))
-							ext = connection.getContentType().substring(connection.getContentType().lastIndexOf('/') + 1);
-				if (ext.contains("."))
-					ext = ext.substring(ext.indexOf("."));
-				localFile = File.createTempFile("foo", "." + removeNonazAZStatic(ext));
-			}
-			fileOutputStream = new FileOutputStream(localFile);
-			if (connection.getContentEncoding() != null && connection.getContentEncoding().equals("gzip"))
-				inputStream = new GZIPInputStream(inputStream);
-			if (connection.getContentEncoding() != null && connection.getContentEncoding().equals("deflate"))
-				inputStream = new DeflaterInputStream(inputStream);
-			IOUtils.copy(inputStream, fileOutputStream);
-			return localFile;
-		}
-		finally
-		{
-			closeIt(inputStream);
-			closeIt(fileOutputStream);
-		}
-	}
+    /**
+     * Close a stream or reader/writer object.
+     *
+     * @param stream Stream to close.
+     */
+    public static void closeIt(Object stream)
+    {
+        try
+        {
+            if (stream instanceof InputStream)
+            {
+                ((InputStream) stream).close();
+            }
+            else if (stream instanceof OutputStream)
+            {
+                ((OutputStream) stream).close();
+            }
+            else if (stream instanceof Reader)
+            {
+                ((Reader) stream).close();
+            }
+            else if (stream instanceof Writer)
+            {
+                ((Writer) stream).close();
+            }
+        }
+        catch (IOException e)
+        {
+            // TODO: log this instead?
+            e.printStackTrace();
+        }
+    }
 
-	private static String removeNonazAZStatic(String _text)
-	{
-		for (int i = 0; i < _text.length(); i++)
-		{
-			char k = _text.charAt(i);
-			if (!(k >= 'a' && k <= 'z') && !(k >= 'A' && k <= 'Z'))
-			{
-				StringBuilder sb = new StringBuilder();
-				for (int j = 0; j < _text.length(); j++)
-				{
-					char c = _text.charAt(j);
-					if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-						sb.append(_text.charAt(j));
-				}
-				return sb.toString();
-			}
-		}
-		return _text;
-	}
+    /**
+     * Download the content of a URL to a specific local file or a temporary
+     * file if no local file is specified. Returns the local file used.
+     *
+     * @param path URL to download.
+     * @param localFile To this local file.
+     * @param timeout Timeout for download.
+     * @return Downloaded file or null.
+     * @throws IOException Error in downloading or writing file.
+     */
+    public static File downloadFile(String path, File localFile, int timeout) throws IOException
+    {
+        URL uri;
+        FileOutputStream fileOutputStream = null;
+        InputStream inputStream = null;
+        try
+        {
+            try
+            {
+                uri = new URL(path);
+            }
+            catch (MalformedURLException e)
+            {
+                uri = new URL(URLDecoder.decode(path));
+            }
+            URLConnection connection = uri.openConnection();
+            connection.setConnectTimeout(timeout);
+            connection.setReadTimeout(timeout);
+            connection.setRequestProperty("Accept", "*/*");
+            connection.connect();
+            inputStream = connection.getInputStream();
+            // If the local file is null, create a temporary file to hold the
+            // content
+            if (localFile == null)
+            {
+                String ext = null;
+                try
+                {
+                    String headerField = connection.getHeaderField("content-disposition");
+                    if (headerField != null && headerField.split(";")[0].equals("attachment"))
+                    {
+                        String filename = headerField.split(";")[1].split("=")[1];
+                        if (filename.contains("."))
+                        {
+                            ext = filename.split("\\.")[filename.split("\\.").length - 1];
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.out.println("Download of File: Could not determine extension appropriately from header.");
+                    System.out.println(uri);
+                    ex.printStackTrace();
+                }
+                if (ext == null)
+                {
+                    ext = uri.getPath().substring(uri.getPath().lastIndexOf("/") + 1);
+                }
+                if (ext == null || ext.isEmpty())
+                {
+                    if (connection.getContentType() != null)
+                    {
+                        if (!connection.getContentType().endsWith("/"))
+                        {
+                            ext = connection.getContentType().substring(connection.getContentType().lastIndexOf('/') + 1);
+                        }
+                    }
+                }
+                if (ext.contains("."))
+                {
+                    ext = ext.substring(ext.indexOf("."));
+                }
+                localFile = File.createTempFile("foo", "." + removeNonazAZStatic(ext));
+            }
+            fileOutputStream = new FileOutputStream(localFile);
+            if (connection.getContentEncoding() != null && connection.getContentEncoding().equals("gzip"))
+            {
+                inputStream = new GZIPInputStream(inputStream);
+            }
+            if (connection.getContentEncoding() != null && connection.getContentEncoding().equals("deflate"))
+            {
+                inputStream = new DeflaterInputStream(inputStream);
+            }
+            IOUtils.copy(inputStream, fileOutputStream);
+            return localFile;
+        }
+        finally
+        {
+            closeIt(inputStream);
+            closeIt(fileOutputStream);
+        }
+    }
 
-	public static String resolve(URL uri) throws IOException
-	{
-		ByteArrayOutputStream baos = null;
-		InputStream inputStream = null;
-		try
-		{
-			URLConnection connection = uri.openConnection();
-			inputStream = connection.getInputStream();
-			connection.connect();
-			baos = new ByteArrayOutputStream();
-			if (connection.getContentEncoding() != null && connection.getContentEncoding().equals("gzip"))
-				inputStream = new GZIPInputStream(inputStream);
-			if (connection.getContentEncoding() != null && connection.getContentEncoding().equals("deflate"))
-				inputStream = new DeflaterInputStream(inputStream);
-			IOUtils.copy(inputStream, baos);
-			return new String(baos.toByteArray());
-		}
-		finally
-		{
-			closeIt(inputStream);
-			closeIt(baos);
-		}
-	}
+    private static String removeNonazAZStatic(String _text)
+    {
+        for (int i = 0; i < _text.length(); i++)
+        {
+            char k = _text.charAt(i);
+            if (!(k >= 'a' && k <= 'z') && !(k >= 'A' && k <= 'Z'))
+            {
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < _text.length(); j++)
+                {
+                    char c = _text.charAt(j);
+                    if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+                    {
+                        sb.append(_text.charAt(j));
+                    }
+                }
+                return sb.toString();
+            }
+        }
+        return _text;
+    }
 
-	public static File downloadFile(String path) throws IOException
-	{
-		return downloadFile(path, null, 5 * 60 * 1000);
-	}
+    public static String resolve(URL uri) throws IOException
+    {
+        ByteArrayOutputStream baos = null;
+        InputStream inputStream = null;
+        try
+        {
+            URLConnection connection = uri.openConnection();
+            inputStream = connection.getInputStream();
+            connection.connect();
+            baos = new ByteArrayOutputStream();
+            if (connection.getContentEncoding() != null && connection.getContentEncoding().equals("gzip"))
+            {
+                inputStream = new GZIPInputStream(inputStream);
+            }
+            if (connection.getContentEncoding() != null && connection.getContentEncoding().equals("deflate"))
+            {
+                inputStream = new DeflaterInputStream(inputStream);
+            }
+            IOUtils.copy(inputStream, baos);
+            return new String(baos.toByteArray());
+        }
+        finally
+        {
+            closeIt(inputStream);
+            closeIt(baos);
+        }
+    }
 
-	public static File downloadFile(String path, int timeoutms) throws IOException
-	{
-		return downloadFile(path, null, timeoutms);
-	}
+    public static File downloadFile(String path) throws IOException
+    {
+        return downloadFile(path, null, 5 * 60 * 1000);
+    }
 
-	private static String getDefaultLocationPath(boolean isWebResource) throws IOException
-	{
-		if (webConfigurationPath != null)
-			return webConfigurationPath;
-		String rootPath;
-		rootPath = createTempDirectory().getName();
-		if (isWebResource)
-			webConfigurationPath = rootPath;
-		return rootPath;
-	}
+    public static File downloadFile(String path, int timeoutms) throws IOException
+    {
+        return downloadFile(path, null, timeoutms);
+    }
 
-	private static File createTempDirectory() throws IOException
-	{
-		File createTempFile = File.createTempFile("ewww", "tmp");
-		createTempFile.delete();
-		createTempFile = new File(createTempFile.getParentFile(), "etc");
-		createTempFile.mkdirs();
-		createTempFile.mkdir();
-		createTempFile.deleteOnExit();
-		return createTempFile;
-	}
+    private static String getDefaultLocationPath(boolean isWebResource) throws IOException
+    {
+        if (webConfigurationPath != null)
+        {
+            return webConfigurationPath;
+        }
+        String rootPath;
+        rootPath = createTempDirectory().getName();
+        if (isWebResource)
+        {
+            webConfigurationPath = rootPath;
+        }
+        return rootPath;
+    }
 
-	public static void deleteEventually(File file)
-	{
-		if (file == null)
-			return;
-		if (!file.exists())
-			return;
-		if (!file.delete())
-			file.deleteOnExit();
-	}
+    private static File createTempDirectory() throws IOException
+    {
+        File createTempFile = File.createTempFile("ewww", "tmp");
+        createTempFile.delete();
+        createTempFile = new File(createTempFile.getParentFile(), "etc");
+        createTempFile.mkdirs();
+        createTempFile.mkdir();
+        createTempFile.deleteOnExit();
+        return createTempFile;
+    }
 
-	public static void placeInWorkingDirectoryTemporarily(File findFile, String relativePath)
-	{
-		File dest = new File(relativePath);
-		if (dest.exists())
-			return;
-		dest.getParentFile().mkdirs();
-		FileInputStream input;
-		try
-		{
-			input = new FileInputStream(findFile);
-			dest.createNewFile();
-			FileOutputStream output = new FileOutputStream(dest);
-			IOUtils.copy(input, output);
-			IOUtils.closeQuietly(input);
-			IOUtils.closeQuietly(output);
-		}
-		catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		dest.deleteOnExit();
-	}
+    public static void deleteEventually(File file)
+    {
+        if (file == null)
+        {
+            return;
+        }
+        if (!file.exists())
+        {
+            return;
+        }
+        if (!file.delete())
+        {
+            file.deleteOnExit();
+        }
+    }
 
-	public static void copyPackage(String path, String string, Class<? extends Object> class1)
-	{
+    public static void placeInWorkingDirectoryTemporarily(File findFile, String relativePath)
+    {
+        File dest = new File(relativePath);
+        if (dest.exists())
+        {
+            return;
+        }
+        dest.getParentFile().mkdirs();
+        FileInputStream input;
+        try
+        {
+            input = new FileInputStream(findFile);
+            dest.createNewFile();
+            FileOutputStream output = new FileOutputStream(dest);
+            IOUtils.copy(input, output);
+            IOUtils.closeQuietly(input);
+            IOUtils.closeQuietly(output);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        dest.deleteOnExit();
+    }
 
-	}
+    public static void copyPackage(String path, String string, Class<? extends Object> class1)
+    {
+
+    }
 
 }
