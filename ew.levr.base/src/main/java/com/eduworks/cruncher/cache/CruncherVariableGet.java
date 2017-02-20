@@ -10,7 +10,7 @@ import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 
 /**
- * Retreives a variable from the variable store (set by #variableGet). Used when simple internal state is absolutely necessary.
+ * Retrieves a variable from the variable store (set by #variableGet). Used when simple internal state is absolutely necessary.
  * 
  * rs2: result = #variableGet(key="unique key");<br>
  * LevrJS: result = variableGet.call(this,"unique key");

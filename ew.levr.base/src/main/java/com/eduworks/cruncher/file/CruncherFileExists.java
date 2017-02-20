@@ -8,13 +8,31 @@ import org.json.JSONObject;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 
+
+/**
+ * Returns true if the file or directory located at the path exists.
+ * 
+ * rs2: result = #fileExists(path="Relative or Full Path to directory");<br>
+ * LevrJS: fileExists.call(this,"Relative or Full Path to directory");
+ *
+ * @class fileExists
+ * @module ew.levr.base
+ * @author fritz.ray@eduworks.com
+ */
+/**
+ * @method fileExists
+ * @param path {String} Relative or Full Path to file or directory.
+ * @param [safe=true] {Boolean} For security, will not obey paths that contain '..'or startsWIth('/') paths.
+ * @return {Boolean} True if the file or directory exists.
+ */
+
 public class CruncherFileExists extends Cruncher {
 	public Object resolve(Context c,
 			java.util.Map<String, String[]> parameters, java.util.Map<String, java.io.InputStream> dataStreams)
 			throws org.json.JSONException {
 		
 		String path = getAsString("path", c, parameters, dataStreams);
-		if (optAsBoolean("safe",true,c,parameters, dataStreams) && path.contains(".."))
+		if (optAsBoolean("safe",true,c,parameters, dataStreams) && CruncherCreateDirectory.pathUnsafe(path))
 			throw new RuntimeException("Cannot go up in filesystem.");
 		File f = new File(path);
 

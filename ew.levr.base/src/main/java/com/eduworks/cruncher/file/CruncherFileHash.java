@@ -13,66 +13,93 @@ import org.json.JSONObject;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 import com.eduworks.util.io.InMemoryFile;
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.io.FileUtils;
 
-public class CruncherFileHash extends Cruncher
-{
+/**
+ *
+ * Returns the MD5 hash of the file provided.
+ *
+ * @class fileHash
+ * @module ew.levr.base
+ * @author fritz.ray@eduworks.com
+ */
+/**
+ * @method fileHash
+ * @param obj {String|nMemoryFile|File) Path to, or File to hash and produce a result.
+ * @param [hash=MD5] (String) Name of the hash to use to digest the file. See Java Hash Providers for a list.
+ * @return (String) Hash of the file.
+ */
+public class CruncherFileHash extends Cruncher {
 
-	@Override
-	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
-	{
-		Object obj =  getObj(c, parameters, dataStreams);
-		
-		if(obj instanceof InMemoryFile){
-			InMemoryFile file = (InMemoryFile) obj;
-			MessageDigest md = null;
-			
-			try
-			{
-				md = MessageDigest.getInstance("MD5");
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			}
-			
-			DigestInputStream dis = new DigestInputStream(file.getInputStream(), md);
-			int numRead;
-			byte[] buffer = new byte[1024];
-			
-			try {
-				do{
-					numRead = dis.read(buffer);
-				}while(numRead != -1);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			return md.digest();
-			
-		}
-		return null;
-	}
+    @Override
+    public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException {
+        Object obj = getObj(c, parameters, dataStreams);
 
-	@Override
-	public String getDescription()
-	{
-		return "Converts an in memory file to a string.";
-	}
+        MessageDigest md = null;
 
-	@Override
-	public String getReturn()
-	{
-		return "String";
-	}
+        try {
+            md = MessageDigest.getInstance(optAsString("hash","MD5",c,parameters,dataStreams));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
 
-	@Override
-	public String getAttribution()
-	{
-		return ATTRIB_NONE;
-	}
+        DigestInputStream dis = null;
+        if (obj instanceof InMemoryFile) {
+            InMemoryFile file = (InMemoryFile) obj;
+            dis = new DigestInputStream(file.getInputStream(), md);
+        } else if (obj instanceof File) {
+            try {
+                dis = new DigestInputStream(FileUtils.openInputStream((File) obj), md);
+            } catch (IOException ex) {
+                Logger.getLogger(CruncherFileHash.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (obj instanceof String) {
+            try {
+                dis = new DigestInputStream(FileUtils.openInputStream(new File((String) obj)), md);
+            } catch (IOException ex) {
+                Logger.getLogger(CruncherFileHash.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (dis == null) {
+            return null;
+        }
+        
+        int numRead;
+        byte[] buffer = new byte[1024];
 
-	@Override
-	public JSONObject getParameters() throws JSONException
-	{
-		return jo("obj", "InMemoryFile");
-	}
+        try {
+            do {
+                numRead = dis.read(buffer);
+            } while (numRead != -1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return md.digest();
+
+    }
+
+    @Override
+    public String getDescription() {
+        return "Converts an in memory file to a string.";
+    }
+
+    @Override
+    public String getReturn() {
+        return "String";
+    }
+
+    @Override
+    public String getAttribution() {
+        return ATTRIB_NONE;
+    }
+
+    @Override
+    public JSONObject getParameters() throws JSONException {
+        return jo("obj", "InMemoryFile");
+    }
 
 }

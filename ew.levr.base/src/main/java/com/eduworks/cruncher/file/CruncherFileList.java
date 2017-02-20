@@ -9,13 +9,29 @@ import org.json.JSONObject;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 
+/**
+ * Lists all files in a directory. Only returns partial paths.
+ * 
+ * rs2: filePaths = #fileList(path="Directory path")
+ * LevrJS: pathsArray = fileList.call(this,"Directory path")
+ * 
+ * @class fileList
+ * @module ew.levr.base
+ * @author fritz.ray@eduworks.com
+ */
+/**
+ * @method fileList
+ * @param path (String) Full or relative path to directory to list files.
+ * @param [safe=true] {Boolean} For security, will not obey paths that contain '..'or startsWIth('/') paths.
+ * @return (JSONArray) Relative paths from the directory root of all files or directories in that directory.
+ */
 public class CruncherFileList extends Cruncher
 {
 	public Object resolve(Context c, java.util.Map<String, String[]> parameters, java.util.Map<String, java.io.InputStream> dataStreams)
 			throws org.json.JSONException
 	{
 		String path = getAsString("path", c, parameters, dataStreams);
-		if (path.contains(".."))
+		if (optAsBoolean("safe",true,c,parameters,dataStreams) && CruncherCreateDirectory.pathUnsafe(path))
 			throw new RuntimeException("Cannot go up in filesystem.");
 		File f = new File(path);
 		JSONArray paths = new JSONArray();
