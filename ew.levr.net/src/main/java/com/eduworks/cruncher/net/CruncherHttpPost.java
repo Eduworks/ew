@@ -186,8 +186,20 @@ public class CruncherHttpPost extends Cruncher
 			if (string == null)
 				return null;
 
-			if (EwJson.isJson(string))
-				return EwJson.tryParseJson(string, false);
+            try
+            {
+                return new JSONArray(string);
+            }
+            catch (JSONException ex)
+            {
+            }
+            try
+            {
+                return new JSONObject(string);
+            }
+            catch (JSONException ex)
+            {
+            }
 			return string;
 		}
 		finally
