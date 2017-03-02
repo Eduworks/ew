@@ -2,7 +2,7 @@
     "project": {
         "name": "EW Library",
         "description": "EW Library API: ",
-        "version": "5.0.0",
+        "version": "5.1.0",
         "url": "http://ew.eduworks.org/",
         "logo": "http://eduworks.com/img/eduworks-ring-e.png"
     },
@@ -234,11 +234,101 @@
             "fors": {},
             "namespaces": {}
         },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherCreateDirectory.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherCreateDirectory.java",
+            "modules": {},
+            "classes": {
+                "createDirectory": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherDeserialize.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherDeserialize.java",
+            "modules": {},
+            "classes": {
+                "deserialize": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileDelete.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileDelete.java",
+            "modules": {},
+            "classes": {
+                "fileDelete": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileExists.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileExists.java",
+            "modules": {},
+            "classes": {
+                "fileExists": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileHash.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileHash.java",
+            "modules": {},
+            "classes": {
+                "fileHash": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileList.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileList.java",
+            "modules": {},
+            "classes": {
+                "fileList": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileLoad.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileLoad.java",
+            "modules": {},
+            "classes": {
+                "fileLoad": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileSave.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileSave.java",
+            "modules": {},
+            "classes": {
+                "fileSave": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java": {
             "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java",
             "modules": {},
             "classes": {
                 "add": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/ws/CruncherWsBroadcast.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/ws/CruncherWsBroadcast.java",
+            "modules": {},
+            "classes": {
+                "wsBroadcast": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/ws/CruncherWsEmit.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/ws/CruncherWsEmit.java",
+            "modules": {},
+            "classes": {
+                "wsEmit": 1
             },
             "fors": {},
             "namespaces": {}
@@ -327,6 +417,13 @@
             "fors": {},
             "namespaces": {}
         },
+        "ew.levr.core/src/test/java/com/eduworks/resolver/lang/LevrJsParserTest.java": {
+            "name": "ew.levr.core/src/test/java/com/eduworks/resolver/lang/LevrJsParserTest.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "ew.levr.db.couchdb/src/main/java/com/eduworks/resolver/db/couchdb/CruncherDocument.java": {
             "name": "ew.levr.db.couchdb/src/main/java/com/eduworks/resolver/db/couchdb/CruncherDocument.java",
             "modules": {},
@@ -387,13 +484,23 @@
                 "variableGet": 1,
                 "variableSet": 1,
                 "base64ToFile": 1,
-                "add": 1
+                "createDirectory": 1,
+                "deserialize": 1,
+                "fileDelete": 1,
+                "fileExists": 1,
+                "fileHash": 1,
+                "fileList": 1,
+                "fileLoad": 1,
+                "fileSave": 1,
+                "add": 1,
+                "wsBroadcast": 1,
+                "wsEmit": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java",
-            "line": 14,
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/ws/CruncherWsEmit.java",
+            "line": 12,
             "description": "Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.<br>Cache, by default, persists over the web service request.\n\nrs2: result = obj.cache(name=\"unique name\");<br>\nLevrJS: result = cache.call(this,obj,\"unique name\");"
         }
     },
@@ -424,7 +531,7 @@
             "namespace": "",
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherVariableGet.java",
             "line": 12,
-            "description": "Retreives a variable from the variable store (set by #variableGet). Used when simple internal state is absolutely necessary.\n\nrs2: result = #variableGet(key=\"unique key\");<br>\nLevrJS: result = variableGet.call(this,\"unique key\");",
+            "description": "Retrieves a variable from the variable store (set by #variableGet). Used when simple internal state is absolutely necessary.\n\nrs2: result = #variableGet(key=\"unique key\");<br>\nLevrJS: result = variableGet.call(this,\"unique key\");",
             "author": "fritz.ray@eduworks.com"
         },
         "variableSet": {
@@ -457,6 +564,126 @@
             "description": "Converts one or more base 64 encoded files (represented as a JSON Object) to one or more InMemoryFiles\n\nRepresentation:<br>\n{<br>\n name:\"base64EncodedFileAsString\"<br>\n ,...\n}\n\nrs2: result = obj.base64ToFile();<br>\nLevrJS: result = base64ToFile.call(this,obj);",
             "author": "fritz.ray@eduworks.com"
         },
+        "createDirectory": {
+            "name": "createDirectory",
+            "shortname": "createDirectory",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherCreateDirectory.java",
+            "line": 11,
+            "description": "Creates a directory. Will throw exception if the directory exists, use alongside fileExists to prevent this. Will not create parent directories.\n\nrs2: #createDirectory(path=\"Relative or Full Path to directory\");<br>\nLevrJS: createDirectory.call(this,\"Relative or Full Path to directory\");",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "deserialize": {
+            "name": "deserialize",
+            "shortname": "deserialize",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherDeserialize.java",
+            "line": 19,
+            "description": "Deserializes an object from a file. Uses Java Object Serialization, and is\nsubject to version number changes.\n\nrs2: result = obj.deserialize(obj=\"File or InMemoryFile\");<br>\nLevrJS: result = deserialize.call(this,obj);",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "fileDelete": {
+            "name": "fileDelete",
+            "shortname": "fileDelete",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileDelete.java",
+            "line": 11,
+            "description": "Deletes a file or directory. Will return false if file did not exist or if the file could not be deleted. Returns true if the file is deleted.\n\nrs2: #fileDelete(path=\"Relative or Full Path to directory\");<br>\nLevrJS: fileDelete.call(this,\"Relative or Full Path to directory\");",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "fileExists": {
+            "name": "fileExists",
+            "shortname": "fileExists",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileExists.java",
+            "line": 12,
+            "description": "Returns true if the file or directory located at the path exists.\n\nrs2: result = #fileExists(path=\"Relative or Full Path to directory\");<br>\nLevrJS: fileExists.call(this,\"Relative or Full Path to directory\");",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "fileHash": {
+            "name": "fileHash",
+            "shortname": "fileHash",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileHash.java",
+            "line": 21,
+            "description": "Returns the MD5 hash of the file provided.",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "fileList": {
+            "name": "fileList",
+            "shortname": "fileList",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileList.java",
+            "line": 12,
+            "description": "Lists all files in a directory. Only returns partial paths.\n\nrs2: filePaths = #fileList(path=\"Directory path\")\nLevrJS: pathsArray = fileList.call(this,\"Directory path\")",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "fileLoad": {
+            "name": "fileLoad",
+            "shortname": "fileLoad",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileLoad.java",
+            "line": 15,
+            "description": "Loads a file in a filesystem. Will attempt to copy the file into memory if the file is less than 2GB.\n\nrs2: file = #fileLoad(path=\"Path to File\");\nlevrJs: file = fileLoad.call(this,\"Path to File\");",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "fileSave": {
+            "name": "fileSave",
+            "shortname": "fileSave",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileSave.java",
+            "line": 20,
+            "description": "Saves a file onto the filesystem. If passed a string, uses default encoding.\n\nrs2: obj = obj.fileSave(path=\"Path to save to.\");\nlevrJs: obj = fileSave.call(this,obj,\"Path to save to.\");",
+            "author": "fritz.ray@eduworks.com"
+        },
         "add": {
             "name": "add",
             "shortname": "add",
@@ -470,6 +697,36 @@
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java",
             "line": 14,
             "description": "Adds any number of numbers or strings. Will default to returning a number if all parameters are numbers, will return string if not.",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "wsBroadcast": {
+            "name": "wsBroadcast",
+            "shortname": "wsBroadcast",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/ws/CruncherWsBroadcast.java",
+            "line": 12,
+            "description": "Broadcasts a message to all websockets connected to this machine.\n\nrs2: obj.wsBroadcast();<br>\nLevrJS: wsBroadcast.call(this,obj);",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "wsEmit": {
+            "name": "wsEmit",
+            "shortname": "wsEmit",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/ws/CruncherWsEmit.java",
+            "line": 12,
+            "description": "Broadcasts a message to all websockets connected to this machine.\n\nrs2: obj.wsBroadcast(to=\"@wsId\");<br>\nLevrJS: wsBroadcast.call(this,params.wsId,obj);",
             "author": "fritz.ray@eduworks.com"
         }
     },
@@ -1777,7 +2034,7 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/util/io/EwFileSystem.java",
-            "line": 326,
+            "line": 382,
             "description": "Close a stream or reader/writer object.",
             "params": [
                 {
@@ -1789,7 +2046,7 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/util/io/EwFileSystem.java",
-            "line": 350,
+            "line": 415,
             "description": "Download the content of a URL to a specific local file or a temporary\nfile if no local file is specified. Returns the local file used.",
             "params": [
                 {
@@ -3853,6 +4110,215 @@
             "module": "ew.levr.base"
         },
         {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherCreateDirectory.java",
+            "line": 21,
+            "itemtype": "method",
+            "name": "createDirectory",
+            "params": [
+                {
+                    "name": "path",
+                    "description": "Relative or Full Path to directory.",
+                    "type": "String"
+                },
+                {
+                    "name": "safe",
+                    "description": "For security, will not obey paths that contain '..'or startsWIth('/') paths.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                }
+            ],
+            "return": {
+                "description": "True if the directory was created.",
+                "type": "Boolean"
+            },
+            "class": "createDirectory",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherDeserialize.java",
+            "line": 30,
+            "itemtype": "method",
+            "name": "deserialize",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "File or In Memory File to extract object from.",
+                    "type": "File|InMemoryFile"
+                }
+            ],
+            "return": {
+                "description": "Object that has been deserialized.",
+                "type": "Object"
+            },
+            "class": "deserialize",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileDelete.java",
+            "line": 21,
+            "itemtype": "method",
+            "name": "fileDelete",
+            "params": [
+                {
+                    "name": "path",
+                    "description": "Relative or Full Path to file or directory.",
+                    "type": "String"
+                },
+                {
+                    "name": "safe",
+                    "description": "For security, will not obey paths that contain '..'or startsWIth('/') paths.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                }
+            ],
+            "return": {
+                "description": "True if the file or directory was deleted.",
+                "type": "Boolean"
+            },
+            "class": "fileDelete",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileExists.java",
+            "line": 22,
+            "itemtype": "method",
+            "name": "fileExists",
+            "params": [
+                {
+                    "name": "path",
+                    "description": "Relative or Full Path to file or directory.",
+                    "type": "String"
+                },
+                {
+                    "name": "safe",
+                    "description": "For security, will not obey paths that contain '..'or startsWIth('/') paths.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                }
+            ],
+            "return": {
+                "description": "True if the file or directory exists.",
+                "type": "Boolean"
+            },
+            "class": "fileExists",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileHash.java",
+            "line": 29,
+            "itemtype": "method",
+            "name": "fileHash",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "{String|nMemoryFile|File) Path to, or File to hash and produce a result."
+                },
+                {
+                    "name": "hash",
+                    "description": "(String) Name of the hash to use to digest the file. See Java Hash Providers for a list.",
+                    "optional": true,
+                    "optdefault": "MD5"
+                }
+            ],
+            "return": {
+                "description": "(String) Hash of the file."
+            },
+            "class": "fileHash",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileList.java",
+            "line": 22,
+            "itemtype": "method",
+            "name": "fileList",
+            "params": [
+                {
+                    "name": "path",
+                    "description": "(String) Full or relative path to directory to list files."
+                },
+                {
+                    "name": "safe",
+                    "description": "For security, will not obey paths that contain '..'or startsWIth('/') paths.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                }
+            ],
+            "return": {
+                "description": "(JSONArray) Relative paths from the directory root of all files or directories in that directory."
+            },
+            "class": "fileList",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileLoad.java",
+            "line": 25,
+            "itemtype": "method",
+            "name": "fileLoad",
+            "params": [
+                {
+                    "name": "path",
+                    "description": "(String) Relative or Full Path to file."
+                },
+                {
+                    "name": "safe",
+                    "description": "For security, will not obey paths that contain \"..\" or start with \"/\".",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                },
+                {
+                    "name": "file",
+                    "description": "Will not load the file into memory.\n'..' or startsWIth('/') paths.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "(InMemoryFile|File) File object."
+            },
+            "class": "fileLoad",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileSave.java",
+            "line": 30,
+            "itemtype": "method",
+            "name": "fileSave",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "(InMemoryFile|File|String) Data to save to a file."
+                },
+                {
+                    "name": "path",
+                    "description": "(String) Path to save the file."
+                },
+                {
+                    "name": "overwrite",
+                    "description": "Overwrite the file if it already exists.",
+                    "optional": true,
+                    "optdefault": "true"
+                },
+                {
+                    "name": "safe",
+                    "description": "For security, will not obey paths that contain '..'or startsWIth('/') paths.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                }
+            ],
+            "return": {
+                "description": "(InMemoryFile|File|String) Value passed into obj."
+            },
+            "class": "fileSave",
+            "module": "ew.levr.base"
+        },
+        {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java",
             "line": 21,
             "itemtype": "method",
@@ -3880,6 +4346,49 @@
                 }
             ],
             "class": "add",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/ws/CruncherWsBroadcast.java",
+            "line": 22,
+            "itemtype": "method",
+            "name": "wsBroadcast",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "Thing to broadcast. Will be converted to a string.",
+                    "type": "Cruncher|Function|Object"
+                }
+            ],
+            "return": {
+                "description": "Returns obj.",
+                "type": "Object"
+            },
+            "class": "wsBroadcast",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/ws/CruncherWsEmit.java",
+            "line": 22,
+            "itemtype": "method",
+            "name": "wsEmit",
+            "params": [
+                {
+                    "name": "to",
+                    "description": "ID to emit to, set by the WebSocket Session. (comes in on \"@wsId\")",
+                    "type": "String"
+                },
+                {
+                    "name": "obj",
+                    "description": "Thing to emit. Will be converted to a string.",
+                    "type": "Cruncher|Function|Object"
+                }
+            ],
+            "return": {
+                "description": "Returns obj.",
+                "type": "Object"
+            },
+            "class": "wsEmit",
             "module": "ew.levr.base"
         },
         {
@@ -4243,7 +4752,7 @@
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java",
-            "line": 30,
+            "line": 33,
             "author": "fray",
             "class": "",
             "module": "ew.levr.base"
@@ -4272,6 +4781,13 @@
             "file": "ew.levr.core/src/main/java/com/eduworks/App.java",
             "line": 3,
             "description": "Hello world!",
+            "class": "",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.core/src/test/java/com/eduworks/resolver/lang/LevrJsParserTest.java",
+            "line": 22,
+            "description": "Created by Eduworks on 2/6/2017.\n\nTests the core levrJs functionality",
             "class": "",
             "module": "ew.levr.base"
         },
@@ -5404,11 +5920,11 @@
         },
         {
             "message": "Missing item type\nClose a stream or reader/writer object.",
-            "line": " ew.common/src/main/java/com/eduworks/util/io/EwFileSystem.java:326"
+            "line": " ew.common/src/main/java/com/eduworks/util/io/EwFileSystem.java:382"
         },
         {
             "message": "Missing item type\nDownload the content of a URL to a specific local file or a temporary\nfile if no local file is specified. Returns the local file used.",
-            "line": " ew.common/src/main/java/com/eduworks/util/io/EwFileSystem.java:350"
+            "line": " ew.common/src/main/java/com/eduworks/util/io/EwFileSystem.java:415"
         },
         {
             "message": "Missing item type\nUtility class designed to hold a pair of typed objects. Useful for creating\nlists of pairs or for returning two values from a function.\n\nNote that this is a TUple, not a more general N-Tuple (though you can use an\narray of Object to get pretty close). ThreeTuple, FourTuple, and such can be\nwritten as needed.\n\nThis class is technically comparable, but this works only if the first\nelement is of a comparable type. If you try otherwise it returns a\nUnsupportedOperationException. You can test if it's comparable using:\n\nmyTuple.getKey() instanceof Comparable",
@@ -6132,7 +6648,7 @@
         },
         {
             "message": "Missing item type",
-            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java:30"
+            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java:33"
         },
         {
             "message": "Missing item type",
@@ -6149,6 +6665,10 @@
         {
             "message": "Missing item type\nHello world!",
             "line": " ew.levr.core/src/main/java/com/eduworks/App.java:3"
+        },
+        {
+            "message": "Missing item type\nCreated by Eduworks on 2/6/2017.\n\nTests the core levrJs functionality",
+            "line": " ew.levr.core/src/test/java/com/eduworks/resolver/lang/LevrJsParserTest.java:22"
         },
         {
             "message": "Missing item type",

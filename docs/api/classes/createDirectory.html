@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>createDirectory - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworks-ring-e.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/add.html">add</a></li>
+                            <li><a href="../classes/base64ToFile.html">base64ToFile</a></li>
+                            <li><a href="../classes/cache.html">cache</a></li>
+                            <li><a href="../classes/createDirectory.html">createDirectory</a></li>
+                            <li><a href="../classes/deserialize.html">deserialize</a></li>
+                            <li><a href="../classes/fileDelete.html">fileDelete</a></li>
+                            <li><a href="../classes/fileExists.html">fileExists</a></li>
+                            <li><a href="../classes/fileHash.html">fileHash</a></li>
+                            <li><a href="../classes/fileList.html">fileList</a></li>
+                            <li><a href="../classes/fileLoad.html">fileLoad</a></li>
+                            <li><a href="../classes/fileSave.html">fileSave</a></li>
+                            <li><a href="../classes/variableGet.html">variableGet</a></li>
+                            <li><a href="../classes/variableSet.html">variableSet</a></li>
+                            <li><a href="../classes/wsBroadcast.html">wsBroadcast</a></li>
+                            <li><a href="../classes/wsEmit.html">wsEmit</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            <div id="sections" class="sidebox">
+              <div class="hd">
+                <h2 class="no-toc">createDirectory</h2>
+              </div>
+              <div class="bd">
+            
+            
+            
+            
+                  <div><a href="#method-summary">Method Summary</a></div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                  <div><a href="#public-methods">Public Methods</a></div>
+                  <ul>
+                      <li><a href="#method_createDirectory">createDirectory</a></li>
+                  </ul>
+            
+            
+              </div>
+            </div>
+            
+            
+            
+            <div class="version-info">
+              Version: 5.1.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+    <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_file_CruncherCreateDirectory.java.html#l11"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;file&#x2F;CruncherCreateDirectory.java:11</code></a></span>
+    <h1 class="class-name">createDirectory</h1>
+</div>
+
+
+
+
+<div class="class-description"><p>Creates a directory. Will throw exception if the directory exists, use alongside fileExists to prevent this. Will not create parent directories.</p>
+<p>rs2: #createDirectory(path="Relative or Full Path to directory");<br>
+LevrJS: createDirectory.call(this,"Relative or Full Path to directory");</p>
+</div>
+
+
+
+
+
+
+
+
+  <h2 id="method-summary">Method Summary</h2>
+
+    <table class="summary">
+      <thead>
+      <tr>
+        <th colspan="2">Public Methods</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            public
+            
+            
+          </td>
+          <td>
+            <div class="method-name ">
+              <a href="#method_createDirectory">createDirectory</a>(path, [safe=true]): Boolean
+            </div>
+            <div class="short-description">
+              
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div id="methods public">
+    <h2 id="public-methods">Public Methods</h2>
+<div class="method item">
+    <div id="method_createDirectory" class="title">
+        <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_file_CruncherCreateDirectory.java.html#l21"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;file&#x2F;CruncherCreateDirectory.java:21</code></a></span>
+        <h3 class="">
+            public
+            
+            
+            createDirectory(path, [safe=true]): Boolean
+        </h3>
+    </div>
+
+
+
+    <div class="method-description"></div>
+
+      <div class="params">
+        <h4>Parameters:</h4>
+        <table>
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Attribute</th>
+            <th>Description</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>path</td>
+              <td>String</td>
+              <td>
+                <ul>
+                  
+                  
+                  
+                </ul>
+              </td>
+              <td><p>Relative or Full Path to directory.</p>
+</td>
+            </tr>
+
+            <tr>
+              <td>safe</td>
+              <td>Boolean</td>
+              <td>
+                <ul>
+                  <li>optional</li>
+                  <li>default: true</li>
+                  
+                </ul>
+              </td>
+              <td><p>For security, will not obey paths that contain '..'or startsWIth('/') paths.</p>
+</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="return">
+        <h4>Return:</h4>
+        <div>
+          <span class="return-type">Boolean</span>
+          <span class="return-description"><p>True if the directory was created.</p>
+</span>
+        </div>
+      </div>
+
+
+</div>
+  </div>
+
+
+
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

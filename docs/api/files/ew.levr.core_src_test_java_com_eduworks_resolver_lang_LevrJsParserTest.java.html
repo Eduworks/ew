@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.levr.core/src/test/java/com/eduworks/resolver/lang/LevrJsParserTest.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworks-ring-e.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/add.html">add</a></li>
+                            <li><a href="../classes/base64ToFile.html">base64ToFile</a></li>
+                            <li><a href="../classes/cache.html">cache</a></li>
+                            <li><a href="../classes/createDirectory.html">createDirectory</a></li>
+                            <li><a href="../classes/deserialize.html">deserialize</a></li>
+                            <li><a href="../classes/fileDelete.html">fileDelete</a></li>
+                            <li><a href="../classes/fileExists.html">fileExists</a></li>
+                            <li><a href="../classes/fileHash.html">fileHash</a></li>
+                            <li><a href="../classes/fileList.html">fileList</a></li>
+                            <li><a href="../classes/fileLoad.html">fileLoad</a></li>
+                            <li><a href="../classes/fileSave.html">fileSave</a></li>
+                            <li><a href="../classes/variableGet.html">variableGet</a></li>
+                            <li><a href="../classes/variableSet.html">variableSet</a></li>
+                            <li><a href="../classes/wsBroadcast.html">wsBroadcast</a></li>
+                            <li><a href="../classes/wsEmit.html">wsEmit</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.1.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.levr.core/src/test/java/com/eduworks/resolver/lang/LevrJsParserTest.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.resolver.lang;
+
+import com.eduworks.resolver.CruncherJavascriptBinder;
+import javax.script.*;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+
+import static junit.framework.TestCase.assertTrue;
+
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
+import org.powermock.modules.junit4.PowerMockRunner;
+import sun.font.Script;
+
+import static org.junit.Assert.assertEquals;
+
+/**
+ * Created by Eduworks on 2/6/2017.
+ *
+ * Tests the core levrJs functionality
+ */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(LevrJsParser.class)
+@SuppressStaticInitializationFor(&quot;com.eduworks.resolver.lang.LevrJsParser&quot;)
+public class LevrJsParserTest
+{
+    private ScriptEngine engine;
+
+    @Before
+    public void setUp() throws Exception
+    {
+        ScriptEngineManager factory = new ScriptEngineManager();
+        engine = factory.getEngineByName(&quot;nashorn&quot;);
+        //engine.getBindings(ScriptContext.ENGINE_SCOPE).putAll();
+
+        PowerMockito.spy(LevrJsParser.class);
+    }
+
+    @Test
+    public void testJsToJavaGetsAnObject() throws Exception
+    {
+        engine.eval(&quot;function getAnObj() {return {anAttr: &#x27;a value&#x27;}}&quot;);
+        Invocable invocable = (Invocable) engine;
+        Object result = invocable.invokeFunction(&quot;getAnObj&quot;);
+
+        Object parsedResult = LevrJsParser.jsToJava(result);
+
+        assertTrue(parsedResult instanceof JSONObject);
+    }
+
+    @Test
+    public void testJsToJavaGetsAnArray() throws Exception
+    {
+        engine.eval(&quot;function getAnArray() {return [1, &#x27;array&#x27;, 2, &#x27;array&#x27;];}&quot;);
+        Invocable invocable = (Invocable) engine;
+        Object result = invocable.invokeFunction(&quot;getAnArray&quot;);
+
+        Object parsedResult = LevrJsParser.jsToJava(result);
+
+        assertTrue(parsedResult instanceof JSONArray);
+    }
+
+    @Test
+    public void testJsToJavaGetsAFunction() throws Exception
+    {
+        engine.eval(&quot;function getAFunction() {return function retFunc(){};}&quot;);
+        Invocable invocable = (Invocable) engine;
+        Object result = invocable.invokeFunction(&quot;getAFunction&quot;);
+
+        Object parsedResult = LevrJsParser.jsToJava(result);
+
+        assertTrue(parsedResult instanceof CruncherJavascriptBinder);
+    }
+
+    @Test
+    public void testJsToJavaReturnsAnArbitraryPrimitiveAsAString() throws Exception
+    {
+        engine.eval(&quot;function getABoolean() {return true;}&quot;);
+        Invocable invocable = (Invocable) engine;
+        Object result = invocable.invokeFunction(&quot;getABoolean&quot;);
+
+        Object parsedResult = LevrJsParser.jsToJava(result);
+
+        assertTrue(parsedResult instanceof String);
+    }
+
+    @Test
+    public void testJsToJavaReturnsUndefinedAsNull() throws Exception
+    {
+        engine.eval(&quot;function undef() {}&quot;);
+        Invocable invocable = (Invocable) engine;
+        Object result = invocable.invokeFunction(&quot;undef&quot;);
+
+        Object parsedResult = LevrJsParser.jsToJava(result);
+
+        assertEquals(parsedResult,null);
+    }
+
+
+    @Test
+    public void testJavaToJsConvertsAJsonObjectCorrectly() throws Exception
+    {
+        // need to enable the engine in LevrJsParser since static block
+        // is being skipped
+        LevrJsParser.engine = engine;
+        JSONObject jo = new JSONObject();
+        JSONObject puttedObj = new JSONObject();
+        JSONArray puttedArr = new JSONArray();
+        jo.put(&quot;strVal&quot;, &quot;value&quot;);
+        jo.put(&quot;numVal&quot;, 32131);
+        jo.put(&quot;objVal&quot;, puttedObj);
+        jo.put(&quot;arrVal&quot;, puttedArr);
+        jo.put(&quot;boolVal&quot;, true);
+
+        ScriptObjectMirror parsedResult = (ScriptObjectMirror) LevrJsParser.javaToJs(jo);
+
+        assertEquals(jo.get(&quot;strVal&quot;), parsedResult.get(&quot;strVal&quot;));
+        assertEquals(jo.get(&quot;numVal&quot;), parsedResult.get(&quot;numVal&quot;));
+
+        assertEquals(jo.get(&quot;boolVal&quot;), parsedResult.get(&quot;boolVal&quot;));
+//        these fail because
+//        java.lang.AssertionError:
+//        Expected :{}
+//        Actual   :[object Object]
+//        assertEquals(jo.get(&quot;objVal&quot;), parsedResult.get(&quot;objVal&quot;));
+//        assertEquals(jo.get(&quot;arrVal&quot;), parsedResult.get(&quot;arrVal&quot;));
+        assertTrue(parsedResult.get(&quot;objVal&quot;) != null);
+        assertTrue(parsedResult.get(&quot;arrVal&quot;) != null);
+    }
+
+    @Test
+    public void testJavaToJsConvertsAJsonArrayCorrectly() throws Exception
+    {
+        // need to enable the engine in LevrJsParser since static block
+        // is being skipped
+        LevrJsParser.engine = engine;
+        JSONArray ja = new JSONArray();
+        JSONObject puttedObject = new JSONObject();
+        puttedObject.put(&quot;key&quot;, &quot;value&quot;);
+        ja.put(true);
+        ja.put(&quot;string&quot;);
+        ja.put(91.90);
+        ja.put(42);
+        ja.put((long)2);
+        ja.put(puttedObject);
+
+        ScriptObjectMirror parsedResult = (ScriptObjectMirror) LevrJsParser.javaToJs(ja);
+
+        assertEquals(true, parsedResult.get(&quot;0&quot;));
+        assertEquals(&quot;string&quot;, parsedResult.get(&quot;1&quot;));
+        assertEquals(91.90, parsedResult.get(&quot;2&quot;));
+        assertEquals(42, parsedResult.get(&quot;3&quot;));
+        assertEquals(2, parsedResult.get(&quot;4&quot;));
+        ScriptObjectMirror convertedObject = (ScriptObjectMirror) parsedResult.get(&quot;5&quot;);
+        assertEquals(convertedObject.get(&quot;key&quot;), puttedObject.get(&quot;key&quot;));
+    }
+
+    @Test
+    public void regressionTestJavaToJsConvertsObjectsWithQuotesInThem() throws Exception
+    {
+        // need to enable the engine in LevrJsParser since static block
+        // is being skipped
+        LevrJsParser.engine = engine;
+        JSONObject carrier = new JSONObject();
+        String culprit = &quot;Don&#x27;t fail&quot;;
+        carrier.put(&quot;key&quot;, culprit);
+
+
+        ScriptObjectMirror parsedObject = (ScriptObjectMirror) LevrJsParser.javaToJs(carrier);
+
+        assertEquals(parsedObject.get(&quot;key&quot;), carrier.get(&quot;key&quot;));
+    }
+}
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

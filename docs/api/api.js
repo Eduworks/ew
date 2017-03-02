@@ -4,8 +4,18 @@ YUI.add("yuidoc-meta", function(Y) {
         "add",
         "base64ToFile",
         "cache",
+        "createDirectory",
+        "deserialize",
+        "fileDelete",
+        "fileExists",
+        "fileHash",
+        "fileList",
+        "fileLoad",
+        "fileSave",
         "variableGet",
-        "variableSet"
+        "variableSet",
+        "wsBroadcast",
+        "wsEmit"
     ],
     "modules": [
         "ew.levr.base"
