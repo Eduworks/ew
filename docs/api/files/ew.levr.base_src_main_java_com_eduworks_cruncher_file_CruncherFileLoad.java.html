@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileLoad.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworks-ring-e.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/add.html">add</a></li>
+                            <li><a href="../classes/base64ToFile.html">base64ToFile</a></li>
+                            <li><a href="../classes/cache.html">cache</a></li>
+                            <li><a href="../classes/createDirectory.html">createDirectory</a></li>
+                            <li><a href="../classes/deserialize.html">deserialize</a></li>
+                            <li><a href="../classes/fileDelete.html">fileDelete</a></li>
+                            <li><a href="../classes/fileExists.html">fileExists</a></li>
+                            <li><a href="../classes/fileHash.html">fileHash</a></li>
+                            <li><a href="../classes/fileList.html">fileList</a></li>
+                            <li><a href="../classes/fileLoad.html">fileLoad</a></li>
+                            <li><a href="../classes/fileSave.html">fileSave</a></li>
+                            <li><a href="../classes/variableGet.html">variableGet</a></li>
+                            <li><a href="../classes/variableSet.html">variableSet</a></li>
+                            <li><a href="../classes/wsBroadcast.html">wsBroadcast</a></li>
+                            <li><a href="../classes/wsEmit.html">wsEmit</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.0.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileLoad.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks.cruncher.file;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
+import com.eduworks.util.io.InMemoryFile;
+
+/**
+ * Loads a file in a filesystem. Will attempt to copy the file into memory if the file is less than 2GB.
+ *
+ * rs2: file = #fileLoad(path=&quot;Path to File&quot;);
+ * levrJs: file = fileLoad.call(this,&quot;Path to File&quot;);
+ * 
+ * @class fileLoad
+ * @module ew.levr.base
+ * @author fritz.ray@eduworks.com
+ */
+/**
+ * @method fileLoad
+ * @param path (String) Relative or Full Path to file.
+ * @param [safe=true] {Boolean} For security, will not obey paths that contain &quot;..&quot; or start with &quot;/&quot;.
+ * @param [file=false] {Boolean} Will not load the file into memory.
+ * &#x27;..&#x27; or startsWIth(&#x27;/&#x27;) paths.
+ * @return (InMemoryFile|File) File object.
+ */
+public class CruncherFileLoad extends Cruncher {
+
+    public Object resolve(Context c, java.util.Map&lt;String, String[]&gt; parameters, java.util.Map&lt;String, java.io.InputStream&gt; dataStreams)
+            throws org.json.JSONException {
+        String path = getAsString(&quot;path&quot;, c, parameters, dataStreams);
+        if (optAsBoolean(&quot;safe&quot;, true, c, parameters, dataStreams) &amp;&amp; CruncherCreateDirectory.pathUnsafe(path)) {
+            throw new RuntimeException(&quot;Cannot go up in filesystem.&quot;);
+        }
+        File f = new File(path);
+        if (optAsBoolean(&quot;file&quot;, false, c, parameters, dataStreams)) {
+            return f;
+        }
+        try {
+            if (f.length() &gt; Integer.MAX_VALUE) {
+                if (optAsBoolean(&quot;text&quot;, false, c, parameters, dataStreams)) {
+                    return IOUtils.toString(new FileInputStream(f));
+                }
+                return f;
+            } else {
+                InMemoryFile imf = new InMemoryFile(f);
+                if (optAsBoolean(&quot;text&quot;, false, c, parameters, dataStreams)) {
+                    return IOUtils.toString(imf.getInputStream());
+                }
+                return imf;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    @Override
+    public String getDescription() {
+        return &quot;Loads a file in the filesystem.&quot;;
+    }
+
+    @Override
+    public String getReturn() {
+        return &quot;InMemoryFile|File&quot;;
+    }
+
+    @Override
+    public String getAttribution() {
+        return ATTRIB_NONE;
+    }
+
+    @Override
+    public JSONObject getParameters() throws JSONException {
+        return jo(&quot;path&quot;, &quot;String&quot;,&quot;?safe&quot;,&quot;Boolean&quot;,&quot;?file&quot;,&quot;Boolean&quot;);
+    }
+;
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

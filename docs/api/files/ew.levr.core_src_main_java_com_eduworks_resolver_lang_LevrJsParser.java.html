@@ -39,8 +39,18 @@
                             <li><a href="../classes/add.html">add</a></li>
                             <li><a href="../classes/base64ToFile.html">base64ToFile</a></li>
                             <li><a href="../classes/cache.html">cache</a></li>
+                            <li><a href="../classes/createDirectory.html">createDirectory</a></li>
+                            <li><a href="../classes/deserialize.html">deserialize</a></li>
+                            <li><a href="../classes/fileDelete.html">fileDelete</a></li>
+                            <li><a href="../classes/fileExists.html">fileExists</a></li>
+                            <li><a href="../classes/fileHash.html">fileHash</a></li>
+                            <li><a href="../classes/fileList.html">fileList</a></li>
+                            <li><a href="../classes/fileLoad.html">fileLoad</a></li>
+                            <li><a href="../classes/fileSave.html">fileSave</a></li>
                             <li><a href="../classes/variableGet.html">variableGet</a></li>
                             <li><a href="../classes/variableSet.html">variableSet</a></li>
+                            <li><a href="../classes/wsBroadcast.html">wsBroadcast</a></li>
+                            <li><a href="../classes/wsEmit.html">wsEmit</a></li>
                     </ul>
                 </div>
             </div>
@@ -64,6 +74,7 @@
 package com.eduworks.resolver.lang;
 
 import com.eduworks.lang.json.impl.EwJsonObject;
+import com.eduworks.lang.util.EwJson;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 import com.eduworks.resolver.CruncherJavascriptBinder;
@@ -74,6 +85,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
@@ -85,6 +97,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import jdk.nashorn.internal.runtime.Undefined;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -96,6 +109,7 @@ import org.json.JSONObject;
  */
 public class LevrJsParser
 {
+
     public static Logger log = Logger.getLogger(LevrJsParser.class);
     public static ScriptEngineManager factory;
     public static ScriptEngine engine;
@@ -106,11 +120,12 @@ public class LevrJsParser
         engine = factory.getEngineByName(&quot;nashorn&quot;);
         log.info(&quot;Nashorn Javascript Engine Loaded.&quot;);
         engine.put(&quot;ctx&quot;, new Context());
-        engine.put(&quot;parameters&quot;,null);
-        engine.put(&quot;dataStreams&quot;,null);
+        engine.put(&quot;parameters&quot;, null);
+        engine.put(&quot;dataStreams&quot;, null);
         String allCruncherBindings = &quot;&quot;;
         for (String cruncherName : ResolverFactory.cruncherSpecs.keySet())
         {
+            if (cruncherName.equals(&quot;toString&quot;)) continue; 
             String cruncherBinding = generateCruncherBinding(cruncherName);
             if (cruncherBinding != null)
             {
@@ -120,7 +135,8 @@ public class LevrJsParser
         try
         {
             engine.eval(allCruncherBindings);
-        } catch (ScriptException ex)
+        }
+        catch (ScriptException ex)
         {
             java.util.logging.Logger.getLogger(LevrJsParser.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -145,13 +161,16 @@ public class LevrJsParser
                 log.debug(bindingTreeset);
             }
             return bindings;
-        } catch (FileNotFoundException ex)
+        }
+        catch (FileNotFoundException ex)
         {
             java.util.logging.Logger.getLogger(LevrJsParser.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ScriptException ex)
+        }
+        catch (ScriptException ex)
         {
             java.util.logging.Logger.getLogger(LevrJsParser.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex)
+        }
+        catch (IOException ex)
         {
             java.util.logging.Logger.getLogger(LevrJsParser.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -195,7 +214,8 @@ public class LevrJsParser
             if (paramList.isEmpty())
             {
                 jsTemplate = &quot;function {functionName}(){\n&quot;;
-            } else
+            }
+            else
             {
                 jsTemplate = &quot;function {functionName}({paramList}){\n&quot;;
             }
@@ -206,32 +226,39 @@ public class LevrJsParser
                 if (key.contains(&quot;&lt;any&gt;&quot;))
                 {
                     jsTemplate += &quot;\tfor(var k in vany) cru.build(k,com.eduworks.resolver.lang.LevrJsParser.jsToJava(vany[k]));\n&quot;;
-                } else if (key.startsWith(&quot;?&quot;))
+                }
+                else if (key.startsWith(&quot;?&quot;))
                 {
                     key = key.replace(&quot;?&quot;, &quot;&quot;);
                     jsTemplate += &quot;\tif (v&quot; + key.replace(&quot;-&quot;, &quot;&quot;) + &quot; != null) cru.build(&#x27;&quot; + key + &quot;&#x27;,com.eduworks.resolver.lang.LevrJsParser.jsToJava(v&quot; + key.replace(&quot;-&quot;, &quot;&quot;) + &quot;));\n&quot;;
-                } else
+                }
+                else
                 {
                     jsTemplate += &quot;\tcru.build(&#x27;&quot; + key + &quot;&#x27;,com.eduworks.resolver.lang.LevrJsParser.jsToJava(v&quot; + key.replace(&quot;-&quot;, &quot;&quot;) + &quot;));\n&quot;;
                 }
             }
-            
-            jsTemplate += &quot;\treturn cru.resolve(&quot;
+
+            jsTemplate += &quot;\tif (this.parameters === undefined)\n\t\tthrow new java.lang.NullPointerException(\&quot;Cruncher invoked without appropriate &#x27;this&#x27;. Please use fun.call to pass &#x27;this&#x27; from invocation source to the current function.\&quot;);\n&quot;;
+
+            jsTemplate += &quot;\treturn com.eduworks.resolver.lang.LevrJsParser.javaToJs(cru.resolve(&quot;
                     + &quot;this === undefined ? new com.eduworks.resolver.Context() : this.ctx,&quot;
                     + &quot;this === undefined ? null : this.parameters,&quot;
                     + &quot;this === undefined ? null : this.dataStreams&quot;
-                    + &quot;);\n&quot;
+                    + &quot;));\n&quot;
                     + &quot;}&quot;;
             jsTemplate = jsTemplate.replace(&quot;{paramList}&quot;, paramList).replace(&quot;{functionName}&quot;, cruncherName);
             //System.out.println(jsTemplate);
             return jsTemplate;
-        } catch (InstantiationException ex)
+        }
+        catch (InstantiationException ex)
         {
             java.util.logging.Logger.getLogger(LevrJsParser.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex)
+        }
+        catch (IllegalAccessException ex)
         {
             java.util.logging.Logger.getLogger(LevrJsParser.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JSONException ex)
+        }
+        catch (JSONException ex)
         {
             java.util.logging.Logger.getLogger(LevrJsParser.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -245,19 +272,22 @@ public class LevrJsParser
             String jsTemplate;
             jsTemplate = &quot;function {functionName}(vany){\n&quot;;
             jsTemplate += &quot;\tvar cru = new com.eduworks.cruncher.refl.CruncherExecute();\n&quot;;
-            jsTemplate += &quot;\tcru.build(&#x27;service&#x27;,&#x27;&quot;+cruncherName+&quot;&#x27;);\n&quot;;
+            jsTemplate += &quot;\tcru.build(&#x27;service&#x27;,&#x27;&quot; + cruncherName + &quot;&#x27;);\n&quot;;
             jsTemplate += &quot;\tif (vany != null) for(var k in vany) cru.build(k,com.eduworks.resolver.lang.LevrJsParser.jsToJava(vany[k]));\n&quot;;
-            
-            jsTemplate += &quot;\treturn cru.resolve(&quot;
+
+            jsTemplate += &quot;\tif (this.parameters === undefined)\n\t\tthrow new java.lang.NullPointerException(\&quot;Levr Function invoked without appropriate &#x27;this&#x27;. Please use fun.call to pass &#x27;this&#x27; from invocation source to the current function.\&quot;);\n&quot;;
+
+            jsTemplate += &quot;\treturn com.eduworks.resolver.lang.LevrJsParser.javaToJs(cru.resolve(&quot;
                     + &quot;this === undefined ? new com.eduworks.resolver.Context() : this.ctx,&quot;
                     + &quot;this === undefined ? null : this.parameters,&quot;
                     + &quot;this === undefined ? null : this.dataStreams&quot;
-                    + &quot;);\n&quot;;
+                    + &quot;));\n&quot;;
             jsTemplate += &quot;}&quot;;
             jsTemplate = jsTemplate.replace(&quot;{functionName}&quot;, cruncherName);
 //            System.out.println(jsTemplate);
             engine.eval(jsTemplate);
-        } catch (ScriptException ex)
+        }
+        catch (ScriptException ex)
         {
             java.util.logging.Logger.getLogger(LevrJsParser.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -267,21 +297,110 @@ public class LevrJsParser
     {
         if (o instanceof ScriptObjectMirror)
         {
-        ScriptObjectMirror m = (ScriptObjectMirror) o;
-        if (m.getClassName().toLowerCase().equals(&quot;object&quot;))
-        {
-            return new JSONObject(m);
+            ScriptObjectMirror m = (ScriptObjectMirror) o;
+            if (m.getClassName().toLowerCase().equals(&quot;object&quot;))
+            {
+                return new JSONObject(m);
+            }
+            else if (m.isArray())
+            {
+                return new JSONArray(m.values());
+            }
+            else if (m.isFunction())
+            {
+                CruncherJavascriptBinder b = new CruncherJavascriptBinder();
+                b.build(&quot;obj&quot;, m);
+                return b;
+            }
         }
-        else if (m.isArray())
+        else if (o instanceof Boolean)
+            return o.toString();
+        else if (o instanceof Undefined)
+            return null;
+        return o;
+    }
+
+    public static Object javaToJs(Object o)
+    {
+        if (o instanceof JSONArray || o instanceof JSONObject)
         {
-            return new JSONArray(m.values());
-        }
-        else if (m.isFunction())
-        {
-            CruncherJavascriptBinder b = new CruncherJavascriptBinder();
-            b.build(&quot;obj&quot;, m);
-            return b;
-        }
+            if (o instanceof JSONArray)
+            {
+                JSONArray ary = (JSONArray) o;
+                for (int i = 0; i &lt; ary.length(); i++)
+                {
+                    try
+                    {
+                        if (ary.isNull(i))
+                            continue;
+                        Object test = ary.get(i);
+                        if (test.getClass().isPrimitive())
+                        {
+                            continue;
+                        }
+                        if (test instanceof JSONArray)
+                        {
+                            continue;
+                        }
+                        if (test instanceof JSONObject)
+                        {
+                            continue;
+                        }
+                        if (test instanceof String || test instanceof Boolean || test instanceof Number)
+                        {
+                            continue;
+                        }
+                        return o;
+                    }
+                    catch (JSONException ex)
+                    {
+                        java.util.logging.Logger.getLogger(LevrJsParser.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            if (o instanceof JSONObject)
+            {
+                JSONObject obj = (JSONObject) o;
+                for (String key : EwJson.getKeys(obj))
+                {
+                    try
+                    {
+                        if (obj.isNull(key))
+                            continue;
+                        Object test = obj.get(key);
+                        if (test.getClass().isPrimitive())
+                        {
+                            continue;
+                        }
+                        if (test instanceof JSONArray)
+                        {
+                            continue;
+                        }
+                        if (test instanceof JSONObject)
+                        {
+                            continue;
+                        }
+                        if (test instanceof String || test instanceof Boolean || test instanceof Number)
+                        {
+                            continue;
+                        }
+                        return o;
+                    }
+                    catch (JSONException ex)
+                    {
+                        java.util.logging.Logger.getLogger(LevrJsParser.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            try
+            {
+                ScriptObjectMirror som = (ScriptObjectMirror) engine.eval(&quot;JSON.parse&quot;);
+                o = som.call(null, o.toString());
+            }
+            catch (ScriptException ex)
+            {
+                java.util.logging.Logger.getLogger(LevrJsParser.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return o;
     }
