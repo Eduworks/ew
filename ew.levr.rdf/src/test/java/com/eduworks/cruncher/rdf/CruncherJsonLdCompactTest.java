@@ -34,14 +34,20 @@ public class CruncherJsonLdCompactTest
         JSONObject uncompacted = new JSONObject(json);
         c.build("obj", uncompacted);
         JSONObject compacted = (JSONObject) c.resolve(new Context(), new HashMap<>(), null);
-        System.out.println(compacted);
         compacted.put("@context", uncompacted.get("@context"));
+//        System.out.println(compacted.toString(2));
         for (String s : EwJson.getKeys(compacted))
         {
+//            System.out.println(s);
+//            System.out.println(uncompacted.get(s).toString());
+//            System.out.println(compacted.get(s).toString());
             Assert.assertTrue("Compacted Framework is not equivalent to Uncompacted Framework", uncompacted.get(s).toString().contains(compacted.get(s).toString()));
         }
         for (String s : EwJson.getKeys(uncompacted))
         {
+//            System.out.println(s);
+//            System.out.println(uncompacted.get(s).toString());
+//            System.out.println(compacted.get(s).toString());
             Assert.assertTrue("Compacted Framework is not equivalent to Uncompacted Framework", uncompacted.get(s).toString().contains(compacted.get(s).toString()));
         }
     }
@@ -53,20 +59,20 @@ public class CruncherJsonLdCompactTest
         JSONObject uncompacted = new JSONObject(json);
         c.build("obj", uncompacted);
         JSONObject compacted = (JSONObject) c.resolve(new Context(), new HashMap<>(), null);
-        System.out.println(compacted);
+//        System.out.println(compacted.toString(2));
         compacted.put("@context", uncompacted.get("@context"));
         for (String s : EwJson.getKeys(compacted))
         {
-            System.out.println(s);
-            System.out.println(uncompacted.get(s).toString());
-            System.out.println(compacted.get(s).toString());
+//            System.out.println(s);
+//            System.out.println(uncompacted.get(s).toString());
+//            System.out.println(compacted.get(s).toString());
             Assert.assertTrue("Compacted Competency is not equivalent to Uncompacted Competency", uncompacted.get(s).toString().contains(compacted.get(s).toString()));
         }
         for (String s : EwJson.getKeys(uncompacted))
         {
-            System.out.println(s);
-            System.out.println(uncompacted.get(s).toString());
-            System.out.println(compacted.get(s).toString());
+//            System.out.println(s);
+//            System.out.println(uncompacted.get(s).toString());
+//            System.out.println(compacted.get(s).toString());
             Assert.assertTrue("Compacted Competency is not equivalent to Uncompacted Competency", uncompacted.get(s).toString().contains(compacted.get(s).toString()));
         }
     }
@@ -78,20 +84,20 @@ public class CruncherJsonLdCompactTest
         JSONObject uncompacted = new JSONObject(json);
         c.build("obj", uncompacted);
         JSONObject compacted = (JSONObject) c.resolve(new Context(), new HashMap<>(), null);
-        System.out.println(compacted);
+//        System.out.println(compacted);
         compacted.put("@context", uncompacted.get("@context"));
         for (String s : EwJson.getKeys(compacted))
         {
-            System.out.println(s);
-            System.out.println(uncompacted.get(s).toString());
-            System.out.println(compacted.get(s).toString());
+//            System.out.println(s);
+//            System.out.println(uncompacted.get(s).toString());
+//            System.out.println(compacted.get(s).toString());
             Assert.assertTrue("Compacted Relation is not equivalent to Uncompacted Relation", uncompacted.get(s).toString().contains(compacted.get(s).toString()));
         }
         for (String s : EwJson.getKeys(uncompacted))
         {
-            System.out.println(s);
-            System.out.println(uncompacted.get(s).toString());
-            System.out.println(compacted.get(s).toString());
+//            System.out.println(s);
+//            System.out.println(uncompacted.get(s).toString());
+//            System.out.println(compacted.get(s).toString());
             Assert.assertTrue("Compacted Relation is not equivalent to Uncompacted Relation", uncompacted.get(s).toString().contains(compacted.get(s).toString()));
         }
     }

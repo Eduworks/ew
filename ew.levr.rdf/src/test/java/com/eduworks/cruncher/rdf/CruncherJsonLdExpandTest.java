@@ -11,88 +11,57 @@ import com.eduworks.util.io.EwFileSystem;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- *
- * @author fray
- */
 public class CruncherJsonLdExpandTest
 {
-
     @Test
     public void expandFramework() throws JSONException, IOException
     {
         String json = FileUtils.readFileToString(EwFileSystem.findFile("012.framework.json", CruncherJsonLdExpandTest.class, false, false), Charset.forName("UTF-8"));
         CruncherJsonLdExpand c = new CruncherJsonLdExpand();
-        JSONObject uncompacted = new JSONObject(json);
-        c.build("obj", uncompacted);
-        JSONObject compacted = (JSONObject) c.resolve(new Context(), new HashMap<>(), null);
-        System.out.println(compacted.toString(2));
-        compacted.put("@context", uncompacted.get("@context"));
-        for (String s : EwJson.getKeys(compacted))
-        {
-            Assert.assertTrue("Compacted Framework is not equivalent to Uncompacted Framework", uncompacted.get(s).toString().contains(compacted.get(s).toString()));
-        }
-        for (String s : EwJson.getKeys(uncompacted))
-        {
-            Assert.assertTrue("Compacted Framework is not equivalent to Uncompacted Framework", uncompacted.get(s).toString().contains(compacted.get(s).toString()));
-        }
+        JSONObject unexpanded = new JSONObject(json);
+        c.build("obj", unexpanded);
+        JSONArray expanded = (JSONArray) c.resolve(new Context(), new HashMap<>(), null);
+        System.out.println(expanded.toString(2));
+        json = FileUtils.readFileToString(EwFileSystem.findFile("012.expanded.framework.json", CruncherJsonLdExpandTest.class, false, false), Charset.forName("UTF-8"));
+        JSONArray correct = new JSONArray(json);
+        
+        Assert.assertTrue("Expanded framework is not equal to previously expanded framework.", correct.equals(expanded));
     }
+    
     @Test
     public void expandCompetency() throws JSONException, IOException
     {
         String json = FileUtils.readFileToString(EwFileSystem.findFile("94c.competency.json", CruncherJsonLdExpandTest.class, false, false), Charset.forName("UTF-8"));
-        CruncherJsonLdCompact c = new CruncherJsonLdCompact();
-        JSONObject uncompacted = new JSONObject(json);
-        c.build("obj", uncompacted);
-        JSONObject compacted = (JSONObject) c.resolve(new Context(), new HashMap<>(), null);
-        System.out.println(compacted);
-        compacted.put("@context", uncompacted.get("@context"));
-        for (String s : EwJson.getKeys(compacted))
-        {
-            System.out.println(s);
-            System.out.println(uncompacted.get(s).toString());
-            System.out.println(compacted.get(s).toString());
-            Assert.assertTrue("Compacted Competency is not equivalent to Uncompacted Competency", uncompacted.get(s).toString().contains(compacted.get(s).toString()));
-        }
-        for (String s : EwJson.getKeys(uncompacted))
-        {
-            System.out.println(s);
-            System.out.println(uncompacted.get(s).toString());
-            System.out.println(compacted.get(s).toString());
-            Assert.assertTrue("Compacted Competency is not equivalent to Uncompacted Competency", uncompacted.get(s).toString().contains(compacted.get(s).toString()));
-        }
+        CruncherJsonLdExpand c = new CruncherJsonLdExpand();
+        JSONObject unexpanded = new JSONObject(json);
+        c.build("obj", unexpanded);
+        JSONArray expanded = (JSONArray) c.resolve(new Context(), new HashMap<>(), null);
+        System.out.println(expanded.toString(2));
+        json = FileUtils.readFileToString(EwFileSystem.findFile("94c.expanded.competency.json", CruncherJsonLdExpandTest.class, false, false), Charset.forName("UTF-8"));
+        JSONArray correct = new JSONArray(json);
+        
+        Assert.assertTrue("Expanded competency is not equal to previously expanded competency.", correct.equals(expanded));
     }
+    
     @Test
     public void expandRelation() throws JSONException, IOException
     {
         String json = FileUtils.readFileToString(EwFileSystem.findFile("4bc.relation.json", CruncherJsonLdExpandTest.class, false, false), Charset.forName("UTF-8"));
-        CruncherJsonLdCompact c = new CruncherJsonLdCompact();
-        JSONObject uncompacted = new JSONObject(json);
-        c.build("obj", uncompacted);
-        JSONObject compacted = (JSONObject) c.resolve(new Context(), new HashMap<>(), null);
-        System.out.println(compacted);
-        compacted.put("@context", uncompacted.get("@context"));
-        for (String s : EwJson.getKeys(compacted))
-        {
-            System.out.println(s);
-            System.out.println(uncompacted.get(s).toString());
-            System.out.println(compacted.get(s).toString());
-            Assert.assertTrue("Compacted Relation is not equivalent to Uncompacted Relation", uncompacted.get(s).toString().contains(compacted.get(s).toString()));
-        }
-        for (String s : EwJson.getKeys(uncompacted))
-        {
-            System.out.println(s);
-            System.out.println(uncompacted.get(s).toString());
-            System.out.println(compacted.get(s).toString());
-            Assert.assertTrue("Compacted Relation is not equivalent to Uncompacted Relation", uncompacted.get(s).toString().contains(compacted.get(s).toString()));
-        }
+        CruncherJsonLdExpand c = new CruncherJsonLdExpand();
+        JSONObject unexpanded = new JSONObject(json);
+        c.build("obj", unexpanded);
+        JSONArray expanded = (JSONArray) c.resolve(new Context(), new HashMap<>(), null);
+        System.out.println(expanded.toString(2));
+        json = FileUtils.readFileToString(EwFileSystem.findFile("4bc.expanded.relation.json", CruncherJsonLdExpandTest.class, false, false), Charset.forName("UTF-8"));
+        JSONArray correct = new JSONArray(json);
+        
+        Assert.assertTrue("Expanded relation is not equal to previously expanded relation.", correct.equals(expanded));
     }
 }

@@ -1,6 +1,5 @@
 package com.eduworks.cruncher.rdf;
 
-import com.eduworks.lang.util.EwJson;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 import com.github.jsonldjava.core.JsonLdError;
@@ -10,14 +9,10 @@ import com.github.jsonldjava.utils.JsonUtils;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,7 +49,7 @@ public class CruncherJsonLdExpand extends Cruncher
             
             Object compact = JsonLdProcessor.expand(jsonObject,options);
 // Print out the result (or don't, it's your call!)
-            return new JSONObject(JsonUtils.toString(compact));
+            return new JSONArray(JsonUtils.toString(compact));
         }
         catch (IOException ex)
         {
