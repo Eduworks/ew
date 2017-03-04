@@ -104,7 +104,7 @@ public class CruncherCollapse extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj", "JSONObject,JSONArray", "keyKey", "String", "valueKey", "String");
+		return jo("obj", "JSONObject|JSONArray", "keyKey", "String", "valueKey", "String");
 	}
 
 	@Override

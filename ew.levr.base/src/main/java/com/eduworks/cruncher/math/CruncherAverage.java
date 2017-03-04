@@ -29,7 +29,7 @@ public class CruncherAverage extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj","JSON Array of Numbers");
+		return jo("obj","JSONArray");
 	}
 
 	@Override

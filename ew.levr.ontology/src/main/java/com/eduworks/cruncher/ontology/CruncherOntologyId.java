@@ -34,7 +34,7 @@ public class CruncherOntologyId extends Cruncher {
 
 	@Override
 	public String getReturn() {
-		return "string";
+		return "String";
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class CruncherOntologyId extends Cruncher {
 
 	@Override
 	public JSONObject getParameters() throws JSONException {
-		return jo("id", "string");
+		return jo("id", "String");
 	}
 
 }

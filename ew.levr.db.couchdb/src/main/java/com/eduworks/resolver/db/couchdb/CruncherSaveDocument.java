@@ -86,7 +86,7 @@ public class CruncherSaveDocument extends Cruncher
 	@Override
 	public String getReturn()
 	{
-		return "null";
+		return null;
 	}
 
 	@Override

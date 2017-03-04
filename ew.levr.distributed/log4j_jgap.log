@@ -1,0 +1,5 @@
+[03.03.2017 17:21:54,220] [main] INFO  com.eduworks.lang.threading.EwDistributedThreading  - Bound /0.0.0.0 Datagram Socket to 4445.
+[03.03.2017 17:21:54,223] [main] INFO  com.eduworks.lang.threading.EwDistributedThreading  - Attempting to bind Multicast Socket to 4446.
+[03.03.2017 17:21:54,224] [main] INFO  com.eduworks.lang.threading.EwDistributedThreading  - Success.
+[03.03.2017 17:21:54,226] [main] INFO  com.eduworks.mapreduce.MapReduceManager  - Binding to port 13424 w/name: cruncherDistribute
+[03.03.2017 17:21:54,229] [main] INFO  com.eduworks.mapreduce.MapReduceManager  - Binding complete.

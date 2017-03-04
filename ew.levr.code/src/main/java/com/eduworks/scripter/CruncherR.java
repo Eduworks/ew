@@ -139,13 +139,13 @@ public class CruncherR extends Cruncher
 	@Override
 	public String getDescription()
 	{
-		return "Allows LEVR to run javascript and interact with crunchers and resolvers.";
+		return "Allows LEVR to run R";
 	}
 
 	@Override
 	public String getReturn()
 	{
-		return "The variable result in the javascript will return its value to the client when the code has finished being executed.";
+		return "String";
 	}
 
 	@Override
@@ -157,7 +157,6 @@ public class CruncherR extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("<expression>", "Required:An expression to be executed that is a valid javascript program", "<any variable arguments>",
-				"Optional:Any variables that are not bound during the execution can be bound to the standard LEVR query paramters and dataStreams.");
+		return jo("obj","String","path","String","returns","String","<any>","String");
 	}
 }

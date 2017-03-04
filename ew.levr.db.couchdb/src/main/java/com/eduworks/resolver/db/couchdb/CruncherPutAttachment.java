@@ -71,7 +71,7 @@ public class CruncherPutAttachment extends CruncherDocument
 	@Override
 	public String getReturn()
 	{
-		return "null";
+		return null;
 	}
 
 	@Override

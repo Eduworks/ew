@@ -155,6 +155,11 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.eduworks</groupId>
+                <artifactId>levr-codegen-maven-plugin</artifactId>
+                <version>SNAPSHOT</version>
+            </plugin>
         </plugins>
     </build>
 </project>
