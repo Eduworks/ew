@@ -132,7 +132,7 @@ public class CruncherFileFromDatastream extends Cruncher
 	@Override
 	public String getReturn()
 	{
-		return "List";
+		return "List|File|InMemoryFile";
 	}
 	@Override
 	public String getAttribution()

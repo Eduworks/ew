@@ -11,10 +11,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import javax.script.Bindings;
@@ -43,12 +39,7 @@ public class LevrJsParser
 
     static
     {
-        factory = new ScriptEngineManager();
-        engine = factory.getEngineByName("nashorn");
-        log.info("Nashorn Javascript Engine Loaded.");
-        engine.put("ctx", new Context());
-        engine.put("parameters", null);
-        engine.put("dataStreams", null);
+        reinitialize();
         String allCruncherBindings = "";
         for (String cruncherName : ResolverFactory.cruncherSpecs.keySet())
         {
@@ -68,6 +59,15 @@ public class LevrJsParser
             java.util.logging.Logger.getLogger(LevrJsParser.class.getName()).log(Level.SEVERE, null, ex);
         }
         log.info("Cruncher Javascript Bindings Loaded.");
+    }
+
+    public static void reinitialize()
+    {
+        factory = new ScriptEngineManager();
+        engine = factory.getEngineByName("nashorn");
+        engine.put("ctx", new Context());
+        engine.put("parameters", null);
+        engine.put("dataStreams", null);
     }
 
     public static Bindings decodeStreams(File fileToDecode)

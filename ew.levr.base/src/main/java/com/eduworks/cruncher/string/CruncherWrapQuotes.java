@@ -15,6 +15,8 @@ public class CruncherWrapQuotes extends Cruncher
 	   public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	   {
 	      String str = getAsString("str",c,parameters, dataStreams);
+          if (str == null)
+              str = getObjAsString(c, parameters, dataStreams);
 	      
 	      return "\"" + str + "\"";
 	   }
@@ -22,13 +24,13 @@ public class CruncherWrapQuotes extends Cruncher
 	   @Override
 	   public String getDescription()
 	   {
-	      return "Returns the index of the where the first character in substr appears in str, or -1 if it doesn't substr is not in str";
+	      return "Wraps the string in quotes.";
 	   }
 
 	   @Override
 	   public String getReturn()
 	   {
-	      return "int";
+	      return "String";
 	   }
 
 	   @Override
@@ -40,7 +42,7 @@ public class CruncherWrapQuotes extends Cruncher
 	   @Override
 	   public JSONObject getParameters() throws JSONException
 	   {
-	      return jo("str","String","substr","String");
+	      return jo("obj","String");
 	   }
 
 }

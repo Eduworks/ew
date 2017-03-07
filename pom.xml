@@ -9,7 +9,9 @@
     <packaging>pom</packaging>
 
     <name>Eduworks Open Source</name>
-    <description>LEVR is a web service framework that allows you to write and publish complex web services quickly and in a variety of domain-specific languages.</description>
+    <description>LEVR is a web service framework that allows you to write and publish complex web services quickly and
+        in a variety of domain-specific languages.
+    </description>
     <url>https://github.com/Eduworks/ew</url>
 
     <properties>
@@ -159,6 +161,19 @@
                 <groupId>com.eduworks</groupId>
                 <artifactId>levr-codegen-maven-plugin</artifactId>
                 <version>SNAPSHOT</version>
+            </plugin>
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

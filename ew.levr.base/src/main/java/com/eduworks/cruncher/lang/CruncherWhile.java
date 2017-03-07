@@ -40,13 +40,13 @@ public class CruncherWhile extends Cruncher
 	@Override
 	public String getDescription()
 	{
-		return "Will perform some 'obj' Resolvable until a condition resolves to 'false'. Use 'do' if you wish to make it a do-while.";
+		return "Will perform some 'obj' Resolvable until a condition resolves to 'false'. Set 'do' to true if you wish to make it a do-while.";
 	}
 
 	@Override
 	public String getReturn()
 	{
-		return "Returns object value of last iteration.";
+		return "Object";
 	}
 
 	@Override
