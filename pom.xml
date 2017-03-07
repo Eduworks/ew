@@ -168,10 +168,19 @@
                 <version>3.2.1</version>
                 <executions>
                     <execution>
+                        <id>compile</id>
                         <goals>
+                            <goal>add-source</goal>
                             <goal>compile</goal>
+                        </goals>
+                        <phase>process-resources</phase>
+                    </execution>
+                    <execution>
+                        <id>test</id>
+                        <goals>
                             <goal>testCompile</goal>
                         </goals>
+                        <phase>process-test-resources</phase>
                     </execution>
                 </executions>
             </plugin>
