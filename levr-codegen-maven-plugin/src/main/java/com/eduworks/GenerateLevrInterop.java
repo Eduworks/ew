@@ -268,7 +268,7 @@ public class GenerateLevrInterop
                     continue;
                 if (key.equals("?<any>"))
                     continue;
-                code += "if ("+key.replace("?", "")+" != null) cru.build(\"" + key.replace("?", "") + "\"," + key.replace("?", "") + ".toString());";
+                code += "if ("+key.replace("?", "")+" != null) cru.build(\"" + key.replace("?", "") + "\"," + key.replace("?", "") + ");";
             }
             if (parameters.has("<any>") || parameters.has("?<any>"))
             {
@@ -412,7 +412,7 @@ public class GenerateLevrInterop
         template += "\tcom.eduworks.resolver.Cruncher cru = new com.eduworks.cruncher.refl.CruncherExecute();\n";
         template += "\tcru.build(\"service\",\"" + name + "\");\n";
         template += "\tcru.build(\"obj\",obj);\n";
-        template += "\tif (build != null) for(String k : build.keySet()) if (build.get(k) != null) cru.build(k,build.get(k).toString());\n";
+        template += "\tif (build != null) for(String k : build.keySet()) if (build.get(k) != null) cru.build(k,build.get(k));\n";
 
         template += "\treturn cru.resolve(c,parameters,dataStreams);\n";
         template += "}";

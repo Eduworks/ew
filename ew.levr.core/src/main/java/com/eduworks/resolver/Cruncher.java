@@ -400,10 +400,12 @@ public abstract class Cruncher implements Resolvable
     protected boolean optAsBoolean(String key, boolean defaultx, Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams)
             throws JSONException
     {
-        String string = getAsString(key, c, parameters, dataStreams);
-        if (string == null)
+        Object val = get(key, c, parameters, dataStreams);
+        if (val instanceof Boolean)
+            return (Boolean)val;
+        if (val == null)
             return defaultx;
-        return Boolean.parseBoolean(string);
+        return Boolean.parseBoolean(objectToString(val));
     }
 
     protected int optAsInteger(String key, int defaultx, Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
