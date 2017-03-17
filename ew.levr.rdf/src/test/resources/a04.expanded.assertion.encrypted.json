@@ -1,0 +1,111 @@
+[{
+          "@id": "https://sandbox.service.cassproject.org/data/schema.cassproject.org.0.2.Assertion/a045e1ba-1069-43b7-81fa-af60609f42be/1489525838334",
+          "http://schema.cassproject.org/kbac/0.2/@owner": [{
+          		"@type": "https://purl.org/signature#publicKeyPem",
+          		"@value":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtOvRfSzTHedgu08TJrAb9vU8wA46EFA7MzzxPWE65sx1gsa0TpWqeFKDDJq7VPIIi1Oxhn9M0JG1YJZtNz3r+HFZEIOlv4E8/GD1Pbpo1z0vQ997mnDpCRBvf5YuC1G3GvDKif+7nYNM2uxIiCd+tlPNP/A9MWj+GYvk0wnkjPeM4V2vxgg22JKH8k5+7iae3YcWJrGyUW5865KbV1+I9thERxLpIhas9PuTYizl07C42Mu9IGvFHyIXfsDgf3UNJ3lcUi3AMn8wwIGOb+oRj7S9XFQUmC/XM8pcv+K6j+y/UIqlHe+1b/Jp3k2Mk4BXWmD2F2C2RK12H+jC/haJDwIDAQAB-----END PUBLIC KEY-----"
+          }],
+          "http://schema.cassproject.org/kbac/0.2/@signature": [{
+          	"@value":"pC0jEuFLq+ONm7OVvGAiQ99Pa+GgFwb3dk9XdFyrEV1cvZiGuClHPicWoFccZmcNdsSLCVQVS8FBQD74b3QtN9lh21HJFi5382KqIoKDB4umHxrV1WoDCGW8mx4GBBafgKnMdEsThuSnbyFz9KVpWRQuZukxKWmwXAjXuXwLQWI/xQNYMkjEa8cArME5hlCQq/bss9wBPr4YJbF6dq7VJPG0gouIwu1+CEa6HHoHGrzqe8OISJLC19J2IE4vyUre/5srvXSvajrgQmKxWoZrJ+19U3bk0JWDSAMOCI/3E3tQbnLOD+uZFqA4z+QlaBfWtN8zqQc03zWbq9utDeYCCQ=="
+          }],
+          "@type": ["http://schema.cassproject.org/0.2/Assertion"],
+          "http://schema.cassproject.org/0.2/agent": [{
+               "http://schema.cassproject.org/kbac/0.2/@owner": [{
+          			"@type":"https://purl.org/signature#publicKeyPem",
+          			"@value":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtOvRfSzTHedgu08TJrAb9vU8wA46EFA7MzzxPWE65sx1gsa0TpWqeFKDDJq7VPIIi1Oxhn9M0JG1YJZtNz3r+HFZEIOlv4E8/GD1Pbpo1z0vQ997mnDpCRBvf5YuC1G3GvDKif+7nYNM2uxIiCd+tlPNP/A9MWj+GYvk0wnkjPeM4V2vxgg22JKH8k5+7iae3YcWJrGyUW5865KbV1+I9thERxLpIhas9PuTYizl07C42Mu9IGvFHyIXfsDgf3UNJ3lcUi3AMn8wwIGOb+oRj7S9XFQUmC/XM8pcv+K6j+y/UIqlHe+1b/Jp3k2Mk4BXWmD2F2C2RK12H+jC/haJDwIDAQAB-----END PUBLIC KEY-----"
+          		}],
+               "http://schema.cassproject.org/kbac/0.2/@reader": [{
+               		"@type":"https://purl.org/signature#publicKeyPem",
+               		"@value":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxo/rsoXeT4uTMsg9Ie6y6PFKqSaksUfXN4CYYxJYukPCczEoxCzeoS+d/5/OVzHNA/4yX8ILl1x9ibV3wFdtsE5BgwTDDg/NPzpLdKyHHlov2F9j2AYOn9KQVMuRob3HLDr162XrtLGZKLAisTdsCsLk4GM2C6O+hd4f6gGLhPrHJST9Pv2avyh0sX4s3pOehdg5+k1XKrXzZuIeD55hwlIWjbFtkz9aJX6m1B2noJgZVIWsXYawplXQ8fhYa2ZXZRx7HP3Na75tNhYRsLitrqT2X1CHR5hWDvC+YmQ97AYeP5gIQUFZ+2pIo0hIjhu+ZlCSw9Joikb8KVmp0wCDwIDAQAB-----END PUBLIC KEY-----"
+				}],
+               "@type": ["http://schema.cassproject.org/kbac/0.2/EncryptedValue"],
+               "http://schema.cassproject.org/kbac/0.2/payload": [{
+               		"@value":"YUgdGXScy4U9tirF/ju6TT10Vi2Q/mDN4dhYMXY3tCMJ6vtdOwPwH0NaPzBgzIj2AhRlRhxhjxsCrPhZPcnQwmKkgU/WW3e17YaQrZ4PDA0B+zZo9DtV9oAvb/dyZwm+RSpT0CzML1mfe2+Y0veDxZDMGvfwP+GhmWwKlOf9tEpzKms5CypWh24DKGrCWOZD2GdyPWYyB2rj3STbyKIeAct8X/NfR0fAuMcXEtcC8zJX0wvLZHTzq8xJOS9BPOiegYZIMoxPHhtPuKFwZMyx5rkIXADcQWriw+PW2WAv+uGqN99BQ5bH0rTBancYDNP3IXXaMI+fHPyYacSzkYoLxRfFRhTf1pLUk6YO/YopG2/PSOuQVY2iZJnmbfNSjffUZO54ZZWsA9LdjhZ9hmFVsPDmn+oG4o3Yuvf6uz7QTKcG20VebdEKd2dLFy+jMfpwuIn4KUvNIM7dn1kz0JAYtTfB1aY1av2Wh+IHF8+GQtHcx011CkIyzR9vWAGq6JrH/SWwcjsYm49KnFAYSYbPXqoi3/SXmrP9vctfaSxZD9G4QzTfu84Kariumm8uS93vEbqgBhYLFI3okA=="
+               	}],
+               "http://schema.cassproject.org/kbac/0.2/secret": [
+                    {"@value":"l2QjYUkEwu3N0qsGqYwtibGSoT3hRyiR8AdfrB5ZtFCr0WC9BgsUtEsEWDU8phn+st+VeWslM5Np4MRjYL3TETxpZhXH35ENJWqIeYIZfHOIaJ2EZscYdYlHIWT2zV77zwiWcIfV+VQHJfEcgdFp+EDj7oQSx0a+a1ywRmrs8Sh1IX6hB8npeO1yMUGw2V2xkoz+DPc+IafH/VZtpRkJ/XbLlDc0q+uCGpJVc+Ha2+9IcPZu5//WJnPIKDR4RUSZa6FWepzYaedryQZu4dS1/E2Hhx0Qb+G5czwi7FiCd26ywUXKA9d6hXV3KT99NGJ3eZrHeHnZoISPAQ3tRYLa7w=="},
+                    {"@value":"HB7rTogj2KuBShO3WoFwVmtfwzb4QRFljys7xrUuljWUtzIKphxLOSiXm1TJ/HldHsamWfY2AI1ByBO1uZ4LEA6Tq0OQu6hERPTscQvhUHXmuPOy+t7Vvvzxf7+KMiIVjmQuc7cQDBjPUG041tcU9XPEAoHOrur3CWUo3IJVj2OOzKwAZUomVO41tEQTZfHbCl6i5OZX1ENnyn0s/pMva2NZ3U7b4X0w4z1oesfsX8lB4RKTKqvjeJVeusM/FQ3pGtIUU7dVOlJV8BgKj336ZIz9Txuca8CKVgnSNpYbWaDbd4DkUiY5ZOw5GDXNePqbu50+ejReMbKswr1ifB6ayw=="}
+               ]
+          }],
+          "http://schema.cassproject.org/0.2/assertionDate": [{
+               "http://schema.cassproject.org/kbac/0.2/@owner": [{
+	          		"@type": "https://purl.org/signature#publicKeyPem",
+	          		"@value":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtOvRfSzTHedgu08TJrAb9vU8wA46EFA7MzzxPWE65sx1gsa0TpWqeFKDDJq7VPIIi1Oxhn9M0JG1YJZtNz3r+HFZEIOlv4E8/GD1Pbpo1z0vQ997mnDpCRBvf5YuC1G3GvDKif+7nYNM2uxIiCd+tlPNP/A9MWj+GYvk0wnkjPeM4V2vxgg22JKH8k5+7iae3YcWJrGyUW5865KbV1+I9thERxLpIhas9PuTYizl07C42Mu9IGvFHyIXfsDgf3UNJ3lcUi3AMn8wwIGOb+oRj7S9XFQUmC/XM8pcv+K6j+y/UIqlHe+1b/Jp3k2Mk4BXWmD2F2C2RK12H+jC/haJDwIDAQAB-----END PUBLIC KEY-----"
+	          	}],
+               "http://schema.cassproject.org/kbac/0.2/@reader": [{
+               		"@type": "https://purl.org/signature#publicKeyPem",
+               		"@value":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxo/rsoXeT4uTMsg9Ie6y6PFKqSaksUfXN4CYYxJYukPCczEoxCzeoS+d/5/OVzHNA/4yX8ILl1x9ibV3wFdtsE5BgwTDDg/NPzpLdKyHHlov2F9j2AYOn9KQVMuRob3HLDr162XrtLGZKLAisTdsCsLk4GM2C6O+hd4f6gGLhPrHJST9Pv2avyh0sX4s3pOehdg5+k1XKrXzZuIeD55hwlIWjbFtkz9aJX6m1B2noJgZVIWsXYawplXQ8fhYa2ZXZRx7HP3Na75tNhYRsLitrqT2X1CHR5hWDvC+YmQ97AYeP5gIQUFZ+2pIo0hIjhu+ZlCSw9Joikb8KVmp0wCDwIDAQAB-----END PUBLIC KEY-----"
+				}],
+               "@type": ["http://schema.cassproject.org/kbac/0.2/EncryptedValue"],
+               "http://schema.cassproject.org/kbac/0.2/payload": [{
+               		"@value":"ALnrq2wLXyqc9CiBuw=="
+               	}],
+               "http://schema.cassproject.org/kbac/0.2/secret": [
+                    {"@value":"IDIPD9OYfv5KXLFrGMywLx9Njz4xWPjYJmmXMc0Bw9EcOSwFNTHB2BSTyRaZr5/iLGW0xih/0c/g4qf0iH/ZP1VmYKeHtC0zJKUKlwK06Euj5Ua9zL77oTXgMO4myT5EHRaUWGM7XSnVs0lwysC/oL5wCUt744cTVC5OsGVPwLZ7IJkhOH+vv8wF7/lUEnUL0cbqSZ0ES6Z85FBjYXT5nPC3GGgJF/pHWP1hTVxcElhrdERu3QEuP/aokUdXoQGhpk98AAq5O7w90kx50G4MfQT7LmV+7RNN1VNow1ZFE4WxKzBDHTzybsvaZuivb0cVAr+OTpDqXwHXzslcusdc/w=="},
+                    {"@value":"nMPdiDfdfqIO+Rx0aRibd65pv2yBrIKutSv3dndikpska6U4/0Bk+5jB7Q1tnd5ESPfS6Um9HET1VdZudc7EhhgL03fhUGBCqQfrPNRMW3CTu6w4LKuWBpn+KJI/zghAO8xNDsJpu4Ltbns21eIv7IqtKM+bacZHsnrNTea9yNGb0f0VECMiYM6TiblQwQfoyLacak6xyMbwT8sAj7EFv0Xt1dragS6UnXYOtqWxMtBYcRySFsIHiyzMRwsoTtduL6jm5lQdTacTJ9mceA7PDx2PEH+1G7F50qBEP7MxnI6gOVRSS+KZQ8oSDQClTAMokFali1EMcNI78m+g2mn8qA=="}
+               ]
+          }],
+          "http://schema.cassproject.org/0.2/competency": [{
+          		"@id":"https://sandbox.service.cassproject.org/data/schema.cassproject.org.0.2.Competency/cff9dbaa-ed5b-4928-8b4e-dfd9ad27da73"
+          	}],
+          "http://schema.cassproject.org/0.2/confidence": [{
+          		"@value":"0.4",
+          		"@type":"http://schema.org/Float"
+          	}],
+          "http://schema.cassproject.org/0.2/decayFunction": [{
+               "http://schema.cassproject.org/kbac/0.2/@owner": [{
+	          		"@type": "https://purl.org/signature#publicKeyPem",
+	          		"@value":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtOvRfSzTHedgu08TJrAb9vU8wA46EFA7MzzxPWE65sx1gsa0TpWqeFKDDJq7VPIIi1Oxhn9M0JG1YJZtNz3r+HFZEIOlv4E8/GD1Pbpo1z0vQ997mnDpCRBvf5YuC1G3GvDKif+7nYNM2uxIiCd+tlPNP/A9MWj+GYvk0wnkjPeM4V2vxgg22JKH8k5+7iae3YcWJrGyUW5865KbV1+I9thERxLpIhas9PuTYizl07C42Mu9IGvFHyIXfsDgf3UNJ3lcUi3AMn8wwIGOb+oRj7S9XFQUmC/XM8pcv+K6j+y/UIqlHe+1b/Jp3k2Mk4BXWmD2F2C2RK12H+jC/haJDwIDAQAB-----END PUBLIC KEY-----"
+	          	}],
+               "http://schema.cassproject.org/kbac/0.2/@reader": [{
+               		"@type": "https://purl.org/signature#publicKeyPem",
+               		"@value":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxo/rsoXeT4uTMsg9Ie6y6PFKqSaksUfXN4CYYxJYukPCczEoxCzeoS+d/5/OVzHNA/4yX8ILl1x9ibV3wFdtsE5BgwTDDg/NPzpLdKyHHlov2F9j2AYOn9KQVMuRob3HLDr162XrtLGZKLAisTdsCsLk4GM2C6O+hd4f6gGLhPrHJST9Pv2avyh0sX4s3pOehdg5+k1XKrXzZuIeD55hwlIWjbFtkz9aJX6m1B2noJgZVIWsXYawplXQ8fhYa2ZXZRx7HP3Na75tNhYRsLitrqT2X1CHR5hWDvC+YmQ97AYeP5gIQUFZ+2pIo0hIjhu+ZlCSw9Joikb8KVmp0wCDwIDAQAB-----END PUBLIC KEY-----"
+				}],
+               "@type": ["http://schema.cassproject.org/kbac/0.2/EncryptedValue"],
+               "http://schema.cassproject.org/kbac/0.2/payload": [{
+               		"@value":"JXK9Xn3G"
+               	}],
+               "http://schema.cassproject.org/kbac/0.2/secret": [
+                    {"@value":"aN70cIU72GOLgRepofjnMsNdNhjgJfowYWu2pXmpg7E5Ngx3Ga/NWx2W6q5EXuDLiLhNrqOZunDFyerrfV86v1NBG/Se4PNLkRrA86S8dX1/a/w9tol/0psYkbALuuDFYm+ByNBlpgouZ3uvVmUpckxiYKiYMe1qBgi+rxIa7974REFEKx9dlGVIIbpRzhKKNUubV+mlci7kPpzWVCksjYlZBWP3iem9u0uaBmnP5aWECgvYEcmZcwaH83PEBxVUD7O0ue2qdRlofCE5hi6wileGcWvlZlWXqiuk6oBWcpelSWHTzbh0wb9LJ3nazUuQwuuzhCyvS7xC9IgPLRgNsA=="},
+                    {"@value":"HtGfFvk12cI/+6AqKnXHixQExoGll9iogTPNhVJHhjj1Zd/5XehCqC+KDsTPx8djxLpcVNmZCvpQ/kJZFWduuiHhpZFAJ+An3f1oRZ8DjbDFRGdsm5eTA8qm7Ontc31bD/z8CJA22LSlsi9U+XBxV3j4d2DtBE30ABOywQXZ9Jsrsh6Eyp6Kvp3In/WdyENJukFpuZfkhQw+3TGrEqlqw4Cb23IoFIdtaEcV7KlvgCwIRmk0Zgj2NYLsBOUY7MG5WHVS5TUMtUFXgZmdOZKep2V7+IK7l0mBhl0PtD3RHpuq9YtQcq+HcMkaOfbzRs7bdiiC6blmrdshSXOspGSFgw=="}
+               ]
+          }],
+          "http://schema.cassproject.org/0.2/expirationDate": [{
+               "http://schema.cassproject.org/kbac/0.2/@owner": [{
+	          		"@type": "https://purl.org/signature#publicKeyPem",
+	          		"@value":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtOvRfSzTHedgu08TJrAb9vU8wA46EFA7MzzxPWE65sx1gsa0TpWqeFKDDJq7VPIIi1Oxhn9M0JG1YJZtNz3r+HFZEIOlv4E8/GD1Pbpo1z0vQ997mnDpCRBvf5YuC1G3GvDKif+7nYNM2uxIiCd+tlPNP/A9MWj+GYvk0wnkjPeM4V2vxgg22JKH8k5+7iae3YcWJrGyUW5865KbV1+I9thERxLpIhas9PuTYizl07C42Mu9IGvFHyIXfsDgf3UNJ3lcUi3AMn8wwIGOb+oRj7S9XFQUmC/XM8pcv+K6j+y/UIqlHe+1b/Jp3k2Mk4BXWmD2F2C2RK12H+jC/haJDwIDAQAB-----END PUBLIC KEY-----"
+	          	}],
+               "http://schema.cassproject.org/kbac/0.2/@reader": [{
+               		"@type": "https://purl.org/signature#publicKeyPem",
+               		"@value":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxo/rsoXeT4uTMsg9Ie6y6PFKqSaksUfXN4CYYxJYukPCczEoxCzeoS+d/5/OVzHNA/4yX8ILl1x9ibV3wFdtsE5BgwTDDg/NPzpLdKyHHlov2F9j2AYOn9KQVMuRob3HLDr162XrtLGZKLAisTdsCsLk4GM2C6O+hd4f6gGLhPrHJST9Pv2avyh0sX4s3pOehdg5+k1XKrXzZuIeD55hwlIWjbFtkz9aJX6m1B2noJgZVIWsXYawplXQ8fhYa2ZXZRx7HP3Na75tNhYRsLitrqT2X1CHR5hWDvC+YmQ97AYeP5gIQUFZ+2pIo0hIjhu+ZlCSw9Joikb8KVmp0wCDwIDAQAB-----END PUBLIC KEY-----"
+				}],
+               "@type": ["http://schema.cassproject.org/kbac/0.2/EncryptedValue"],
+               "http://schema.cassproject.org/kbac/0.2/payload": [{
+               		"@value":"FpoAuF07QPt4CZE6fw=="
+               	}],
+               "http://schema.cassproject.org/kbac/0.2/secret": [
+                    {"@value":"I1lwhBiWOLZAPHk9MmxwtB7yCloi1b+mZMg1Kl1bvdoVBV/lNSKCA/SEO1ESLnTISC4oYKU235f4B7Fr/VVF0SssVlF1qmydITzpxhRgzatLMjzxIVM/lmB1W0o9j/mHzM6ivNGyGpMIMJyzCsxSzhsPDlvzXjjl6b+LSJ2rxw5FswFZUx0HzurYbVbDlVdBzjnl2oQNZYcx7xrI15JVrKUYJn6WjfVZzsPHaxjBJxD18wvZCR760lSvWpd3LVQIEE7Izv2+TPkWoQb6+D2xJaFPB/0CpVNgFY2f5BrUWLoO7PEmeYaf358FxZEnbJg86DRJfZW9sO3cj0J5nSEcJA=="},
+                    {"@value":"LIC3AoSDoRwoiyZ9oblwBJKGjJvX0dDusJtw3NKafCJrh16rypRvzHY5EES6mPqCha3Q6RmRyvHK9IdKgtPO6S1N9+FNx7QtV2eJJ4BCxMfY7BPGThKi0t5LY3FUI31B23ApVWVU8Vewa79poH6FPmQWH1BeYaDXFZ3tnFZGW+Nwl0Jz7k7fkk6u4bsiL1DBNfBbPssCQMcE0BxH4QXJJ9B/qc+vZcwrN34dE4NritxBLBSFdThjB0sz+H+Y+l5vRegp0aRAl/NF7FSkK3q3eS5OB/MZ2LQwOWboQL55SipPcKTU8Y3dlITZyKzdWFkJH9v2BFDtEfTGuJH8itfCSA=="}
+               ]
+          }],
+          "http://schema.cassproject.org/0.2/level": [{
+          		"@id":"https://sandbox.service.cassproject.org/data/schema.cassproject.org.0.2.Level/bd2df0b1-c962-4556-9b4e-99ab694cbef7"
+          	}],
+          "http://schema.cassproject.org/0.2/subject": [{
+               "http://schema.cassproject.org/kbac/0.2/@owner": [{
+	          		"@type": "https://purl.org/signature#publicKeyPem",
+	          		"@value":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtOvRfSzTHedgu08TJrAb9vU8wA46EFA7MzzxPWE65sx1gsa0TpWqeFKDDJq7VPIIi1Oxhn9M0JG1YJZtNz3r+HFZEIOlv4E8/GD1Pbpo1z0vQ997mnDpCRBvf5YuC1G3GvDKif+7nYNM2uxIiCd+tlPNP/A9MWj+GYvk0wnkjPeM4V2vxgg22JKH8k5+7iae3YcWJrGyUW5865KbV1+I9thERxLpIhas9PuTYizl07C42Mu9IGvFHyIXfsDgf3UNJ3lcUi3AMn8wwIGOb+oRj7S9XFQUmC/XM8pcv+K6j+y/UIqlHe+1b/Jp3k2Mk4BXWmD2F2C2RK12H+jC/haJDwIDAQAB-----END PUBLIC KEY-----"
+	          	}],
+               "http://schema.cassproject.org/kbac/0.2/@reader": [{
+               		"@type": "https://purl.org/signature#publicKeyPem",
+               		"@value":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxo/rsoXeT4uTMsg9Ie6y6PFKqSaksUfXN4CYYxJYukPCczEoxCzeoS+d/5/OVzHNA/4yX8ILl1x9ibV3wFdtsE5BgwTDDg/NPzpLdKyHHlov2F9j2AYOn9KQVMuRob3HLDr162XrtLGZKLAisTdsCsLk4GM2C6O+hd4f6gGLhPrHJST9Pv2avyh0sX4s3pOehdg5+k1XKrXzZuIeD55hwlIWjbFtkz9aJX6m1B2noJgZVIWsXYawplXQ8fhYa2ZXZRx7HP3Na75tNhYRsLitrqT2X1CHR5hWDvC+YmQ97AYeP5gIQUFZ+2pIo0hIjhu+ZlCSw9Joikb8KVmp0wCDwIDAQAB-----END PUBLIC KEY-----"
+				}],
+               "@type": ["http://schema.cassproject.org/kbac/0.2/EncryptedValue"],
+               "http://schema.cassproject.org/kbac/0.2/payload": [{
+               		"@value":"HhyFB3fJh4YGUovtV0FoKisXz3tH2oaQnI3xwlxEVomplqOfaVnMqjCbqyCY6NJX6Ib1EC53CrgYARFL8OWWfxJ647gkJh7f6gQfCfs0G/39VPZxYUIpe5IIllUwK/ahobejV4s1v+pzsMip3R314gJ3ni1QM+4gEgFbzSTI5rO39NeYL4cNVN+Qs3BYB0TWAVDIjIQ8EO31saU5vAADwrVS4ihiwBYAEO9ufDFCjr7n+susrWXYjyxoEOSQp3y1Xvi5c6qtfDhJ6uc+Cy9uVtf85lbTd71++3onhIXTQQpfKNHLI5oJH2ygs9x4404zyK5dMfhKDlH0W8sIGkB5q8TMPvNuE4MpOrHmMbn8cYyrNb66Y2XXz3G3vGEwVkaOgGEoDe/jAKsCL9rmwqAPliGJO4HRyGZ6ghu9MayY3wcVApoSiHE4Qljw8c+BzXC6TjiJzB4fkjTCjm0uAUAcf47z+8cFSt+CvYoWYOJ58gJYLxMuAbvAe488BaW06PvRpqRItxlHV6ZR+6l7yz5SDQ9A/YDQ/HVt9WFVs+2GyWpePLBOzJUAXsERyl25+cWrFn4DHDjVpMrCvA=="
+               	}],
+               "http://schema.cassproject.org/kbac/0.2/secret": [
+                    {"@value":"GSP59LjZDzB8hJ1gMCdIrcp434AvbWMa9n9kiAdOB9So3SsLx5la7Xhg+oE0wkNhU7dCyrA878mYWIRrhLFKWf37zES6oK8DTUUaIBEoQ6AuJxlhNEkFDWM7Yyyw/YbViEkkDX+nLTcB+l5ylhLHsLvuimHTVk0wfaSC4r4IK/kXCFV4e1i+aDgp4VVA49bIWhCb1QBkOJSps5eDeiIJ1DKPDaUPA+ha+VLi/SUCZCGgbihHbobpglm330prcimOy9Q8Aio/RPAHnWf4wzZlJ4gpGTkXQ0CTx0O1+IK8LMCPMShORIlAKuv+kw2WOIqVden0W6sdSrHGRpEQ4XF0iQ=="},
+                    {"@value":"XCGYQvK3yXQmEclqvK51IgcoJi8BgbOhHB00Q/Q0oHJOOT4oMcPo3jBk+FvWo2Kso9/FcAtuRfvLIBQRTjMQXqfKYmkEJUwDc7LyTifoCiJAIHOa/Rk9+c/S2WuAF/0PFpLkAJ1n1oJxorMsnSq9gZJqmpREsMcVij5+nHFAIwcSrN5R594RznVBMbSL4u0bbZUEX6YJdDtsjTrInyY64Rg9ADKG9gYuW00YlaqxyTDgRCIlgKeEPwnIubgiY9AWl2INYU+PkmUxPSVvM48npQSCpHwjfI/GxECDw5XbXL6Y/CIuWRuEg69Tnz+OrQRxbVq5NRJA2/PROWDIUrcl8g=="}
+               ]
+          }]
+}]

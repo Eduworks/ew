@@ -1,0 +1,12 @@
+{
+     "@context": "http://schema.cassproject.org/0.2",
+     "@id": "http://localhost:9722/api/custom/data/schema.cassproject.org.0.2.Level/d663193f-c57a-4676-bb98-90bde2bbce58/1489704354267",
+     "@owner": ["-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArWNbLjgLK1wtsUb3ifPw6ZAfUCHYpJZBJMqcJLn8F6vha5nysDfBRyBUIuKcN9V616an6MMBJUuo3ZChizNcgXpD8rza75fZuTDfFuF5bQibZzDmTCrUTYaLUT0hEQiO69mdk32bpLJCHxDqAXzlwram4zhQbElgi0aeFqYhkQQDnUU9X4UlQO86MOkC57MwQPs/869ZwbX5WD9f8NlOGBnzKspnMIj+6zWB1tT4ZL930vJ8UT/nh8HTA7Vzodivf5MieU9cEuE9vcpsgbB17IIdP1WW1GKp4Jb5vVFDweJcTH4/9JEUuKzVEL442ilcEWPWW2Wu+Ycx8PQqyslw4QIDAQAB-----END PUBLIC KEY-----"],
+     "@signature": ["JejoG0uhYojt06pBWV86UkjMCUxZqGgwFYIVLl1e2RSy8BAnr2RE+t4EVaMRT3EMuQx109sv0Bc/Mol6O5JqakYom0N5U7qNxjyzSDAYbDruIDHTcb6cLEfCaloAyD2BpI8RkpjYZtgWnNMRDnIh9wcM7QmWx5f9wAFhqSWW+4oaezpN8Fw3lBJHXdCSqC/8TBMhA0utgrHNWHu48haAz9kYHJbyHZZ9iY0XvUKetIw+xReC+2o3hN54i6DGxa0vuJl1gQuu7ReA5oi/6+QLPdMNQidGdg+qTzP40Kp0jd7rE3BjY/hrSh1luAj5jrZL609HK+6m7sd+7iF3PzNDmw=="],
+     "@type": "Level",
+     "competency": "http://localhost:9722/api/custom/data/schema.cassproject.org.0.2.Competency/7cbba11d-b6f4-40bb-8d0c-60da428e7c46",
+     "description": "dselavalsdk ",
+     "name": "level name",
+     "performance": "perf measure",
+     "title": "title held"
+}

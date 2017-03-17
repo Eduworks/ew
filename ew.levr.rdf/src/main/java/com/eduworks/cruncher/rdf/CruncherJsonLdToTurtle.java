@@ -3,6 +3,7 @@ package com.eduworks.cruncher.rdf;
 import com.eduworks.lang.util.EwJson;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
+import com.github.jsonldjava.core.JsonLdConsts;
 import com.github.jsonldjava.core.JsonLdError;
 import com.github.jsonldjava.core.JsonLdOptions;
 import com.github.jsonldjava.core.JsonLdProcessor;
@@ -19,26 +20,14 @@ import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 /**
- * Converts a JSON object to JSON-LD and performs a Compact operation.
  *
- * rs2: result = obj.jsonLdCompact();<br>
- * LevrJS: result = jsonLdCompact.call(this,obj);
- *
- * @class jsonLdCompact
- * @module ew.levr.rdf
- * @author fritz.ray@eduworks.com
+ * @author fray
  */
-/**
- * @method jsonLdCompact
- * @param obj {JSONObject} JSONObject to convert into a JSON-LD object and compact.
- * @param [context] {JSONObject} Context to use to compact. Will use context from obj if missing.
- * @return {JSONObject} Compacted object.
- */
-public class CruncherJsonLdCompact extends Cruncher
+public class CruncherJsonLdToTurtle extends Cruncher
 {
+    
     @Override
     public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
     {
@@ -46,13 +35,9 @@ public class CruncherJsonLdCompact extends Cruncher
         {
             Object obj = getObj(c, parameters, dataStreams);
             if (obj == null) return null;
-// Read the file into an Object (The type of this object will be a List, Map, String, Boolean,
-// Number or null depending on the root object in the file).
             Object jsonObject = JsonUtils.fromInputStream(new ByteArrayInputStream(obj.toString().getBytes()));
-// Create a context JSON map containing prefixes and definitions
-            
+
             Object context;
-            
             String ctxString = optAsString("context", null, c, parameters, dataStreams);
             JSONObject ctxObj;
             if (ctxString != null){
@@ -80,23 +65,20 @@ public class CruncherJsonLdCompact extends Cruncher
             } else {
                 context = jsonObject;
         	}
-// Create an instance of JsonLdOptions with the standard JSON-LD options
+            
             JsonLdOptions options = new JsonLdOptions();
-// Call whichever JSONLD function you want! (e.g. compact)
-            
-            Object compact = JsonLdProcessor.compact(jsonObject,context,options);
-            
-            ((Map)compact).put("@context", context);
-// Print out the result (or don't, it's your call!)
-            return new JSONObject(JsonUtils.toString(compact));
+            options.setExpandContext(context);
+            options.format = JsonLdConsts.TEXT_TURTLE;
+            String rdfString = (String)JsonLdProcessor.toRDF(jsonObject, options);
+            return rdfString;
         }
         catch (IOException ex)
         {
-            Logger.getLogger(CruncherJsonLdCompact.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CruncherJsonLdExpand.class.getName()).log(Level.SEVERE, null, ex);
         }
         catch (JsonLdError ex)
         {
-            Logger.getLogger(CruncherJsonLdCompact.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CruncherJsonLdExpand.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -104,7 +86,7 @@ public class CruncherJsonLdCompact extends Cruncher
     @Override
     public String getDescription()
     {
-        return "Performs a JSON-LD Compact algorithm on the obj.";
+        return "Performs a JSON-LD Expand algorithm on the obj.";
     }
     
     @Override

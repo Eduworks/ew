@@ -25,7 +25,7 @@ import org.json.JSONObject;
  *
  * @author fray
  */
-public class CruncherJsonLdToNQuads extends Cruncher
+public class CruncherNQuadsToJsonLd extends Cruncher
 {
     
     @Override
@@ -33,44 +33,52 @@ public class CruncherJsonLdToNQuads extends Cruncher
     {
         try
         {
-            Object obj = getObj(c, parameters, dataStreams);
+            String obj = getObjAsString(c, parameters, dataStreams);
             if (obj == null) return null;
-            Object jsonObject = JsonUtils.fromInputStream(new ByteArrayInputStream(obj.toString().getBytes()));
-
-            Object context;
-            String ctxString = optAsString("context", null, c, parameters, dataStreams);
-            JSONObject ctxObj;
-            if (ctxString != null){
-            	try{
-            		ctxObj = new JSONObject(ctxString);
-            		context = new HashMap();
-                    for (String s : EwJson.getKeys(ctxObj))
-                    {
-                        if (ctxObj.isNull(s))continue;
-                        
-                        ((Map)context).put(s, ctxObj.get(s));
-                    }
-            	}catch(JSONException e){
-            		try{
-            			JSONArray arr = new JSONArray(ctxString);
-            			
-            			context = new ArrayList();
-            			for(int i = 0; i < arr.length(); i++){
-            				((ArrayList)context).add(arr.get(i));
-            			}
-            		}catch(JSONException e2){
-            			context = ctxString;
-            		}
-            	}
-            } else {
-                context = jsonObject;
-        	}
+            
+           
             
             JsonLdOptions options = new JsonLdOptions();
-            options.setExpandContext(context);
-            options.format = JsonLdConsts.APPLICATION_NQUADS;
-            String rdfString = (String)JsonLdProcessor.toRDF(jsonObject, options);
-            return rdfString;
+            options.outputForm=JsonLdConsts.COMPACTED;
+            Object output =  JsonLdProcessor.fromRDF(obj, options);
+            if(!((Map<String, Object>)output).containsKey("@context")){
+            	Object context;
+            	String ctxString = optAsString("context", null, c, parameters, dataStreams);
+            	JSONObject ctxObj;
+            	if (ctxString != null){
+            		try{
+            			ctxObj = new JSONObject(ctxString);
+                 		context = new HashMap();
+                        for (String s : EwJson.getKeys(ctxObj))
+                        {
+                        	if (ctxObj.isNull(s))continue;
+                             
+                            ((Map)context).put(s, ctxObj.get(s));
+                        }
+                 	}catch(JSONException e){
+                 		try{
+                 			JSONArray arr = new JSONArray(ctxString);
+                 			
+                 			context = new ArrayList();
+                 			for(int i = 0; i < arr.length(); i++){
+                 				((ArrayList)context).add(arr.get(i));
+                 			}
+                 		}catch(JSONException e2){
+                 			context = ctxString;
+                 		}
+                 	}
+                 } else {
+                     context = obj;
+             	 }
+                 
+                 output = JsonLdProcessor.compact(output, context, options);
+                 if(!((Map)output).containsKey("@context")){
+                	 ((Map)output).put("@context", context);
+                 }
+            }
+            	
+            
+            return new JSONObject(JsonUtils.toString(output));
         }
         catch (IOException ex)
         {

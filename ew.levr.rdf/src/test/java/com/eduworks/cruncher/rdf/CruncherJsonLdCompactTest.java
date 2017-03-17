@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
@@ -31,11 +32,17 @@ public class CruncherJsonLdCompactTest
     {
         String json = FileUtils.readFileToString(EwFileSystem.findFile("012.framework.json", CruncherJsonLdCompactTest.class, false, false), Charset.forName("UTF-8"));
         CruncherJsonLdCompact c = new CruncherJsonLdCompact();
-        JSONObject uncompacted = new JSONObject(json);
+        JSONObject uncompacted;
+        try{
+        	uncompacted = new JSONObject(json);
+        }catch(JSONException e){
+        	uncompacted = new JSONArray(json).getJSONObject(0);
+        }
+        
         c.build("obj", uncompacted);
         JSONObject compacted = (JSONObject) c.resolve(new Context(), new HashMap<>(), null);
         compacted.put("@context", uncompacted.get("@context"));
-//        System.out.println(compacted.toString(2));
+        System.out.println(compacted.toString(2));
         for (String s : EwJson.getKeys(compacted))
         {
 //            System.out.println(s);
