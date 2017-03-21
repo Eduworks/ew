@@ -17,8 +17,5 @@
      "http://schema.org/name": [{
      	"@value":"rule name",
      }],
-     "http://schema.cassproject.org/0.2/rule":  [{
-     	"@value":"code for rule",
-     	"@type":"http://schema.org/Text"
-     }]
+     "http://schema.cassproject.org/0.2/rule":  [{"@value":"code for rule"}]
 }]

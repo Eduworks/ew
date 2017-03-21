@@ -14,15 +14,7 @@
      "http://schema.org/description": [{
      	"@value":"dselavalsdk "
      }],
-     "http://schema.org/name": [{
-     	"@value":"level name"
-     }],
-     "http://schema.cassproject.org/0.2/performance": [{
-     	"@value":"perf measure",
-     	"@type":"http://schema.org/Text"
-     }],	
-     "http://schema.cassproject.org/0.2/title": [{
-     	"@value":"title held",
-     	"@type":"http://schema.org/Text"
-     }],
+     "http://schema.org/name": [{"@value":"level name"}],
+     "http://schema.cassproject.org/0.2/performance": [{"@value":"perf measure"}],	
+     "http://schema.org/title": [{"@value":"title held"}],
 }]

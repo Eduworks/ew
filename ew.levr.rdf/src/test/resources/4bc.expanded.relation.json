@@ -1,10 +1,7 @@
 [{
   "@id": "https://cass.tla.cassproject.org/api/custom/data/schema.cassproject.org.0.2.Relation/4bcb951e-04e8-4886-8314-2abc87e2278f/1485824478849",
   "@type": ["http://schema.cassproject.org/0.2/Relation"],
-  "http://schema.cassproject.org/0.2/relationType": [{
-    "@type": "http://schema.org/Text",
-    "@value": "enables"
-  }],
+  "http://schema.cassproject.org/0.2/relationType": [{"@value": "enables"}],
   "http://schema.cassproject.org/0.2/source": [{
     "@type": "http://schema.cassproject.org/0.2/Competency",
     "@value": "https://cass.tla.cassproject.org/api/custom/data/schema.cassproject.org.0.2.Competency/fa3bff94-9411-4512-98f8-4419794adede"

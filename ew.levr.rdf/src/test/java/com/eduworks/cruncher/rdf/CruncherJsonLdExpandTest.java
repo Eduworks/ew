@@ -56,10 +56,12 @@ public class CruncherJsonLdExpandTest
         CruncherJsonLdExpand c = new CruncherJsonLdExpand();
         JSONObject unexpanded = new JSONObject(json);
         
+        System.out.println(unexpanded.toString(2));
+        
         c.build("obj", unexpanded);
         JSONArray expanded = (JSONArray) c.resolve(new Context(), new HashMap<>(), null);
         
-        //System.out.println(expanded.toString(2));
+        System.out.println(expanded.toString(2));
         
         json = FileUtils.readFileToString(EwFileSystem.findFile("94c.expanded.competency.json", CruncherJsonLdExpandTest.class, false, false), Charset.forName("UTF-8"));
         JSONArray correct = new JSONArray(json);
