@@ -1,0 +1,10 @@
+[{
+  "@id": "https://cass.tla.cassproject.org/api/custom/data/schema.cassproject.org.0.2.Competency/94c6486e-99c7-405e-80f6-e76d19445bfe/1485824471109",
+  "@type": ["http://schema.cassproject.org/0.2/Competency"],
+  "http://schema.cassproject.org/kbac/0.2/@owner": [{
+    "@type": "https://purl.org/signature#publicKeyPem",
+    "@value": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmEibtH3PXfKUpPIWf3B6TplUbpSDBiLIv936iVmicDzm2QF8ld+KmAUEhwDjcHYqFxvpmlJ35a2D9Q2YCdXbgCiwrh4Dx6X7LyiU3shWdUIoIUASlKXp8E9FziwDKXnphDFinSBSpdhGVggnDLS7TBE/s0O1JS8bkt0DooZt39f5YCAgBUFUmXQnD341L77DAVBqqqBhg/zjSPFuI1ggBT895e3N+GT/15KdcvLEte71niapoPcoMHQMU7ISFwy91PQxJPAw/nuM2ZsXGF9OWxg2h1VpFbe9JUAJhSz9rwMob3Vj8BMoMNm2ftgZUhXk2RcitmNfcsCZqohhw9m0MwIDAQAB-----END PUBLIC KEY-----"
+  }],
+  "http://schema.cassproject.org/kbac/0.2/@signature": [{"@value": "JIUBSEwNBEVrtwH3EMZsBbX84jkkB/GsPHQ58+Ron5rwfYHtYU0eJsAAJlWmkB1hY/7TxUtzcyO8/ShMzplpBz89jGLbwbAIGVClHnRbLavkeoYkrdSgsEXGJZkRgAr+TBwIHC4PHlXAP6XFJII06j07CZpcnqA9gghvI3UlLsorx+fqRAdmeTZ6fS2EOvFEEnzHqB46MwfqWrzX1a8S6k0W43qsClyXGews6Fwpb7Z1fZs+05u1j0tmxZ7UHLsS9DSXjNFhMBr6eMoEUiKl097oY2N5nKRocdwjLFyUCVogWHQMvJY6MI+DB1t+lygqwsXd5E/ap1rttMEzQ1+rbg=="}],
+  "http://schema.org/name": [{"@value": "List end-point security tools used to seek out malicious activity on a host (e.g. sysinternals tools, process hacker, etc)"}]
+}]

@@ -3,6 +3,8 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
+context=#add(a="@",b="context");
+
 query=#object(
 	type=#split(obj="@urlRemainder",split="/").getIndex(index="1"),
 	id=#split(obj="@urlRemainder",split="/").getIndex(index="2"),
@@ -20,11 +22,22 @@ get=#skyrepoGet(
     version=query.cget(version="")
 );
 
+tryFormatOutput=#if(operator="@format", operand="nquads",
+	eq=#toObject(obj="@get").jsonLdToNQuads(context=#toObject(obj="@get").getByParam(param=context)),
+	ne=#if(operator="@format", operand="turtle",
+		eq=#toObject(obj="@get").jsonLdToTurtle(context=#toObject(obj="@get").getByParam(param=context)),
+		ne=#toObject(obj="@get")
+	)
+);
+
 get=#if(
 	operator=#toObject(obj="@get").count(),
 	operand="0",
 	eq=#error(code="404",msg="Object not found or you did not supply sufficient permissions to access the object."),
-	ne=#toObject(obj="@get")
+	ne=#if(operator="@format", operand="",
+		eq=#toObject(obj="@get"),
+		ne=tryFormatOutput
+	),
 ).call(get=get);
 
 save=postObject.skyrepoPut(
