@@ -157,6 +157,7 @@ get=#if(
 
 ownerSignatureFilterArray = #signatureSheet().cforEach(
 	paramName="signatureKey",
+	threaded="false",
 	op=#object(
 		multi_match=#object(
 			fields=#object(
@@ -263,6 +264,7 @@ searchObj=#object(
 
 protectedTypeArray = #skyRepoGetProtectedTypes().cforEach(
 	paramName="protectedType",
+	threaded="false",
 	op=#object(
 		match=#object().put(
 			_key=#add(a="@",b="type.(full)"),
