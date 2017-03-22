@@ -99,6 +99,7 @@
         <module>ew.levr.lang.english</module>
         <module>ew.levr.db.skyrepo</module>
         <module>ew.levr.ebac.skyid</module>
+        <module>ew.levr.rdf</module>
     </modules>
 
     <build>

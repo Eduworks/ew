@@ -1,0 +1,14 @@
+{
+"@context": "http://schema.cassproject.org/0.2",
+"@id": "https://cass.tla.cassproject.org/api/custom/data/schema.cassproject.org.0.2.Relation/4bcb951e-04e8-4886-8314-2abc87e2278f/1485824478849",
+"@owner": [
+"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmEibtH3PXfKUpPIWf3B6TplUbpSDBiLIv936iVmicDzm2QF8ld+KmAUEhwDjcHYqFxvpmlJ35a2D9Q2YCdXbgCiwrh4Dx6X7LyiU3shWdUIoIUASlKXp8E9FziwDKXnphDFinSBSpdhGVggnDLS7TBE/s0O1JS8bkt0DooZt39f5YCAgBUFUmXQnD341L77DAVBqqqBhg/zjSPFuI1ggBT895e3N+GT/15KdcvLEte71niapoPcoMHQMU7ISFwy91PQxJPAw/nuM2ZsXGF9OWxg2h1VpFbe9JUAJhSz9rwMob3Vj8BMoMNm2ftgZUhXk2RcitmNfcsCZqohhw9m0MwIDAQAB-----END PUBLIC KEY-----"
+],
+"@signature": [
+"GbILdp43/1doj6AblsCHoMH7a5zE4LCW4h0/bsQLb4BPadQXrpxc2Rn1b4Gb06BP3LFZCZKg4HPJmhUq+6rj/JhwR2zfmdXOF8jnBK5cd5+AKsJg3I+J+pXPvbfpDQIHlEics/ExiT83B2mZ4woSzs3oKUg6mspv6SQwYdcRYcDCMJQ+qutvZfvEnaUqwv8RB6nR6v38NyfqY7fGGJR98bVxukaJPgILsM15FgVn7vt/A+5Rl8O+eEp8IT9RmaRzUOrVRPdOqfm74MZ1DxXh0HWWQDbkKIVbqgDFfkDuE5VMnapUnxK2FqWTUthukh/m0vIzimq6tMQmywSsQJ0VfA=="
+],
+"@type": "Relation",
+"relationType": "enables",
+"source": "https://cass.tla.cassproject.org/api/custom/data/schema.cassproject.org.0.2.Competency/fa3bff94-9411-4512-98f8-4419794adede",
+"target": "https://cass.tla.cassproject.org/api/custom/data/schema.cassproject.org.0.2.Competency/b051d415-c475-48a2-b761-847cadd48a61"
+}

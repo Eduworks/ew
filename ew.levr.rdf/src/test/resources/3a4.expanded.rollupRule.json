@@ -1,0 +1,21 @@
+[{
+     "@id": "http://localhost:9722/api/custom/data/schema.cassproject.org.0.2.RollupRule/3a4d4012-3273-4b12-9d66-07c1a7297bfb/1489704364280",
+     "http://schema.cassproject.org/kbac/0.2/@owner": [{
+     	"@value":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArWNbLjgLK1wtsUb3ifPw6ZAfUCHYpJZBJMqcJLn8F6vha5nysDfBRyBUIuKcN9V616an6MMBJUuo3ZChizNcgXpD8rza75fZuTDfFuF5bQibZzDmTCrUTYaLUT0hEQiO69mdk32bpLJCHxDqAXzlwram4zhQbElgi0aeFqYhkQQDnUU9X4UlQO86MOkC57MwQPs/869ZwbX5WD9f8NlOGBnzKspnMIj+6zWB1tT4ZL930vJ8UT/nh8HTA7Vzodivf5MieU9cEuE9vcpsgbB17IIdP1WW1GKp4Jb5vVFDweJcTH4/9JEUuKzVEL442ilcEWPWW2Wu+Ycx8PQqyslw4QIDAQAB-----END PUBLIC KEY-----",
+     	"@type":"https://purl.org/signature#publicKeyPem"
+     }],
+     "http://schema.cassproject.org/kbac/0.2/@signature": [
+     	{"@value":"lNaIyp+Dz8KkLkYVbsBNVDtKDXb0IisR33C8r4u8Gyp1+ka/GkDla1l0YdjB7YuwRvUjfgexgnC1ZAGMBB6bY57AbTO54hpIkybjC6ETgugYUP1lS2FawqwL++yf4gRzUQILYBsmqVw+1YKMOf7ZtCknlGl+IVezQpa2DFQf91pLjyaYvipIDgetAZoYd5sMBoKzlzoBB2s1EgMFzmo74bDCg+206dyyXQmS+GWe7MEsnjFpplWrajptG8pNAS7nLr+G3sNgrjCeT9ZB9OthEJwsRYkC+KfkBndNiuQj6oJ7Xw8RDBn6U5kyGrESD+n7NknUGARg3WyPlkdhOuDJDQ=="}
+     ],
+     "@type": ["http://schema.cassproject.org/0.2/RollupRule"],
+     "http://schema.cassproject.org/0.2/competency": [
+     	{"@id":"http://localhost:9722/api/custom/data/schema.cassproject.org.0.2.Competency/7cbba11d-b6f4-40bb-8d0c-60da428e7c46"}
+     ],
+     "http://schema.org/description": [{
+     	"@value":"dslkjdacvdsl",
+     }],
+     "http://schema.org/name": [{
+     	"@value":"rule name",
+     }],
+     "http://schema.cassproject.org/0.2/rule":  [{"@value":"code for rule"}]
+}]
