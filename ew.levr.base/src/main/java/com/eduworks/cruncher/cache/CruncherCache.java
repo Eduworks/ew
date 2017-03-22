@@ -48,19 +48,27 @@ public class CruncherCache extends Cruncher
             obj.clear();
             return null;
         }
+        boolean global = optAsBoolean("global", false, c, parameters, dataStreams);
         synchronized (getClass())
         {
-            lock = obj.get(cacheName);
-            if (lock == null)
-            {
-                obj.put(cacheName, lock = cacheName);
+            if (global) {
+                lock = obj.get(cacheName);
+                if (lock == null) {
+                    obj.put(cacheName, lock = new Object());
+                }
+            }
+            else{
+                lock = c.get("cache"+cacheName);
+                if (lock == null) {
+                    obj.put("cache"+cacheName, lock = new Object());
+                }
             }
         }
         synchronized (lock)
         {
             if (optAsBoolean("remove", false, c, parameters, dataStreams))
             {
-                if (optAsBoolean("global", false, c, parameters, dataStreams))
+                if (global)
                 {
                     EwCache.getCache("GlobalCache").remove(cacheName);
                 } else
@@ -69,7 +77,7 @@ public class CruncherCache extends Cruncher
                 }
             } else
             {
-                if (optAsBoolean("global", false, c, parameters, dataStreams))
+                if (global)
                 {
                     result = EwCache.getCache("GlobalCache").get(cacheName);
                 } else
@@ -81,7 +89,7 @@ public class CruncherCache extends Cruncher
                     result = getObj(c, parameters, dataStreams);
                     if (!optAsBoolean("justLock", false, c, parameters, dataStreams))
                     {
-                        if (optAsBoolean("global", false, c, parameters, dataStreams))
+                        if (global)
                         {
                             EwCache.getCache("GlobalCache").put(cacheName, result);
                         } else
