@@ -43,6 +43,6 @@ public class CruncherBCryptHash extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("password","String","rounds","int");
+		return jo("password","String","rounds","Integer");
 	}
 }
