@@ -265,7 +265,7 @@ public class CruncherUpdateDocument extends CruncherDocument
 	@Override
 	public String getReturn()
 	{
-		return "null";
+		return null;
 	}
 
 	@Override

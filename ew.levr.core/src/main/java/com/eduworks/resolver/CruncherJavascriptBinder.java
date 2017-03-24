@@ -78,7 +78,7 @@ public class CruncherJavascriptBinder extends Cruncher
     @Override
     public String getReturn()
     {
-        return "Any";
+        return "Object";
     }
 
     @Override
@@ -90,7 +90,7 @@ public class CruncherJavascriptBinder extends Cruncher
     @Override
     public JSONObject getParameters() throws JSONException
     {
-        return jo("obj", "Any");
+        return jo("obj", "Object");
     }
 
 }

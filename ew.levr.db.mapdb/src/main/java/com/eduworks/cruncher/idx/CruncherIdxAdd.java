@@ -69,7 +69,7 @@ public class CruncherIdxAdd extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj","Object","indexDir","LocalPathString","databaseName","String","index","String","key","String");
+		return jo("obj","Object","indexDir","String","databaseName","String","index","String","key","String");
 	}
 
 }

@@ -65,7 +65,7 @@ public class CruncherOntologyDeleteInstance extends CruncherOntology {
 
 	@Override
 	public String getReturn() {
-		return "empty object";
+		return "Object";
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class CruncherOntologyDeleteInstance extends CruncherOntology {
 
 	@Override
 	public JSONObject getParameters() throws JSONException {
-		return jo("ontologyId", "string", "directory", "path string", "instanceId", "string");
+		return jo("ontologyId", "String", "directory", "String", "instanceId", "String");
 	}
 
 }

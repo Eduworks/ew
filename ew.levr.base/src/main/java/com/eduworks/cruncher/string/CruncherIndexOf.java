@@ -35,7 +35,7 @@ public class CruncherIndexOf extends Cruncher
 	   @Override
 	   public String getReturn()
 	   {
-	      return "int";
+	      return "Integer";
 	   }
 
 	   @Override

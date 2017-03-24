@@ -62,13 +62,13 @@ public class CruncherOntologyCreate extends CruncherOntology
 	@Override
 	public String getDescription()
 	{
-		return "creates a new ontology in the local directory specified with the id specified";
+		return "creates a new ontology in the local directory specified with the id specified.  {uri, directory, ontologyId, filename}";
 	}
 
 	@Override
 	public String getReturn()
 	{
-		return "Object {uri, directory, ontologyId, filename}";
+		return "Object";
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class CruncherOntologyCreate extends CruncherOntology
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("ontologyId", "string", "directory", "path string");
+		return jo("ontologyId", "String", "directory", "String");
 	}
 
 }

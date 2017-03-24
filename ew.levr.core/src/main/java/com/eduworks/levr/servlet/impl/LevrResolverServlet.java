@@ -106,7 +106,6 @@ public class LevrResolverServlet extends LevrServlet
                         codeFilesLastModifiedMs = getFilesLastModified(new File(EwFileSystem.getWebConfigurationPath()));
                     }
                     for (String webService : resolvableFunctions.keySet())
-                    {
                         if (webService.toLowerCase().endsWith("autoexecute"))
                         {
                             Context c = new Context();
@@ -114,21 +113,23 @@ public class LevrResolverServlet extends LevrServlet
                             {
                                 execute(log, true, webService, c, new HashMap<String, String[]>(), new HashMap<String, InputStream>(), true);
                                 c.success();
-                            } catch (Exception ex)
+                            }
+                            catch (Exception ex)
                             {
                                 c.failure();
                                 log.debug("Auto-Execute failed.", ex);
                             }
                             c.finish();
                         }
-                    }
                     return true;
-                } catch (JSONException e)
+                }
+                catch (JSONException e)
                 {
                     pw.println("Error in config: " + e.getMessage());
                     e.printStackTrace();
                     return false;
-                } finally
+                }
+                finally
                 {
                     IOUtils.closeQuietly(input);
                 }
@@ -139,10 +140,6 @@ public class LevrResolverServlet extends LevrServlet
 
     private static void loadAdditionalConfigFilesFromServletContext(String path, ServletContext servletContext) throws IOException, JSONException
     {
-        if (servletContext == null)
-        {
-            return;
-        }
         if (path.endsWith(".jar") && (path.toLowerCase().contains("levr")))
         {
             ZipInputStream zip = new ZipInputStream(servletContext.getResourceAsStream(path));
@@ -150,9 +147,7 @@ public class LevrResolverServlet extends LevrServlet
             {
                 ZipEntry e = zip.getNextEntry();
                 if (e == null)
-                {
                     break;
-                }
                 String name = e.getName();
                 if (name.endsWith(".rs2") || (name.endsWith(".js") && name.contains("node_modules") == false))
                 {
@@ -165,11 +160,11 @@ public class LevrResolverServlet extends LevrServlet
                 }
             }
             zip.close();
-        } else if (path.endsWith("/"))
+        }
+        else if (path.endsWith("/"))
         {
             Set<String> resourcePaths = servletContext.getResourcePaths(path);
             if (resourcePaths != null && resourcePaths.size() > 0)
-            {
                 for (String contextPath : resourcePaths)
                 {
                     if (contextPath.endsWith("/") || contextPath.endsWith(".jar"))
@@ -186,7 +181,6 @@ public class LevrResolverServlet extends LevrServlet
                     loadAdditionalConfigFiles(createTempFile);
                     createTempFile.delete();
                 }
-            }
         }
         // else
         // System.out.println("Failed: " + path);
@@ -199,7 +193,6 @@ public class LevrResolverServlet extends LevrServlet
         {
             Enumeration<URL> resourcePaths = classLoader.getResources(path);
             if (resourcePaths != null)
-            {
                 while (resourcePaths.hasMoreElements())
                 {
                     String contextPath = resourcePaths.nextElement().toString();
@@ -215,21 +208,16 @@ public class LevrResolverServlet extends LevrServlet
                     loadAdditionalConfigFiles(createTempFile);
                     createTempFile.delete();
                 }
-            }
         }
     }
 
     public static void loadAdditionalConfigFiles(File codeFile) throws JSONException
     {
         if (codeFile.canRead())
-        {
             if (codeFile.isDirectory())
-            {
                 for (File f2 : codeFile.listFiles())
-                {
                     loadAdditionalConfigFiles(f2);
-                }
-            } else if (codeFile.isFile())
+            else if (codeFile.isFile())
             {
                 FileInputStream fileHandle = null;
                 try
@@ -244,7 +232,7 @@ public class LevrResolverServlet extends LevrServlet
                     {
                         log.debug("Loading: " + codeFile.getPath());
                         codeFiles.add(codeFile);
-                        bindWebServicesAndFunctions(resolvableWebServices, resolvableFunctions, LevrResolverV2Parser.decodeStreams(codeFile));
+                        bindWebServicesAndFunctions(resolvableWebServices, resolvableFunctions, LevrResolverV2Parser.decodeStreams(codeFile), codeFile);
                     }
                     JSONObject scriptPack = null;
                     Map<String, JSONObject> scriptStreams = null;
@@ -278,48 +266,51 @@ public class LevrResolverServlet extends LevrServlet
                     {
                         log.debug("Loading: " + codeFile.getPath());
                         codeFiles.add(codeFile);
-                        bindJavascriptFunctions(resolvableFunctions, LevrJsParser.decodeStreams(codeFile));
+                        if (levrFunctionUseCodeFileAsNamespace)
+                            LevrJsParser.reinitialize();
+                        bindJavascriptFunctions(resolvableFunctions, LevrJsParser.decodeStreams(codeFile), codeFile);
                     }
-                } catch (NullPointerException ex)
+                }
+                catch (NullPointerException ex)
                 {
                     System.out.println("Failed on " + codeFile.getPath());
                     ex.printStackTrace();
-                } catch (IOException e)
+                }
+                catch (IOException e)
                 {
                     System.out.println("Failed on " + codeFile.getPath());
                     e.printStackTrace();
-                } finally
+                }
+                finally
                 {
                     if (fileHandle != null)
-                    {
                         IOUtils.closeQuietly(fileHandle);
-                    }
                 }
             }
-        }
     }
 
     private static void bindWebServices(Map<String, Resolvable> config2, Map<String, JSONObject> decodeStreams) throws JSONException
     {
         for (Entry<String, JSONObject> entry : decodeStreams.entrySet())
-        {
             config2.put((entry.getKey().startsWith("/") ? "" : "/") + entry.getKey(), ResolverFactory.create(entry.getValue()));
-        }
     }
 
+    public static boolean levrFunctionUseCodeFileAsNamespace = false;
+
     private static void bindWebServicesAndFunctions(Map<String, Resolvable> config2, Map<String, Resolvable> functions2,
-            Tuple<Map<String, JSONObject>, Map<String, JSONObject>> decodeStreams) throws JSONException
+            Tuple<Map<String, JSONObject>, Map<String, JSONObject>> decodeStreams, File codeFile) throws JSONException
     {
         for (Entry<String, JSONObject> entry : decodeStreams.getSecond().entrySet())
         {
             final Resolvable resolverFunction = ResolverFactory.create(entry.getValue());
-            functions2.put(entry.getKey().substring(1), resolverFunction);
+            String preamble = levrFunctionUseCodeFileAsNamespace ? codeFile.getName().substring(0, codeFile.getName().length() - 3) : "";
+            functions2.put(preamble + entry.getKey().substring(1), resolverFunction);
             LevrJsParser.createJavascriptFunctionBinding(entry.getKey().substring(1), resolverFunction);
         }
         bindWebServices(config2, decodeStreams.getFirst());
     }
 
-    private static void bindJavascriptFunctions(Map<String, Resolvable> resolvableFunctions, Bindings bindings)
+    private static void bindJavascriptFunctions(Map<String, Resolvable> resolvableFunctions, Bindings bindings, File codeFile)
     {
         CruncherJavascriptBinder cj = new CruncherJavascriptBinder();
         for (String s : bindings.keySet())
@@ -327,19 +318,16 @@ public class LevrResolverServlet extends LevrServlet
             CruncherJavascriptBinder jb = new CruncherJavascriptBinder();
             jb.build("function", s);
             if (ResolverFactory.cruncherSpecs.containsKey(s))
-            {
                 continue;
-            }
             if (bindings.get(s) instanceof ScriptObjectMirror)
             {
                 ScriptObjectMirror binding = (ScriptObjectMirror) bindings.get(s);
                 if (binding.isFunction())
-                {
                     if (LevrResolverServlet.resolvableFunctions.get(s) == null || LevrResolverServlet.resolvableFunctions.get(s) instanceof CruncherJavascriptBinder)
                     {
-                        resolvableFunctions.put(s, jb);
+                        String preamble = levrFunctionUseCodeFileAsNamespace ? codeFile.getName().substring(0, codeFile.getName().length() - 2) : "";
+                        resolvableFunctions.put(preamble+s, jb);
                     }
-                }
             }
         }
     }
@@ -362,9 +350,7 @@ public class LevrResolverServlet extends LevrServlet
         String requestURI = request.getRequestURI();
         String requestString = requestURI.substring(requestURI.indexOf(getServletPathExample()) + getServletPathExample().length());
         if (requestString.toLowerCase().endsWith(FAVICON_REQUEST_STRING.toLowerCase()))
-        {
             return;
-        }
         Map<String, String[]> parameterMap = Collections.synchronizedMap(new HashMap<String, String[]>(request.getParameterMap()));
         String jsonpSecurityKey = getStringFromParameter(request, "sec", "");
         parameterMap.put("methodType", new String[]
@@ -379,35 +365,29 @@ public class LevrResolverServlet extends LevrServlet
         Context c = new Context(request, response, pw);
 
         if (isPost(methodType))
-        {
             if (ServletFileUpload.isMultipartContent(request))
-            {
                 try
                 {
                     dataStreams = decodeMultipartContent(c, request);
-                } catch (FileUploadException e)
+                }
+                catch (FileUploadException e)
                 {
                     throw new IOException(e.getMessage());
                 }
-            } else
-            {
+            else
                 try
                 {
                     dataStreams = decodeSimpleContent(request);
-                } catch (FileUploadException e)
+                }
+                catch (FileUploadException e)
                 {
                     throw new IOException(e.getMessage());
                 }
-            }
-        }
 
         if (isJsonpRequest(isPost(methodType), jsonpSecurityKey))
-        {
             pw = new PrintStream(os);
-        } else
-        {
+        else
             startJsonpPayload(request, pw);
-        }
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
@@ -416,43 +396,38 @@ public class LevrResolverServlet extends LevrServlet
                 "If-Modified-Since, Content-Type, Content-Range, Content-Disposition, Content-Description, signatureSheet");
 
         if (isJsonpPayloadRequest(isPost(methodType), jsonpSecurityKey))
-        {
             retreiveJsonpPayload(jsonpSecurityKey, pw);
-        } else
-        {
+        else
             try
             {
                 execute(request, response, requestString, c, parameterMap, pw, dataStreams);
                 c.success();
-            } catch (JSONException e)
+            }
+            catch (JSONException e)
             {
                 c.failure();
                 if (response != null)
-                {
                     response.setContentType("text/plain");
-                }
                 try
                 {
                     JSONObject jo = new JSONObject();
                     jo.put("error", e.toString());
                     pw.print(jo.toString(2));
-                } catch (JSONException e1)
+                }
+                catch (JSONException e1)
                 {
                     e1.printStackTrace();
                 }
-            } finally
+            }
+            finally
             {
                 c.finish();
             }
-        }
 
         if (isJsonpRequest(isPost(methodType), jsonpSecurityKey))
-        {
             storeJsonpPayload(jsonpSecurityKey, os.toByteArray());
-        } else
-        {
+        else
             finishJsonpPayload(request, pw);
-        }
 
         pw.flush();
     }
@@ -478,17 +453,14 @@ public class LevrResolverServlet extends LevrServlet
         {
             SoftReference<byte[]> softReference = holdingCache.get(jsonpSecurityKey);
             if (softReference == null)
-            {
                 throw new Exception("Cannot find your data payload. Sorry.");
-            }
             byte[] payload = softReference.get();
             if (payload == null)
-            {
                 throw new Exception("Lost your data payload. Please try again.");
-            }
             holdingCache.remove(jsonpSecurityKey);
             pw.write(payload);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             pw.print("{\"error\":\"" + e.toString() + "\"}");
         }
@@ -499,9 +471,7 @@ public class LevrResolverServlet extends LevrServlet
     private void storeJsonpPayload(String sec, byte[] resultsAsString)
     {
         if (sec == null || sec.isEmpty())
-        {
             return;
-        }
         holdingCache.put(sec, new SoftReference<byte[]>(resultsAsString));
     }
 
@@ -517,17 +487,15 @@ public class LevrResolverServlet extends LevrServlet
             // IE artifact. When files are attached, they are sent using their
             // full path in 'name' and their filename in 'FieldName'.
             if (item.getName() != null && item.getName().contains("\\"))
-            {
                 c.filenames.put(item.getFieldName(), item.getFieldName());
-            } else
-            {
+            else
                 c.filenames.put(item.getFieldName(), item.getName());
-            }
             InputStream inputStream = item.getInputStream();
             try
             {
                 results.put(item.getFieldName(), new ByteArrayInputStream(IOUtils.toByteArray(inputStream)));
-            } finally
+            }
+            finally
             {
                 EwFileSystem.closeIt(inputStream);
                 item.delete();
@@ -545,7 +513,8 @@ public class LevrResolverServlet extends LevrServlet
         try
         {
             results.put("simple", new ByteArrayInputStream(IOUtils.toByteArray(inputStream)));
-        } finally
+        }
+        finally
         {
             EwFileSystem.closeIt(inputStream);
         }
@@ -560,30 +529,25 @@ public class LevrResolverServlet extends LevrServlet
         try
         {
             session = request.getSession();
-        } catch (IllegalStateException ex)
+        }
+        catch (IllegalStateException ex)
         {
             log.warn("Could not create session as part of this request. Run-time-modification of LEVR scripts may be disabled.");
         }
         if (!initConfig(pw, session == null ? null : session.getServletContext()))
-        {
             return;
-        }
 
         final boolean flushAllCache = getParameter("flushAllCache", parameterMap);
         final boolean inline = getParameter("inline", parameterMap);
 
         if (flushAllCache)
-        {
             EwCache.clearAll();
-        }
 
         try
         {
             String ip = request.getHeader("X-Forwarded-For");
             if (ip == null || ip.isEmpty())
-            {
                 ip = request.getRemoteAddr();
-            }
             parameterMap.put("ip", new String[]
             {
                 ip
@@ -601,38 +565,30 @@ public class LevrResolverServlet extends LevrServlet
                 final EwJsonCollection json = EwJson.tryConvert(result);
 
                 if (response != null && request != null && !response.isCommitted())
-                {
                     if (((String) result).startsWith("<html>"))
-                    {
                         response.setContentType("text/html");
-                    } else if (getStringFromParameter(request, "callback", null) != null)
-                    {
+                    else if (getStringFromParameter(request, "callback", null) != null)
                         response.setContentType("text/javascript");
-                    } else if (json != null)
-                    {
+                    else if (json != null)
                         response.setContentType("application/json");
-                    } else
-                    {
+                    else
                         response.setContentType("text/plain");
-                    }
-                }
 
                 pw.println(result.toString());
-            } else if (result instanceof Number)
+            }
+            else if (result instanceof Number)
             {
                 if (response != null && !response.isCommitted())
-                {
                     response.setContentType("text/plain");
-                }
                 pw.println(result.toString());
-            } else if (result instanceof EwJsonSerializable)
+            }
+            else if (result instanceof EwJsonSerializable)
             {
                 if (response != null && !response.isCommitted())
-                {
                     response.setContentType("text/plain");
-                }
                 pw.println(((EwJsonSerializable) result).toJsonObject());
-            } else if (result instanceof InMemoryFile)
+            }
+            else if (result instanceof InMemoryFile)
             {
                 InMemoryFile f = (InMemoryFile) result;
 
@@ -640,30 +596,30 @@ public class LevrResolverServlet extends LevrServlet
                 {
                     response.setContentType(((InMemoryFile) result).mime);
                     if (f.name != null && !f.name.isEmpty())
-                    {
                         if (inline)
                         {
                             response.setHeader("cache-control", "public, max-age=3600");
                             response.setHeader("content-disposition", "filename=" + f.name);
-                        } else
-                        {
-                            response.setHeader("content-disposition", "attachment; filename=" + f.name);
                         }
-                    }
+                        else
+                            response.setHeader("content-disposition", "attachment; filename=" + f.name);
                 }
 
                 pw.write(f.data);
                 pw.flush();
                 pw.close();
             }
-        } catch (JSONException e)
+        }
+        catch (JSONException e)
         {
             e.printStackTrace();
             throw e;
-        } catch (SoftException ex)
+        }
+        catch (SoftException ex)
         {
             execute(request, response, requestString, c, parameterMap, pw, dataStreams);
-        } finally
+        }
+        finally
         {
         }
     }
@@ -673,16 +629,15 @@ public class LevrResolverServlet extends LevrServlet
     {
         Resolvable resolver = requestStringBackoff(requestString, useFunctions, parameterMap);
         if (noisy)
-        {
             log.info("Request: " + requestString + toString(parameterMap));
-        }
         long ms = System.currentTimeMillis();
         long nanos = System.nanoTime();
         Object result = null;
         try
         {
             result = resolver.resolve(c, parameterMap, dataStreams);
-        } catch (Throwable ex)
+        }
+        catch (Throwable ex)
         {
             ArrayList<StackTraceElement> list = new ArrayList<StackTraceElement>();
             String cruncherName = resolver.getClass().getSimpleName().replace("Cruncher", "");
@@ -694,9 +649,7 @@ public class LevrResolverServlet extends LevrServlet
                         || l.getClassName().contains("com.eduworks.levr.servlet"))
                 {
                     if (el != null)
-                    {
                         list.add(el);
-                    }
                     el = null;
                     continue;
                 }
@@ -713,9 +666,7 @@ public class LevrResolverServlet extends LevrServlet
             ((Cruncher) resolver).executions.incrementAndGet();
         }
         if (noisy)
-        {
             log.info("Response (" + (System.currentTimeMillis() - ms) + "ms): " + requestString + toString(parameterMap));
-        }
         return result;
     }
 
@@ -733,9 +684,7 @@ public class LevrResolverServlet extends LevrServlet
         }
 
         if (requestString.equals(""))
-        {
             requestString = oldRequestString;
-        }
 
         parameterMap.put("urlRemainder", new String[]
         {
@@ -747,13 +696,9 @@ public class LevrResolverServlet extends LevrServlet
         {
             resolvable = resolvableWebServices.get(requestString);
             if (useFunctions && resolvable == null)
-            {
                 resolvable = resolvableFunctions.get(requestString);
-            }
             if (resolvable == null)
-            {
                 throw new RuntimeException("Service does not exist: " + requestString);
-            }
             return resolvable;
         }
     }
@@ -762,37 +707,22 @@ public class LevrResolverServlet extends LevrServlet
     {
         long lmodified = 0;
         if (dir == null || dir.listFiles() == null)
-        {
             return codeFilesLastModifiedMs;
-        }
         for (File f : dir.listFiles())
-        {
             if (f.canRead())
-            {
                 if (f.isDirectory())
-                {
                     lmodified = Math.max(lmodified, getFilesLastModified(f));
-                } else if (f.isFile())
+                else if (f.isFile())
                 {
                     if (f.getName().endsWith(".rsl"))
-                    {
                         lmodified = Math.max(f.lastModified(), lmodified);
-                    }
                     if (f.getName().endsWith(".rs2"))
-                    {
                         lmodified = Math.max(f.lastModified(), lmodified);
-                    }
                     if (f.getName().endsWith(".psl"))
-                    {
                         lmodified = Math.max(f.lastModified(), lmodified);
-                    }
                     if (f.getName().endsWith(".jsl"))
-                    {
                         lmodified = Math.max(f.lastModified(), lmodified);
-                    }
                 }
-            }
-        }
         return lmodified;
     }
 
@@ -800,9 +730,7 @@ public class LevrResolverServlet extends LevrServlet
     {
         boolean flushCache = false;
         if (parameterMap.containsKey(name))
-        {
             flushCache = Boolean.parseBoolean(parameterMap.get(name)[0]);
-        }
         return flushCache;
     }
 
@@ -813,12 +741,8 @@ public class LevrResolverServlet extends LevrServlet
         {
             sb.append("~" + e.getKey());
             if (e.getValue() != null)
-            {
                 for (int i = 0; i < e.getValue().length; i++)
-                {
                     sb.append(":" + e.getValue()[i]);
-                }
-            }
         }
         return sb.toString();
     }

@@ -43,7 +43,7 @@ public class CruncherStartsWith extends Cruncher
 	@Override
 	public String getReturn()
 	{
-		return "boolean";
+		return "Boolean";
 	}
 
 	@Override

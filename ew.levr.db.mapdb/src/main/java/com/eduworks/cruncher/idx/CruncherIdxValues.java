@@ -73,7 +73,7 @@ public class CruncherIdxValues extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("indexDir", "LocalPathString", "databaseName", "String", "index", "String");
+		return jo("indexDir", "String", "databaseName", "String", "index", "String");
 	}
 
 }

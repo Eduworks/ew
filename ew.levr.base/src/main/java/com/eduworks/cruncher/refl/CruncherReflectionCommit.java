@@ -45,7 +45,7 @@ public class CruncherReflectionCommit extends Cruncher
 	@Override
 	public String getReturn()
 	{
-		return "null";
+		return null;
 	}
 
 	@Override

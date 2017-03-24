@@ -27,7 +27,7 @@ public class CruncherZipToFiles extends Cruncher
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException {
 		Object obj = getObj(c, parameters, dataStreams);
-		EwJsonArray files = new EwJsonArray();
+		JSONArray files = new JSONArray();
 		ZipInputStream in = null;
 		JSONObject filters = getAsJsonObject("filter", c, parameters, dataStreams);
 		try
@@ -104,7 +104,7 @@ public class CruncherZipToFiles extends Cruncher
 	@Override
 	public String getReturn()
 	{
-		return "Array of InMemoryFile";
+		return "JSONArray";
 	}
 
 	@Override

@@ -70,7 +70,7 @@ public class CruncherOntologyCreateObjectProperty extends CruncherOntology
 	@Override
 	public String getReturn()
 	{
-		return "Object representing the new property";
+		return "JSONObject";
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class CruncherOntologyCreateObjectProperty extends CruncherOntology
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("ontologyId", "string", "directory", "path string", "propertyId", "string", "vals", "Object");
+		return jo("ontologyId", "String", "directory", "String", "propertyId", "String", "vals", "Object");
 	}
 
 }
