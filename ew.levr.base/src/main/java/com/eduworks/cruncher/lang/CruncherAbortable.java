@@ -42,7 +42,7 @@ public class CruncherAbortable extends Cruncher
 		{
 			if (key.equals("obj"))
 				continue;
-			if (key.equals("Content-Type"))
+			if (key.equals("contentType"))
 				c.response.setContentType(getAsString(key, c, parameters, dataStreams));
 			else
 				c.response.setHeader(key, getAsString(key,c,parameters,dataStreams));
@@ -60,7 +60,7 @@ public class CruncherAbortable extends Cruncher
 	@Override
 	public String getReturn()
 	{
-		return "Any";
+		return "Object";
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class CruncherAbortable extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj", "Any","Content-Type","String");
+		return jo("obj", "Object","contentType","String");
 	}
 
 }

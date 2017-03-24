@@ -52,7 +52,7 @@ public class CruncherOntologyListOntologies extends CruncherOntology
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("ontologyId", "string", "directory", "path string", "importId", "string");
+		return jo("ontologyId", "String", "directory", "String", "importId", "String");
 	}
 
 }

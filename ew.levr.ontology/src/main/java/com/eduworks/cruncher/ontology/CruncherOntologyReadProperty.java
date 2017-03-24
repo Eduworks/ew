@@ -74,7 +74,7 @@ public class CruncherOntologyReadProperty extends CruncherOntology
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("ontologyId", "string", "directory", "path string", "propertyId", "string");
+		return jo("ontologyId", "String", "directory", "String", "propertyId", "String");
 	}
 
 }

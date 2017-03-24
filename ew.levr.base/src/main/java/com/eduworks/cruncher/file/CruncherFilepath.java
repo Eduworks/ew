@@ -40,7 +40,7 @@ public class CruncherFilepath extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj","InMemoryfile");
+		return jo("obj","InMemoryFile");
 	}
 
 }

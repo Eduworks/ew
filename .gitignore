@@ -1,5 +1,6 @@
 node_modules
 target/
+.idea
 nbactions.xml
 .settings
 *.iml
@@ -13,3 +14,5 @@ buildNumber.properties
 .mvn/timing.properties
 /ew.levr.rdf/nbproject/
 .idea
+.project
+.classpath

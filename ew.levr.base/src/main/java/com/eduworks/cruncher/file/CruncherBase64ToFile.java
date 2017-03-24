@@ -70,13 +70,13 @@ public class CruncherBase64ToFile extends Cruncher
 	@Override
 	public String getDescription()
 	{
-		return "Converts one or more base 64 files to an InMemoryFile";
+		return "Converts one or more base 64 files to an InMemoryFile. {name:'base64',...}";
 	}
 
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj","JSON Object, {name:'base64',...}");
+		return jo("obj","JSONObject");
 	}
 
 	@Override

@@ -76,7 +76,7 @@ public class CruncherOntologyCreateInstance extends CruncherOntology
 	@Override
 	public String getReturn()
 	{
-		return "Object representing the new instance";
+		return "JSONObject";
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class CruncherOntologyCreateInstance extends CruncherOntology
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("ontologyId", "string", "directory", "path string", "classId", "string", "vals", "Object");
+		return jo("ontologyId", "String", "directory", "String", "classId", "String", "vals", "Object");
 	}
 
 }

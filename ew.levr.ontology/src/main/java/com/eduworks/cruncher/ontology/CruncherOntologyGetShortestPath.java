@@ -63,7 +63,7 @@ public class CruncherOntologyGetShortestPath extends CruncherOntology {
 
 	@Override
 	public String getReturn() {
-		return "object";
+		return "Object";
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class CruncherOntologyGetShortestPath extends CruncherOntology {
 
 	@Override
 	public JSONObject getParameters() throws JSONException {
-		return jo("ontologyId", "string", "directory", "path string", "classId", "string");
+		return jo("ontologyId", "String", "directory", "String", "classId", "String");
 	}
 
 }

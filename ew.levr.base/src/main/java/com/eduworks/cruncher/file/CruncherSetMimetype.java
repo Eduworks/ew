@@ -54,7 +54,7 @@ public class CruncherSetMimetype extends Cruncher
 	@Override
 	public String getReturn()
 	{
-		return "InMemoryfile";
+		return "InMemoryFile";
 	}
 
 	@Override

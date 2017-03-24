@@ -65,13 +65,13 @@ public class CruncherOntologyQuery extends CruncherOntology
 	@Override
 	public String getDescription()
 	{
-		return "Runs the SPARQL query given on the ontology specified";
+		return "Runs the SPARQL query given on the ontology specified. Returns Array of objects, each a result to the query with values that match the variables in the query";
 	}
 
 	@Override
 	public String getReturn()
 	{
-		return "Array of objects, each a result to the query with values that match the variables in the query";
+		return "JSONArray";
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class CruncherOntologyQuery extends CruncherOntology
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("ontologyId", "string", "directory", "path string", "query", "sparql query string");
+		return jo("ontologyId", "String", "directory", "String", "query", "String");
 	}
 
 }
