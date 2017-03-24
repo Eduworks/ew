@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  * Representation:<br>
  * {<br>
  *  name:"base64EncodedFileAsString"<br>
- *  ,...
+ *  ,...<br>
  * }
  * 
  * rs2: result = obj.base64ToFile();<br>
