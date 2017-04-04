@@ -67,8 +67,7 @@ public class CruncherJsonLdExpandTest
         JSONArray correct = new JSONArray(json);
         
         Assert.assertTrue("Expanded competency is not equal to defined expanded competency.", TestHelper.compareJSON(expanded, correct));
-        
-        
+
         CruncherJsonLdCompact cr = new CruncherJsonLdCompact();
         cr.build("obj", expanded.get(0));
         cr.build("context", "http://schema.cassproject.org/0.2");
