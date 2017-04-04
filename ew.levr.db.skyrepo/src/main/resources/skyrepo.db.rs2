@@ -253,8 +253,7 @@ searchObj=#object(
 				ne=#object(
 					a=typeArray
 				).valueSet()
-			),
-			minimum_should_match="1"
+			)
 		)
 	)
 ).put(
@@ -325,8 +324,8 @@ nonSigSearchObj = #object(
 	from="@start",
 	size="@size",
 	query=#object(
-		filtered=#object(
-			query=#object(
+		bool=#object(
+			must=#object(
 				query_string=#object(
 					query="@q"
 				)
@@ -362,7 +361,7 @@ searchUrl=#add(
 	c="/_search"
 );
 
-signatureSearch=searchObj.httpPost(url=searchUrl,multipart="false").toObject().cget(hits="").cget(hits="").cforEach(
+signatureSearch=searchObj.httpPost(url=searchUrl,contentType="application/json",multipart="false").toObject().cget(hits="").cget(hits="").cforEach(
 	paramName="obj",
 	array="true",
 	op=#toObject(obj="@obj").getByParam(param="_source")
@@ -373,7 +372,7 @@ checkRunSignatureSearch = #if(operator=#signatureSheet().count(), operand="0",
 	eq=#toArray()
 );
 
-nonSigSearch = nonSigSearchObj.httpPost(url=searchUrl,multipart="false").toObject().cget(hits="").cget(hits="").cforEach(
+nonSigSearch = nonSigSearchObj.httpPost(url=searchUrl,contentType="application/json",multipart="false").toObject().cget(hits="").cget(hits="").cforEach(
 	paramName="obj",
 	array="true",
 	op=#toObject(obj="@obj").getByParam(param="_source")
@@ -489,6 +488,6 @@ typesObj = #object(
 	)
 );
 
-types = typesObj.httpPost(url=searchUrl, multipart="false").toObject().cget(aggregations="").cget(types="").cget(buckets="").displayJson(_collapse="true");
+types = typesObj.httpPost(url=searchUrl,contentType="application/json", multipart="false").toObject().cget(aggregations="").cget(types="").cget(buckets="").displayJson(_collapse="true");
 
 #skyrepoTypes = types;

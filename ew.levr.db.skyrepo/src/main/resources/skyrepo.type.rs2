@@ -93,7 +93,7 @@ addMappingNoSearch=#object(
 			index="no"
 		)
 	)
-).httpPost(url=mapUrl,multipart="false");
+).httpPost(url=mapUrl,contentType="application/json",multipart="false");
 
 addWhiteSpaceRemovalMapping = #object(
 	properties=#object(
@@ -104,7 +104,7 @@ addWhiteSpaceRemovalMapping = #object(
 			analyzer="whitespace_remove"
 		)
 	)
-).httpPost(url=mapUrl,multipart="false");
+).httpPost(url=mapUrl,contentType="application/json",multipart="false");
 
 addWhiteSpaceRemovalMapping = #object(
 	properties=getCurrentMapping.put(
@@ -114,7 +114,7 @@ addWhiteSpaceRemovalMapping = #object(
 		_key=#add(a="@typePrefix",c="@field",d=".type"),
 		_value="string"
 	).fromDotNotationObject()
-).httpPost(url=mapUrl, multipart="false");
+).httpPost(url=mapUrl,contentType="application/json",multipart="false");
 
 addWhiteSpaceRemovalMapping=#if(
 	operator=getCurrentMapping.getByParam(param=#add(a="@typePrefix",c="@field",d=".analyzer")),
@@ -127,7 +127,7 @@ addNotAnalyzedMultiField = #object(
 	).put(
 		_key="@field",
 		_value=#object(
-			type="multi_field",
+			type="text",
 			fields=#object(
 			).put(
 				_key="(full)",
@@ -144,7 +144,7 @@ addNotAnalyzedMultiField = #object(
 			)
 		)
 	)
-).httpPost(url=mapUrl, multipart="false");
+).httpPost(url=mapUrl,contentType="application/json",multipart="false");
 	
 addNotAnalyzedMultiField = #object(
 	properties=getCurrentMapping.put(
@@ -161,9 +161,9 @@ addNotAnalyzedMultiField = #object(
 		_value="analyzed"
 	).put(
 		_key=#add(a="@typePrefix",c="@field",d=".type"),
-		_value="multi_field"
+		_value="text"
 	).fromDotNotationObject()
-).httpPost(url=mapUrl, multipart="false");
+).httpPost(url=mapUrl,contentType="application/json",multipart="false");
 
 addNotAnalyzedMultiField=#if(
 	operator=getCurrentMapping.getByParam(param=#add(a="@typePrefix",c="@field",d=".fields.(full).index")),
@@ -179,7 +179,7 @@ addExcludeFromAllIndex = #object(
 		_key=#add(a="@typePrefix",c="@field",d=".type"),
 		_value="string"
 	).fromDotNotationObject()
-).httpPost(url=mapUrl, multipart="false");
+).httpPost(url=mapUrl,contentType="application/json",multipart="false");
 
 addExcludeFromAllIndex=#if(
 	operator=getCurrentMapping.has(has=#add(a="@typePrefix",c="@field",d=".include_in_all")),
@@ -312,6 +312,7 @@ addAnalyzer = #object(
 		)
 	)
 ).httpPut(
+    contentType="application/json",
 	url=#add(
 		a=#urlBase(),
 		b="/",c=indexBase
