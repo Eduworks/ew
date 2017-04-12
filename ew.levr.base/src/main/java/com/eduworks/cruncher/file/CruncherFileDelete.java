@@ -10,7 +10,7 @@ import com.eduworks.resolver.Cruncher;
 
 /**
  * Deletes a file or directory. Will return false if file did not exist or if the file could not be deleted. Returns true if the file is deleted.
- * 
+ *
  * rs2: #fileDelete(path="Relative or Full Path to directory");<br>
  * LevrJS: fileDelete.call(this,"Relative or Full Path to directory");
  *
@@ -18,15 +18,14 @@ import com.eduworks.resolver.Cruncher;
  * @module ew.levr.base
  * @author fritz.ray@eduworks.com
  */
-/**
- * @method fileDelete
- * @param path {String} Relative or Full Path to file or directory.
- * @param [safe=true] {Boolean} For security, will not obey paths that contain '..'or startsWIth('/') paths.
- * @return {Boolean} True if the file or directory was deleted.
- */
-
 public class CruncherFileDelete extends Cruncher {
 
+    /**
+     * @method fileDelete
+     * @param path {String} Relative or Full Path to file or directory.
+     * @param [safe=true] {Boolean} For security, will not obey paths that contain '..'or startsWIth('/') paths.
+     * @return {Boolean} True if the file or directory was deleted.
+     */
     public Object resolve(Context c,
             java.util.Map<String, String[]> parameters, java.util.Map<String, java.io.InputStream> dataStreams)
             throws org.json.JSONException {

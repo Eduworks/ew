@@ -27,13 +27,13 @@ import com.eduworks.util.io.InMemoryFile;
  * @module ew.levr.base
  * @author fritz.ray@eduworks.com
  */
+public class CruncherDeserialize extends Cruncher {
+
 /**
  * @method deserialize
  * @param obj {File|InMemoryFile} File or In Memory File to extract object from.
  * @return {Object} Object that has been deserialized.
  */
-public class CruncherDeserialize extends Cruncher {
-
     @Override
     public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException {
         Object obj = getObj(c, parameters, dataStreams);

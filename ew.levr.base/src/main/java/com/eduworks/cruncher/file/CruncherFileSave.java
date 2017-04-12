@@ -19,28 +19,27 @@ import com.eduworks.util.io.InMemoryFile;
 
 /**
  * Saves a file onto the filesystem. If passed a string, uses default encoding.
- * 
- * rs2: obj = obj.fileSave(path="Path to save to.");
- * levrJs: obj = fileSave.call(this,obj,"Path to save to.");
- * 
+ *
+ * rs2: obj = obj.fileSave(path="Path to save to."); levrJs: obj = fileSave.call(this,obj,"Path to save to.");
+ *
  * @class fileSave
  * @module ew.levr.base
  * @author fritz.ray@eduworks.com
  */
-/**
- * @method fileSave
- * @param obj (InMemoryFile|File|String) Data to save to a file.
- * @param path (String) Path to save the file.
- * @param [overwrite=true] Overwrite the file if it already exists.
- * @param [safe=true] {Boolean} For security, will not obey paths that contain '..'or startsWIth('/') paths.
- * @return (InMemoryFile|File|String) Value passed into obj.
- */
 public class CruncherFileSave extends Cruncher {
 
+    /**
+     * @method fileSave
+     * @param obj (InMemoryFile|File|String) Data to save to a file.
+     * @param path (String) Path to save the file.
+     * @param [overwrite=true] Overwrite the file if it already exists.
+     * @param [safe=true] {Boolean} For security, will not obey paths that contain '..'or startsWIth('/') paths.
+     * @return (InMemoryFile|File|String) Value passed into obj.
+     */
     @Override
     public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException {
         String path = getAsString("path", c, parameters, dataStreams);
-        if (optAsBoolean("safe",true,c,parameters,dataStreams) && CruncherCreateDirectory.pathUnsafe(path)) {
+        if (optAsBoolean("safe", true, c, parameters, dataStreams) && CruncherCreateDirectory.pathUnsafe(path)) {
             throw new RuntimeException("Cannot go up in filesystem.");
         }
         File f = new File(path);
@@ -93,7 +92,7 @@ public class CruncherFileSave extends Cruncher {
 
     @Override
     public JSONObject getParameters() throws JSONException {
-        return jo("obj", "InMemoryFile|File|String", "path", "String", "?overwrite","Boolean","?safe","Boolean");
+        return jo("obj", "InMemoryFile|File|String", "path", "String", "?overwrite", "Boolean", "?safe", "Boolean");
     }
 
 }

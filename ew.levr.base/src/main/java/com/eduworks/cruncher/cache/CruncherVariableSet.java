@@ -12,7 +12,7 @@ import com.eduworks.resolver.Cruncher;
 
 /**
  * Places a variable into a local store referenced by 'key'. Use when in-memory state is absolutely required.
- * 
+ *
  * rs2: obj.variableSet(key="unique key");<br>
  * LevrJS: variableSet.call(this,obj,"unique key");
  *
@@ -20,40 +20,40 @@ import com.eduworks.resolver.Cruncher;
  * @module ew.levr.base
  * @author fritz.ray@eduworks.com
  */
-/**
- * @method variableSet
- * @param obj {Cruncher|Function|Object} Resolved variable to store.
- * @param key {String} Unique key used to store the variable.
- */
-public class CruncherVariableSet extends Cruncher
-{
-	public static Map<String,Object> store = new EwMap<String,Object>();
-	@Override
-	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
-	{
-		Object obj = getObj(c, parameters, dataStreams);
-		store.put(getAsString("key",c,parameters, dataStreams),obj);
-		return obj;
-	}
-	@Override
-	public String getDescription()
-	{
-		return "Places a variable into a local state referenced by 'key'. Use when in-memory state is absolutely required.";
-	}
-	@Override
-	public String getReturn()
-	{
-		return "Object";
-	}
-	@Override
-	public String getAttribution()
-	{
-		return ATTRIB_NONE;
-	}
-	@Override
-	public JSONObject getParameters() throws JSONException
-	{
-		return jo("obj","Object","key","String");
-	}
+public class CruncherVariableSet extends Cruncher {
+
+    public static Map<String, Object> store = new EwMap<String, Object>();
+
+    /**
+     * @method variableSet
+     * @param obj {Cruncher|Function|Object} Resolved variable to store.
+     * @param key {String} Unique key used to store the variable.
+     */
+    @Override
+    public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException {
+        Object obj = getObj(c, parameters, dataStreams);
+        store.put(getAsString("key", c, parameters, dataStreams), obj);
+        return obj;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Places a variable into a local state referenced by 'key'. Use when in-memory state is absolutely required.";
+    }
+
+    @Override
+    public String getReturn() {
+        return "Object";
+    }
+
+    @Override
+    public String getAttribution() {
+        return ATTRIB_NONE;
+    }
+
+    @Override
+    public JSONObject getParameters() throws JSONException {
+        return jo("obj", "Object", "key", "String");
+    }
 
 }
