@@ -26,6 +26,8 @@
                     <ul>
                             <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
                             </li>
+                            <li><a href="../modules/ew.levr.rdf.html">ew.levr.rdf</a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -46,7 +48,14 @@
                             <li><a href="../classes/fileHash.html">fileHash</a></li>
                             <li><a href="../classes/fileList.html">fileList</a></li>
                             <li><a href="../classes/fileLoad.html">fileLoad</a></li>
+                            <li><a href="../classes/filename.html">filename</a></li>
+                            <li><a href="../classes/filepath.html">filepath</a></li>
                             <li><a href="../classes/fileSave.html">fileSave</a></li>
+                            <li><a href="../classes/fileSize.html">fileSize</a></li>
+                            <li><a href="../classes/fileToBase64.html">fileToBase64</a></li>
+                            <li><a href="../classes/fileToString.html">fileToString</a></li>
+                            <li><a href="../classes/jsonLdCompact.html">jsonLdCompact</a></li>
+                            <li><a href="../classes/jsonLdExpand.html">jsonLdExpand</a></li>
                             <li><a href="../classes/variableGet.html">variableGet</a></li>
                             <li><a href="../classes/variableSet.html">variableSet</a></li>
                             <li><a href="../classes/wsBroadcast.html">wsBroadcast</a></li>
@@ -93,13 +102,13 @@ import java.util.logging.Logger;
 
 /**
  * Converts one or more base 64 encoded files (represented as a JSON Object) to one or more InMemoryFiles
- * 
+ *
  * Representation:&lt;br&gt;
  * {&lt;br&gt;
- *  name:&quot;base64EncodedFileAsString&quot;&lt;br&gt;
- *  ,...
+ * name:&quot;base64EncodedFileAsString&quot;&lt;br&gt;
+ * ,...&lt;br&gt;
  * }
- * 
+ *
  * rs2: result = obj.base64ToFile();&lt;br&gt;
  * LevrJS: result = base64ToFile.call(this,obj);
  *
@@ -107,63 +116,60 @@ import java.util.logging.Logger;
  * @module ew.levr.base
  * @author fritz.ray@eduworks.com
  */
-/**
- * @method base64ToFile
- * @param obj {JSONObject} JSON Object holding the Base64 representation of the file.
- * @param [mimeType] {String} Force the mime type of the resultant files to be this.
- * @return {InMemoryFile|List&lt;InMemoryFile&gt;} File Object.
- */
-public class CruncherBase64ToFile extends Cruncher
-{
-	@Override
-	public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
-	{
-		JSONObject obj = getObjAsJsonObject(c, parameters, dataStreams);
-		
-		List&lt;InMemoryFile&gt; result = new EwList&lt;InMemoryFile&gt;();
-		for (String key : EwJson.getKeys(obj))
-		{
-			InMemoryFile rf = new InMemoryFile();
-			rf.name = key;
-			rf.data = Base64.decodeBase64(obj.getString(key));
-            try
-            {
-                rf.mime = optAsString(&quot;mimeType&quot;, CruncherMimeType.getMimeType(rf,null), c, parameters, dataStreams);
-            } catch (IOException ex)
-            {
+public class CruncherBase64ToFile extends Cruncher {
+
+    /**
+     * @method base64ToFile
+     * @param obj {JSONObject} JSON Object holding the Base64 representation of the file.
+     * @param [mimeType] {String} Force the mime type of the resultant files to be this.
+     * @return {InMemoryFile|List&lt;InMemoryFile&gt;} File Object.
+     */
+    @Override
+    public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException {
+        JSONObject obj = getObjAsJsonObject(c, parameters, dataStreams);
+
+        List&lt;InMemoryFile&gt; result = new EwList&lt;InMemoryFile&gt;();
+        for (String key : EwJson.getKeys(obj)) {
+            InMemoryFile rf = new InMemoryFile();
+            rf.name = key;
+            rf.data = Base64.decodeBase64(obj.getString(key));
+            try {
+                rf.mime = optAsString(&quot;mimeType&quot;, CruncherMimeType.getMimeType(rf, null), c, parameters, dataStreams);
+            } catch (IOException ex) {
                 Logger.getLogger(CruncherBase64ToFile.class.getName()).log(Level.SEVERE, null, ex);
             }
-			result.add(rf);
-		}
-		if (result.size() == 0) return null;
-		if (result.size() == 1) return result.get(0);
-		return result;
-	}
+            result.add(rf);
+        }
+        if (result.size() == 0) {
+            return null;
+        }
+        if (result.size() == 1) {
+            return result.get(0);
+        }
+        return result;
+    }
 
-	@Override
-	public String getDescription()
-	{
-		return &quot;Converts one or more base 64 files to an InMemoryFile&quot;;
-	}
+    @Override
+    public String getDescription() {
+        return &quot;Converts one or more base 64 files to an InMemoryFile&quot;;
+    }
 
-	@Override
-	public JSONObject getParameters() throws JSONException
-	{
-		return jo(&quot;obj&quot;,&quot;JSON Object, {name:&#x27;base64&#x27;,...}&quot;);
-	}
+    @Override
+    public JSONObject getParameters() throws JSONException {
+        return jo(&quot;obj&quot;, &quot;JSON Object, {name:&#x27;base64&#x27;,...}&quot;);
+    }
 
-	@Override
-	public String getReturn()
-	{
-		return &quot;InMemoryFile|List&lt;InMemoryFile&gt;&quot;;
-	}
+    @Override
+    public String getReturn() {
+        return &quot;InMemoryFile|List&lt;InMemoryFile&gt;&quot;;
+    }
 
-	@Override
-	public String getAttribution()
-	{
-		return ATTRIB_NONE;
-	}
+    @Override
+    public String getAttribution() {
+        return ATTRIB_NONE;
+    }
 }
+
 </pre>
 
 </div>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ew.levr.rdf/src/test/java/com/eduworks/cruncher/rdf/CruncherJsonLdCompactTest.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworks-ring-e.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                            <li><a href="../modules/ew.levr.rdf.html">ew.levr.rdf</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/add.html">add</a></li>
+                            <li><a href="../classes/base64ToFile.html">base64ToFile</a></li>
+                            <li><a href="../classes/cache.html">cache</a></li>
+                            <li><a href="../classes/createDirectory.html">createDirectory</a></li>
+                            <li><a href="../classes/deserialize.html">deserialize</a></li>
+                            <li><a href="../classes/fileDelete.html">fileDelete</a></li>
+                            <li><a href="../classes/fileExists.html">fileExists</a></li>
+                            <li><a href="../classes/fileHash.html">fileHash</a></li>
+                            <li><a href="../classes/fileList.html">fileList</a></li>
+                            <li><a href="../classes/fileLoad.html">fileLoad</a></li>
+                            <li><a href="../classes/filename.html">filename</a></li>
+                            <li><a href="../classes/filepath.html">filepath</a></li>
+                            <li><a href="../classes/fileSave.html">fileSave</a></li>
+                            <li><a href="../classes/fileSize.html">fileSize</a></li>
+                            <li><a href="../classes/fileToBase64.html">fileToBase64</a></li>
+                            <li><a href="../classes/fileToString.html">fileToString</a></li>
+                            <li><a href="../classes/jsonLdCompact.html">jsonLdCompact</a></li>
+                            <li><a href="../classes/jsonLdExpand.html">jsonLdExpand</a></li>
+                            <li><a href="../classes/variableGet.html">variableGet</a></li>
+                            <li><a href="../classes/variableSet.html">variableSet</a></li>
+                            <li><a href="../classes/wsBroadcast.html">wsBroadcast</a></li>
+                            <li><a href="../classes/wsEmit.html">wsEmit</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.1.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">ew.levr.rdf/src/test/java/com/eduworks/cruncher/rdf/CruncherJsonLdCompactTest.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.eduworks.cruncher.rdf;
+
+import com.eduworks.lang.util.EwJson;
+import com.eduworks.resolver.Context;
+import com.eduworks.util.io.EwFileSystem;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.junit.Assert;
+import org.junit.Test;
+
+/**
+ *
+ * @author fray
+ */
+public class CruncherJsonLdCompactTest
+{
+
+    @Test
+    public void compactFramework() throws JSONException, IOException
+    {
+        String json = FileUtils.readFileToString(EwFileSystem.findFile(&quot;012.framework.json&quot;, CruncherJsonLdCompactTest.class, false, false), Charset.forName(&quot;UTF-8&quot;));
+        CruncherJsonLdCompact c = new CruncherJsonLdCompact();
+        JSONObject uncompacted;
+        try{
+        	uncompacted = new JSONObject(json);
+        }catch(JSONException e){
+        	uncompacted = new JSONArray(json).getJSONObject(0);
+        }
+        
+        c.build(&quot;obj&quot;, uncompacted);
+        JSONObject compacted = (JSONObject) c.resolve(new Context(), new HashMap&lt;&gt;(), null);
+        compacted.put(&quot;@context&quot;, uncompacted.get(&quot;@context&quot;));
+        System.out.println(compacted.toString(2));
+        for (String s : EwJson.getKeys(compacted))
+        {
+//            System.out.println(s);
+//            System.out.println(uncompacted.get(s).toString());
+//            System.out.println(compacted.get(s).toString());
+            Assert.assertTrue(&quot;Compacted Framework is not equivalent to Uncompacted Framework&quot;, uncompacted.get(s).toString().contains(compacted.get(s).toString()));
+        }
+        for (String s : EwJson.getKeys(uncompacted))
+        {
+//            System.out.println(s);
+//            System.out.println(uncompacted.get(s).toString());
+//            System.out.println(compacted.get(s).toString());
+            Assert.assertTrue(&quot;Compacted Framework is not equivalent to Uncompacted Framework&quot;, uncompacted.get(s).toString().contains(compacted.get(s).toString()));
+        }
+    }
+    @Test
+    public void compactCompetency() throws JSONException, IOException
+    {
+        String json = FileUtils.readFileToString(EwFileSystem.findFile(&quot;94c.competency.json&quot;, CruncherJsonLdCompactTest.class, false, false), Charset.forName(&quot;UTF-8&quot;));
+        CruncherJsonLdCompact c = new CruncherJsonLdCompact();
+        JSONObject uncompacted = new JSONObject(json);
+        c.build(&quot;obj&quot;, uncompacted);
+        JSONObject compacted = (JSONObject) c.resolve(new Context(), new HashMap&lt;&gt;(), null);
+//        System.out.println(compacted.toString(2));
+        compacted.put(&quot;@context&quot;, uncompacted.get(&quot;@context&quot;));
+        for (String s : EwJson.getKeys(compacted))
+        {
+//            System.out.println(s);
+//            System.out.println(uncompacted.get(s).toString());
+//            System.out.println(compacted.get(s).toString());
+            Assert.assertTrue(&quot;Compacted Competency is not equivalent to Uncompacted Competency&quot;, uncompacted.get(s).toString().contains(compacted.get(s).toString()));
+        }
+        for (String s : EwJson.getKeys(uncompacted))
+        {
+//            System.out.println(s);
+//            System.out.println(uncompacted.get(s).toString());
+//            System.out.println(compacted.get(s).toString());
+            Assert.assertTrue(&quot;Compacted Competency is not equivalent to Uncompacted Competency&quot;, uncompacted.get(s).toString().contains(compacted.get(s).toString()));
+        }
+    }
+    @Test
+    public void compactRelation() throws JSONException, IOException
+    {
+        String json = FileUtils.readFileToString(EwFileSystem.findFile(&quot;4bc.relation.json&quot;, CruncherJsonLdCompactTest.class, false, false), Charset.forName(&quot;UTF-8&quot;));
+        CruncherJsonLdCompact c = new CruncherJsonLdCompact();
+        JSONObject uncompacted = new JSONObject(json);
+        c.build(&quot;obj&quot;, uncompacted);
+        JSONObject compacted = (JSONObject) c.resolve(new Context(), new HashMap&lt;&gt;(), null);
+//        System.out.println(compacted);
+        compacted.put(&quot;@context&quot;, uncompacted.get(&quot;@context&quot;));
+        for (String s : EwJson.getKeys(compacted))
+        {
+//            System.out.println(s);
+//            System.out.println(uncompacted.get(s).toString());
+//            System.out.println(compacted.get(s).toString());
+            Assert.assertTrue(&quot;Compacted Relation is not equivalent to Uncompacted Relation&quot;, uncompacted.get(s).toString().contains(compacted.get(s).toString()));
+        }
+        for (String s : EwJson.getKeys(uncompacted))
+        {
+//            System.out.println(s);
+//            System.out.println(uncompacted.get(s).toString());
+//            System.out.println(compacted.get(s).toString());
+            Assert.assertTrue(&quot;Compacted Relation is not equivalent to Uncompacted Relation&quot;, uncompacted.get(s).toString().contains(compacted.get(s).toString()));
+        }
+    }
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

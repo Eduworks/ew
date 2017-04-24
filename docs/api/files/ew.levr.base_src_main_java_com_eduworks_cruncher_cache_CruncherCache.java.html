@@ -26,6 +26,8 @@
                     <ul>
                             <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
                             </li>
+                            <li><a href="../modules/ew.levr.rdf.html">ew.levr.rdf</a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -46,7 +48,14 @@
                             <li><a href="../classes/fileHash.html">fileHash</a></li>
                             <li><a href="../classes/fileList.html">fileList</a></li>
                             <li><a href="../classes/fileLoad.html">fileLoad</a></li>
+                            <li><a href="../classes/filename.html">filename</a></li>
+                            <li><a href="../classes/filepath.html">filepath</a></li>
                             <li><a href="../classes/fileSave.html">fileSave</a></li>
+                            <li><a href="../classes/fileSize.html">fileSize</a></li>
+                            <li><a href="../classes/fileToBase64.html">fileToBase64</a></li>
+                            <li><a href="../classes/fileToString.html">fileToString</a></li>
+                            <li><a href="../classes/jsonLdCompact.html">jsonLdCompact</a></li>
+                            <li><a href="../classes/jsonLdExpand.html">jsonLdExpand</a></li>
                             <li><a href="../classes/variableGet.html">variableGet</a></li>
                             <li><a href="../classes/variableSet.html">variableSet</a></li>
                             <li><a href="../classes/wsBroadcast.html">wsBroadcast</a></li>
@@ -86,8 +95,9 @@ import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 
 /**
- * Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.&lt;br&gt;Cache, by default, persists over the web service request.
- * 
+ * Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.&lt;br&gt;Cache, by default, persists over the web service
+ * request.
+ *
  * rs2: result = obj.cache(name=&quot;unique name&quot;);&lt;br&gt;
  * LevrJS: result = cache.call(this,obj,&quot;unique name&quot;);
  *
@@ -95,70 +105,64 @@ import com.eduworks.resolver.Cruncher;
  * @module ew.levr.base
  * @author fritz.ray@eduworks.com
  */
-/**
- * @method cache
- * @param obj {Cruncher|Function} Cruncher or Function that will return an object to cache.
- * @param name {String} Unique name used to store and retrieve the cached object.
- * @param [remove=false] {Boolean} Removes the cached value using the name. &#x27;obj&#x27; can be null. May be combined with &#x27;global&#x27;.
- * @param [global=false] {Boolean} Add to global cache, persists over web service requests.
- * @param [justLock=false] {Boolean} Don&#x27;t deal with the cache, but use the cache locking mechanism to prevent recurrent entrance.
- * @param [removeAllGlobal=false] {Boolean} Clears all caches in LEVR.
- * @return {Object} Cached value if in cache, computed value if not in cache.
- */
-public class CruncherCache extends Cruncher
-{
+public class CruncherCache extends Cruncher {
+
     public static Map&lt;String, Object&gt; obj = Collections.synchronizedMap(new HashMap&lt;String, Object&gt;());
 
+    /**
+     * @method cache
+     * @param obj {Cruncher|Function} Cruncher or Function that will return an object to cache.
+     * @param name {String} Unique name used to store and retrieve the cached object.
+     * @param [remove=false] {Boolean} Removes the cached value using the name. &#x27;obj&#x27; can be null. May be combined with &#x27;global&#x27;.
+     * @param [global=false] {Boolean} Add to global cache, persists over web service requests.
+     * @param [justLock=false] {Boolean} Don&#x27;t deal with the cache, but use the cache locking mechanism to prevent recurrent entrance.
+     * @param [removeAllGlobal=false] {Boolean} Clears all caches in LEVR.
+     * @return {Object} Cached value if in cache, computed value if not in cache.
+     */
+
     @Override
-    public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
-    {
+    public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException {
         String cacheName = &quot;cruncherCache&quot; + getAsString(&quot;name&quot;, c, parameters, dataStreams);
         Object result = null;
         Object lock = null;
-        if (optAsBoolean(&quot;removeAllGlobal&quot;, false, c, parameters, dataStreams))
-        {
+        if (optAsBoolean(&quot;removeAllGlobal&quot;, false, c, parameters, dataStreams)) {
             EwCache.caches.clear();
             obj.clear();
             return null;
         }
-        synchronized (getClass())
-        {
-            lock = obj.get(cacheName);
-            if (lock == null)
-            {
-                obj.put(cacheName, lock = cacheName);
+        boolean global = optAsBoolean(&quot;global&quot;, false, c, parameters, dataStreams);
+        synchronized (getClass()) {
+            if (global) {
+                lock = obj.get(cacheName);
+                if (lock == null) {
+                    obj.put(cacheName, lock = new Object());
+                }
+            } else {
+                lock = c.get(&quot;cache&quot; + cacheName);
+                if (lock == null) {
+                    obj.put(&quot;cache&quot; + cacheName, lock = new Object());
+                }
             }
         }
-        synchronized (lock)
-        {
-            if (optAsBoolean(&quot;remove&quot;, false, c, parameters, dataStreams))
-            {
-                if (optAsBoolean(&quot;global&quot;, false, c, parameters, dataStreams))
-                {
+        synchronized (lock) {
+            if (optAsBoolean(&quot;remove&quot;, false, c, parameters, dataStreams)) {
+                if (global) {
                     EwCache.getCache(&quot;GlobalCache&quot;).remove(cacheName);
-                } else
-                {
+                } else {
                     c.remove(cacheName);
                 }
-            } else
-            {
-                if (optAsBoolean(&quot;global&quot;, false, c, parameters, dataStreams))
-                {
+            } else {
+                if (global) {
                     result = EwCache.getCache(&quot;GlobalCache&quot;).get(cacheName);
-                } else
-                {
+                } else {
                     result = c.get(cacheName);
                 }
-                if (result == null)
-                {
+                if (result == null) {
                     result = getObj(c, parameters, dataStreams);
-                    if (!optAsBoolean(&quot;justLock&quot;, false, c, parameters, dataStreams))
-                    {
-                        if (optAsBoolean(&quot;global&quot;, false, c, parameters, dataStreams))
-                        {
+                    if (!optAsBoolean(&quot;justLock&quot;, false, c, parameters, dataStreams)) {
+                        if (global) {
                             EwCache.getCache(&quot;GlobalCache&quot;).put(cacheName, result);
-                        } else
-                        {
+                        } else {
                             c.put(cacheName, result);
                         }
                     }
@@ -169,26 +173,22 @@ public class CruncherCache extends Cruncher
     }
 
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         return &quot;Caches a result, and fetches it automatically if it is in cache. Use Name to specify cache key.&quot;;
     }
 
     @Override
-    public String getReturn()
-    {
+    public String getReturn() {
         return &quot;Object&quot;;
     }
 
     @Override
-    public JSONObject getParameters() throws JSONException
-    {
-        return jo(&quot;obj&quot;, &quot;Object&quot;, &quot;name&quot;, &quot;String&quot;,&quot;remove&quot;,&quot;Boolean&quot;,&quot;global&quot;,&quot;Boolean&quot;,&quot;justLock&quot;,&quot;Boolean&quot;,&quot;removeAllGlobal&quot;,&quot;Boolean&quot;);
+    public JSONObject getParameters() throws JSONException {
+        return jo(&quot;obj&quot;, &quot;Object&quot;, &quot;name&quot;, &quot;String&quot;, &quot;remove&quot;, &quot;Boolean&quot;, &quot;global&quot;, &quot;Boolean&quot;, &quot;justLock&quot;, &quot;Boolean&quot;, &quot;removeAllGlobal&quot;, &quot;Boolean&quot;);
     }
 
     @Override
-    public String getAttribution()
-    {
+    public String getAttribution() {
         return ATTRIB_NONE;
     }
 

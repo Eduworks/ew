@@ -26,6 +26,8 @@
                     <ul>
                             <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
                             </li>
+                            <li><a href="../modules/ew.levr.rdf.html">ew.levr.rdf</a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -46,7 +48,14 @@
                             <li><a href="../classes/fileHash.html">fileHash</a></li>
                             <li><a href="../classes/fileList.html">fileList</a></li>
                             <li><a href="../classes/fileLoad.html">fileLoad</a></li>
+                            <li><a href="../classes/filename.html">filename</a></li>
+                            <li><a href="../classes/filepath.html">filepath</a></li>
                             <li><a href="../classes/fileSave.html">fileSave</a></li>
+                            <li><a href="../classes/fileSize.html">fileSize</a></li>
+                            <li><a href="../classes/fileToBase64.html">fileToBase64</a></li>
+                            <li><a href="../classes/fileToString.html">fileToString</a></li>
+                            <li><a href="../classes/jsonLdCompact.html">jsonLdCompact</a></li>
+                            <li><a href="../classes/jsonLdExpand.html">jsonLdExpand</a></li>
                             <li><a href="../classes/variableGet.html">variableGet</a></li>
                             <li><a href="../classes/variableSet.html">variableSet</a></li>
                             <li><a href="../classes/wsBroadcast.html">wsBroadcast</a></li>
@@ -84,61 +93,59 @@ import com.eduworks.resolver.Cruncher;
 
 /**
  * Lists all files in a directory. Only returns partial paths.
- * 
- * rs2: filePaths = #fileList(path=&quot;Directory path&quot;)
- * LevrJS: pathsArray = fileList.call(this,&quot;Directory path&quot;)
- * 
+ *
+ * rs2: filePaths = #fileList(path=&quot;Directory path&quot;) LevrJS: pathsArray = fileList.call(this,&quot;Directory path&quot;)
+ *
  * @class fileList
  * @module ew.levr.base
  * @author fritz.ray@eduworks.com
  */
-/**
- * @method fileList
- * @param path (String) Full or relative path to directory to list files.
- * @param [safe=true] {Boolean} For security, will not obey paths that contain &#x27;..&#x27;or startsWIth(&#x27;/&#x27;) paths.
- * @return (JSONArray) Relative paths from the directory root of all files or directories in that directory.
- */
-public class CruncherFileList extends Cruncher
-{
-	public Object resolve(Context c, java.util.Map&lt;String, String[]&gt; parameters, java.util.Map&lt;String, java.io.InputStream&gt; dataStreams)
-			throws org.json.JSONException
-	{
-		String path = getAsString(&quot;path&quot;, c, parameters, dataStreams);
-		if (optAsBoolean(&quot;safe&quot;,true,c,parameters,dataStreams) &amp;&amp; CruncherCreateDirectory.pathUnsafe(path))
-			throw new RuntimeException(&quot;Cannot go up in filesystem.&quot;);
-		File f = new File(path);
-		JSONArray paths = new JSONArray();
-		File dir = new File(path);
-		if (dir.isDirectory() == false)
-			throw new RuntimeException(&quot;Path does not refer to a directory.&quot;);
-		for (String s : dir.list())
-			paths.put(s);
-		return paths;
-	}
+public class CruncherFileList extends Cruncher {
 
-	@Override
-	public String getDescription()
-	{
-		return &quot;Returns paths to all files referred to by path.&quot;;
-	}
+    /**
+     * @method fileList
+     * @param path (String) Full or relative path to directory to list files.
+     * @param [safe=true] {Boolean} For security, will not obey paths that contain &#x27;..&#x27;or startsWIth(&#x27;/&#x27;) paths.
+     * @return (JSONArray) Relative paths from the directory root of all files or directories in that directory.
+     */
+    public Object resolve(Context c, java.util.Map&lt;String, String[]&gt; parameters, java.util.Map&lt;String, java.io.InputStream&gt; dataStreams)
+            throws org.json.JSONException {
+        String path = getAsString(&quot;path&quot;, c, parameters, dataStreams);
+        if (optAsBoolean(&quot;safe&quot;, true, c, parameters, dataStreams) &amp;&amp; CruncherCreateDirectory.pathUnsafe(path)) {
+            throw new RuntimeException(&quot;Cannot go up in filesystem.&quot;);
+        }
+        File f = new File(path);
+        JSONArray paths = new JSONArray();
+        File dir = new File(path);
+        if (dir.isDirectory() == false) {
+            throw new RuntimeException(&quot;Path does not refer to a directory.&quot;);
+        }
+        for (String s : dir.list()) {
+            paths.put(s);
+        }
+        return paths;
+    }
 
-	@Override
-	public String getReturn()
-	{
-		return &quot;InMemoryFile&quot;;
-	}
+    @Override
+    public String getDescription() {
+        return &quot;Returns paths to all files referred to by path.&quot;;
+    }
 
-	@Override
-	public String getAttribution()
-	{
-		return ATTRIB_NONE;
-	}
+    @Override
+    public String getReturn() {
+        return &quot;InMemoryFile&quot;;
+    }
 
-	@Override
-	public JSONObject getParameters() throws JSONException
-	{
-		return jo(&quot;path&quot;, &quot;String&quot;);
-	};
+    @Override
+    public String getAttribution() {
+        return ATTRIB_NONE;
+    }
+
+    @Override
+    public JSONObject getParameters() throws JSONException {
+        return jo(&quot;path&quot;, &quot;String&quot;);
+    }
+;
 }
 
 </pre>

@@ -306,6 +306,58 @@
             "fors": {},
             "namespaces": {}
         },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileSize.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileSize.java",
+            "modules": {},
+            "classes": {
+                "fileSize": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileToBase64.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileToBase64.java",
+            "modules": {},
+            "classes": {
+                "fileToBase64": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileToString.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileToString.java",
+            "modules": {},
+            "classes": {
+                "fileToString": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFilename.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFilename.java",
+            "modules": {},
+            "classes": {
+                "filename": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFilepath.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFilepath.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFilesToZip.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFilesToZip.java",
+            "modules": {},
+            "classes": {
+                "filepath": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java": {
             "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java",
             "modules": {},
@@ -431,8 +483,112 @@
             "fors": {},
             "namespaces": {}
         },
+        "ew.levr.db.mapdb/src/main/java/com/eduworks/levr/db/mapdb/Package.java": {
+            "name": "ew.levr.db.mapdb/src/main/java/com/eduworks/levr/db/mapdb/Package.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.db.sql/src/main/java/com/eduworks/levr/db/mapdb/Package.java": {
+            "name": "ew.levr.db.sql/src/main/java/com/eduworks/levr/db/mapdb/Package.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.distributed/src/main/java/com/eduworks/levr/distributed/Package.java": {
+            "name": "ew.levr.distributed/src/main/java/com/eduworks/levr/distributed/Package.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.lang.english/src/main/java/com/eduworks/levr/lang/english/Package.java": {
+            "name": "ew.levr.lang.english/src/main/java/com/eduworks/levr/lang/english/Package.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.ontology/src/main/java/com/eduworks/levr/ontology/Package.java": {
+            "name": "ew.levr.ontology/src/main/java/com/eduworks/levr/ontology/Package.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdCompact.java": {
+            "name": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdCompact.java",
+            "modules": {
+                "ew.levr.rdf": 1
+            },
+            "classes": {
+                "jsonLdCompact": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdExpand.java": {
+            "name": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdExpand.java",
+            "modules": {},
+            "classes": {
+                "jsonLdExpand": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToNQuads.java": {
+            "name": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToNQuads.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToRdfXml.java": {
+            "name": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToRdfXml.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToTurtle.java": {
+            "name": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToTurtle.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherNQuadsToJsonLd.java": {
+            "name": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherNQuadsToJsonLd.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.rdf/src/main/java/com/eduworks/levr/rdf/Package.java": {
+            "name": "ew.levr.rdf/src/main/java/com/eduworks/levr/rdf/Package.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.rdf/src/test/java/com/eduworks/cruncher/rdf/CruncherJsonLdCompactTest.java": {
+            "name": "ew.levr.rdf/src/test/java/com/eduworks/cruncher/rdf/CruncherJsonLdCompactTest.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java": {
             "name": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.service.paypal/src/main/java/com/eduworks/levr/service/paypal/Package.java": {
+            "name": "ew.levr.service.paypal/src/main/java/com/eduworks/levr/service/paypal/Package.java",
             "modules": {},
             "classes": {},
             "fors": {},
@@ -472,6 +628,13 @@
             "classes": {},
             "fors": {},
             "namespaces": {}
+        },
+        "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java": {
+            "name": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
         }
     },
     "modules": {
@@ -492,6 +655,11 @@
                 "fileList": 1,
                 "fileLoad": 1,
                 "fileSave": 1,
+                "fileSize": 1,
+                "fileToBase64": 1,
+                "fileToString": 1,
+                "filename": 1,
+                "filepath": 1,
                 "add": 1,
                 "wsBroadcast": 1,
                 "wsEmit": 1
@@ -501,7 +669,22 @@
             "tag": "module",
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/ws/CruncherWsEmit.java",
             "line": 12,
-            "description": "Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.<br>Cache, by default, persists over the web service request.\n\nrs2: result = obj.cache(name=\"unique name\");<br>\nLevrJS: result = cache.call(this,obj,\"unique name\");"
+            "description": "Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.<br>Cache, by default, persists over the web service\nrequest.\n\nrs2: result = obj.cache(name=\"unique name\");<br>\nLevrJS: result = cache.call(this,obj,\"unique name\");"
+        },
+        "ew.levr.rdf": {
+            "name": "ew.levr.rdf",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "jsonLdCompact": 1,
+                "jsonLdExpand": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdExpand.java",
+            "line": 19,
+            "description": "Converts a JSON object to JSON-LD and performs a Compact operation.\n\nrs2: result = obj.jsonLdCompact();<br>\nLevrJS: result = jsonLdCompact.call(this,obj);"
         }
     },
     "classes": {
@@ -516,7 +699,7 @@
             "module": "ew.levr.base",
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherCache.java",
             "line": 15,
-            "description": "Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.<br>Cache, by default, persists over the web service request.\n\nrs2: result = obj.cache(name=\"unique name\");<br>\nLevrJS: result = cache.call(this,obj,\"unique name\");",
+            "description": "Caches a result, and fetches it automatically (without executing the code in obj) if it is in cache.<br>Cache, by default, persists over the web service\nrequest.\n\nrs2: result = obj.cache(name=\"unique name\");<br>\nLevrJS: result = cache.call(this,obj,\"unique name\");",
             "author": "fritz.ray@eduworks.com"
         },
         "variableGet": {
@@ -561,7 +744,7 @@
             "namespace": "",
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherBase64ToFile.java",
             "line": 21,
-            "description": "Converts one or more base 64 encoded files (represented as a JSON Object) to one or more InMemoryFiles\n\nRepresentation:<br>\n{<br>\n name:\"base64EncodedFileAsString\"<br>\n ,...\n}\n\nrs2: result = obj.base64ToFile();<br>\nLevrJS: result = base64ToFile.call(this,obj);",
+            "description": "Converts one or more base 64 encoded files (represented as a JSON Object) to one or more InMemoryFiles\n\nRepresentation:<br>\n{<br>\nname:\"base64EncodedFileAsString\"<br>\n,...<br>\n}\n\nrs2: result = obj.base64ToFile();<br>\nLevrJS: result = base64ToFile.call(this,obj);",
             "author": "fritz.ray@eduworks.com"
         },
         "createDirectory": {
@@ -620,7 +803,7 @@
             "module": "ew.levr.base",
             "namespace": "",
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileExists.java",
-            "line": 12,
+            "line": 11,
             "description": "Returns true if the file or directory located at the path exists.\n\nrs2: result = #fileExists(path=\"Relative or Full Path to directory\");<br>\nLevrJS: fileExists.call(this,\"Relative or Full Path to directory\");",
             "author": "fritz.ray@eduworks.com"
         },
@@ -651,7 +834,7 @@
             "namespace": "",
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileList.java",
             "line": 12,
-            "description": "Lists all files in a directory. Only returns partial paths.\n\nrs2: filePaths = #fileList(path=\"Directory path\")\nLevrJS: pathsArray = fileList.call(this,\"Directory path\")",
+            "description": "Lists all files in a directory. Only returns partial paths.\n\nrs2: filePaths = #fileList(path=\"Directory path\") LevrJS: pathsArray = fileList.call(this,\"Directory path\")",
             "author": "fritz.ray@eduworks.com"
         },
         "fileLoad": {
@@ -666,7 +849,7 @@
             "namespace": "",
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileLoad.java",
             "line": 15,
-            "description": "Loads a file in a filesystem. Will attempt to copy the file into memory if the file is less than 2GB.\n\nrs2: file = #fileLoad(path=\"Path to File\");\nlevrJs: file = fileLoad.call(this,\"Path to File\");",
+            "description": "Loads a file in a filesystem. Will attempt to copy the file into memory if the file is less than 2GB.\n\nrs2: file = #fileLoad(path=\"Path to File\"); levrJs: file = fileLoad.call(this,\"Path to File\");",
             "author": "fritz.ray@eduworks.com"
         },
         "fileSave": {
@@ -681,7 +864,82 @@
             "namespace": "",
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileSave.java",
             "line": 20,
-            "description": "Saves a file onto the filesystem. If passed a string, uses default encoding.\n\nrs2: obj = obj.fileSave(path=\"Path to save to.\");\nlevrJs: obj = fileSave.call(this,obj,\"Path to save to.\");",
+            "description": "Saves a file onto the filesystem. If passed a string, uses default encoding.\n\nrs2: obj = obj.fileSave(path=\"Path to save to.\"); levrJs: obj = fileSave.call(this,obj,\"Path to save to.\");",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "fileSize": {
+            "name": "fileSize",
+            "shortname": "fileSize",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileSize.java",
+            "line": 15,
+            "description": "Measures the size of a file on the filesystem. If passed a string, uses default encoding.\n\nrs2: obj = obj.fileSize(); levrJs: obj = fileSize.call(this,obj);",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "fileToBase64": {
+            "name": "fileToBase64",
+            "shortname": "fileToBase64",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileToBase64.java",
+            "line": 19,
+            "description": "Converts one or more files to a JSON Object with the file's name as the key, and the file's data as a base64 encoded string as the value.\n\n{\"filename\":\"Base64 encoded file data\"}\n\nrs2: obj = obj.fileToBase64(); levrJs: obj = fileToBase64.call(this,obj);",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "fileToString": {
+            "name": "fileToString",
+            "shortname": "fileToString",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileToString.java",
+            "line": 23,
+            "description": "Converts the contents of one or more files to a UTF-8 encoded string.\n\nrs2: obj = obj.fileToString(); levrJs: obj = fileToString.call(this,obj);",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "filename": {
+            "name": "filename",
+            "shortname": "filename",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFilename.java",
+            "line": 15,
+            "description": "Returns the filename of a file.\n\nrs2: obj = obj.filename(); levrJs: obj = filename.call(this,obj); \nrs2: obj = obj.fileName(); levrJs: obj = fileName.call(this,obj);",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "filepath": {
+            "name": "filepath",
+            "shortname": "filepath",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFilesToZip.java",
+            "line": 37,
+            "description": "Zips either a Map<String,?>, a JSONObject composed of \"filename\":\"UTF-8 encoded string\" or a JSONArray of files.\nTODO: sDoes not support streaming, large file operations may require modification of this Cruncher.\n\nrs2: obj = obj.filepath(); levrJs: obj = filepame.call(this,obj);",
             "author": "fritz.ray@eduworks.com"
         },
         "add": {
@@ -727,6 +985,36 @@
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/ws/CruncherWsEmit.java",
             "line": 12,
             "description": "Broadcasts a message to all websockets connected to this machine.\n\nrs2: obj.wsBroadcast(to=\"@wsId\");<br>\nLevrJS: wsBroadcast.call(this,params.wsId,obj);",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "jsonLdCompact": {
+            "name": "jsonLdCompact",
+            "shortname": "jsonLdCompact",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.rdf",
+            "namespace": "",
+            "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdCompact.java",
+            "line": 24,
+            "description": "Converts a JSON object to JSON-LD and performs a Compact operation.\n\nrs2: result = obj.jsonLdCompact();<br>\nLevrJS: result = jsonLdCompact.call(this,obj);",
+            "author": "fritz.ray@eduworks.com"
+        },
+        "jsonLdExpand": {
+            "name": "jsonLdExpand",
+            "shortname": "jsonLdExpand",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.rdf",
+            "namespace": "",
+            "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdExpand.java",
+            "line": 19,
+            "description": "Converts a JSON object to JSON-LD and performs a Expand operation.\n\nrs2: result = obj.jsonLdExpand();<br>\nLevrJS: result = jsonLdExpand.call(this,obj);",
             "author": "fritz.ray@eduworks.com"
         }
     },
@@ -3995,7 +4283,7 @@
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherCache.java",
-            "line": 25,
+            "line": 30,
             "itemtype": "method",
             "name": "cache",
             "params": [
@@ -4047,7 +4335,7 @@
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherVariableGet.java",
-            "line": 22,
+            "line": 24,
             "itemtype": "method",
             "name": "variableGet",
             "params": [
@@ -4066,7 +4354,7 @@
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/cache/CruncherVariableSet.java",
-            "line": 23,
+            "line": 27,
             "itemtype": "method",
             "name": "variableSet",
             "params": [
@@ -4086,7 +4374,7 @@
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherBase64ToFile.java",
-            "line": 37,
+            "line": 39,
             "itemtype": "method",
             "name": "base64ToFile",
             "params": [
@@ -4111,7 +4399,7 @@
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherCreateDirectory.java",
-            "line": 21,
+            "line": 23,
             "itemtype": "method",
             "name": "createDirectory",
             "params": [
@@ -4137,7 +4425,7 @@
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherDeserialize.java",
-            "line": 30,
+            "line": 32,
             "itemtype": "method",
             "name": "deserialize",
             "params": [
@@ -4156,7 +4444,7 @@
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileDelete.java",
-            "line": 21,
+            "line": 23,
             "itemtype": "method",
             "name": "fileDelete",
             "params": [
@@ -4182,7 +4470,7 @@
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileExists.java",
-            "line": 22,
+            "line": 23,
             "itemtype": "method",
             "name": "fileExists",
             "params": [
@@ -4208,7 +4496,7 @@
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileHash.java",
-            "line": 29,
+            "line": 31,
             "itemtype": "method",
             "name": "fileHash",
             "params": [
@@ -4231,7 +4519,7 @@
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileList.java",
-            "line": 22,
+            "line": 23,
             "itemtype": "method",
             "name": "fileList",
             "params": [
@@ -4255,7 +4543,7 @@
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileLoad.java",
-            "line": 25,
+            "line": 26,
             "itemtype": "method",
             "name": "fileLoad",
             "params": [
@@ -4272,7 +4560,7 @@
                 },
                 {
                     "name": "file",
-                    "description": "Will not load the file into memory.\n'..' or startsWIth('/') paths.",
+                    "description": "Will not load the file into memory. '..' or startsWIth('/') paths.",
                     "type": "Boolean",
                     "optional": true,
                     "optdefault": "false"
@@ -4286,7 +4574,7 @@
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileSave.java",
-            "line": 30,
+            "line": 31,
             "itemtype": "method",
             "name": "fileSave",
             "params": [
@@ -4316,6 +4604,97 @@
                 "description": "(InMemoryFile|File|String) Value passed into obj."
             },
             "class": "fileSave",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileSize.java",
+            "line": 26,
+            "itemtype": "method",
+            "name": "fileSize",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "(InMemoryFile) File to measure."
+                }
+            ],
+            "return": {
+                "description": "(Long) Length of the file."
+            },
+            "class": "fileSize",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileToBase64.java",
+            "line": 32,
+            "itemtype": "method",
+            "name": "fileToBase64",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "(File|InMemoryFile|List<File|InMemoryFile>) File(s) to convert."
+                }
+            ],
+            "return": {
+                "description": "(JSONObject) JSON Object with file(s) as key/value pairs."
+            },
+            "class": "fileToBase64",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileToString.java",
+            "line": 34,
+            "itemtype": "method",
+            "name": "fileToString",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "(File|InMemoryFile|List<File|InMemoryFile>) File(s) to convert."
+                },
+                {
+                    "name": "encoding",
+                    "description": "(String) Encoding to use when reading the string.",
+                    "optional": true,
+                    "optdefault": "\"UTF-8\""
+                }
+            ],
+            "return": {
+                "description": "(String|JSONArray) UTF-8 encoded string(s) (or selected encoding)."
+            },
+            "class": "fileToString",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFilename.java",
+            "line": 27,
+            "itemtype": "method",
+            "name": "filename",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "(File|InMemoryFile) File."
+                }
+            ],
+            "return": {
+                "description": "(String) Name of the file."
+            },
+            "class": "filename",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFilename.java",
+            "line": 32,
+            "itemtype": "method",
+            "name": "fileName",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "(File|InMemoryFile) File."
+                }
+            ],
+            "return": {
+                "description": "(String) Name of the file."
+            },
+            "class": "filename",
             "module": "ew.levr.base"
         },
         {
@@ -4397,19 +4776,19 @@
             "description": "An API for Resolver enumerations that define a set of keys or values for an operation.",
             "author": "dharvey",
             "since": "11/2011",
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/resolver/enumeration/CruncherEnum.java",
             "line": 11,
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/resolver/enumeration/CruncherEnum.java",
             "line": 14,
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
@@ -4425,7 +4804,7 @@
             "return": {
                 "description": "The escaped string."
             },
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
@@ -4444,7 +4823,7 @@
             "throws": {
                 "description": "JSONException JSON Formatting Exception"
             },
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
@@ -4467,69 +4846,69 @@
             "throws": {
                 "description": "JSONException JSON Formatting Exception"
             },
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherDecrypt.java",
             "line": 42,
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherDecrypt.java",
             "line": 81,
             "description": "Converts encrypted bytes to a consistent format not affected by url\nencoding.",
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherDecrypt.java",
             "line": 122,
             "description": "Generates an unpredictable, but consistent byte sequence for consistent\ndecoding.",
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherDecrypt.java",
             "line": 136,
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherDecrypt.java",
             "line": 151,
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java",
-            "line": 41,
-            "class": "",
+            "line": 42,
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java",
-            "line": 78,
-            "class": "",
+            "line": 79,
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java",
-            "line": 114,
-            "class": "",
+            "line": 115,
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java",
-            "line": 127,
-            "class": "",
+            "line": 128,
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java",
-            "line": 141,
-            "class": "",
+            "line": 142,
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
@@ -4539,7 +4918,7 @@
             "return": {
                 "description": "the body of the email sent"
             },
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
@@ -4572,7 +4951,7 @@
             "return": {
                 "description": "Formatted string with filled in variables."
             },
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
@@ -4583,7 +4962,7 @@
                 "#toTitleCase(String",
                 "boolean)"
             ],
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
@@ -4615,7 +4994,7 @@
             "return": {
                 "description": "Formatted string"
             },
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
@@ -4635,27 +5014,27 @@
             "return": {
                 "description": "Titlecased String"
             },
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/resolver/string/CruncherString.java",
             "line": 333,
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java",
             "line": 37,
             "description": "Both GET and POST execute in the same fashion. The only difference is\nthat a GET is guaranteed not to have datastreams (files) attached to it.",
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java",
             "line": 59,
             "description": "Both GET and POST execute in the same fashion. The only difference is\nthat a GET is guaranteed not to have datastreams (files) attached to it.",
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
@@ -4675,7 +5054,7 @@
             "return": {
                 "description": "If appropriate, a JSONP object."
             },
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
@@ -4699,7 +5078,7 @@
             "return": {
                 "description": "the value corresponding to key parsed as an int, or the default\n        value"
             },
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
@@ -4723,7 +5102,7 @@
             "return": {
                 "description": "the value corresponding to key, or the default value"
             },
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
@@ -4747,72 +5126,72 @@
             "return": {
                 "description": "the param, attrib, or header value corresponding to the key, or\n        defValue"
             },
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java",
-            "line": 33,
+            "line": 29,
             "author": "fray",
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/resolver/CruncherBindWebService.java",
             "line": 15,
             "author": "fray",
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/resolver/CruncherJavascriptBinder.java",
             "line": 17,
             "author": "fray",
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/resolver/ResolverFactory.java",
             "line": 37,
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/App.java",
             "line": 3,
             "description": "Hello world!",
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.core/src/test/java/com/eduworks/resolver/lang/LevrJsParserTest.java",
             "line": 22,
             "description": "Created by Eduworks on 2/6/2017.\n\nTests the core levrJs functionality",
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.db.couchdb/src/main/java/com/eduworks/resolver/db/couchdb/CruncherDocument.java",
             "line": 46,
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.db.couchdb/src/main/java/com/eduworks/resolver/db/couchdb/CruncherDocument.java",
             "line": 52,
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.db.couchdb/src/main/java/com/eduworks/resolver/db/couchdb/CruncherDocument.java",
             "line": 58,
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.db.couchdb/src/main/java/com/eduworks/resolver/db/couchdb/CruncherDocument.java",
             "line": 64,
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
@@ -4832,14 +5211,135 @@
             "throws": {
                 "description": "JSONException"
             },
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.db.couchdb/src/main/java/com/eduworks/resolver/db/couchdb/CruncherDocument.java",
             "line": 103,
-            "class": "",
+            "class": "jsonLdCompact",
             "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.db.mapdb/src/main/java/com/eduworks/levr/db/mapdb/Package.java",
+            "line": 3,
+            "description": "Package Placeholder for this project. Forces Javadoc generation.",
+            "class": "jsonLdCompact",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.db.sql/src/main/java/com/eduworks/levr/db/mapdb/Package.java",
+            "line": 3,
+            "description": "Package Placeholder for this project. Forces Javadoc generation.",
+            "class": "jsonLdCompact",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.distributed/src/main/java/com/eduworks/levr/distributed/Package.java",
+            "line": 3,
+            "description": "Package Placeholder for this project. Forces Javadoc generation.",
+            "class": "jsonLdCompact",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.lang.english/src/main/java/com/eduworks/levr/lang/english/Package.java",
+            "line": 3,
+            "description": "Package Placeholder for this project. Forces Javadoc generation.",
+            "class": "jsonLdCompact",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.ontology/src/main/java/com/eduworks/levr/ontology/Package.java",
+            "line": 3,
+            "description": "Package Placeholder for this project. Forces Javadoc generation.",
+            "class": "jsonLdCompact",
+            "module": "ew.levr.base"
+        },
+        {
+            "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdCompact.java",
+            "line": 34,
+            "itemtype": "method",
+            "name": "jsonLdCompact",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "JSONObject to convert into a JSON-LD object and compact.",
+                    "type": "JSONObject"
+                },
+                {
+                    "name": "context",
+                    "description": "Context to use to compact. Will use context from obj if missing.",
+                    "type": "JSONObject",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Compacted object.",
+                "type": "JSONObject"
+            },
+            "class": "jsonLdCompact",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdExpand.java",
+            "line": 29,
+            "itemtype": "method",
+            "name": "jsonLdExpand",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "JSONObject to convert into a JSON-LD object.",
+                    "type": "JSONObject"
+                }
+            ],
+            "return": {
+                "description": "Cached value if in cache, computed value if not in cache.",
+                "type": "JSON-LD"
+            },
+            "class": "jsonLdExpand",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToNQuads.java",
+            "line": 24,
+            "author": "fray",
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToRdfXml.java",
+            "line": 25,
+            "author": "fray",
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToTurtle.java",
+            "line": 24,
+            "author": "fray",
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherNQuadsToJsonLd.java",
+            "line": 24,
+            "author": "fray",
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "ew.levr.rdf/src/main/java/com/eduworks/levr/rdf/Package.java",
+            "line": 3,
+            "description": "Package Placeholder for this project. Forces Javadoc generation.",
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "ew.levr.rdf/src/test/java/com/eduworks/cruncher/rdf/CruncherJsonLdCompactTest.java",
+            "line": 23,
+            "author": "fray",
+            "class": "",
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
@@ -4848,7 +5348,7 @@
             "author": "Damien Miller",
             "version": "0.2",
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
@@ -4869,7 +5369,7 @@
             },
             "exception": "IllegalArgumentException if the length is invalid",
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
@@ -4885,7 +5385,7 @@
                 "description": "the decoded value of x"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
@@ -4908,7 +5408,7 @@
                 "description": "IllegalArgumentException if maxolen is invalid"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
@@ -4925,7 +5425,7 @@
                 }
             ],
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
@@ -4945,14 +5445,14 @@
                 "description": "the next word of material from data"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
             "line": 530,
             "description": "Initialise the Blowfish key schedule",
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
@@ -4965,7 +5465,7 @@
                 }
             ],
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
@@ -4982,7 +5482,7 @@
                 }
             ],
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
@@ -5006,7 +5506,7 @@
                 "description": "an array containing the binary hashed password"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
@@ -5026,7 +5526,7 @@
                 "description": "the hashed password"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
@@ -5046,7 +5546,7 @@
                 "description": "an encoded salt value"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
@@ -5062,7 +5562,7 @@
                 "description": "an encoded salt value"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
@@ -5072,7 +5572,7 @@
                 "description": "an encoded salt value"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
@@ -5092,7 +5592,14 @@
                 "description": "true if the passwords match, false otherwise"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "ew.levr.service.paypal/src/main/java/com/eduworks/levr/service/paypal/Package.java",
+            "line": 3,
+            "description": "Package Placeholder for this project. Forces Javadoc generation.",
+            "class": "",
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
@@ -5112,7 +5619,7 @@
                 "description": "Ontology Object wrapping the OWLOntology that was loaded"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
@@ -5132,7 +5639,7 @@
                 "description": "Ontology Object wrapping the newly created JenaOntology"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
@@ -5149,7 +5656,7 @@
                 }
             ],
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
@@ -5162,7 +5669,7 @@
                 }
             ],
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
@@ -5178,7 +5685,7 @@
                 "description": "OntologyClass wrapper for the class specified"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
@@ -5188,7 +5695,7 @@
                 "description": "map from classId to OntologyClass of all of the classes in this\n        ontology"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
@@ -5208,7 +5715,7 @@
                 "description": "OntologyInstance wrapper for the new instance created"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
@@ -5224,7 +5731,7 @@
                 "description": "OntologyInstance wrapper for the instance specified"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
@@ -5240,7 +5747,7 @@
                 "description": "OntologyProperty object wrapping the property specified"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
@@ -5250,7 +5757,7 @@
                 "description": "Map from propertyId to OntologyProperty of all properties in the\n        ontology"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
@@ -5260,7 +5767,7 @@
                 "description": "Map from propertyId to OntologyProperty of all data properties in\n        the ontology"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
@@ -5270,7 +5777,7 @@
                 "description": "Map from propertyId to OntologyProperty of all object properties\n        in the ontology"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java",
@@ -5287,13 +5794,13 @@
                 }
             ],
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java",
             "line": 518,
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java",
@@ -5303,7 +5810,7 @@
                 "description": "a Map of String (InstanceId) to the OntologyInstance it\n        identifies"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java",
@@ -5313,7 +5820,7 @@
                 "description": "JSON representation of the ontology."
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java",
@@ -5323,7 +5830,7 @@
                 "description": "Ontology object that this class is described in"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyInstance.java",
@@ -5343,7 +5850,7 @@
                 "description": "OntologyInstance of the newly created instance"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyInstance.java",
@@ -5360,7 +5867,7 @@
                 }
             ],
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyInstance.java",
@@ -5377,7 +5884,7 @@
                 }
             ],
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyInstance.java",
@@ -5390,21 +5897,21 @@
                 }
             ],
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyInstance.java",
             "line": 731,
             "description": "Delete's the instance from it's ontology",
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyInstance.java",
             "line": 741,
             "description": "Returns a JSONObject that represents this instance in the form:",
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyProperty.java",
@@ -5425,14 +5932,14 @@
                 }
             ],
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyProperty.java",
             "line": 724,
             "description": "Delete's the property and removes any references to it from the ontology",
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyProperty.java",
@@ -5442,7 +5949,7 @@
                 "description": "JSON Representation of the property."
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyWrapper.java",
@@ -5452,7 +5959,7 @@
                 "description": "ID of the OntologyObject"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyWrapper.java",
@@ -5462,7 +5969,167 @@
                 "description": "IRI of the OntologyObject"
             },
             "class": "",
-            "module": "ew.levr.base"
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
+            "line": 23,
+            "description": "Display help information on levr-codegen-maven-plugin.<br/>\nCall <code>mvn levr-codegen-maven-plugin:help -Ddetail=true -Dgoal=&lt;goal-name&gt;</code> to display parameter details.",
+            "author": "",
+            "version": "",
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
+            "line": 33,
+            "description": "If <code>true</code>, display all settable properties for each goal.",
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
+            "line": 40,
+            "description": "The name of the goal for which to show help. If unspecified, all goals will be displayed.",
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
+            "line": 47,
+            "description": "The maximum length of a display line, should be positive.",
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
+            "line": 54,
+            "description": "The number of spaces per indentation level, should be positive.",
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
+            "line": 89,
+            "description": "{@inheritDoc}",
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
+            "line": 289,
+            "description": "<p>Repeat a String <code>n</code> times to form a new string.</p>",
+            "params": [
+                {
+                    "name": "str",
+                    "description": "String to repeat"
+                },
+                {
+                    "name": "repeat",
+                    "description": "number of times to repeat str"
+                }
+            ],
+            "return": {
+                "description": "String with repeated String"
+            },
+            "throws": {
+                "description": "NullPointerException       if str is <code>null</code>"
+            },
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
+            "line": 310,
+            "description": "Append a description to the buffer by respecting the indentSize and lineLength parameters.\n<b>Note</b>: The last character is always a new line.",
+            "params": [
+                {
+                    "name": "sb",
+                    "description": "The buffer to append the description, not <code>null</code>."
+                },
+                {
+                    "name": "description",
+                    "description": "The description, not <code>null</code>."
+                },
+                {
+                    "name": "indent",
+                    "description": "The base indentation level of each line, must not be negative."
+                }
+            ],
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
+            "line": 326,
+            "description": "Splits the specified text into lines of convenient display length.",
+            "params": [
+                {
+                    "name": "text",
+                    "description": "The text to split into lines, must not be <code>null</code>."
+                },
+                {
+                    "name": "indent",
+                    "description": "The base indentation level of each line, must not be negative."
+                },
+                {
+                    "name": "indentSize",
+                    "description": "The size of each indentation, must not be negative."
+                },
+                {
+                    "name": "lineLength",
+                    "description": "The length of the line, must not be negative."
+                }
+            ],
+            "return": {
+                "description": "The sequence of display lines, never <code>null</code>."
+            },
+            "throws": {
+                "description": "NegativeArraySizeException if <code>indent < 0</code>"
+            },
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
+            "line": 352,
+            "description": "Adds the specified line to the output sequence, performing line wrapping if necessary.",
+            "params": [
+                {
+                    "name": "lines",
+                    "description": "The sequence of display lines, must not be <code>null</code>."
+                },
+                {
+                    "name": "line",
+                    "description": "The line to add, must not be <code>null</code>."
+                },
+                {
+                    "name": "indentSize",
+                    "description": "The size of each indentation, must not be negative."
+                },
+                {
+                    "name": "lineLength",
+                    "description": "The length of the line, must not be negative."
+                }
+            ],
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
+            "line": 403,
+            "description": "Gets the indentation level of the specified line.",
+            "params": [
+                {
+                    "name": "line",
+                    "description": "The line whose indentation level should be retrieved, must not be <code>null</code>."
+                }
+            ],
+            "return": {
+                "description": "The indentation level of the line."
+            },
+            "class": "",
+            "module": "ew.levr.rdf"
         }
     ],
     "warnings": [
@@ -5485,6 +6152,10 @@
         {
             "message": "unknown tag: exception",
             "line": " ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java:375"
+        },
+        {
+            "message": "unknown tag: version",
+            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:23"
         },
         {
             "message": "Missing item type\nTypically, toString is used to describe things in a debug way. Displayable\nprovides a user-friendly representation of the object.",
@@ -6580,23 +7251,23 @@
         },
         {
             "message": "Missing item type",
-            "line": " ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java:41"
+            "line": " ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java:42"
         },
         {
             "message": "Missing item type",
-            "line": " ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java:78"
+            "line": " ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java:79"
         },
         {
             "message": "Missing item type",
-            "line": " ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java:114"
+            "line": " ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java:115"
         },
         {
             "message": "Missing item type",
-            "line": " ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java:127"
+            "line": " ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java:128"
         },
         {
             "message": "Missing item type",
-            "line": " ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java:141"
+            "line": " ew.levr.base/src/main/java/com/eduworks/resolver/security/CruncherEncrypt.java:142"
         },
         {
             "message": "Missing item type\nSends an email using the parameters passed in.\n\nThe template value searches for \"${from}\" Email sending has no return\nvalue, so this method just returns the body of the email sent.",
@@ -6648,7 +7319,7 @@
         },
         {
             "message": "Missing item type",
-            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java:33"
+            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java:29"
         },
         {
             "message": "Missing item type",
@@ -6693,6 +7364,50 @@
         {
             "message": "Missing item type",
             "line": " ew.levr.db.couchdb/src/main/java/com/eduworks/resolver/db/couchdb/CruncherDocument.java:103"
+        },
+        {
+            "message": "Missing item type\nPackage Placeholder for this project. Forces Javadoc generation.",
+            "line": " ew.levr.db.mapdb/src/main/java/com/eduworks/levr/db/mapdb/Package.java:3"
+        },
+        {
+            "message": "Missing item type\nPackage Placeholder for this project. Forces Javadoc generation.",
+            "line": " ew.levr.db.sql/src/main/java/com/eduworks/levr/db/mapdb/Package.java:3"
+        },
+        {
+            "message": "Missing item type\nPackage Placeholder for this project. Forces Javadoc generation.",
+            "line": " ew.levr.distributed/src/main/java/com/eduworks/levr/distributed/Package.java:3"
+        },
+        {
+            "message": "Missing item type\nPackage Placeholder for this project. Forces Javadoc generation.",
+            "line": " ew.levr.lang.english/src/main/java/com/eduworks/levr/lang/english/Package.java:3"
+        },
+        {
+            "message": "Missing item type\nPackage Placeholder for this project. Forces Javadoc generation.",
+            "line": " ew.levr.ontology/src/main/java/com/eduworks/levr/ontology/Package.java:3"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToNQuads.java:24"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToRdfXml.java:25"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToTurtle.java:24"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherNQuadsToJsonLd.java:24"
+        },
+        {
+            "message": "Missing item type\nPackage Placeholder for this project. Forces Javadoc generation.",
+            "line": " ew.levr.rdf/src/main/java/com/eduworks/levr/rdf/Package.java:3"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ew.levr.rdf/src/test/java/com/eduworks/cruncher/rdf/CruncherJsonLdCompactTest.java:23"
         },
         {
             "message": "Missing item type\nBCrypt implements OpenBSD-style Blowfish password hashing using\nthe scheme described in \"A Future-Adaptable Password Scheme\" by\nNiels Provos and David Mazieres.\n<p>\nThis password hashing system tries to thwart off-line password\ncracking using a computationally-intensive hashing algorithm,\nbased on Bruce Schneier's Blowfish cipher. The work factor of\nthe algorithm is parameterised, so it can be increased as\ncomputers get faster.\n<p>\nUsage is really simple. To hash a password for the first time,\ncall the hashpw method with a random salt, like this:\n<p>\n<code>\nString pw_hash = BCrypt.hashpw(plain_password, BCrypt.gensalt()); <br>\n</code>\n<p>\nTo check whether a plaintext password matches one that has been\nhashed previously, use the checkpw method:\n<p>\n<code>\nif (BCrypt.checkpw(candidate_password, stored_hash))<br>\n&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(\"It matches\");<br>\nelse<br>\n&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(\"It does not match\");<br>\n</code>\n<p>\nThe gensalt() method takes an optional parameter (log_rounds)\nthat determines the computational complexity of the hashing:\n<p>\n<code>\nString strong_salt = BCrypt.gensalt(10)<br>\nString stronger_salt = BCrypt.gensalt(12)<br>\n</code>\n<p>\nThe amount of work increases exponentially (2**log_rounds), so \neach increment is twice as much work. The default log_rounds is\n10, and the valid range is 4 to 31.",
@@ -6753,6 +7468,10 @@
         {
             "message": "Missing item type\nCheck that a plaintext password matches a previously hashed\none",
             "line": " ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java:741"
+        },
+        {
+            "message": "Missing item type\nPackage Placeholder for this project. Forces Javadoc generation.",
+            "line": " ew.levr.service.paypal/src/main/java/com/eduworks/levr/service/paypal/Package.java:3"
         },
         {
             "message": "Missing item type\nLoads an existing ontology from the local directory and wraps it in an\nOntology object to be manipulated",
@@ -6865,6 +7584,50 @@
         {
             "message": "Missing item type\nReturns the Full IRI of the OntologyObject",
             "line": " ew.ontology/src/main/java/com/eduworks/ontology/OntologyWrapper.java:18"
+        },
+        {
+            "message": "Missing item type\nDisplay help information on levr-codegen-maven-plugin.<br/>\nCall <code>mvn levr-codegen-maven-plugin:help -Ddetail=true -Dgoal=&lt;goal-name&gt;</code> to display parameter details.",
+            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:23"
+        },
+        {
+            "message": "Missing item type\nIf <code>true</code>, display all settable properties for each goal.",
+            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:33"
+        },
+        {
+            "message": "Missing item type\nThe name of the goal for which to show help. If unspecified, all goals will be displayed.",
+            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:40"
+        },
+        {
+            "message": "Missing item type\nThe maximum length of a display line, should be positive.",
+            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:47"
+        },
+        {
+            "message": "Missing item type\nThe number of spaces per indentation level, should be positive.",
+            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:54"
+        },
+        {
+            "message": "Missing item type\n{@inheritDoc}",
+            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:89"
+        },
+        {
+            "message": "Missing item type\n<p>Repeat a String <code>n</code> times to form a new string.</p>",
+            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:289"
+        },
+        {
+            "message": "Missing item type\nAppend a description to the buffer by respecting the indentSize and lineLength parameters.\n<b>Note</b>: The last character is always a new line.",
+            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:310"
+        },
+        {
+            "message": "Missing item type\nSplits the specified text into lines of convenient display length.",
+            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:326"
+        },
+        {
+            "message": "Missing item type\nAdds the specified line to the output sequence, performing line wrapping if necessary.",
+            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:352"
+        },
+        {
+            "message": "Missing item type\nGets the indentation level of the specified line.",
+            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:403"
         }
     ]
 }

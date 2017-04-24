@@ -26,6 +26,8 @@
                     <ul>
                             <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
                             </li>
+                            <li><a href="../modules/ew.levr.rdf.html">ew.levr.rdf</a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -46,7 +48,14 @@
                             <li><a href="../classes/fileHash.html">fileHash</a></li>
                             <li><a href="../classes/fileList.html">fileList</a></li>
                             <li><a href="../classes/fileLoad.html">fileLoad</a></li>
+                            <li><a href="../classes/filename.html">filename</a></li>
+                            <li><a href="../classes/filepath.html">filepath</a></li>
                             <li><a href="../classes/fileSave.html">fileSave</a></li>
+                            <li><a href="../classes/fileSize.html">fileSize</a></li>
+                            <li><a href="../classes/fileToBase64.html">fileToBase64</a></li>
+                            <li><a href="../classes/fileToString.html">fileToString</a></li>
+                            <li><a href="../classes/jsonLdCompact.html">jsonLdCompact</a></li>
+                            <li><a href="../classes/jsonLdExpand.html">jsonLdExpand</a></li>
                             <li><a href="../classes/variableGet.html">variableGet</a></li>
                             <li><a href="../classes/variableSet.html">variableSet</a></li>
                             <li><a href="../classes/wsBroadcast.html">wsBroadcast</a></li>
@@ -84,7 +93,7 @@ import com.eduworks.resolver.Cruncher;
 
 /**
  * Retrieves a variable from the variable store (set by #variableGet). Used when simple internal state is absolutely necessary.
- * 
+ *
  * rs2: result = #variableGet(key=&quot;unique key&quot;);&lt;br&gt;
  * LevrJS: result = variableGet.call(this,&quot;unique key&quot;);
  *
@@ -92,43 +101,38 @@ import com.eduworks.resolver.Cruncher;
  * @module ew.levr.base
  * @author fritz.ray@eduworks.com
  */
-/**
- * @method variableGet
- * @param key {String} Unique key used to retrieve the variable.
- * @return {Object} Variable that was previously stored.
- */
-public class CruncherVariableGet extends Cruncher
-{
+public class CruncherVariableGet extends Cruncher {
 
-	@Override
-	public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
-	{
-		return CruncherVariableSet.store.get(getAsString(&quot;key&quot;,c,parameters, dataStreams));
-	}
+    /**
+     * @method variableGet
+     * @param key {String} Unique key used to retrieve the variable.
+     * @return {Object} Variable that was previously stored.
+     */
 
-	@Override
-	public String getDescription()
-	{
-		return &quot;Retreives a variable from the variable &#x27;cache&#x27; (set by #variableGet). Used when simple internal state is absolutely necessary.&quot;;
-	}
+    @Override
+    public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException {
+        return CruncherVariableSet.store.get(getAsString(&quot;key&quot;, c, parameters, dataStreams));
+    }
 
-	@Override
-	public String getReturn()
-	{
-		return &quot;Object&quot;;
-	}
+    @Override
+    public String getDescription() {
+        return &quot;Retreives a variable from the variable &#x27;cache&#x27; (set by #variableGet). Used when simple internal state is absolutely necessary.&quot;;
+    }
 
-	@Override
-	public String getAttribution()
-	{
-		return ATTRIB_NONE;
-	}
+    @Override
+    public String getReturn() {
+        return &quot;Object&quot;;
+    }
 
-	@Override
-	public JSONObject getParameters() throws JSONException
-	{
-		return jo(&quot;key&quot;,&quot;String&quot;);
-	}
+    @Override
+    public String getAttribution() {
+        return ATTRIB_NONE;
+    }
+
+    @Override
+    public JSONObject getParameters() throws JSONException {
+        return jo(&quot;key&quot;, &quot;String&quot;);
+    }
 
 }
 

@@ -26,6 +26,8 @@
                     <ul>
                             <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
                             </li>
+                            <li><a href="../modules/ew.levr.rdf.html">ew.levr.rdf</a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -46,7 +48,14 @@
                             <li><a href="../classes/fileHash.html">fileHash</a></li>
                             <li><a href="../classes/fileList.html">fileList</a></li>
                             <li><a href="../classes/fileLoad.html">fileLoad</a></li>
+                            <li><a href="../classes/filename.html">filename</a></li>
+                            <li><a href="../classes/filepath.html">filepath</a></li>
                             <li><a href="../classes/fileSave.html">fileSave</a></li>
+                            <li><a href="../classes/fileSize.html">fileSize</a></li>
+                            <li><a href="../classes/fileToBase64.html">fileToBase64</a></li>
+                            <li><a href="../classes/fileToString.html">fileToString</a></li>
+                            <li><a href="../classes/jsonLdCompact.html">jsonLdCompact</a></li>
+                            <li><a href="../classes/jsonLdExpand.html">jsonLdExpand</a></li>
                             <li><a href="../classes/variableGet.html">variableGet</a></li>
                             <li><a href="../classes/variableSet.html">variableSet</a></li>
                             <li><a href="../classes/wsBroadcast.html">wsBroadcast</a></li>
@@ -85,7 +94,7 @@ import com.eduworks.resolver.Cruncher;
 
 /**
  * Places a variable into a local store referenced by &#x27;key&#x27;. Use when in-memory state is absolutely required.
- * 
+ *
  * rs2: obj.variableSet(key=&quot;unique key&quot;);&lt;br&gt;
  * LevrJS: variableSet.call(this,obj,&quot;unique key&quot;);
  *
@@ -93,41 +102,41 @@ import com.eduworks.resolver.Cruncher;
  * @module ew.levr.base
  * @author fritz.ray@eduworks.com
  */
-/**
- * @method variableSet
- * @param obj {Cruncher|Function|Object} Resolved variable to store.
- * @param key {String} Unique key used to store the variable.
- */
-public class CruncherVariableSet extends Cruncher
-{
-	public static Map&lt;String,Object&gt; store = new EwMap&lt;String,Object&gt;();
-	@Override
-	public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
-	{
-		Object obj = getObj(c, parameters, dataStreams);
-		store.put(getAsString(&quot;key&quot;,c,parameters, dataStreams),obj);
-		return obj;
-	}
-	@Override
-	public String getDescription()
-	{
-		return &quot;Places a variable into a local state referenced by &#x27;key&#x27;. Use when in-memory state is absolutely required.&quot;;
-	}
-	@Override
-	public String getReturn()
-	{
-		return &quot;Object&quot;;
-	}
-	@Override
-	public String getAttribution()
-	{
-		return ATTRIB_NONE;
-	}
-	@Override
-	public JSONObject getParameters() throws JSONException
-	{
-		return jo(&quot;obj&quot;,&quot;Object&quot;,&quot;key&quot;,&quot;String&quot;);
-	}
+public class CruncherVariableSet extends Cruncher {
+
+    public static Map&lt;String, Object&gt; store = new EwMap&lt;String, Object&gt;();
+
+    /**
+     * @method variableSet
+     * @param obj {Cruncher|Function|Object} Resolved variable to store.
+     * @param key {String} Unique key used to store the variable.
+     */
+    @Override
+    public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException {
+        Object obj = getObj(c, parameters, dataStreams);
+        store.put(getAsString(&quot;key&quot;, c, parameters, dataStreams), obj);
+        return obj;
+    }
+
+    @Override
+    public String getDescription() {
+        return &quot;Places a variable into a local state referenced by &#x27;key&#x27;. Use when in-memory state is absolutely required.&quot;;
+    }
+
+    @Override
+    public String getReturn() {
+        return &quot;Object&quot;;
+    }
+
+    @Override
+    public String getAttribution() {
+        return ATTRIB_NONE;
+    }
+
+    @Override
+    public JSONObject getParameters() throws JSONException {
+        return jo(&quot;obj&quot;, &quot;Object&quot;, &quot;key&quot;, &quot;String&quot;);
+    }
 
 }
 

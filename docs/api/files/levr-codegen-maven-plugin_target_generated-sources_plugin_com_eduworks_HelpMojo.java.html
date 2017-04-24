@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworks-ring-e.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                            <li><a href="../modules/ew.levr.rdf.html">ew.levr.rdf</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/add.html">add</a></li>
+                            <li><a href="../classes/base64ToFile.html">base64ToFile</a></li>
+                            <li><a href="../classes/cache.html">cache</a></li>
+                            <li><a href="../classes/createDirectory.html">createDirectory</a></li>
+                            <li><a href="../classes/deserialize.html">deserialize</a></li>
+                            <li><a href="../classes/fileDelete.html">fileDelete</a></li>
+                            <li><a href="../classes/fileExists.html">fileExists</a></li>
+                            <li><a href="../classes/fileHash.html">fileHash</a></li>
+                            <li><a href="../classes/fileList.html">fileList</a></li>
+                            <li><a href="../classes/fileLoad.html">fileLoad</a></li>
+                            <li><a href="../classes/filename.html">filename</a></li>
+                            <li><a href="../classes/filepath.html">filepath</a></li>
+                            <li><a href="../classes/fileSave.html">fileSave</a></li>
+                            <li><a href="../classes/fileSize.html">fileSize</a></li>
+                            <li><a href="../classes/fileToBase64.html">fileToBase64</a></li>
+                            <li><a href="../classes/fileToString.html">fileToString</a></li>
+                            <li><a href="../classes/jsonLdCompact.html">jsonLdCompact</a></li>
+                            <li><a href="../classes/jsonLdExpand.html">jsonLdExpand</a></li>
+                            <li><a href="../classes/variableGet.html">variableGet</a></li>
+                            <li><a href="../classes/variableSet.html">variableSet</a></li>
+                            <li><a href="../classes/wsBroadcast.html">wsBroadcast</a></li>
+                            <li><a href="../classes/wsEmit.html">wsEmit</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="version-info">
+              Version: 5.1.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+  <h1 class="file-name">levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java</h1>
+</div>
+
+<pre class="code prettyprint linenums">
+package com.eduworks;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * Display help information on levr-codegen-maven-plugin.&lt;br/&gt;
+ * Call &lt;code&gt;mvn levr-codegen-maven-plugin:help -Ddetail=true -Dgoal=&amp;lt;goal-name&amp;gt;&lt;/code&gt; to display parameter details.
+ * @author
+ * @version
+ */
+@Mojo( name = &quot;help&quot;, requiresProject = false, threadSafe = true )
+public class HelpMojo
+    extends AbstractMojo
+{
+    /**
+     * If &lt;code&gt;true&lt;/code&gt;, display all settable properties for each goal.
+     *
+     */
+    @Parameter( property = &quot;detail&quot;, defaultValue = &quot;false&quot; )
+    private boolean detail;
+
+    /**
+     * The name of the goal for which to show help. If unspecified, all goals will be displayed.
+     *
+     */
+    @Parameter( property = &quot;goal&quot; )
+    private java.lang.String goal;
+
+    /**
+     * The maximum length of a display line, should be positive.
+     *
+     */
+    @Parameter( property = &quot;lineLength&quot;, defaultValue = &quot;80&quot; )
+    private int lineLength;
+
+    /**
+     * The number of spaces per indentation level, should be positive.
+     *
+     */
+    @Parameter( property = &quot;indentSize&quot;, defaultValue = &quot;2&quot; )
+    private int indentSize;
+
+    // groupId/artifactId/plugin-help.xml
+    private static final String PLUGIN_HELP_PATH = &quot;/META-INF/maven/com.eduworks/levr-codegen-maven-plugin/plugin-help.xml&quot;;
+
+    private Document build()
+        throws MojoExecutionException
+    {
+        getLog().debug( &quot;load plugin-help.xml: &quot; + PLUGIN_HELP_PATH );
+        InputStream is = getClass().getResourceAsStream( PLUGIN_HELP_PATH );
+        try
+        {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            return dBuilder.parse( is );
+        }
+        catch ( IOException e )
+        {
+            throw new MojoExecutionException( e.getMessage(), e );
+        }
+        catch ( ParserConfigurationException e )
+        {
+            throw new MojoExecutionException( e.getMessage(), e );
+        }
+        catch ( SAXException e )
+        {
+            throw new MojoExecutionException( e.getMessage(), e );
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void execute()
+        throws MojoExecutionException
+    {
+        if ( lineLength &lt;= 0 )
+        {
+            getLog().warn( &quot;The parameter &#x27;lineLength&#x27; should be positive, using &#x27;80&#x27; as default.&quot; );
+            lineLength = 80;
+        }
+        if ( indentSize &lt;= 0 )
+        {
+            getLog().warn( &quot;The parameter &#x27;indentSize&#x27; should be positive, using &#x27;2&#x27; as default.&quot; );
+            indentSize = 2;
+        }
+
+        Document doc = build();
+
+        StringBuilder sb = new StringBuilder();
+        Node plugin = getSingleChild( doc, &quot;plugin&quot; );
+
+
+        String name = getValue( plugin, &quot;name&quot; );
+        String version = getValue( plugin, &quot;version&quot; );
+        String id = getValue( plugin, &quot;groupId&quot; ) + &quot;:&quot; + getValue( plugin, &quot;artifactId&quot; ) + &quot;:&quot; + version;
+        if ( isNotEmpty( name ) &amp;&amp; !name.contains( id ) )
+        {
+            append( sb, name + &quot; &quot; + version, 0 );
+        }
+        else
+        {
+            if ( isNotEmpty( name ) )
+            {
+                append( sb, name, 0 );
+            }
+            else
+            {
+                append( sb, id, 0 );
+            }
+        }
+        append( sb, getValue( plugin, &quot;description&quot; ), 1 );
+        append( sb, &quot;&quot;, 0 );
+
+        //&lt;goalPrefix&gt;plugin&lt;/goalPrefix&gt;
+        String goalPrefix = getValue( plugin, &quot;goalPrefix&quot; );
+
+        Node mojos1 = getSingleChild( plugin, &quot;mojos&quot; );
+
+        List&lt;Node&gt; mojos = findNamedChild( mojos1, &quot;mojo&quot; );
+
+        if ( goal == null || goal.length() &lt;= 0 )
+        {
+            append( sb, &quot;This plugin has &quot; + mojos.size() + ( mojos.size() &gt; 1 ? &quot; goals:&quot; : &quot; goal:&quot; ), 0 );
+            append( sb, &quot;&quot;, 0 );
+        }
+
+        for ( Node mojo : mojos )
+        {
+            writeGoal( sb, goalPrefix, (Element) mojo );
+        }
+
+        if ( getLog().isInfoEnabled() )
+        {
+            getLog().info( sb.toString() );
+        }
+    }
+
+
+    private static boolean isNotEmpty( String string )
+    {
+        return string != null &amp;&amp; string.length() &gt; 0;
+    }
+
+    private String getValue( Node node, String elementName )
+        throws MojoExecutionException
+    {
+        return getSingleChild( node, elementName ).getTextContent();
+    }
+
+    private Node getSingleChild( Node node, String elementName )
+        throws MojoExecutionException
+    {
+        List&lt;Node&gt; namedChild = findNamedChild( node, elementName );
+        if ( namedChild.isEmpty() )
+        {
+            throw new MojoExecutionException( &quot;Could not find &quot; + elementName + &quot; in plugin-help.xml&quot; );
+        }
+        if ( namedChild.size() &gt; 1 )
+        {
+            throw new MojoExecutionException( &quot;Multiple &quot; + elementName + &quot; in plugin-help.xml&quot; );
+        }
+        return namedChild.get( 0 );
+    }
+
+    private List&lt;Node&gt; findNamedChild( Node node, String elementName )
+    {
+        List&lt;Node&gt; result = new ArrayList&lt;Node&gt;();
+        NodeList childNodes = node.getChildNodes();
+        for ( int i = 0; i &lt; childNodes.getLength(); i++ )
+        {
+            Node item = childNodes.item( i );
+            if ( elementName.equals( item.getNodeName() ) )
+            {
+                result.add( item );
+            }
+        }
+        return result;
+    }
+
+    private Node findSingleChild( Node node, String elementName )
+        throws MojoExecutionException
+    {
+        List&lt;Node&gt; elementsByTagName = findNamedChild( node, elementName );
+        if ( elementsByTagName.isEmpty() )
+        {
+            return null;
+        }
+        if ( elementsByTagName.size() &gt; 1 )
+        {
+            throw new MojoExecutionException( &quot;Multiple &quot; + elementName + &quot;in plugin-help.xml&quot; );
+        }
+        return elementsByTagName.get( 0 );
+    }
+
+    private void writeGoal( StringBuilder sb, String goalPrefix, Element mojo )
+        throws MojoExecutionException
+    {
+        String mojoGoal = getValue( mojo, &quot;goal&quot; );
+        Node configurationElement = findSingleChild( mojo, &quot;configuration&quot; );
+		Node description = findSingleChild( mojo, &quot;description&quot; );
+        if ( goal == null || goal.length() &lt;= 0 || mojoGoal.equals( goal ) )
+        {
+            append( sb, goalPrefix + &quot;:&quot; + mojoGoal, 0 );
+            Node deprecated = findSingleChild( mojo, &quot;deprecated&quot; );
+            if ( ( deprecated != null ) &amp;&amp; isNotEmpty( deprecated.getNodeValue() ) )
+            {
+                append( sb, &quot;Deprecated. &quot; + deprecated, 1 );
+                if ( detail &amp;&amp; description != null )
+                {
+                    append( sb, &quot;&quot;, 0 );
+                    append( sb, description.getTextContent(), 1 );
+                }
+            }
+            else if (description != null )
+            {
+                append( sb, description.getTextContent(), 1 );
+            }
+            append( sb, &quot;&quot;, 0 );
+
+            if ( detail )
+            {
+                Node parametersNode = getSingleChild( mojo, &quot;parameters&quot; );
+                List&lt;Node&gt; parameters = findNamedChild( parametersNode, &quot;parameter&quot; );
+                append( sb, &quot;Available parameters:&quot;, 1 );
+                append( sb, &quot;&quot;, 0 );
+
+                for ( Node parameter : parameters )
+                {
+                    writeParameter( sb, parameter, configurationElement );
+                }
+            }
+        }
+    }
+
+    private void writeParameter( StringBuilder sb, Node parameter, Node configurationElement )
+        throws MojoExecutionException
+    {
+        String parameterName = getValue( parameter, &quot;name&quot; );
+        String parameterDescription = getValue( parameter, &quot;description&quot; );
+
+        Node fieldConfigurationElement = findSingleChild( configurationElement, parameterName );
+
+        String parameterDefaultValue = &quot;&quot;;
+        if ( fieldConfigurationElement != null &amp;&amp; fieldConfigurationElement.getNodeValue() != null )
+        {
+            parameterDefaultValue = &quot; (Default: &quot; + ((Element)fieldConfigurationElement).getAttribute( &quot;default-value&quot; ) + &quot;)&quot;;
+        }
+        append( sb, parameterName + parameterDefaultValue, 2 );
+        Node deprecated = findSingleChild( parameter, &quot;deprecated&quot; );
+        if ( ( deprecated != null ) &amp;&amp; isNotEmpty( deprecated.getNodeValue() ) )
+        {
+            append( sb, &quot;Deprecated. &quot; + deprecated.getNodeValue(), 3 );
+            append( sb, &quot;&quot;, 0 );
+        }
+        append( sb, parameterDescription, 3 );
+        if ( &quot;true&quot;.equals( getValue( parameter, &quot;required&quot; ) ) )
+        {
+            append( sb, &quot;Required: Yes&quot;, 3 );
+        }
+        Node expression = findSingleChild( parameter, &quot;expression&quot; );
+        if ( ( expression != null ) &amp;&amp; isNotEmpty( expression.getNodeValue() ) )
+        {
+        	String property = getPropertyFromExpression( expression.getNodeValue() );
+            append( sb, &quot;User property: &quot; + property, 3 );
+        }
+
+        append( sb, &quot;&quot;, 0 );
+    }
+
+    /**
+     * &lt;p&gt;Repeat a String &lt;code&gt;n&lt;/code&gt; times to form a new string.&lt;/p&gt;
+     *
+     * @param str    String to repeat
+     * @param repeat number of times to repeat str
+     * @return String with repeated String
+     * @throws NegativeArraySizeException if &lt;code&gt;repeat &lt; 0&lt;/code&gt;
+     * @throws NullPointerException       if str is &lt;code&gt;null&lt;/code&gt;
+     */
+    private static String repeat( String str, int repeat )
+    {
+        StringBuilder buffer = new StringBuilder( repeat * str.length() );
+
+        for ( int i = 0; i &lt; repeat; i++ )
+        {
+            buffer.append( str );
+        }
+
+        return buffer.toString();
+    }
+
+    /**
+     * Append a description to the buffer by respecting the indentSize and lineLength parameters.
+     * &lt;b&gt;Note&lt;/b&gt;: The last character is always a new line.
+     *
+     * @param sb          The buffer to append the description, not &lt;code&gt;null&lt;/code&gt;.
+     * @param description The description, not &lt;code&gt;null&lt;/code&gt;.
+     * @param indent      The base indentation level of each line, must not be negative.
+     */
+    private void append( StringBuilder sb, String description, int indent )
+    {
+        for ( String line : toLines( description, indent, indentSize, lineLength ) )
+        {
+            sb.append( line ).append( &#x27;\n&#x27; );
+        }
+    }
+
+    /**
+     * Splits the specified text into lines of convenient display length.
+     *
+     * @param text       The text to split into lines, must not be &lt;code&gt;null&lt;/code&gt;.
+     * @param indent     The base indentation level of each line, must not be negative.
+     * @param indentSize The size of each indentation, must not be negative.
+     * @param lineLength The length of the line, must not be negative.
+     * @return The sequence of display lines, never &lt;code&gt;null&lt;/code&gt;.
+     * @throws NegativeArraySizeException if &lt;code&gt;indent &lt; 0&lt;/code&gt;
+     */
+    private static List&lt;String&gt; toLines( String text, int indent, int indentSize, int lineLength )
+    {
+        List&lt;String&gt; lines = new ArrayList&lt;String&gt;();
+
+        String ind = repeat( &quot;\t&quot;, indent );
+
+        String[] plainLines = text.split( &quot;(\r\n)|(\r)|(\n)&quot; );
+
+        for ( String plainLine : plainLines )
+        {
+            toLines( lines, ind + plainLine, indentSize, lineLength );
+        }
+
+        return lines;
+    }
+
+    /**
+     * Adds the specified line to the output sequence, performing line wrapping if necessary.
+     *
+     * @param lines      The sequence of display lines, must not be &lt;code&gt;null&lt;/code&gt;.
+     * @param line       The line to add, must not be &lt;code&gt;null&lt;/code&gt;.
+     * @param indentSize The size of each indentation, must not be negative.
+     * @param lineLength The length of the line, must not be negative.
+     */
+    private static void toLines( List&lt;String&gt; lines, String line, int indentSize, int lineLength )
+    {
+        int lineIndent = getIndentLevel( line );
+        StringBuilder buf = new StringBuilder( 256 );
+
+        String[] tokens = line.split( &quot; +&quot; );
+
+        for ( String token : tokens )
+        {
+            if ( buf.length() &gt; 0 )
+            {
+                if ( buf.length() + token.length() &gt;= lineLength )
+                {
+                    lines.add( buf.toString() );
+                    buf.setLength( 0 );
+                    buf.append( repeat( &quot; &quot;, lineIndent * indentSize ) );
+                }
+                else
+                {
+                    buf.append( &#x27; &#x27; );
+                }
+            }
+
+            for ( int j = 0; j &lt; token.length(); j++ )
+            {
+                char c = token.charAt( j );
+                if ( c == &#x27;\t&#x27; )
+                {
+                    buf.append( repeat( &quot; &quot;, indentSize - buf.length() % indentSize ) );
+                }
+                else if ( c == &#x27;\u00A0&#x27; )
+                {
+                    buf.append( &#x27; &#x27; );
+                }
+                else
+                {
+                    buf.append( c );
+                }
+            }
+        }
+        lines.add( buf.toString() );
+    }
+
+    /**
+     * Gets the indentation level of the specified line.
+     *
+     * @param line The line whose indentation level should be retrieved, must not be &lt;code&gt;null&lt;/code&gt;.
+     * @return The indentation level of the line.
+     */
+    private static int getIndentLevel( String line )
+    {
+        int level = 0;
+        for ( int i = 0; i &lt; line.length() &amp;&amp; line.charAt( i ) == &#x27;\t&#x27;; i++ )
+        {
+            level++;
+        }
+        for ( int i = level + 1; i &lt;= level + 4 &amp;&amp; i &lt; line.length(); i++ )
+        {
+            if ( line.charAt( i ) == &#x27;\t&#x27; )
+            {
+                level++;
+                break;
+            }
+        }
+        return level;
+    }
+    
+    private String getPropertyFromExpression( String expression )
+    {
+        if ( expression != null &amp;&amp; expression.startsWith( &quot;${&quot; ) &amp;&amp; expression.endsWith( &quot;}&quot; )
+            &amp;&amp; !expression.substring( 2 ).contains( &quot;${&quot; ) )
+        {
+            // expression=&quot;${xxx}&quot; -&gt; property=&quot;xxx&quot;
+            return expression.substring( 2, expression.length() - 1 );
+        }
+        // no property can be extracted
+        return null;
+    }
+}
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>

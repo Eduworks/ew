@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>fileToString - EW Library</title>
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div class="yui3-g">
+        <div id="sidebar" class="yui3-u">
+            <div class="logo">
+              <a href="../index.html">
+                  <img src="http://eduworks.com/img/eduworks-ring-e.png">
+              </a>
+            </div>
+            
+            <div id="modules" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Modules</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../modules/ew.levr.base.html">ew.levr.base</a>
+                            </li>
+                            <li><a href="../modules/ew.levr.rdf.html">ew.levr.rdf</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="classes" class="sidebox">
+                <div class="hd">
+                    <h2 class="no-toc">Classes</h2>
+                </div>
+                <div class="bd">
+                    <ul>
+                            <li><a href="../classes/add.html">add</a></li>
+                            <li><a href="../classes/base64ToFile.html">base64ToFile</a></li>
+                            <li><a href="../classes/cache.html">cache</a></li>
+                            <li><a href="../classes/createDirectory.html">createDirectory</a></li>
+                            <li><a href="../classes/deserialize.html">deserialize</a></li>
+                            <li><a href="../classes/fileDelete.html">fileDelete</a></li>
+                            <li><a href="../classes/fileExists.html">fileExists</a></li>
+                            <li><a href="../classes/fileHash.html">fileHash</a></li>
+                            <li><a href="../classes/fileList.html">fileList</a></li>
+                            <li><a href="../classes/fileLoad.html">fileLoad</a></li>
+                            <li><a href="../classes/filename.html">filename</a></li>
+                            <li><a href="../classes/filepath.html">filepath</a></li>
+                            <li><a href="../classes/fileSave.html">fileSave</a></li>
+                            <li><a href="../classes/fileSize.html">fileSize</a></li>
+                            <li><a href="../classes/fileToBase64.html">fileToBase64</a></li>
+                            <li><a href="../classes/fileToString.html">fileToString</a></li>
+                            <li><a href="../classes/jsonLdCompact.html">jsonLdCompact</a></li>
+                            <li><a href="../classes/jsonLdExpand.html">jsonLdExpand</a></li>
+                            <li><a href="../classes/variableGet.html">variableGet</a></li>
+                            <li><a href="../classes/variableSet.html">variableSet</a></li>
+                            <li><a href="../classes/wsBroadcast.html">wsBroadcast</a></li>
+                            <li><a href="../classes/wsEmit.html">wsEmit</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            <div id="sections" class="sidebox">
+              <div class="hd">
+                <h2 class="no-toc">fileToString</h2>
+              </div>
+              <div class="bd">
+            
+            
+            
+            
+                  <div><a href="#method-summary">Method Summary</a></div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                  <div><a href="#public-methods">Public Methods</a></div>
+                  <ul>
+                      <li><a href="#method_fileToString">fileToString</a></li>
+                  </ul>
+            
+            
+              </div>
+            </div>
+            
+            
+            
+            <div class="version-info">
+              Version: 5.1.0
+            </div>
+            
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><div class="title">
+    <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_file_CruncherFileToString.java.html#l23"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;file&#x2F;CruncherFileToString.java:23</code></a></span>
+    <h1 class="class-name">fileToString</h1>
+</div>
+
+
+
+
+<div class="class-description"><p>Converts the contents of one or more files to a UTF-8 encoded string.</p>
+<p>rs2: obj = obj.fileToString(); levrJs: obj = fileToString.call(this,obj);</p>
+</div>
+
+
+
+
+
+
+
+
+  <h2 id="method-summary">Method Summary</h2>
+
+    <table class="summary">
+      <thead>
+      <tr>
+        <th colspan="2">Public Methods</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            public
+            
+            
+          </td>
+          <td>
+            <div class="method-name ">
+              <a href="#method_fileToString">fileToString</a>(obj, [encoding=&quot;UTF-8&quot;]): 
+            </div>
+            <div class="short-description">
+              
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div id="methods public">
+    <h2 id="public-methods">Public Methods</h2>
+<div class="method item">
+    <div id="method_fileToString" class="title">
+        <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_file_CruncherFileToString.java.html#l34"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;file&#x2F;CruncherFileToString.java:34</code></a></span>
+        <h3 class="">
+            public
+            
+            
+            fileToString(obj, [encoding=&quot;UTF-8&quot;]): 
+        </h3>
+    </div>
+
+
+
+    <div class="method-description"></div>
+
+      <div class="params">
+        <h4>Parameters:</h4>
+        <table>
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Attribute</th>
+            <th>Description</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>obj</td>
+              <td>Object</td>
+              <td>
+                <ul>
+                  
+                  
+                  
+                </ul>
+              </td>
+              <td><p>(File|InMemoryFile|List&lt;File|InMemoryFile&gt;) File(s) to convert.</p>
+</td>
+            </tr>
+
+            <tr>
+              <td>encoding</td>
+              <td>Object</td>
+              <td>
+                <ul>
+                  <li>optional</li>
+                  <li>default: "UTF-8"</li>
+                  
+                </ul>
+              </td>
+              <td><p>(String) Encoding to use when reading the string.</p>
+</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="return">
+        <h4>Return:</h4>
+        <div>
+          
+          <span class="return-description"><p>(String|JSONArray) UTF-8 encoded string(s) (or selected encoding).</p>
+</span>
+        </div>
+      </div>
+
+
+</div>
+  </div>
+
+
+
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+</body>
+</html>
