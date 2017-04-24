@@ -15,34 +15,33 @@ package com.eduworks;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import com.eduworks.lang.EwList;
 import com.eduworks.lang.EwMap;
 import com.eduworks.lang.util.EwJson;
 import com.eduworks.levr.servlet.impl.LevrResolverServlet;
-import static com.eduworks.levr.servlet.impl.LevrResolverServlet.codeFiles;
-import static com.eduworks.levr.servlet.impl.LevrResolverServlet.loadAdditionalConfigFiles;
-import static com.eduworks.levr.servlet.impl.LevrResolverServlet.resolvableFunctions;
-import static com.eduworks.levr.servlet.impl.LevrResolverServlet.resolvableWebServices;
 import com.eduworks.resolver.Cruncher;
 import com.eduworks.resolver.Resolvable;
-import com.eduworks.util.io.EwFileSystem;
+import org.apache.commons.io.FileUtils;
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
+import org.apache.maven.project.MavenProject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,14 +49,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.plugins.annotations.ResolutionScope;
-import org.apache.maven.project.MavenProject;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE)
 public class GenerateLevrInterop
