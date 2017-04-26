@@ -68,7 +68,7 @@ public class CruncherFileToString extends Cruncher {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        throw new InvalidParameterException("obj is not a valid file type.");
+        throw new InvalidParameterException("obj is not a valid file type. It is a: " + obj.getClass().getName());
     }
 
     @Override

@@ -101,9 +101,9 @@ isEncryptedType=#if(
 		).cache(
 			global="true",
 			name=#add(z=types.getIndex(index="0"),a="httpGet")
-		).fileToString().toObject().getByParam(
+		).toObject().getByParam(
 			param=protect
-		),
+		).catch(any=#object()),
 		operand="true",
 		eq="true",
 		ne="false"

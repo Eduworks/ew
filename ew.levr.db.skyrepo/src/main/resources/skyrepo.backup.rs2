@@ -115,18 +115,33 @@ backup=#if(
 
 /skyrepo/util/backup=backup;
 
+fl=#fileLoad(path=#add(_string="true",a=backupPath,aa="/",b="@dir",bb="/",f="@file")).fileToString();
+fl=#if(
+	operator="@replace",
+	operand="",
+	eq=fl,
+	ne=fl.replace(replace="@replace",with="@with")
+);
+fl=fl.toObject();
+
+eyedee=#add(a="@",b="id");
+fl=#if(
+	operator="@server",
+	operand="",
+	eq=fl,
+	ne=fl.put(_key=eyedee,_value=#add(a="@server",b="@dir",bb="/",bbb=#hexToString(obj="@file").urlEncode(),c="/",d=fl.getByParam(param=#add(a="@",b="id")).split(split="/").reverse().getIndex(index="0")
+);
+
 restore=#fileList(path=backupPath.add(z="@dir")).forEach(
     paramName="file",
     op=#object(
-        a=#fileLoad(path=#add(_string="true",a=backupPath,aa="/",b="@dir",bb="/",f="@file")).fileToString().toObject().skyRepoCheckType(
+        a=fl.skyRepoCheckType(
                 type="@dir"
         ),
-        b=#fileLoad(path=#add(_string="true",a=backupPath,aa="/",b="@dir",bb="/",f="@file")).fileToString().toObject().skyrepoPutInternal(
+        b=fl.skyrepoPutInternal(
             type="@dir",
             id=#hexToString(obj="@file").urlEncode(),
-            version=#fileLoad(
-                path=#add(_string="true",a=backupPath,aa="/",b="@dir",bb="/",f="@file")
-            ).fileToString().toObject().getByParam(param=#add(a="@",b="id")).split(split="/").reverse().getIndex(index="0"),
+            version=fl.getByParam(param=#add(a="@",b="id")).split(split="/").reverse().getIndex(index="0"),
         )
     ).get(b="")
 );
@@ -147,7 +162,7 @@ restore=#object(
     e=#fileLoad(path=#add(a=backupPath,b="skyrepo")).fileSave(path="skyrepo"),
     f=#fileLoad(path=#add(a=backupPath,b="skyrepo.p")).fileSave(path="skyrepo.p"),
     g=#fileLoad(path=#add(a=backupPath,b="skyrepo.t")).fileSave(path="skyrepo.t")
-).displayJson();
+).displayJson(_collapse="true");
 
 restore=#if(
     operator="@secret",

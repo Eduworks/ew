@@ -364,6 +364,7 @@ searchUrl=#add(
 signatureSearch=searchObj.httpPost(url=searchUrl,contentType="application/json",multipart="false").toObject().cget(hits="").cget(hits="").cforEach(
 	paramName="obj",
 	array="true",
+	threaded="false",
 	op=#toObject(obj="@obj").getByParam(param="_source")
 ).filterResults();
 
@@ -375,10 +376,12 @@ checkRunSignatureSearch = #if(operator=#signatureSheet().count(), operand="0",
 nonSigSearch = nonSigSearchObj.httpPost(url=searchUrl,contentType="application/json",multipart="false").toObject().cget(hits="").cget(hits="").cforEach(
 	paramName="obj",
 	array="true",
+	threaded="false",
 	op=#toObject(obj="@obj").getByParam(param="_source")
 ).filterResults();
 
 checkRunNonSigSearch = #catch(
+	printStackTrace="true",
 	try=nonSigSearch, 
 	runtime=#toArray()
 );

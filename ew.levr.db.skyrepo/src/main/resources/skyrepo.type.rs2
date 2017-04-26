@@ -89,8 +89,8 @@ addMappingNoSearch=#object(
 	).put(
 		_key="@field",
 		_value=#object(
-			type="string",
-			index="no"
+			type="text",
+			index=#false()
 		)
 	)
 ).httpPost(url=mapUrl,contentType="application/json",multipart="false");
@@ -100,7 +100,7 @@ addWhiteSpaceRemovalMapping = #object(
 	).put(
 		_key="@field",
 		_value=#object(
-			type="string",
+			type="text",
 			analyzer="whitespace_remove"
 		)
 	)
@@ -112,7 +112,7 @@ addWhiteSpaceRemovalMapping = #object(
 		_value="whitespace_remove"
 	).put(
 		_key=#add(a="@typePrefix",c="@field",d=".type"),
-		_value="string"
+		_value="text"
 	).fromDotNotationObject()
 ).httpPost(url=mapUrl,contentType="application/json",multipart="false");
 
@@ -132,14 +132,14 @@ addNotAnalyzedMultiField = #object(
 			).put(
 				_key="(full)",
 				_value=#object(
-					type="string",
-					index="not_analyzed"
+					type="keyword",
+					index=#true()
 				)
 			).put(
 				_key="@field",
 				_value=#object(
-					type="string",
-					index="analyzed"
+					type="text",
+					index=#true()
 				)
 			)
 		)
@@ -149,16 +149,16 @@ addNotAnalyzedMultiField = #object(
 addNotAnalyzedMultiField = #object(
 	properties=getCurrentMapping.put(
 		_key=#add(a="@typePrefix",c="@field",d=".fields.(full).type"),
-		_value="string"
+		_value="keyword"
 	).put(
 		_key=#add(a="@typePrefix",c="@field",d=".fields.(full).index"),
-		_value="not_analyzed"
+		_value=#true()
 	).put(
 		_key=#add(a="@typePrefix",c="@field",d=".fields.",e="@field",f=".type"),
-		_value="string"
+		_value="text"
 	).put(
 		_key=#add(a="@typePrefix",c="@field",d=".fields.",e="@field",f=".index"),
-		_value="analyzed"
+		_value=#true()
 	).put(
 		_key=#add(a="@typePrefix",c="@field",d=".type"),
 		_value="text"
@@ -177,7 +177,7 @@ addExcludeFromAllIndex = #object(
 		_value="false"
 	).put(
 		_key=#add(a="@typePrefix",c="@field",d=".type"),
-		_value="string"
+		_value="text"
 	).fromDotNotationObject()
 ).httpPost(url=mapUrl,contentType="application/json",multipart="false");
 
@@ -276,7 +276,7 @@ cacheSchemaProtect=#if(
 	operand="0",
 	gt="true",
 	eq=#if(
-		operator=#catch(try=#httpGet(obj="@typeUrl").cache(global="true",name=#add(z="@typeUrl",a="httpGet")).fileToString().toObject().getByParam(param=protect), any="false"),
+		operator=#catch(try=#httpGet(obj="@typeUrl").cache(global="true",name=#add(z="@typeUrl",a="httpGet")).toObject().getByParam(param=protect), any="false"),
 		operand="true",
 		eq=#object(
 			a=addProtectedType,
