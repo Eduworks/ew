@@ -4,19 +4,19 @@
 	<parent>
 		<groupId>com.eduworks</groupId>
 		<artifactId>ew</artifactId>
-		<version>SNAPSHOT</version>
+		<version>5.3.0</version>
 	</parent>
 	<artifactId>ew.levr.ontology</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>com.eduworks</groupId>
 			<artifactId>ew.levr.core</artifactId>
-			<version>SNAPSHOT</version>
+			<version>5.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.eduworks</groupId>
 			<artifactId>ew.ontology</artifactId>
-			<version>SNAPSHOT</version>
+			<version>5.3.0</version>
 		</dependency>
 	</dependencies>
 </project>
