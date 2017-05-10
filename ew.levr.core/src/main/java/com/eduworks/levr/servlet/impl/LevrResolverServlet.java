@@ -722,6 +722,8 @@ public class LevrResolverServlet extends LevrServlet
                         lmodified = Math.max(f.lastModified(), lmodified);
                     if (f.getName().endsWith(".jsl"))
                         lmodified = Math.max(f.lastModified(), lmodified);
+                    if (f.getName().endsWith(".js"))
+                        lmodified = Math.max(f.lastModified(), lmodified);
                 }
         return lmodified;
     }

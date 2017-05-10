@@ -142,7 +142,7 @@ public class CruncherFileFromDatastream extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("?name","String","?except","String");
+		return jo("?name","String","?except","String","?inMemory","String");
 	}
 
 }
