@@ -22,17 +22,12 @@ deleteBackupTest=#fileDelete(path=backupPath.add(z="temp.tmp"));
 
 query=#object(
     query=#object(
-        filtered=#object(
-            query=#object(
                 query_string=#object(
                     query="*:*"
                 )
-            )
-        )
     ),
     explain="false",
     size="50",
-    fields=#object().valueSet(),
     sort="_doc"
 );
 
@@ -55,8 +50,8 @@ check=#object(
 search=query.httpPost(
     url=#add(a=#urlBase(),z="/",zz=indexBase,zzz="/_search?scroll=1m"),
     contentType="application/json",
-    multipart="false"	
-);
+    multipart="false"
+).debug();
 
 scroll=#object(
     a=#toObject(obj="@search").cget(hits="").cget(hits="").cforEach(
@@ -75,7 +70,7 @@ scroll=#object(
     search=#httpGet(
         obj=#add(a=#urlBase(),b="/_search/scroll?scroll=1m&scroll_id=",c=#variableGet(key="scroll")),
         contentType="text/plain",
-        multipart="false"	
+        multipart="false"
     )
 );
 
@@ -108,8 +103,8 @@ backup=#object(
 
 backup=#if(
     operator="@secret",
-    operand=#fileLoad(path="skyId.secret").fileToString().debug(),
-    eq=backup,
+    operand=#fileLoad(path="skyId.secret").fileToString(),
+    eq=backup.displayJson(),
     ne=#error(code="401",msg="Must provide secret.")
 );
 
@@ -130,7 +125,7 @@ fl=#if(
 	operand="",
 	eq=fl,
 	ne=fl.put(_key=eyedee,_value=#add(a="@server",b="@dir",bb="/",bbb=#hexToString(obj="@file").urlEncode(),c="/",d=fl.getByParam(param=#add(a="@",b="id")).split(split="/").reverse().getIndex(index="0")
-);
+)));
 
 restore=#fileList(path=backupPath.add(z="@dir")).forEach(
     paramName="file",
