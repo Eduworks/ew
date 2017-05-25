@@ -1,14 +1,13 @@
 package com.eduworks.cruncher.lang;
 
-import java.io.InputStream;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.eduworks.lang.EwMap;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.util.Map;
 
 public class CruncherCatch extends Cruncher
 {
@@ -30,6 +29,13 @@ public class CruncherCatch extends Cruncher
 				if (printStackTrace)
 					e.printStackTrace();
 				result = resolveAChild("null", c,newParams, dataStreams);
+			}else
+			if(has("any")){
+				final EwMap<String, String[]> newParams = new EwMap<String, String[]>(parameters);
+				newParams.put("message", new String[] { e.getMessage() });
+				if (printStackTrace)
+					e.printStackTrace();
+				result = resolveAChild("any", c,newParams, dataStreams);
 			}else{
 				throw e;
 			}
@@ -40,8 +46,15 @@ public class CruncherCatch extends Cruncher
 				if (printStackTrace)
 					e.printStackTrace();
 				result = resolveAChild("runtime", c,newParams, dataStreams);
+			}else
+			if(has("any")){
+				final EwMap<String, String[]> newParams = new EwMap<String, String[]>(parameters);
+				newParams.put("message", new String[] { e.getMessage() });
+				if (printStackTrace)
+					e.printStackTrace();
+				result = resolveAChild("any", c,newParams, dataStreams);
 			}else{
-				throw e;
+				throw new RuntimeException(e);
 			}
 		}catch(Exception e){
 			if(has("any")){
