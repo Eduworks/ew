@@ -11,6 +11,7 @@ import com.github.jsonldjava.utils.JsonUtils;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.ontoware.rdf2go.model.ModelSet;
+import org.ontoware.rdf2go.impl.StaticBinding;
+import org.ontoware.rdf2go.model.Syntax;
+import org.openrdf.rdf2go.RepositoryModelSet;
 
 /**
  *
@@ -70,9 +74,11 @@ public class CruncherJsonLdToRdfXml extends Cruncher
             JsonLdOptions options = new JsonLdOptions();
             options.setExpandContext(context);
             final RDF2GoTripleCallback cb = new RDF2GoTripleCallback();
-            final ModelSet model = (ModelSet) JsonLdProcessor.toRDF(jsonObject, cb, options);
+            final RepositoryModelSet model = (RepositoryModelSet) JsonLdProcessor.toRDF(jsonObject, cb, options);
 
-            return model;
+	        StringWriter writer = null;
+	        model.writeTo(writer = new StringWriter(), Syntax.RdfXml);
+            return writer.getBuffer().toString();
             
         }
         catch (IOException ex)
@@ -89,13 +95,13 @@ public class CruncherJsonLdToRdfXml extends Cruncher
     @Override
     public String getDescription()
     {
-        return "Performs a JSON-LD Expand algorithm on the obj.";
+        return "JSON-LD to RDF XML.";
     }
     
     @Override
     public String getReturn()
     {
-        return "JSON-LD";
+        return "RDF/XML";
     }
     
     @Override
