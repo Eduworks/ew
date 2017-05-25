@@ -17,6 +17,7 @@ urlType=#add(
 	b=#if(operator=obj.getByParam(param=context),operand="",ne="/"),
 	c=obj.getByParam(param=type).replace(replace=obj.getByParam(param=context),with="").string(op="trim",chars="/")
 );
+#skyrepoUrlType=urlType;
 
 indexBase=#if(
     operator=#indexBase(),

@@ -19,10 +19,24 @@ indexBase=#if(
     ne=#indexBase()
 );
 
+inferTypeFromObj=#if(
+	operator="@type",
+	operand="",
+	eq=#skyrepoUrlType(obj="@obj").replace(simple="true",replace="http://",with="").replace(simple="true",replace="https://",with="").replace(simple="true",replace="/",with=".").debug("URL based type:"),
+	ne="@type"
+);
+
+inferTypeWithoutObj=#if(
+	operator="@type",
+	operand="",
+	eq="_all",
+	ne="@type"
+);
+
 putUrl=#add(
 	a=urlBase,
 	b="/",bb=indexBase,bbb="/",
-	c="@type",
+	c=inferTypeFromObj,
 	d="/",
 	g=#urlEncode(obj="@id"),
 	h=#if(
@@ -45,7 +59,7 @@ putInternal=#object(
         contentType="application/json",
         multipart="false"
     ),
-    mapDb=#toObject(obj="@obj").idxPut(indexDir=".",databaseName="skyrepo",index="@type",key=#add(a="@id",b="/",c="@version"))
+    mapDb=#toObject(obj="@obj").idxPut(indexDir=".",databaseName="skyrepo",index=inferTypeFromObj,key=#add(a="@id",b="/",c="@version"))
 );
 #skyrepoPutInternal=putInternal;
 
@@ -85,7 +99,7 @@ put=#if(
 deleteUrl=#add(
 	a=urlBase,
 	b="/",bb=indexBase,bbb="/",
-	c="@type",
+	c=inferTypeWithoutObj,
 	d="/",
 	g=#urlEncode(obj="@id"),
 	z="?refresh=true"
@@ -122,7 +136,7 @@ delete=#object(
 getUrl=#add(
 	a=urlBase,
 	b="/",bb=indexBase,bbb="/",
-	c="@type",
+	c=inferTypeWithoutObj,
 	f="/",
 	g=#urlEncode(obj="@id"),
 	h=#if(
@@ -140,7 +154,7 @@ get=getUrl.httpGet().toObject().cgetByParam(
 	param="_source"
 );
 
-getMapDb=#idxGet(indexDir=".",databaseName="skyrepo",index="@type",key=#add(a="@id",b="/",c="@version")).toObject();
+getMapDb=#idxGet(indexDir=".",databaseName="skyrepo",index=inferTypeWithoutObj,key=#add(a="@id",b="/",c="@version")).toObject();
 getMapDb=#if(operator=getMapDb,operand="",eq=get,ne=getMapDb);
 
 get=#if(operator="@version",operand="",eq=get,ne=getMapDb);

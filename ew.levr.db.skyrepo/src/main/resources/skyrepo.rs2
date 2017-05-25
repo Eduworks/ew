@@ -5,10 +5,43 @@
 
 context=#add(a="@",b="context");
 
+querySplit=#split(obj="@urlRemainder",split="/");
+
+//If one segment, is id.
+//If two segments, is either type/id or id/version. Test using ToLong() on segment 2.
+//If three segments, is type/id/version.
+
 query=#object(
 	type=#split(obj="@urlRemainder",split="/").getIndex(index="1"),
 	id=#split(obj="@urlRemainder",split="/").getIndex(index="2"),
 	version=#split(obj="@urlRemainder",split="/").getIndex(index="3")
+);
+
+query=#if(
+	operator=querySplit.count(),
+	operand="3",
+	eq=#if(
+		operator=querySplit.getIndex(index="2").toLong().catch(runtime="NAN").toString(),
+		operand=querySplit.getIndex(index="2"),
+		eq=#object(
+			id=querySplit.getIndex(index="1"),
+			version=querySplit.getIndex(index="2")
+		),
+		ne=#object(
+            type=querySplit.getIndex(index="1"),
+			id=querySplit.getIndex(index="2")
+		)
+	),
+	ne=query
+);
+
+query=#if(
+	operator=querySplit.count(),
+	operand="2",
+	eq=#object(
+		id=querySplit.getIndex(index="1")
+	),
+	ne=query
 );
 
 postData=#fileFromDatastream(name="data");
@@ -22,12 +55,53 @@ get=#skyrepoGet(
     version=query.cget(version="")
 );
 
-tryFormatOutput=#if(operator="@format", operand="nquads",
-	eq=#toObject(obj="@get").jsonLdToNQuads(context=#toObject(obj="@get").getByParam(param=context)),
-	ne=#if(operator="@format", operand="turtle",
-		eq=#toObject(obj="@get").jsonLdToTurtle(context=#toObject(obj="@get").getByParam(param=context)),
-		ne=#toObject(obj="@get")
+postProcessGet=#toObject(obj="@get");
+
+postProcessGet=#if(operator="@context", operand="",
+	eq=postProcessGet,
+	ne=postProcessGet.jsonLdExpand(
+	).getIndex(index="0").put(
+		_key=#type(),
+		_value=#toArray(obj="@type")
+	).toArray().jsonLdCompact(
+		context=#if(
+			operator="@coercionContext",
+			operand="",
+			eq="@context",
+			ne="@coercionContext"
+		)
+	).put(
+		_key=#context(),
+		_value="@context"
 	)
+);
+tryFormatOutput=#if(operator="@expand", operand="true",
+	eq=postProcessGet.jsonLdExpand(),
+	ne=postProcessGet
+);
+tryFormatOutput=#if(operator=#headers().get(accept="").has(has="text/turtle"),operand="true",
+	eq=postProcessGet.jsonLdToTurtle(context=postProcessGet.getByParam(param=context)),
+	ne=tryFormatOutput
+);
+tryFormatOutput=#if(operator=#headers().get(accept="").has(has="application/x-turtle"),operand="true",
+	eq=postProcessGet.jsonLdToTurtle(context=postProcessGet.getByParam(param=context)),
+	ne=tryFormatOutput
+);
+tryFormatOutput=#if(operator=#headers().get(accept="").has(has="application/rdf+xml"),operand="true",
+	eq=postProcessGet.jsonLdToRdfXml(context=postProcessGet.getByParam(param=context)).toString(),
+	ne=tryFormatOutput
+);
+tryFormatOutput=#if(operator=#headers().get(accept="").has(has="application/rdf+json"),operand="true",
+	eq=postProcessGet.jsonLdToRdfJson(context=postProcessGet.getByParam(param=context)),
+	ne=tryFormatOutput
+);
+tryFormatOutput=#if(operator=#headers().get(accept="").has(has="application/rdf+n4"),operand="true",
+	eq=postProcessGet.jsonLdToNQuads(context=postProcessGet.getByParam(param=context)),
+	ne=tryFormatOutput
+);
+tryFormatOutput=#if(operator=#headers().debug().get(accept="").has(has="text/n4"),operand="true",
+	eq=postProcessGet.jsonLdToNQuads(context=postProcessGet.getByParam(param=context)),
+	ne=tryFormatOutput
 );
 
 get=#if(
@@ -40,11 +114,27 @@ get=#if(
 	),
 ).call(get=get);
 
+get=#object(
+	a=#beforeGet(),
+	b=get
+).get(b="");
+
+beforeGet=#false();
+#beforeGet=beforeGet;
+
 save=postObject.skyrepoPut(
     type=query.cget(type=""),
     id=query.cget(id=""),
     version=query.cget(version="")
 );
+
+save=#object(
+	a=save,
+	b=#afterSave()
+).get(a="");
+
+afterSave=#false();
+#afterSave=afterSave;
 
 delete=get.skyrepoDelete(
     type=query.cget(type=""),
