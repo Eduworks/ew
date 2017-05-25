@@ -1,25 +1,21 @@
 package com.eduworks.cruncher.lang;
 
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.eduworks.resolver.Context;
-import com.eduworks.resolver.Cruncher;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 
-public class CruncherCount extends Cruncher
-{
+public class CruncherCount extends Cruncher {
 
 	@Override
-	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
-	{
+	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException {
 		int count = 0;
-		for (String key : keySet())
-		{
+		for (String key : keySet()) {
 			Object opt = get(key, c, parameters, dataStreams);
 			if (opt instanceof JSONArray)
 				count += ((JSONArray) opt).length();
@@ -36,27 +32,31 @@ public class CruncherCount extends Cruncher
 	}
 
 	@Override
-	public String getDescription()
-	{
+	public String getDescription() {
 		return "Counts the number of items in an array, object, or list (or one, if there is something passed in).";
 	}
 
 	@Override
-	public String getReturn()
-	{
+	public String[] getResolverNames() {
+		return new String[]
+				{
+						"c" + getResolverName(), getResolverName(), "length"
+				};
+	}
+
+	@Override
+	public String getReturn() {
 		return "Number";
 	}
 
 	@Override
-	public String getAttribution()
-	{
+	public String getAttribution() {
 		return ATTRIB_NONE;
 	}
 
 	@Override
-	public JSONObject getParameters() throws JSONException
-	{
-		return jo("<any>","JSONArray|JSONObject|List|Object");
+	public JSONObject getParameters() throws JSONException {
+		return jo("<any>", "JSONArray|JSONObject|List|Object");
 	}
 
 }
