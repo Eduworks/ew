@@ -155,6 +155,10 @@ public class GenerateLevrInterop
         {
             Logger.getLogger(GenerateLevrInterop.class.getName()).log(Level.SEVERE, null, ex);
         }
+        catch (NoClassDefFoundError ex)
+        {
+            Logger.getLogger(GenerateLevrInterop.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private List<URL> getUrlsForAllJars(File directory) throws MalformedURLException
