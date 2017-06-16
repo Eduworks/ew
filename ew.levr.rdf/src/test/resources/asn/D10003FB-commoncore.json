@@ -1,0 +1,125 @@
+{"rdf:RDF": {
+  "asn:StandardDocument": {
+    "asn:identifier": {"rdf:resource": "http://purl.org/ASN/resources/D10003FB"},
+    "asn:jurisdiction": {"rdf:resource": "http://purl.org/ASN/scheme/ASNJurisdiction/CCSS"},
+    "asn:publicationStatus": {"rdf:resource": "http://purl.org/ASN/scheme/ASNPublicationStatus/Published"},
+    "asn:repositoryDate": {
+      "content": "2011-03-08",
+      "rdf:datatype": "http://purl.org/dc/terms/W3CDTF"
+    },
+    "dc:publisher": [
+      {
+        "content": "National Governors Association Center for Best Practices",
+        "xml:lang": "en-US"
+      },
+      {
+        "content": "Council of Chief State School Officers, Washington D.C.",
+        "xml:lang": "en-US"
+      }
+    ],
+    "dc:title": {
+      "content": "Common Core State Standards for Mathematics",
+      "xml:lang": "en-US"
+    },
+    "dcterms:dateCopyright": {
+      "content": 2010,
+      "rdf:datatype": "http://purl.org/dc/terms/W3CDTF"
+    },
+    "dcterms:description": {
+      "content": "These Standards define what students should understand and be able to do in their study of mathematics. Asking a student to understand something means asking a teacher to assess whether the student has understood it. But what does mathematical understanding look like? One hallmark of mathematical understanding is the ability to justify, in a way appropriate to the student's mathematical maturity, why a particular mathematical statement is true or where a mathematical rule comes from. There is a world of difference between a student who can summon a mnemonic device to expand a product such as (a + b)(x + y) and a student who can explain where the mnemonic comes from. The student who can explain the rule understands the mathematics, and may have a better chance to succeed at a less familiar task such as expanding (a + b + c)(x + y). Mathematical understanding and procedural skill are equally important, and both are assessable using mathematical tasks of sufficient richness.",
+      "xml:lang": "en-US"
+    },
+    "dcterms:educationLevel": [
+      {"rdf:resource": "http://purl.org/ASN/scheme/ASNEducationLevel/K"},
+      {"rdf:resource": "http://purl.org/ASN/scheme/ASNEducationLevel/1"},
+      {"rdf:resource": "http://purl.org/ASN/scheme/ASNEducationLevel/2"},
+      {"rdf:resource": "http://purl.org/ASN/scheme/ASNEducationLevel/3"},
+      {"rdf:resource": "http://purl.org/ASN/scheme/ASNEducationLevel/4"},
+      {"rdf:resource": "http://purl.org/ASN/scheme/ASNEducationLevel/5"},
+      {"rdf:resource": "http://purl.org/ASN/scheme/ASNEducationLevel/6"},
+      {"rdf:resource": "http://purl.org/ASN/scheme/ASNEducationLevel/7"},
+      {"rdf:resource": "http://purl.org/ASN/scheme/ASNEducationLevel/8"},
+      {"rdf:resource": "http://purl.org/ASN/scheme/ASNEducationLevel/9"},
+      {"rdf:resource": "http://purl.org/ASN/scheme/ASNEducationLevel/10"},
+      {"rdf:resource": "http://purl.org/ASN/scheme/ASNEducationLevel/11"},
+      {"rdf:resource": "http://purl.org/ASN/scheme/ASNEducationLevel/12"}
+    ],
+    "dcterms:language": {"rdf:resource": "http://id.loc.gov/vocabulary/iso639-2/eng"},
+    "dcterms:rights": {
+      "content": "© Copyright 2010. National Governors Association Center for Best Practices and Council of Chief State School Officers. All rights reserved.",
+      "xml:lang": "en-US"
+    },
+    "dcterms:source": {"rdf:resource": "http://www.corestandards.org/assets/CCSSI_Math%20Standards.pdf"},
+    "dcterms:subject": {"rdf:resource": "http://purl.org/ASN/scheme/ASNTopic/math"},
+    "dcterms:tableOfContents": {"rdf:resource": "http://asn.jesandco.org/resources/D10003FB_manifest.json"},
+    "dcterms:valid": {
+      "content": 2010,
+      "rdf:datatype": "http://purl.org/dc/terms/W3CDTF"
+    },
+    "gemq:hasChild": [
+      {"rdf:resource": "http://asn.jesandco.org/resources/S2366905"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S1143409"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S114340A"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S114340B"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S114340C"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S114340D"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S1143472"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S11434C0"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S11434C2"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S11434C6"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S11434CB"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S1143526"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S114354D"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S114354E"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S114354F"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S1143551"},
+      {"rdf:resource": "http://asn.jesandco.org/resources/S1143552"}
+    ],
+    "loc:aut": [
+      {
+        "content": "National Governors Association Center for Best Practices",
+        "xml:lang": "en-US"
+      },
+      {
+        "content": "Council of Chief State School Officers",
+        "xml:lang": "en-US"
+      }
+    ],
+    "rdf:about": "http://asn.jesandco.org/resources/D10003FB"
+  },
+  "rdf:Description": {
+    "asn:exportVersion": {"rdf:resource": "http://purl.org/ASN/scheme/ASNExport/3.1.0"},
+    "cc:attributionName": {
+      "content": "D2L Corporation",
+      "rdf:datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "cc:attributionURL": {"rdf:resource": "http://asn.jesandco.org/resources/D10003FB"},
+    "cc:license": {"rdf:resource": "http://creativecommons.org/licenses/by/3.0/us/"},
+    "dcterms:created": {
+      "content": "2011-03-08T13:57:18-05:00",
+      "rdf:datatype": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    "dcterms:modified": {
+      "content": "2015-07-15T23:16:06-04:00",
+      "rdf:datatype": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    "dcterms:rights": {"rdf:resource": "http://achievementstandards.org/legal/terms"},
+    "dcterms:rightsHolder": {
+      "content": "D2L Corporation",
+      "rdf:datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "foaf:primaryTopic": {"rdf:resource": "http://asn.jesandco.org/resources/D10003FB"},
+    "rdf:about": "http://asn.jesandco.org/resources/D10003FB.rdf"
+  },
+  "xmlns:asn": "http://purl.org/ASN/schema/core/",
+  "xmlns:cc": "http://creativecommons.org/ns#",
+  "xmlns:dc": "http://purl.org/dc/elements/1.1/",
+  "xmlns:dcterms": "http://purl.org/dc/terms/",
+  "xmlns:foaf": "http://xmlns.com/foaf/0.1/",
+  "xmlns:gemq": "http://purl.org/gem/qualifiers/",
+  "xmlns:loc": "http://www.loc.gov/loc.terms/relators/",
+  "xmlns:owl": "http://www.w3.org/2002/07/owl#",
+  "xmlns:rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+  "xmlns:rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+  "xmlns:skos": "http://www.w3.org/2004/02/skos/core#"
+}}

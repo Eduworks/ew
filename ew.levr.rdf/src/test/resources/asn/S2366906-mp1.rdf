@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  TERMS OF USE: http://achievementstandards.org/legal/terms
+-->
+<rdf:RDF xmlns:asn="http://purl.org/ASN/schema/core/" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:gemq="http://purl.org/gem/qualifiers/" xmlns:loc="http://www.loc.gov/loc.terms/relators/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <rdf:Description rdf:about="http://asn.jesandco.org/resources/S2366906.rdf">
+    <foaf:primaryTopic rdf:resource="http://asn.jesandco.org/resources/D10003FB" />
+    <dcterms:rightsHolder rdf:datatype="http://www.w3.org/2001/XMLSchema#string">D2L Corporation</dcterms:rightsHolder>
+    <dcterms:rights rdf:resource="http://achievementstandards.org/legal/terms" />
+    <dcterms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2013-09-10T10:46:25-04:00</dcterms:modified>
+    <dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-10-26T15:58:00-04:00</dcterms:created>
+    <cc:license rdf:resource="http://creativecommons.org/licenses/by/3.0/us/" />
+    <cc:attributionURL rdf:resource="http://asn.jesandco.org/resources/D10003FB" />
+    <cc:attributionName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">D2L Corporation</cc:attributionName>
+    <asn:exportVersion rdf:resource="http://purl.org/ASN/scheme/ASNExport/3.1.0" />
+  </rdf:Description>
+  <asn:StandardDocument rdf:about="http://asn.jesandco.org/resources/D10003FB">
+    <asn:jurisdiction rdf:resource="http://purl.org/ASN/scheme/ASNJurisdiction/CCSS" />
+    <dc:title xml:lang="en-US">Common Core State Standards for Mathematics</dc:title>
+    <dcterms:description xml:lang="en-US">These Standards define what students should understand and be able to do in their study of mathematics. Asking a student to understand something means asking a teacher to assess whether the student has understood it. But what does mathematical understanding look like? One hallmark of mathematical understanding is the ability to justify, in a way appropriate to the student's mathematical maturity, why a particular mathematical statement is true or where a mathematical rule comes from. There is a world of difference between a student who can summon a mnemonic device to expand a product such as (a + b)(x + y) and a student who can explain where the mnemonic comes from. The student who can explain the rule understands the mathematics, and may have a better chance to succeed at a less familiar task such as expanding (a + b + c)(x + y). Mathematical understanding and procedural skill are equally important, and both are assessable using mathematical tasks of sufficient richness.</dcterms:description>
+    <dcterms:source rdf:resource="http://www.corestandards.org/assets/CCSSI_Math%20Standards.pdf" />
+    <asn:publicationStatus rdf:resource="http://purl.org/ASN/scheme/ASNPublicationStatus/Published" />
+    <asn:repositoryDate rdf:datatype="http://purl.org/dc/terms/W3CDTF">2011-03-08</asn:repositoryDate>
+    <dcterms:dateCopyright rdf:datatype="http://purl.org/dc/terms/W3CDTF">2010</dcterms:dateCopyright>
+    <dcterms:valid rdf:datatype="http://purl.org/dc/terms/W3CDTF">2010</dcterms:valid>
+    <dcterms:tableOfContents rdf:resource="http://asn.jesandco.org/resources/D10003FB_manifest.json" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/math" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/K" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/1" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/2" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/3" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/4" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/5" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/6" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/7" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/8" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/9" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/10" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/11" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/12" />
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <loc:aut xml:lang="en-US">National Governors Association Center for Best Practices</loc:aut>
+    <loc:aut xml:lang="en-US">Council of Chief State School Officers</loc:aut>
+    <dc:publisher xml:lang="en-US">National Governors Association Center for Best Practices</dc:publisher>
+    <dc:publisher xml:lang="en-US">Council of Chief State School Officers, Washington D.C.</dc:publisher>
+    <dcterms:rights xml:lang="en-US">© Copyright 2010. National Governors Association Center for Best Practices and Council of Chief State School Officers. All rights reserved.</dcterms:rights>
+    <asn:identifier rdf:resource="http://purl.org/ASN/resources/D10003FB" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S2366905" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S1143409" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S114340A" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S114340B" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S114340C" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S114340D" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S1143472" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S11434C0" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S11434C2" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S11434C6" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S11434CB" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S1143526" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S114354D" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S114354E" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S114354F" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S1143551" />
+    <gemq:hasChild rdf:resource="http://asn.jesandco.org/resources/S1143552" />
+  </asn:StandardDocument>
+  <asn:Statement rdf:about="http://asn.jesandco.org/resources/S2366906">
+    <dcterms:isPartOf rdf:resource="http://asn.jesandco.org/resources/D10003FB" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>CCSS.Math.Practice.MP1</asn:statementNotation>
+    <asn:listID>1.</asn:listID>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/K" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/1" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/2" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/3" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/4" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/5" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/6" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/7" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/8" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/9" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/10" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/11" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/12" />
+    <asn:altStatementNotation>MP.1</asn:altStatementNotation>
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/math" />
+    <asn:statementLabel xml:lang="en-US">Standard</asn:statementLabel>
+    <dcterms:description xml:lang="en-US">Make sense of problems and persevere in solving them.</dcterms:description>
+    <asn:comment xml:lang="en-US">Mathematically proficient students start by explaining to themselves the meaning of a problem and looking for entry points to its solution. They analyze givens, constraints, relationships, and goals. They make conjectures about the form and meaning of the solution and plan a solution pathway rather than simply jumping into a solution attempt. They consider analogous problems, and try special cases and simpler forms of the original problem in order to gain insight into its solution. They monitor and evaluate their progress and change course if necessary. Older students might, depending on the context of the problem, transform algebraic expressions or change the viewing window on their graphing calculator to get the information they need. Mathematically proficient students can explain correspondences between equations, verbal descriptions, tables, and graphs or draw diagrams of important features and relationships, graph data, and search for regularity or trends. Younger students might rely on using concrete objects or pictures to help conceptualize and solve a problem. Mathematically proficient students check their answers to problems using a different method, and they continually ask themselves, "Does this make sense?" They can understand the approaches of others to solving complex problems and identify correspondences between different approaches.</asn:comment>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <skos:exactMatch rdf:resource="http://corestandards.org/Math/Practice/MP1" />
+    <skos:exactMatch rdf:resource="urn:guid:FBCBB7C696FE475695920CA622B1C854" />
+    <gemq:isChildOf rdf:resource="http://asn.jesandco.org/resources/S2366905" />
+  </asn:Statement>
+</rdf:RDF>
