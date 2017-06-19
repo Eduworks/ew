@@ -13,11 +13,11 @@ encryptedTypes=#object(
 
 #skyRepoPredefinedEncrypted = encryptedTypes;
 
-type=#add(a="@",b="type");
-context=#add(a="@",b="context");
-owner=#add(a="@",b="owner");
-reader=#add(a="@",b="reader");
-protect=#add(a="@",b="protect");
+type=#add(a="@",b="type",_string="true");
+context=#add(a="@",b="context",_string="true");
+owner=#add(a="@",b="owner",_string="true");
+reader=#add(a="@",b="reader",_string="true");
+protect=#add(a="@",b="protect",_string="true");
 obj=#toObject(obj="@obj");
 
 owners=#if(
@@ -27,7 +27,7 @@ owners=#if(
 		operator=#startsWith(obj="@owner",with="["), 
 		operand="true",
 		eq=#toArray(obj="@owner"),
-		ne=#add(a="[",b="]").toArray().append(a="@owner")
+		ne=#add(_string="true",a="[",b="]").toArray().append(a="@owner")
 	)
 ).ccall(
 	owner=obj.getByParam(
@@ -52,7 +52,7 @@ readers=#if(
 		operator=#startsWith(obj="@reader",with="["), 
 		operand="true",
 		eq=#toArray(obj="@reader"),
-		ne=#add(a="[",b="]").toArray().append(a="@reader")
+		ne=#add(_string="true",a="[",b="]").toArray().append(a="@reader")
 	)
 ).ccall(
 	reader=obj.getByParam(
@@ -73,7 +73,7 @@ readers=#if(
 ownersOrReaders=#object(a=owners,b=readers).valueSet().union();
 #owners=owners;
 
-urlType=#add(
+urlType=#add(_string="true",
 	a=obj.getByParam(param=context).string(op="trim",chars="/"),
 	b=#if(operator=obj.getByParam(param=context),operand="",ne="/"),
 	c=#replace(obj="@type",replace=obj.getByParam(param=context),with="").string(op="trim",chars="/")
@@ -97,13 +97,13 @@ isEncryptedType=#if(
 	gt="true",
 	eq=#if(
 		operator=#httpGet(
-			obj=types.getIndex(index="0")
-		).cache(
+			obj="@typesCache"
+		).add(z=" ").cache(
 			global="true",
-			name=#add(z=types.getIndex(index="0"),a="httpGet")
+			name=#add(_string="true",z="@typesCache",a="httpGet")
 		).toObject().getByParam(
 			param=protect
-		).catch(any=#object()),
+		).catch(any=#object()).call(typesCache=types.getIndex(index="0")),
 		operand="true",
 		eq="true",
 		ne="false"
@@ -148,20 +148,56 @@ filterResultArray=#toArray(obj="@obj").cforEach(
 	op=#filterResults()
 );
 
+isObject=#if(
+	operator=#startsWith(obj="@obj",with="{"),
+	operand="true",
+	eq=#if(
+		operator=#endsWith(obj="@obj",with="}"),
+		operand="true",
+		eq=#toObject(obj="@obj").catch(any="")
+	)
+);
+isArray=#if(
+	operator=#startsWith(obj="@obj",with="["),
+	operand="true",
+	eq=#if(
+		operator=#endsWith(obj="@obj",with="]"),
+		operand="true",
+		eq=#toArray(obj="@obj",wrapString="false").catch(any="")
+	)
+);
+
 filterResults=#if(
 	operator="@obj",
 	operand="",
 	ne=#if(
-		operator=#toObject(obj="@obj").catch(any=""),
+		operator=isObject,
 		operand="",
 		ne=filterResultObject,
 		eq=#if(
-			operator=#toArray(obj="@obj",wrapString="false").catch(any=""),
+			operator=isArray,
 			operand="",
 			ne=filterResultArray,
 			eq="@obj"			
 		)
 	)
+);
+
+filterResults=#if(operator=#has(obj=#toLower(obj="@obj"),has="encrypted"),operand="true",eq=filterResults,ne=#if(
+        operator="@obj",
+        operand="",
+        ne=#if(
+                operator=isObject,
+                operand="",
+                ne=#toObject(obj="@obj"),
+                eq=#if(
+                        operator=isArray,
+                        operand="",
+                        ne=#toArray(obj="@obj"),
+                        eq="@obj"
+                )
+        )
+)
 );
 
 #filterResults=filterResults;

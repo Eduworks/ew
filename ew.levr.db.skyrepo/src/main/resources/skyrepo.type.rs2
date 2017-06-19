@@ -3,11 +3,11 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-schema=#httpGet(obj="@typeUrl").cache(global="true",name=#add(z="@typeUrl",a="httpGet")).toObject();
-schemaContext=schema.cgetByParam(param=#add(a="@",b="context"));
+schema=#httpGet(obj="@typeUrl").catch(any=#object()).cache(global="true",name=#add(z="@typeUrl",a="httpGet",_string="true")).toObject();
+schemaContext=schema.cgetByParam(param=#add(a="@",b="context",_string="true"));
 
-type=#add(a="@",b="type");
-context=#add(a="@",b="context");
+type=#add(a="@",b="type",_string="true");
+context=#add(a="@",b="context",_string="true");
 
 obj=#toObject(obj="@obj");
 
@@ -27,6 +27,7 @@ indexBase=#if(
 );
 
 mapUrl=#add(
+	_string="true",
 	a=#urlBase(),
 	b="/",bb=indexBase,bbb="/",
 	c="@type",
@@ -38,6 +39,7 @@ map=mapUrl.httpGet().toObject().cache(name="elasticMapping");
 properties=map.getByParam(param=indexBase).cget(mappings="").getByParam(param="@type").cget(properties="");
 
 settingsUrl = #add(
+	_string="true",
 	a=#urlBase(),
 	b="/_settings",
 );
@@ -63,7 +65,7 @@ getCurrentMapping=properties.toDotNotationObject().forEach(
 	op=#if(
 		operator=#startsWith(
 			obj="@k",
-			with=#add(
+			with=#add(_string="true",
 				a="@typePrefix",
 				b="@field"
 			)
@@ -277,7 +279,7 @@ cacheSchemaProtect=#if(
 	operand="0",
 	gt="true",
 	eq=#if(
-		operator=#catch(try=#httpGet(obj="@typeUrl").cache(global="true",name=#add(z="@typeUrl",a="httpGet")).toObject().getByParam(param=protect), any="false"),
+		operator=#catch(try=#httpGet(obj="@typeUrl").catch(any=#object()).cache(global="true",name=#add(z="@typeUrl",a="httpGet")).toObject().getByParam(param=protect), any="false"),
 		operand="true",
 		eq=#object(
 			a=addProtectedType,
