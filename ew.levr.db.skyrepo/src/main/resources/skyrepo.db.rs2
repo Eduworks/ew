@@ -402,30 +402,35 @@ checkRunNonSigSearch = #catch(
 
 search = #if(operator=#toArray(obj="@sigResults").count(), operand="@size",
 	eq="@sigResults",
-	lt=#if(operator=#toArray(obj="@sigResults").count(), operand="0",
-		eq=checkRunNonSigSearch.ccall(
-			start=#string(
-				str="@string",
-				op="substr",
-				begin="0",
-				end=#indexOf(str="@string", substr=".")
-			).ccall(
-				string=#add(
-					a="@start",
-					b=#add(
-						a="-",
-						b=checkRunSignatureSearch.ccall(
-							start="0",
-							size="@start"
-						).toArray().count()
-					),
-					c="-1"
-				).append(a="0").cmax()
-			),
-			size="@size"
-		),
+	lt=#if(
+		operator=#toArray(obj="@sigResults").count(),
+		operand="0",
+		eq=#object(
+			a=#toArray(),
+			b=checkRunNonSigSearch.ccall(
+				start=#string(
+					str="@string",
+					op="substr",
+					begin="0",
+					end=#indexOf(str="@string", substr=".")
+				).ccall(
+					string=#add(
+						a="@start",
+						b=#add(
+							a="-",
+							b=checkRunSignatureSearch.ccall(
+								start="0",
+								size="@start"
+							).toArray().count()
+						),
+						c="-1"
+					).append(a="0").cmax()
+				),
+				size="@size"
+			)
+		).valueSet().union(unique="false"),
 		ne=#object(
-			a=#toArray(obj="@sigResults"), 
+			a=#toArray(obj="@sigResults"),
 			b=checkRunNonSigSearch.ccall(
 				start="0",
 				size=#string(
