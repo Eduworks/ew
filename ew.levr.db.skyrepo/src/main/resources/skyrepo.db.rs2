@@ -322,7 +322,9 @@ nonSigOwnershipFilters = #if(operator=#toArray().append(a="all", b="owned").has(
 	)
 );
 
-checkNonSigReaderFilters = #if(operator=#indexOf(str="@q", substr=#add(a="", b="@", c="reader")), operand="-1",
+checkNonSigReaderFilters = #if(
+	operator=#indexOf(str="@q", substr=#add(_string="true",a="", b="@", c="reader")),
+	operand="-1",
 	ne=#if(operator=#signatureSheet().count(), operand="0",
 		eq=#error(msg="error!"),
 		ne=nonSigOwnershipFilters.put(
@@ -332,7 +334,6 @@ checkNonSigReaderFilters = #if(operator=#indexOf(str="@q", substr=#add(a="", b="
 	),
 	eq=nonSigOwnershipFilters
 );
-	
 
 nonSigSearchObj = #object(
 	from="@start",
