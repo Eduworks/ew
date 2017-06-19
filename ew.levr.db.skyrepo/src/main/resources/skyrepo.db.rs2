@@ -375,7 +375,17 @@ searchUrl=#add(
 	c="/_search"
 );
 
-signatureSearch=searchObj.httpPost(url=searchUrl,contentType="application/json",multipart="false").toObject().cget(hits="").cget(hits="").cforEach(
+//2017-06-19 fray: We are now providing errors back to the client instead of empty results. I may regret this.
+errorCheck = #if(
+	operator=#get(obj=#toObject(obj="@obj"),error="").get(root_cause="").getIndex(index="0").get(reason=""),
+	operand="",
+	ne=#error(code=#get(obj=#toObject(obj="@obj"),status=""),msg=#get(obj=#toObject(obj="@obj"),error="").get(root_cause="").getIndex(index="0").get(reason="")),
+	eq=#toObject(obj="@obj")
+);
+errorCheck=#if(operator="@debug",operand="false",ne=errorCheck,eq=#toObject(obj="@obj"));
+#errorCheck = errorCheck;
+
+signatureSearch=searchObj.httpPost(url=searchUrl,contentType="application/json",multipart="false").errorCheck().cget(hits="").cget(hits="").cforEach(
 	paramName="obj",
 	array="true",
 	threaded="false",
@@ -387,18 +397,14 @@ checkRunSignatureSearch = #if(operator=#signatureSheet().count(), operand="0",
 	eq=#toArray()
 );
 
-nonSigSearch = nonSigSearchObj.httpPost(url=searchUrl,contentType="application/json",multipart="false").toObject().cget(hits="").cget(hits="").cforEach(
+nonSigSearch = nonSigSearchObj.httpPost(url=searchUrl,contentType="application/json",multipart="false").errorCheck().cget(hits="").cget(hits="").cforEach(
 	paramName="obj",
 	array="true",
 	threaded="false",
 	op=#toObject(obj="@obj").getByParam(param="_source")
 ).filterResults();
 
-checkRunNonSigSearch = #catch(
-	printStackTrace="true",
-	try=nonSigSearch, 
-	runtime=#toArray()
-);
+checkRunNonSigSearch = nonSigSearch;
 
 search = #if(operator=#toArray(obj="@sigResults").count(), operand="@size",
 	eq="@sigResults",
