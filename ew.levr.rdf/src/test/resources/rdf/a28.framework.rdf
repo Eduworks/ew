@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+
+<rdf:Description rdf:about="http://localhost:9722/api/custom/data/schema.cassproject.org.0.2.Framework/a2862368-8340-49f5-8d89-fc582ed806b7/1497286232371">
+	<rdf:type rdf:resource="http://schema.cassproject.org/0.2/Framework"/>
+	<competency xmlns="http://schema.cassproject.org/0.2/" rdf:resource="http://localhost:9722/api/custom/data/schema.cassproject.org.0.2.Competency/3aa57fbe-dccf-482b-8cd8-bb9e5a908689"/>
+	<competency xmlns="http://schema.cassproject.org/0.2/" rdf:resource="http://localhost:9722/api/custom/data/schema.cassproject.org.0.2.Competency/24f8a1b3-5b8e-4a90-86c9-403bb6ad82a8"/>
+	<relation xmlns="http://schema.cassproject.org/0.2/" rdf:resource="http://localhost:9722/api/custom/data/schema.cassproject.org.0.2.Relation/58d3fe66-913d-4ffd-8255-07611ae9e816"/>
+	<name xmlns="http://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">test</name>
+</rdf:Description>
+
+</rdf:RDF>

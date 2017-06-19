@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+
+<rdf:Description rdf:about="http://localhost:9722/api/custom/data/schema.cassproject.org.0.2.Competency/3aa57fbe-dccf-482b-8cd8-bb9e5a908689/1497286208484">
+	<rdf:type rdf:resource="http://schema.cassproject.org/0.2/Competency"/>
+	<name xmlns="http://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">test comp</name>
+</rdf:Description>
+
+</rdf:RDF>
