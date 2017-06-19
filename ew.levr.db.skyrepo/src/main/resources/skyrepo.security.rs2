@@ -157,6 +157,7 @@ isObject=#if(
 		eq=#toObject(obj="@obj").catch(any="")
 	)
 );
+#isObject=isObject;
 isArray=#if(
 	operator=#startsWith(obj="@obj",with="["),
 	operand="true",
@@ -166,6 +167,7 @@ isArray=#if(
 		eq=#toArray(obj="@obj",wrapString="false").catch(any="")
 	)
 );
+#isArray=isArray;
 
 filterResults=#if(
 	operator="@obj",
