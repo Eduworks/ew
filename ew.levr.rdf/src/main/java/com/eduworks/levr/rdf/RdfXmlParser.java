@@ -59,6 +59,8 @@ public class RdfXmlParser implements RDFParser {
 				}
 			}
 			
+			System.out.println(rdf.toString(2));
+			
 			parseInner(rdf, dataset, namespaces);
 		}
 		
@@ -87,7 +89,15 @@ public class RdfXmlParser implements RDFParser {
 					
 					parseInner(rdf.getJSONObject(key), dataset, globalNS);
 				} catch (JSONException e) {
-				
+					JSONArray arr = rdf.getJSONArray(key);
+					
+					String type = key;
+					String[] keysplit = key.split(":");
+					if(globalNS.get(keysplit[0]) != null){
+						type = type.replace(keysplit[0]+":", globalNS.get(keysplit[0]));
+					}
+					
+					parseObjectArray(arr, dataset, globalNS, type);
 				}
 			}
 			return;
@@ -188,6 +198,9 @@ public class RdfXmlParser implements RDFParser {
 		}
 	}
 	
+	private void parseObjectArray(JSONArray arr, RDFDataset dataset, HashMap<String, String> namespaces, String type){
+		
+	}
 	
 
 	private void parseArray(JSONArray arr, RDFDataset dataset, HashMap<String,String> namespaces, 
@@ -228,7 +241,8 @@ public class RdfXmlParser implements RDFParser {
 				
 				object = new RDFDataset.BlankNode(RDFDatasetUtils.unescape(sObject));
 			}
-			if(object != null){
+			
+			if(subject != null && predicate != null && object != null){
 				addTripleToDataset(dataset, subject, predicate, object);
 			}
 		}

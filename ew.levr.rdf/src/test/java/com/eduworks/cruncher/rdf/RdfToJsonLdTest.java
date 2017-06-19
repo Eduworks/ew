@@ -28,6 +28,18 @@ public class RdfToJsonLdTest {
 	 }
 	 
 	 @Test
+	 public void LargeRdfXmlToJsonLdTest() throws JSONException, IOException{
+		 String asnString = FileUtils.readFileToString(EwFileSystem.findFile("asn/D10003FB.xml", RdfToJsonLdTest.class, false, false), Charset.forName("UTF-8")); 
+		 
+		 CruncherRdfToJsonLd cr = new CruncherRdfToJsonLd();
+	     cr.build("obj", asnString);
+	     //cr.build("context", unexpanded.get("@context"));
+	     JSONObject json = (JSONObject) cr.resolve(new Context(), new HashMap<>(), null);
+	     
+	     System.out.println(json.toString(2));
+	 }
+	 
+	 @Test
 	 public void RdfXmlToExpandedJsonLdTest() throws JSONException, IOException{
 		 String asnString = FileUtils.readFileToString(EwFileSystem.findFile("asn/D10003FB-commoncore.rdf", RdfToJsonLdTest.class, false, false), Charset.forName("UTF-8")); 
 		 
