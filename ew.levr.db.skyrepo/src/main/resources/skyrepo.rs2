@@ -115,7 +115,7 @@ tryFormatOutput=#if(operator=#headers().get(Accept="").has(has="application/rdf+
 		ne=tryFormatOutput
 	)
 );
-tryFormatOutput=#if(operator=#headers().debug().get(Accept="").has(has="text/n4"),operand="true",
+tryFormatOutput=#if(operator=#headers().get(Accept="").has(has="text/n4"),operand="true",
 	eq=postProcessGet.jsonLdToNQuads(context=postProcessGet.getByParam(param=context)).toString(),
 	ne=#if(operator=#headers().get(accept="").has(has="text/n4"),operand="true",
 		eq=postProcessGet.jsonLdToNQuads(context=postProcessGet.getByParam(param=context)).toString(),
