@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.eduworks</groupId>
 		<artifactId>ew</artifactId>
-		<version>5.5.0</version>
+		<version>5.5.1</version>
 	</parent>
 	<artifactId>ew.levr.code</artifactId>
 	<packaging>jar</packaging>
@@ -12,7 +12,7 @@
 		<dependency>
 			<groupId>com.eduworks</groupId>
 			<artifactId>ew.levr.core</artifactId>
-			<version>5.5.0</version>
+			<version>5.5.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.jbytecode</groupId>
