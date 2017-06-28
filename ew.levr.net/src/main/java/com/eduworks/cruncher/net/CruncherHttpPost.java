@@ -1,14 +1,11 @@
 package com.eduworks.cruncher.net;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.SocketException;
-import java.nio.charset.Charset;
-import java.util.Map;
-
+import com.eduworks.lang.threading.EwThreading;
+import com.eduworks.lang.util.EwJson;
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
+import com.eduworks.resolver.exception.SoftException;
+import com.eduworks.util.io.InMemoryFile;
 import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
@@ -30,12 +27,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.eduworks.lang.threading.EwThreading;
-import com.eduworks.lang.util.EwJson;
-import com.eduworks.resolver.Context;
-import com.eduworks.resolver.Cruncher;
-import com.eduworks.resolver.exception.SoftException;
-import com.eduworks.util.io.InMemoryFile;
+import java.io.*;
+import java.net.SocketException;
+import java.nio.charset.Charset;
+import java.util.Map;
 
 public class CruncherHttpPost extends Cruncher
 {
