@@ -79,29 +79,47 @@ tryFormatOutput=#if(operator="@expand", operand="true",
 	eq=postProcessGet.jsonLdExpand().displayJson(_collapse="true"),
 	ne=postProcessGet.displayJson(_collapse="true")
 );
-tryFormatOutput=#if(operator=#headers().get(accept="").has(has="text/turtle"),operand="true",
+tryFormatOutput=#if(operator=#headers().get(Accept="").has(has="text/turtle"),operand="true",
 	eq=postProcessGet.jsonLdToTurtle(context=postProcessGet.getByParam(param=context)).toString(),
-	ne=tryFormatOutput
+	ne=#if(operator=#headers().get(accept="").has(has="text/turtle"),operand="true",
+		eq=postProcessGet.jsonLdToTurtle(context=postProcessGet.getByParam(param=context)).toString(),
+		ne=tryFormatOutput
+	)
 );
-tryFormatOutput=#if(operator=#headers().get(accept="").has(has="application/x-turtle"),operand="true",
+tryFormatOutput=#if(operator=#headers().get(Accept="").has(has="application/x-turtle"),operand="true",
 	eq=postProcessGet.jsonLdToTurtle(context=postProcessGet.getByParam(param=context)).toString(),
-	ne=tryFormatOutput
+	ne=#if(operator=#headers().get(accept="").has(has="application/x-turtle"),operand="true",
+		eq=postProcessGet.jsonLdToTurtle(context=postProcessGet.getByParam(param=context)).toString(),
+		ne=tryFormatOutput
+	)
 );
-tryFormatOutput=#if(operator=#headers().get(accept="").has(has="application/rdf+xml"),operand="true",
+tryFormatOutput=#if(operator=#headers().get(Accept="").has(has="application/rdf+xml"),operand="true",
 	eq=postProcessGet.jsonLdToRdfXml(context=postProcessGet.getByParam(param=context)).toString(),
-	ne=tryFormatOutput
+	ne=#if(operator=#headers().get(accept="").has(has="application/rdf+xml"),operand="true",
+		eq=postProcessGet.jsonLdToRdfXml(context=postProcessGet.getByParam(param=context)),
+		ne=tryFormatOutput
+	)
 );
-tryFormatOutput=#if(operator=#headers().get(accept="").has(has="application/rdf+json"),operand="true",
+tryFormatOutput=#if(operator=#headers().get(Accept="").has(has="application/rdf+json"),operand="true",
 	eq=postProcessGet.jsonLdToRdfJson(context=postProcessGet.getByParam(param=context)).displayJson(_collapse="true"),
-	ne=tryFormatOutput
+	ne=#if(operator=#headers().get(accept="").has(has="application/rdf+json"),operand="true",
+		eq=postProcessGet.jsonLdToRdfJson(context=postProcessGet.getByParam(param=context)).displayJson(_collapse="true"),
+		ne=tryFormatOutput
+	)
 );
-tryFormatOutput=#if(operator=#headers().get(accept="").has(has="application/rdf+n4"),operand="true",
+tryFormatOutput=#if(operator=#headers().get(Accept="").has(has="application/rdf+n4"),operand="true",
 	eq=postProcessGet.jsonLdToNQuads(context=postProcessGet.getByParam(param=context)).toString(),
-	ne=tryFormatOutput
+	ne=#if(operator=#headers().get(accept="").has(has="application/rdf+n4"),operand="true",
+		eq=postProcessGet.jsonLdToNQuads(context=postProcessGet.getByParam(param=context)).toString(),
+		ne=tryFormatOutput
+	)
 );
-tryFormatOutput=#if(operator=#headers().debug().get(accept="").has(has="text/n4"),operand="true",
+tryFormatOutput=#if(operator=#headers().debug().get(Accept="").has(has="text/n4"),operand="true",
 	eq=postProcessGet.jsonLdToNQuads(context=postProcessGet.getByParam(param=context)).toString(),
-	ne=tryFormatOutput
+	ne=#if(operator=#headers().get(accept="").has(has="text/n4"),operand="true",
+		eq=postProcessGet.jsonLdToNQuads(context=postProcessGet.getByParam(param=context)).toString(),
+		ne=tryFormatOutput
+	)
 );
 #tryFormatOutput=tryFormatOutput;
 
