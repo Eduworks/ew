@@ -1,34 +1,21 @@
 package com.eduworks.levr.servlet.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.lang.ref.SoftReference;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.eduworks.interfaces.EwJsonSerializable;
+import com.eduworks.lang.EwList;
+import com.eduworks.lang.EwMap;
+import com.eduworks.lang.json.EwJsonCollection;
+import com.eduworks.lang.util.EwCache;
+import com.eduworks.lang.util.EwJson;
+import com.eduworks.levr.servlet.LevrServlet;
+import com.eduworks.resolver.*;
+import com.eduworks.resolver.exception.SoftException;
+import com.eduworks.resolver.lang.LevrJsParser;
+import com.eduworks.resolver.lang.LevrResolverParser;
+import com.eduworks.resolver.lang.LevrResolverV2Parser;
+import com.eduworks.util.Tuple;
+import com.eduworks.util.io.EwFileSystem;
+import com.eduworks.util.io.InMemoryFile;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -39,28 +26,20 @@ import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.eduworks.interfaces.EwJsonSerializable;
-import com.eduworks.lang.EwList;
-import com.eduworks.lang.EwMap;
-import com.eduworks.lang.json.EwJsonCollection;
-import com.eduworks.lang.util.EwCache;
-import com.eduworks.lang.util.EwJson;
-import com.eduworks.levr.servlet.LevrServlet;
-import com.eduworks.resolver.Context;
-import com.eduworks.resolver.Cruncher;
-import com.eduworks.resolver.CruncherJavascriptBinder;
-import com.eduworks.resolver.Resolvable;
-import com.eduworks.resolver.ResolverFactory;
-import com.eduworks.resolver.exception.SoftException;
-import com.eduworks.resolver.lang.LevrJsParser;
-import com.eduworks.resolver.lang.LevrResolverParser;
-import com.eduworks.resolver.lang.LevrResolverV2Parser;
-import com.eduworks.util.Tuple;
-import com.eduworks.util.io.EwFileSystem;
-import com.eduworks.util.io.InMemoryFile;
 import javax.script.Bindings;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletInputStream;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import java.io.*;
+import java.lang.ref.SoftReference;
+import java.net.URL;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 @SuppressWarnings("serial")
 public class LevrResolverServlet extends LevrServlet
@@ -686,6 +665,7 @@ public class LevrResolverServlet extends LevrServlet
         if (requestString.equals(""))
             requestString = oldRequestString;
 
+        if (!parameterMap.containsKey("urlRemainder"))
         parameterMap.put("urlRemainder", new String[]
         {
             paramString

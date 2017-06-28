@@ -1,14 +1,13 @@
 package com.eduworks.cruncher.manip;
 
-import java.io.InputStream;
-import java.util.Iterator;
-import java.util.Map;
-
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.eduworks.resolver.Context;
-import com.eduworks.resolver.Cruncher;
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.Map;
 
 public class CruncherRemoveByParam extends Cruncher
 {
@@ -17,6 +16,7 @@ public class CruncherRemoveByParam extends Cruncher
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
 		JSONObject jo = getAsJsonObject("obj", c, parameters, dataStreams);
+		if (jo == null) return null;
 		JSONObject result = new JSONObject();
 		String param = getAsString("param", c, parameters, dataStreams);
 		Iterator<String> keys = jo.keys();

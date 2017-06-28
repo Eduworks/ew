@@ -43,6 +43,7 @@ query=#if(
 	),
 	ne=query
 );
+#queryParse = query;
 
 postData=#fileFromDatastream(name="data");
 

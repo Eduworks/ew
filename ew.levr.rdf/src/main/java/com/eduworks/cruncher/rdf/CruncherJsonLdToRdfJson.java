@@ -7,8 +7,13 @@ import com.github.jsonldjava.core.JsonLdError;
 import com.github.jsonldjava.core.JsonLdOptions;
 import com.github.jsonldjava.core.JsonLdProcessor;
 import com.github.jsonldjava.rdf2go.RDF2GoTripleCallback;
-import com.github.jsonldjava.sesame.SesameTripleCallback;
 import com.github.jsonldjava.utils.JsonUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.ontoware.rdf2go.model.Syntax;
+import org.openrdf.rdf2go.RepositoryModelSet;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,14 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.ontoware.rdf2go.model.ModelSet;
-import org.ontoware.rdf2go.model.Syntax;
-import org.openrdf.rdf2go.RepositoryModelSet;
-import org.openrdf.rio.helpers.StatementCollector;
 
 /**
  *
@@ -113,7 +110,7 @@ public class CruncherJsonLdToRdfJson extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj", "JSONObject|JSONArray");
+		return jo("obj", "JSONObject|JSONArray","context","JSONObject");
 	}
 
 }
