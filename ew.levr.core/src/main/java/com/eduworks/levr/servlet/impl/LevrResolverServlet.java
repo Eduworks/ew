@@ -327,9 +327,15 @@ public class LevrResolverServlet extends LevrServlet
     public void go(String methodType, HttpServletRequest request, HttpServletResponse response, ServletOutputStream outputStream) throws IOException
     {
         String requestURI = request.getRequestURI();
-        String requestString = requestURI.substring(requestURI.indexOf(getServletPathExample()) + getServletPathExample().length());
+
+        String requestString = requestURI;
+        if (requestString.startsWith(getServletPathExample()))
+            requestString = requestString.substring(requestURI.indexOf(getServletPathExample()) + getServletPathExample().length());
+        else if (requestString.startsWith("/api"))
+            requestString = requestString.substring(requestURI.indexOf("/api") + "/api".length());
         if (requestString.toLowerCase().endsWith(FAVICON_REQUEST_STRING.toLowerCase()))
             return;
+
         Map<String, String[]> parameterMap = Collections.synchronizedMap(new HashMap<String, String[]>(request.getParameterMap()));
         String jsonpSecurityKey = getStringFromParameter(request, "sec", "");
         parameterMap.put("methodType", new String[]
