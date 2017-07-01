@@ -173,10 +173,24 @@ deleteOrOther = #if(
     ne=saveOrGet
 );
 
-data=deleteOrOther;
+searchOrOther = #if(
+	operator="@q",
+	operand="",
+	eq=deleteOrOther,
+	ne=#skyRepoSearch()
+);
+
+postSearchOrOther = #if(
+	operator=#fileFromDatastream(name="searchParams"),
+	operand="",
+	eq=searchOrOther,
+	ne=#skyRepoSearch()
+);
+
+data=postSearchOrOther;
 /data=data;
 
-multiGet=postArray.cforEach(paramName="urlRemainder",op=get,rethrow="false",array="true").displayJson(_collapse="true");
+multiGet=postArray.cforEach(paramName="urlRemainder",op=get.toObject(),rethrow="false",array="true").displayJson(_collapse="true");
 
 /sky/repo/multiGet=multiGet;
 
@@ -215,8 +229,10 @@ search=#skyrepoSearch(
 	), 
 	types=searchParamObj.cget(types="")
 );
+#skyRepoSearch = search;
 
-/sky/repo/search=search;
+//Deprecated
+/sky/repo/search = search;
 
 types = #skyrepoTypes();
 /sky/repo/types=types;
