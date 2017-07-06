@@ -329,9 +329,9 @@ public class LevrResolverServlet extends LevrServlet
         String requestURI = request.getRequestURI();
 
         String requestString = requestURI;
-        if (requestString.startsWith(getServletPathExample()))
+        if (requestString.contains(getServletPathExample()))
             requestString = requestString.substring(requestURI.indexOf(getServletPathExample()) + getServletPathExample().length());
-        else if (requestString.startsWith("/api"))
+        else if (requestString.contains("/api"))
             requestString = requestString.substring(requestURI.indexOf("/api") + "/api".length());
         if (requestString.toLowerCase().endsWith(FAVICON_REQUEST_STRING.toLowerCase()))
             return;
