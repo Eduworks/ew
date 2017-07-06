@@ -19,13 +19,6 @@ urlType=#add(
 );
 #skyrepoUrlType=urlType;
 
-indexBase=#if(
-    operator="@type",
-    operand="",
-    ne="@type",
-    eq=#indexBase()
-);
-
 mapUrl=#add(
 	_string="true",
 	a=#urlBase(),

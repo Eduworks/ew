@@ -167,24 +167,13 @@ get=#if(
 	operator="@type",
 	operand="",
 	ne=get,
-	eq=#elasticSettings().keySet().removeFromArray(remove=#indexBase()).forEach(
+	eq=#elasticSettings().keySet().forEach(
 		threaded="false",
 		array="true",
 		paramName="index",
 		op=get
 	).getIndex(index="0")
 );
-
-//Backwards compatibility w/0.2
-get=#if(
-	operator="@get",
-	operand="",
-	eq=get.call(index=#indexBase()),
-	ne=#toObject(obj="@get")
-).call(
-	get=get.call(index=#toLower(obj="@type"))
-);
-
 
 getMapDb=#idxGet(indexDir=".",databaseName="skyrepo",index=inferTypeWithoutObj,key=#add(a="@id",b="/",c="@version")).toObject();
 getMapDb=#if(operator=getMapDb,operand="",eq=get,ne=getMapDb);
