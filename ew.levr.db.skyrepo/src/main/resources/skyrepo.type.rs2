@@ -8,6 +8,7 @@ schemaContext=schema.cgetByParam(param=#add(a="@",b="context",_string="true"));
 
 type=#add(a="@",b="type",_string="true");
 context=#add(a="@",b="context",_string="true");
+protect=#add(a="@",b="protect",_string="true");
 
 obj=#toObject(obj="@obj");
 
@@ -25,9 +26,21 @@ mapUrl=#add(
 	d="/_mapping"
 );
 
-map=mapUrl.httpGet().toObject().cache(name="elasticMapping");
+map=mapUrl.httpGet().toObject().cache(global="true",name="elasticMapping");
 
-properties=map.getByParam(param=#toLower(obj="@type")).cget(mappings="").getByParam(param="@type").cget(properties="");
+properties=map.getByParam(param=#toLower(obj="@type")).get(mappings="").getByParam(param="@type").get(properties="");
+
+//Make sure to check before not having a thing.
+properties=#if(
+	operator=properties,
+	operand="",
+	eq=#object(
+		d=#cache(global="true",remove="true",name="elasticSettings"),
+		e=#cache(global="true",remove="true",name="elasticMapping"),
+		z=properties
+	).get(z=""),
+	ne=properties
+);
 
 settingsUrl = #add(
 	_string="true",
@@ -35,7 +48,7 @@ settingsUrl = #add(
 	c="/_settings",
 );
 
-settings = settingsUrl.httpGet().toObject().cache(name="elasticSettings");
+settings = settingsUrl.httpGet().toObject().cache(global="true",name="elasticSettings");
 
 #elasticSettings=settings;
 
@@ -91,16 +104,12 @@ addMappingNoSearch=#object(
 	)
 ).httpPost(url=mapUrl,contentType="application/json",multipart="false");
 
-addWhiteSpaceRemovalMapping = #object(
-	properties=#object(
-	).put(
-		_key="@field",
-		_value=#object(
-			type="text",
-			analyzer="whitespace_remove"
-		)
-	)
-).httpPost(url=mapUrl,contentType="application/json",multipart="false");
+//Invalidate cache.
+addMappingNoSearch=#object(
+	a=addMappingNoSearch,
+	d=#cache(global="true",remove="true",name="elasticSettings"),
+	e=#cache(global="true",remove="true",name="elasticMapping")
+);
 
 addWhiteSpaceRemovalMapping = #object(
 	properties=getCurrentMapping.put(
@@ -112,36 +121,19 @@ addWhiteSpaceRemovalMapping = #object(
 	).fromDotNotationObject()
 ).httpPost(url=mapUrl,contentType="application/json",multipart="false");
 
+//Invalidate cache.
+addWhiteSpaceRemovalMapping=#object(
+	a=addWhiteSpaceRemovalMapping,
+	d=#cache(global="true",remove="true",name="elasticSettings"),
+	e=#cache(global="true",remove="true",name="elasticMapping")
+);
+
 addWhiteSpaceRemovalMapping=#if(
 	operator=getCurrentMapping.getByParam(param=#add(a="@typePrefix",c="@field",d=".analyzer")),
 	operand="whitespace_remove",
 	ne=addWhiteSpaceRemovalMapping
 );
 
-addNotAnalyzedMultiField = #object(
-	properties=#object(
-	).put(
-		_key="@field",
-		_value=#object(
-			type="text",
-			fields=#object(
-			).put(
-				_key="(full)",
-				_value=#object(
-					type="keyword",
-					index=#true()
-				)
-			).put(
-				_key="@field",
-				_value=#object(
-					type="text",
-					index=#true()
-				)
-			)
-		)
-	)
-).httpPost(url=mapUrl,contentType="application/json",multipart="false");
-	
 addNotAnalyzedMultiField = #object(
 	properties=getCurrentMapping.put(
 		_key=#add(a="@typePrefix",c="@field",d=".fields.(full).type"),
@@ -161,6 +153,13 @@ addNotAnalyzedMultiField = #object(
 	).fromDotNotationObject()
 ).httpPost(url=mapUrl,contentType="application/json",multipart="false");
 
+//Invalidate cache.
+addNotAnalyzedMultiField=#object(
+	a=addNotAnalyzedMultiField,
+	d=#cache(global="true",remove="true",name="elasticSettings"),
+	e=#cache(global="true",remove="true",name="elasticMapping")
+);
+
 addNotAnalyzedMultiField=#if(
 	operator=getCurrentMapping.getByParam(param=#add(a="@typePrefix",c="@field",d=".fields.(full).index")),
 	operand="not_analyzed",
@@ -176,6 +175,13 @@ addExcludeFromAllIndex = #object(
 		_value="text"
 	).fromDotNotationObject()
 ).httpPost(url=mapUrl,contentType="application/json",multipart="false");
+
+//Invalidate cache.
+addExcludeFromAllIndex=#object(
+	a=addExcludeFromAllIndex,
+	d=#cache(global="true",remove="true",name="elasticSettings"),
+	e=#cache(global="true",remove="true",name="elasticMapping")
+);
 
 addExcludeFromAllIndex=#if(
 	operator=getCurrentMapping.has(has=#add(a="@typePrefix",c="@field",d=".include_in_all")),
@@ -272,7 +278,16 @@ cacheSchemaProtect=#if(
 	operand="0",
 	gt="true",
 	eq=#if(
-		operator=#catch(try=#httpGet(obj="@typeUrl").catch(any=#object()).cache(global="true",name=#add(z="@typeUrl",a="httpGet")).toObject().getByParam(param=protect), any="false"),
+		operator=#catch(
+			try=#httpGet(
+				obj="@typeUrl"
+			).catch(
+				any=#object()
+			).cache(
+				global="true",name=#add(z="@typeUrl",a="httpGet")
+			).toObject().getByParam(param=protect),
+			any="false"
+		),
 		operand="true",
 		eq=#object(
 			a=addProtectedType,
@@ -315,6 +330,13 @@ addAnalyzer = #object(
 	)
 );
 
+//Invalidate cache.
+addAnalyzer=#object(
+	a=addAnalyzer,
+	d=#cache(global="true",remove="true",name="elasticSettings"),
+	e=#cache(global="true",remove="true",name="elasticMapping")
+);
+
 checkAddAnalyzer = #if(
 	operator=#decode(obj="@settings").has(has=#toLower(obj="@type")),
 	operand="true",
@@ -333,9 +355,7 @@ checkAddAnalyzer = #if(
 checkType = #object(
 	a=checkAddAnalyzer,
 	b=cacheSchemaProtect,
-	c=iterateOverFields,
-	d=#cache(remove="true",name="elasticSettings"),
-	e=#cache(remove="true",name="elasticMapping")
+	c=iterateOverFields
 );
 
 #skyRepoCheckType=checkType;

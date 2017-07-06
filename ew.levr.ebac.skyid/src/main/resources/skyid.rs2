@@ -177,7 +177,7 @@ retrieveFormally=#if(
 		operator=retrieve,
 		operand="",
 		eq=#error(code="404", msg="User does not exist."),
-		ne=#error(code="401",msg="Incorrect password.")
+		ne=#error(code="401", msg="Incorrect password.")
 	)
 );
 

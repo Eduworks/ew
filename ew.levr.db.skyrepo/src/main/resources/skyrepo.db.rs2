@@ -75,9 +75,7 @@ put=#if(
     operator="@obj",
     operand="",
     ne=#object(
-        a=#skyRepoCheckType(
-            obj=#toObject(obj="@obj").toObject()
-        ),
+        a=#toObject(obj="@obj").skyRepoCheckType(),
         c=#if(
             operator=#owners(obj="@oldObj").count(),
             operand="0",
@@ -166,7 +164,7 @@ get=getUrl.httpGet().toObject().cgetByParam(
 get=#if(
 	operator="@type",
 	operand="",
-	ne=get,
+	ne=get.call(index=#toLower(obj="@type")),
 	eq=#elasticSettings().keySet().forEach(
 		threaded="false",
 		array="true",
@@ -179,9 +177,7 @@ getMapDb=#idxGet(indexDir=".",databaseName="skyrepo",index=inferTypeWithoutObj,k
 getMapDb=#if(operator=getMapDb,operand="",eq=get,ne=getMapDb);
 
 get=#if(operator="@version",operand="",eq=get,ne=getMapDb);
-
 get=get.filterResults();
-
 get=#if(
 	operator=#toObject(obj="@get").count(),
 	operand="0",
