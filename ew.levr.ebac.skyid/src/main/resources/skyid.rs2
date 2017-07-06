@@ -140,12 +140,10 @@ getAnyBySaltedId=#object(
 ).valueSet().union().getIndex(index="0");
 
 retrieve=#aesDecrypt(
-		obj=#debug(obj="@retrievePayload",prefix="retrievePayload:"),
-		secret=secret,
-		iv=saltedId
-	).toObject().ccall(
-	retrievePayload=getAnyBySaltedId
-);
+	obj=getAnyBySaltedId,
+	secret=secret,
+	iv=saltedId
+).toObject();
 
 payload=#object(
 	payload = #toObject(obj="@payload").aesEncrypt(
@@ -163,7 +161,7 @@ payload=#object(
 	_value=ppk.rsaPpkToPk()
 );
 
-retreiveFormally=#if(
+retrieveFormally=#if(
 	operator=saltedPassword,
 	operand=retrieve.cget(password=""),
 	eq=payload.call(
@@ -183,12 +181,13 @@ retreiveFormally=#if(
 	)
 );
 
-retreiveFormally = signatureSheet.toDatastream(
+retrieveFormally = signatureSheet.toDatastream(
 	paramName="signatureSheet",
-	op=retreiveFormally
+	op=retrieveFormally
 );
 	
-#skyidRetreive = retreiveFormally;
+#skyidRetrieve = retrieveFormally;
+#skyidRetreive = retrieveFormally;
 
 store=payload.skyrepoPut(
 	type="schema.cassproject.org.kbac.0.2.EncryptedValue",
@@ -236,7 +235,7 @@ postData=#fileFromDatastream(name="credentialRequest");
 
 postObject=postData.fileToString().toObject();
 
-login=#skyidRetreive(
+login=#skyidRetrieve(
 	id=postObject.cget(username=""),
 	password=postObject.cget(password="")
 ).displayJson(_collapse="true");

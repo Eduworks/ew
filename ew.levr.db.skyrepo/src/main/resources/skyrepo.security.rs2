@@ -185,21 +185,25 @@ filterResults=#if(
 	)
 );
 
-filterResults=#if(operator=#has(obj=#toLower(obj="@obj"),has="encrypted"),operand="true",eq=filterResults,ne=#if(
-        operator="@obj",
-        operand="",
-        ne=#if(
-                operator=isObject,
-                operand="",
-                ne=#toObject(obj="@obj"),
-                eq=#if(
-                        operator=isArray,
-                        operand="",
-                        ne=#toArray(obj="@obj"),
-                        eq="@obj"
-                )
-        )
-)
+filterResults=#if(
+	operator=#has(obj=#toLower(obj="@obj"),has="encrypted"),
+	operand="true",
+	eq=filterResults,
+	ne=#if(
+		operator="@obj",
+		operand="",
+		ne=#if(
+			operator=isObject,
+			operand="",
+			ne=#toObject(obj="@obj"),
+			eq=#if(
+				operator=isArray,
+				operand="",
+				ne=#toArray(obj="@obj"),
+				eq="@obj"
+			)
+		)
+	)
 );
 
 #filterResults=filterResults;

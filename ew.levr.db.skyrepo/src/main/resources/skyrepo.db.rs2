@@ -12,19 +12,27 @@ id=#add(a="@",b="id");
 
 urlBase=#urlBase();
 
-indexBase=#if(
-    operator=#indexBase(),
-    operand="",
-    eq="data",
-    ne=#indexBase()
-);
-
 inferTypeFromObj=#if(
 	operator="@type",
 	operand="",
-	eq=#skyrepoUrlType(obj="@obj").replace(simple="true",replace="http://",with="").replace(simple="true",replace="https://",with="").replace(simple="true",replace="/",with=".").debug("URL based type:"),
+	eq=#skyrepoUrlType(
+		obj="@obj"
+	).replace(
+		simple="true",
+		replace="http://",
+		with=""
+	).replace(
+		simple="true",
+		replace="https://",
+		with=""
+	).replace(
+		simple="true",
+		replace="/",
+		with="."
+	),
 	ne="@type"
 );
+#inferTypeFromObj=inferTypeFromObj;
 
 inferTypeWithoutObj=#if(
 	operator="@type",
@@ -35,7 +43,7 @@ inferTypeWithoutObj=#if(
 
 putUrl=#add(
 	a=urlBase,
-	b="/",bb=indexBase,bbb="/",
+	b="/",bb=inferTypeFromObj.toLower(),bbb="/",
 	c=inferTypeFromObj,
 	d="/",
 	g=#urlEncode(obj="@id"),
@@ -61,7 +69,7 @@ putInternal=#object(
     ),
     mapDb=#toObject(obj="@obj").idxPut(indexDir=".",databaseName="skyrepo",index=inferTypeFromObj,key=#add(a="@id",b="/",c="@version"))
 );
-#skyrepoPutInternal=putInternal;
+#skyRepoPutInternal=putInternal;
 
 put=#if(
     operator="@obj",
@@ -98,7 +106,7 @@ put=#if(
 
 deleteUrl=#add(
 	a=urlBase,
-	b="/",bb=indexBase,bbb="/",
+	b="/",bb=inferTypeWithoutObj.toLower(),bbb="/",
 	c=inferTypeWithoutObj,
 	d="/",
 	g=#urlEncode(obj="@id"),
@@ -135,7 +143,7 @@ delete=#object(
 
 getUrl=#add(
 	a=urlBase,
-	b="/",bb=indexBase,bbb="/",
+	b="/",bb="@index",bbb="/",
 	c=inferTypeWithoutObj,
 	f="/",
 	g=#urlEncode(obj="@id"),
@@ -153,6 +161,30 @@ getUrl=#add(
 get=getUrl.httpGet().toObject().cgetByParam(
 	param="_source"
 );
+
+//Search in the case of no match
+get=#if(
+	operator="@type",
+	operand="",
+	ne=get,
+	eq=#elasticSettings().keySet().removeFromArray(remove=#indexBase()).forEach(
+		threaded="false",
+		array="true",
+		paramName="index",
+		op=get
+	).getIndex(index="0")
+);
+
+//Backwards compatibility w/0.2
+get=#if(
+	operator="@get",
+	operand="",
+	eq=get.call(index=#indexBase()),
+	ne=#toObject(obj="@get")
+).call(
+	get=get.call(index=#toLower(obj="@type"))
+);
+
 
 getMapDb=#idxGet(indexDir=".",databaseName="skyrepo",index=inferTypeWithoutObj,key=#add(a="@id",b="/",c="@version")).toObject();
 getMapDb=#if(operator=getMapDb,operand="",eq=get,ne=getMapDb);
@@ -369,10 +401,9 @@ nonSigSearchObj = #object(
 	_value=#object(a="*").valueSet()
 );
 
-
 searchUrl=#add(
 	a=urlBase,
-	b="/",bb=#indexBase(),
+	b=#if(operator=#count(obj="@urlRemainder"),operand="1",gt=#toLower(obj="@urlRemainder")),
 	c="/_search"
 );
 
@@ -459,7 +490,7 @@ search = #if(operator=#toArray(obj="@sigResults").count(), operand="@size",
 	),
 ).ccall(
 	sigResults=checkRunSignatureSearch
-).displayJson(_collapse="true");
+).removeDuplicates().displayJson(_collapse="true");
 
 #skyrepoSearch=search;
 

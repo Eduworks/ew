@@ -20,31 +20,31 @@ urlType=#add(
 #skyrepoUrlType=urlType;
 
 indexBase=#if(
-    operator=#indexBase(),
+    operator="@type",
     operand="",
-    eq="data",
-    ne=#indexBase()
+    ne="@type",
+    eq=#indexBase()
 );
 
 mapUrl=#add(
 	_string="true",
 	a=#urlBase(),
-	b="/",bb=indexBase,bbb="/",
-	c="@type",
 	d="/_mapping"
 );
 
 map=mapUrl.httpGet().toObject().cache(name="elasticMapping");
 
-properties=map.getByParam(param=indexBase).cget(mappings="").getByParam(param="@type").cget(properties="");
+properties=map.getByParam(param=#toLower(obj="@type")).cget(mappings="").getByParam(param="@type").cget(properties="");
 
 settingsUrl = #add(
 	_string="true",
 	a=#urlBase(),
-	b="/_settings",
+	c="/_settings",
 );
 
-settings = settingsUrl.httpGet().toObject().cache(name="elasticSettings"); 
+settings = settingsUrl.httpGet().toObject().cache(name="elasticSettings");
+
+#elasticSettings=settings;
 
 noSearchList=#object(
 	a="base64:base64"
@@ -318,20 +318,19 @@ addAnalyzer = #object(
     contentType="application/json",
 	url=#add(
 		a=#urlBase(),
-		b="/",c=indexBase
+		b="/",c=#toLower(obj="@type")
 	)
 );
 
 checkAddAnalyzer = #if(
-	operator=#decode(obj="@settings").has(has=indexBase),
+	operator=#decode(obj="@settings").has(has=#toLower(obj="@type")),
 	operand="true",
 	eq=#if(
-		operator=#decode(obj="@settings").getByParam(param=indexBase).cget(index="").cget(analysis="").cget(analyzer="").has(has="whitespace_remove"),
+		operator=#decode(obj="@settings").getByParam(param=#toLower(obj="@type")).cget(settings="").cget(index="").cget(analysis="").cget(analyzer="").has(has="whitespace_remove"),
 		operand="true",
 		ne=addAnalyzer
 	),
 	ne=addAnalyzer
-	
 ).ccall(
 	settings=settings
 );

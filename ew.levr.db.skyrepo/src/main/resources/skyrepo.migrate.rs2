@@ -1,0 +1,49 @@
+//5 July 2017, FR, Move everything from data into its appropriate location.
+searchUrl=#add(
+	a=#urlBase(),
+	b=#indexBase(),aa="/",
+	c="/_search?size=500"
+);
+someResults=searchUrl.httpGet().get(hits="").get(hits="");
+newHome=#add(
+	a=#urlBase(),aa="/",
+	b=#toLower(obj="@type"),bb="/",c="@type",d="/",e=#toObject(obj="@obj").getByParam(param="_id").urlEncode()
+).httpGet();
+oldHome=#add(
+	a=#urlBase(),aa="/",
+	b=#indexBase(),bb="/",c="@type",d="/",e=#toObject(obj="@obj").getByParam(param="_id").urlEncode()
+).httpDelete();
+
+idParts=#toObject(obj="@obj").getByParam(param="_source").getByParam(param=#id()).split(split="/").reverse().top(top="4").reverse().join(divider="/");
+
+someMigration=someResults.forEach(
+	paramName="obj",
+	threaded="false",
+	array="true",
+	op=#object(
+		a=#toObject(obj="@obj").getByParam(param="_source").skyRepoCheckType(),
+        aa=#toObject(obj="@obj").getByParam(param="_source").skyRepoPutInternal(),
+		b=#if(
+			operator=newHome.getByParam(param="_source").toString(),
+			operand=#toObject(obj="@obj").getByParam(param="_source").toString(),
+			ne=#error(msg=#object(a=newHome.getByParam(param="_source"),b=#toObject(obj="@obj").getByParam(param="_source")),op="503")
+		),
+		c=oldHome
+	).call(
+		type=#toObject(obj="@obj").getByParam(param="_source").inferTypeFromObj(),
+		id=#toObject(obj="@obj").getByParam(param="_id"),
+		version=#queryParse(urlRemainder=idParts).get(version="")
+	)
+).while(condition=#if(operator=someResults.count(),operand="0",eq="false",ne="true"));
+
+migrate=#object(
+	a=#if(
+		operator=someResults.count(),
+		operand="0",
+		ne=#debug(obj="Migrating database. Please stand by. If this fails, you may debug it by hitting /api/sky/repo/util/migrate")
+	),
+	b=someMigration
+);
+
+#skyRepoMigrateAutoExecute=migrate;
+/sky/repo/util/migrate=someMigration;

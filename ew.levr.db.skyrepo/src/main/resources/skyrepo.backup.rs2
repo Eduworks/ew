@@ -47,11 +47,12 @@ check=#object(
     )
 );
 
+//TODO: Redo this, have to iterate indicies now.
 search=query.httpPost(
     url=#add(a=#urlBase(),z="/",zz=indexBase,zzz="/_search?scroll=1m"),
     contentType="application/json",
     multipart="false"
-).debug();
+);
 
 scroll=#object(
     a=#toObject(obj="@search").cget(hits="").cget(hits="").cforEach(
@@ -133,7 +134,7 @@ restore=#fileList(path=backupPath.add(z="@dir")).forEach(
         a=fl.skyRepoCheckType(
                 type="@dir"
         ),
-        b=fl.skyrepoPutInternal(
+        b=fl.skyRepoPutInternal(
             type="@dir",
             id=#hexToString(obj="@file").urlEncode(),
             version=fl.getByParam(param=#add(a="@",b="id")).split(split="/").reverse().getIndex(index="0"),
