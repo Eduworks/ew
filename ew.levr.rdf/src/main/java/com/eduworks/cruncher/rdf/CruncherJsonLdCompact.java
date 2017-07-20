@@ -104,7 +104,7 @@ public class CruncherJsonLdCompact extends Cruncher {
 
 	@Override
 	public JSONObject getParameters() throws JSONException {
-		return jo("obj", "JSONObject|JSONArray");
+		return jo("obj", "JSONObject|JSONArray", "?context", "String");
 	}
 
 }

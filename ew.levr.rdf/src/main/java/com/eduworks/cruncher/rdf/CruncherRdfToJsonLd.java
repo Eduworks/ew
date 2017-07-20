@@ -37,7 +37,7 @@ public class CruncherRdfToJsonLd extends Cruncher
             String obj = getObjAsString(c, parameters, dataStreams);
             if (obj == null) return null;
             
-            JsonLdProcessor.registerRDFParser("RDF/XML", new RdfXmlParser());
+            JsonLdProcessor.registerRDFParser("RDF/XML", new RdfXmlParser(true));
             
             JsonLdOptions options = new JsonLdOptions();
             options.outputForm=JsonLdConsts.COMPACTED;

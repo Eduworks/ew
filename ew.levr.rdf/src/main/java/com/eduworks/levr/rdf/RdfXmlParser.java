@@ -20,6 +20,17 @@ import com.github.jsonldjava.core.RDFParser;
 
 public class RdfXmlParser implements RDFParser {
 
+	public RdfXmlParser(){
+		this(false);
+	}
+	
+	public RdfXmlParser(boolean ignoreLanguage){
+		this.ignoreLanguage = ignoreLanguage;
+	}
+	
+	private boolean ignoreLanguage;
+	
+	
 	@Override
 	public RDFDataset parse(Object input) throws JsonLdError {
 		if(input instanceof String){
@@ -59,7 +70,11 @@ public class RdfXmlParser implements RDFParser {
 				}
 			}
 			
-			System.out.println(rdf.toString(2));
+			for(String ns : namespaces.keySet()){
+				rdf.remove("xmlns:"+ns);
+			}
+			
+			//System.out.println(rdf.toString(2));
 			
 			parseInner(rdf, dataset, namespaces);
 		}
@@ -163,7 +178,7 @@ public class RdfXmlParser implements RDFParser {
 						
 						if(obj.has("content")){
 							String language = obj.optString("xml:lang");
-							if(language.isEmpty())
+							if(language.isEmpty() || ignoreLanguage)
 								language = null;
 							String datatype = obj.optString("rdf:datatype");
 							if(datatype.isEmpty())
@@ -198,8 +213,16 @@ public class RdfXmlParser implements RDFParser {
 		}
 	}
 	
-	private void parseObjectArray(JSONArray arr, RDFDataset dataset, HashMap<String, String> namespaces, String type){
-		
+	private void parseObjectArray(JSONArray arr, RDFDataset dataset, HashMap<String, String> namespaces, String type) throws JSONException{
+		for(int i = 0; i < arr.length(); i++){
+			JSONObject obj = arr.getJSONObject(i);
+			
+			if(obj.has("rdf:about")){
+				addTypeTripleToDataset(dataset, obj.getString("rdf:about"), type);
+				
+				parseInner(obj, dataset, namespaces);
+			}
+		}
 	}
 	
 

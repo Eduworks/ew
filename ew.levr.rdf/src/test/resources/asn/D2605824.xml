@@ -1,0 +1,1221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This material is licensed under a Creative Commons Attribution 3.0 United States License available at:  http://creativecommons.org/licenses/by/3.0/us/
+
+  This data is protected by copyright and owned or controlled by Desire2Learn Incorporated.
+  This data is an RDF representation of the work of the entity identified as the publisher and/or rights holder in the data.
+  Where known, copyright in the original work is identified in the rights statement in the data.
+-->
+<rdf:RDF xmlns:asn="http://purl.org/ASN/schema/core/" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:gemq="http://purl.org/gem/qualifiers/" xmlns:loc="http://www.loc.gov/loc.terms/relators/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <rdf:Description rdf:about="http://asn.desire2learn.com/resources/D2605824.xml">
+    <foaf:primaryTopic rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <dcterms:rightsHolder rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Desire2Learn Incorporated</dcterms:rightsHolder>
+    <dcterms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2014-12-05T14:14:29-05:00</dcterms:modified>
+    <dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2014-12-02T17:08:22-05:00</dcterms:created>
+    <cc:license rdf:resource="http://creativecommons.org/licenses/by/3.0/us/" />
+    <cc:attributionURL rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <cc:attributionName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Desire2Learn Incorporated</cc:attributionName>
+    <asn:exportVersion rdf:resource="http://purl.org/ASN/scheme/ASNExport/3.1.0" />
+  </rdf:Description>
+  <asn:StandardDocument rdf:about="http://asn.desire2learn.com/resources/D2605824">
+    <asn:jurisdiction rdf:resource="http://purl.org/ASN/scheme/ASNJurisdiction/WMO" />
+    <dc:title xml:lang="en-GB">Basic Instruction Package for Meteorological Technicians (BIP-MT)</dc:title>
+    <dcterms:description xml:lang="en-GB">The overall aim of the BIP-MT is to provide an individual with a basic knowledge of atmospheric phenomena and processes, together with skills related to the application of this knowledge.</dcterms:description>
+    <dcterms:source rdf:resource="http://library.wmo.int/pmb_ged/wmo_1083_en.pdf" />
+    <asn:publicationStatus rdf:resource="http://purl.org/ASN/scheme/ASNPublicationStatus/Published" />
+    <asn:repositoryDate rdf:datatype="http://purl.org/dc/terms/W3CDTF">2014-12-01</asn:repositoryDate>
+    <dcterms:dateCopyright rdf:datatype="http://purl.org/dc/terms/W3CDTF">2012</dcterms:dateCopyright>
+    <dcterms:valid rdf:datatype="http://purl.org/dc/terms/W3CDTF">2012</dcterms:valid>
+    <dcterms:tableOfContents rdf:resource="http://asn.desire2learn.com/resources/D2605824_manifest.json" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <loc:aut xml:lang="en-GB">World Meteorological Organization</loc:aut>
+    <dc:publisher xml:lang="en-GB">World Meteorological Organization</dc:publisher>
+    <dcterms:rights xml:lang="en-GB">The right of publication in print, electronic and any other form and in any language is reserved by WMO. Short extracts from WMO publications may be reproduced without authorization, provided that the complete source is clearly indicated.</dcterms:rights>
+    <dcterms:rightsHolder xml:lang="en-GB">World Meteorological Organization</dcterms:rightsHolder>
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605852" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605886" />
+  </asn:StandardDocument>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605852">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/No" />
+    <asn:listID>1.</asn:listID>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <dcterms:description xml:lang="en-GB">Foundation Topics</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605853" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605861" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605872" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605853">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/No" />
+    <asn:listID>1.1</asn:listID>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <dcterms:description xml:lang="en-GB">Mathematics</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605854" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605855" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605856" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605857" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605858" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605859" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605860" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605852" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605854">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.1.1</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Trigonometry</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Define sine, cosine and tangent, describe their relationship with their inverse functions, and manipulate basic trigonometrical equations</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605853" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605855">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.1.2</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Logarithms/exponentials</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Manipulate logarithms and exponentials</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605853" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605856">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.1.3</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Vectors</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Add and subtract vectors, and multiply a vector by a scalar</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605853" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605857">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.1.4</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Algebra</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Manipulate polynomial equations and solve basic algebraic equations, including quadratic equations</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605853" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605858">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.1.5</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Geometry</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Calculate the areas of right-angled and isosceles triangles, circumference and area of circles, and areas and volumes of rectangular blocks, cylinders and spheres, and describe the relationship between radians and degrees</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605853" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605859">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.1.6</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Coordinate Geometry</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Interpret the slope and intercept of a linear graph, recognize standard curves such as the parabola, ellipse and hyperbola, and convert between cartesian and polar coordinate systems</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605853" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605860">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.1.7</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Statistics</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Select suitable ways of displaying statistical data and interpret the results, use different measures of central tendency (mean, median and mode) and variation (range, interquartile range and standard deviation), and explain the concepts of sampling, linear regression by least squares, correlation, normal distribution, percentiles and hypothesis testing</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605853" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605861">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/No" />
+    <asn:listID>1.2</asn:listID>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <dcterms:description xml:lang="en-GB">Physics</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605862" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605863" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605864" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605865" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605866" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605867" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605868" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605869" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605870" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605871" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605852" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605862">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.2.1</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Kinematics</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Solve problems using the equations describing the relationship between distance, speed, acceleration and time for uniformly accelerated motion in a straight line</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605861" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605863">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.2.2</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Dynamics</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Solve basic problems when a system is in equilibrium, solve basic problems using Newton's Second Law of Motion, and solve basic problems using the principle of the conservation of momentum</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605861" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605864">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.2.3</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Work, energy, power</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Explain the concepts of work, kinetic energy, potential energy, internal energy, and solve problems using the principle of the conservation of energy and the relationship between power, work and force</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605861" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605865">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.2.4</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Motion in a circle</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Explain the concept of centripetal acceleration and describe circular orbits by relating the gravitational force to the centripetal acceleration</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605861" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605866">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.2.5</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Phases of matter</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the physical differences between solids, liquids and gases, explain the concept of latent heat associated with a phase change, and describe the processes associated with changes of phase with emphasis on condensation and evaporation</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605861" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605867">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.2.6</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Temperature and heat</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Explain the concepts of temperature and heat, describe how physical properties of a substance that varies with temperature can be used to measure temperature, and describe how heat is transferred by conduction, convection and radiation</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605861" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605868">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.2.7</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Thermodynamics and kinetic theory of gases</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Solve problems using the equation of state for an ideal gas, give a qualitative description of the First Law of Thermodynamics, explain what is meant by an adiabatic process with emphasis on the adiabatic expansion of a gas, and describe the concepts behind the kinetic theory of gases</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605861" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605869">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.2.8</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Oscillations and waves</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the properties of oscillations and waves, describe simple harmonic motion, solve problems using the relationship between speed, frequency and wavelength for waves, explain the difference between longitudinal and transverse waves, and explain the concepts of reflection, refraction, diffraction and interference</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605861" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605870">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.2.9</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Electromagnetic radiation</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the characteristics of electromagnetic radiation and the key features of the electromagnetic spectrum, describe the processes of reflection, absorption and scattering of radiation (including reflection and refraction of light), describe what is meant by a black body, and outline the implications of the Stefan-Boltzmann Law and Wien Law</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605861" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605871">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.2.10</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Electricity and electromagnetic induction</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the physical basis of current, voltage and resistance and how these quantities are measured, solve circuit problems (including those with two or more resistors) using Ohm's Law and Kirchhoff's Laws, and describe the process of electromagnetic induction</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605861" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605872">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/No" />
+    <asn:listID>1.3</asn:listID>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <dcterms:description xml:lang="en-GB">Complementary Subjects</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605874" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605875" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605876" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605877" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605879" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605880" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605882" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605883" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605884" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605885" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605852" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605874">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.3.1</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Historical context</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Outline the scientific and technological advances that have contributed to the development of meteorology and its applications</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605872" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605875">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.3.2</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Basic oceanography</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the general circulation and thermal structure of the oceans, and describe how measurements of temperature, salinity and sea state are made</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605872" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605876">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.3.3</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Basic hydrology</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the hydrological cycle, identifying the key factors determining runoff, groundwater and surface water resources and the water balance, and describe how hydrological measurements are made (precipitation, evaporation, soil moisture, river flow, groundwater, etc.)</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605872" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605877">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.3.4</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Basic geography</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the main geographical characteristics of the region of responsibility, including a description of the local terrain</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605872" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605879">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.3.5</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Written communications</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Prepare written communications within specified time limits in a concise, accurate and comprehensible way, including use of word processing and presentation programmes</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605872" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605880">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.3.6</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Oral presentations</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Make presentations within stated time limits in which the content and style of delivery accurately conveys information in a way that can be understood by the audience</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605872" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605882">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.3.7</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Programming</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Use basic computer programming principles, and construct a basic computer programme</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605872" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605883">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.3.8</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Data processing</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Perform data processing and statistical analysis using spreadsheets and databases</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605872" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605884">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.3.9</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Accessing and obtaining informatiom</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Find meteorological information using libraries, databases and internet searches</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605872" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605885">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>1.3.10</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Creating and publishing online material</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Create, publish and update a basic webpage</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605872" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605886">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/No" />
+    <asn:listID>2.</asn:listID>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <dcterms:description xml:lang="en-GB">Topics in General Meteorology</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605887" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605898" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605912" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605922" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605887">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/No" />
+    <asn:listID>2.1</asn:listID>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <dcterms:description xml:lang="en-GB">Basic Physical &amp; Dynamic Meteorology</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605888" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605889" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605890" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605891" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605892" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605893" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605894" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605895" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605896" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605897" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605886" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605888">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.1.1</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Atmospheric composition &amp; structure</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the composition of the atmosphere and explain its vertical structure</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605887" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605889">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.1.2</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Radiation</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Explain the diurnal, latitudinal and seasonal variations in the radiation reaching the Earth's surface, describe the differences between short- (solar) and long-wave (terrestrial) radiation, describe the processes affecting short- and long-wave radiation (i.e., reflection, scattering and absorption of radiation), outline the heat budget of the Earth's atmosphere, explain the greenhouse effect, explain the role of ozone in affecting ultraviolet radiation, and describe the heat balance at the surface and how it varies with latitude</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605887" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605890">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.1.3</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Atmospheric pressure</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Explain why pressure varies with height, explain the effect of temperature and humidity on the variation of pressure with height, and explain why pressure is often reduced to mean sea level</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605887" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605891">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.1.4</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Atmospheric temperature</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the heating and cooling effect of convection, advection, turbulence and evaporation/condensation, explain the effect of water vapour, cloud and wind on the surface air temperature, explain the diurnal variation in surface air temperature, and describe the main factors that affect the global distribution of surface air temperature</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605887" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605892">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.1.5</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Atmospheric humidity</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Explain why humidity is important, explain the concepts of vapour pressure, saturated vapour pressure, wet-bulb temperature, dew point and relative humidity, and describe the factors that affect the rate of evaporation</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605887" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605893">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.1.6</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Atmospheric stability</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the causes of variations in atmospheric stability, explain the concepts of dry adiabatic lapse rate, saturated adiabatic lapse rate and environmental lapse rate, explain various types of stability (for example, absolute, conditional, neutral), explain the role of temperature inversions, and describe how stability and instability develop</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605887" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605894">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.1.7</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Wind</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Explain why winds occur, describe the pressure gradient force and Coriolis force, and explain concepts of the geostrophic and gradient winds, describe the effect of friction on the wind, and explain the causes of common local winds caused by topography (for example, sea/land breezes, foehn winds and katabatic/anabatic winds)</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605887" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605895">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.1.8</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Clouds, precipitation, &amp; thunderstorms</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Explain why rising motion leads to the formation of clouds, describe the main mechanisms for the formation of clouds, describe the processes that produce precipitation, and describe the triggering processes for thunderstorms and their life cycle</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605887" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605896">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.1.9</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Dew, frost, and fog</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the factors affecting visibility, explain the formation of dew and frost, and explain the causes of fog, with emphasis on radiation and advection fog</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605887" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605897">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.1.10</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Atmospheric optics &amp; electricity</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Explain the formation of rainbows, haloes, blue skies and lightning</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605887" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605898">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/No" />
+    <asn:listID>2.2</asn:listID>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <dcterms:description xml:lang="en-GB">Basic Synoptic &amp; Mesoscale Meteorology</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605899" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605900" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605901" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605902" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605903" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605904" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605905" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605906" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605907" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605908" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605909" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605910" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605911" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605886" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605899">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.2.1</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Weather at a specific location</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Explain how the weather experienced at a specific location is a combination of effects acting on different time and space scales</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605898" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605900">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.2.2</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Bodies of air</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe and explain the origin, characteristics, movement and modification of bodies of air</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605898" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605901">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.2.3</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Mid-latitude and polar weather systems</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the characteristics of depressions, anticyclones, troughs and ridges and their associated weather, with emphasis on those affecting the region of responsibility, describe the characteristics of warm, cold and occluded fronts and the weather associated with their passage, and describe the relationship between jet streams and weather systems</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605898" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605902">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.2.4</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Main tropical disturbances</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the main tropical disturbances and their associated weather, including the ITCZ, tropical depressions, monsoons and El Niño-Southern Oscillation (ENSO)</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605898" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605903">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.2.5</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Mesoscale systems</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the formation and characteristics of important mesoscale features affecting the region of responsibility</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605898" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605904">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.2.6</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Hazardous weather</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the formation and characteristics of hazardous weather systems (for example, thunderstorms, and tropical cyclones) affecting the region of responsibility, the extent to which they can be forecast, and their impact on society</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605898" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605905">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.2.7</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Surface pressure diagrams</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Identify the main synoptic features on surface pressure diagrams and the associated satellite and radar imagery, and describe the typical weather associated with those features</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605898" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605906">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.2.8</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Upper-air diagrams</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe different types of upper-air diagrams, including height charts on constant pressure surfaces, identify the main synoptic features on the diagram and the associated satellite and radar imagery, and describe the typical weather associated with those features</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605898" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605907">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.2.9</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Aerological diagrams</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the physical ideas that form the basis of aerological diagrams and perform basic operations on the diagram</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605898" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605908">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.2.10</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Display and mapping systems</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Discuss the common systems used within Meteorological Services to (a) display and map data and (b) prepare products and services for users, along with the benefits and shortcomings of the systems</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605898" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605909">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.2.11</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Forecast process</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the forecasting process, describe the principles behind numerical weather prediction (NWP), and interpret basic operational NWP output</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605898" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605910">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.2.12</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Key products and services</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the key products and services, including warnings of hazardous weather conditions, based on current and forecast weather information, that are provided to the public and other users</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605898" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605911">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.2.13</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Function of National Meteorological Services</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the function of National Meteorological Services in monitoring and forecasting the weather and the role of other service providers</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605898" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605912">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/No" />
+    <asn:listID>2.3</asn:listID>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <dcterms:description xml:lang="en-GB">Basic Climatology</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605913" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605914" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605915" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605916" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605917" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605918" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605919" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605920" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605921" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605886" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605913">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.3.1</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Features of the global circulation</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Explain the main features of the global circulation of the atmosphere and oceans and their temporal (diurnal, seasonal, annual) variability</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605912" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605914">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.3.2</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Regional and local climates</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Explain the factors that determine regional and local climates</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605912" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605915">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.3.3</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Classifying and describing climates</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the techniques for classifying the climate, including the Köppen method</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605912" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605916">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.3.4</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Local climate</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the climatology and seasonal changes of the region of responsibility and the climatic trend in that region</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605912" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605917">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.3.5</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Climate variability and climate change</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the difference between climate variability and climate change, describe the basic concepts behind the greenhouse effect and the basic science involved in human-induced climate change, and describe the basis for climate predictions</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605912" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605918">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.3.6</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Seasonal forecasts</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Outline the process and scientific basis for making seasonal forecasts</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605912" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605919">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.3.7</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Climate data</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe how climate data is captured, collected and quality-controlled in the meteorological service</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605912" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605920">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.3.8</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Climate statistics</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe how climate data is analysed in terms of its distribution (for example, frequency and cumulative frequency), central tendency and variation</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605912" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605921">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.3.9</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Key products and services</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the key products and services based on climate information that are provided to the public and other users</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605912" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605922">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/No" />
+    <asn:listID>2.4</asn:listID>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <dcterms:description xml:lang="en-GB">Meteorological Instruments &amp; Methods of Observation</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605923" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605924" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605925" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605926" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605927" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605928" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605929" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605930" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605931" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605932" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605933" />
+    <gemq:hasChild rdf:resource="http://asn.desire2learn.com/resources/S2605934" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605886" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605923">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.4.1</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">WMO Integrated Global Observing System</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the main components of the WMO Global Observing System and WMO Information System (including the Global Telecommunications System) that are used for making and transmitting meteorological and other environmental observations on a global scale using surface-based and space-based systems</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605922" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605924">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.4.2</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Siting of instruments</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the factors that need to be taken into account when siting surface instrumentation</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605922" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605925">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.4.3</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Surface instrumentation</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Explain the physical principles used in instruments to make surface measurements of temperature, moisture, pressure, precipitation, wind, cloud height, visibility, sunshine and radiation (including instruments used in automatic weather stations), describe how these instruments operate, and outline the kinds of errors that might occur</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605922" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605926">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.4.4</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Hydrometeors</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the various hydrometeors and how they are observed</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605922" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605927">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.4.5</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Clouds</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the main cloud types, their characteristics, usual height range, and associated weather phenomena</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605922" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605928">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.4.6</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Weather phenomena</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the various weather phenomena considered when taking a visual surface observation, describe their characteristics and explain their formation</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605922" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605929">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.4.7</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Monitoring &amp; observing the weather</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Monitor the weather, make surface observations using remote and directly-read instruments and visual assessments (including identifying cloud types, cloud amount and weather type), and explain the reasons for the visual assessments</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605922" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605930">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.4.8</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Standards, quality control, calibration, intercomparison</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe national and international measurement standards and best practice for the quality control of observations and calibration and intercomparison of instruments</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605922" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605931">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.4.9</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Upper-air observations</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Explain the physical principles and the limitations of instruments used to make upper-air measurements</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605922" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605932">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.4.10</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Remote sensing systems</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the means by which remote sensing from ground and space (including use of satellites, radars, wind profilers, and aircraft, marine and lightning-detection systems) provides information about the atmosphere</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605922" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605933">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.4.11</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Coding</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Outline how observations are coded and transmitted, and describe the differences between different types of messages (SYNOP, SHIP, CLIMAT, METAR, etc.)</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605922" />
+  </asn:Statement>
+  <asn:Statement rdf:about="http://asn.desire2learn.com/resources/S2605934">
+    <dcterms:isPartOf rdf:resource="http://asn.desire2learn.com/resources/D2605824" />
+    <asn:authorityStatus rdf:resource="http://purl.org/ASN/scheme/ASNAuthorityStatus/Original" />
+    <asn:indexingStatus rdf:resource="http://purl.org/ASN/scheme/ASNIndexingStatus/Yes" />
+    <asn:statementNotation>2.4.12</asn:statementNotation>
+    <dcterms:educationLevel rdf:resource="http://purl.org/ASN/scheme/ASNEducationLevel/ProfessionalEducation-Development" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/careerEducation" />
+    <dcterms:subject rdf:resource="http://purl.org/ASN/scheme/ASNTopic/science" />
+    <asn:statementLabel xml:lang="en-GB">Learning Outcome</asn:statementLabel>
+    <asn:conceptKeyword xml:lang="en-GB">Use of observations</asn:conceptKeyword>
+    <dcterms:description xml:lang="en-GB">Describe the main uses of observations from the WMO Integrated Global Observing System and other sources of information</dcterms:description>
+    <dcterms:language rdf:resource="http://id.loc.gov/vocabulary/iso639-2/eng" />
+    <gemq:isChildOf rdf:resource="http://asn.desire2learn.com/resources/S2605922" />
+  </asn:Statement>
+</rdf:RDF>
