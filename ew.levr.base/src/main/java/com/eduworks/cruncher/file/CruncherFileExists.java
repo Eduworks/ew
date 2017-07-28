@@ -61,7 +61,7 @@ public class CruncherFileExists extends Cruncher {
 
     @Override
     public JSONObject getParameters() throws JSONException {
-        return jo("path", "String");
+        return jo("path", "String", "?safe", "Boolean");
     }
 ;
 }
