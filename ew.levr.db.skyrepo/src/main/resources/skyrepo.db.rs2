@@ -424,7 +424,7 @@ nonSigSearch = nonSigSearchObj.httpPost(url=searchUrl,contentType="application/j
 checkRunNonSigSearch = nonSigSearch;
 
 search = #if(operator=#toArray(obj="@sigResults").count(), operand="@size",
-	eq="@sigResults",
+	eq=#toArray(obj="@sigResults"),
 	lt=#if(
 		operator=#toArray(obj="@sigResults").count(),
 		operand="0",
