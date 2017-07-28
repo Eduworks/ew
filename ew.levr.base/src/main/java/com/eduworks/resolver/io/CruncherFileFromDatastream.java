@@ -1,21 +1,16 @@
 package com.eduworks.resolver.io;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.apache.commons.io.IOUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.eduworks.lang.EwList;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 import com.eduworks.util.io.InMemoryFile;
+import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.*;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class CruncherFileFromDatastream extends Cruncher
 {
@@ -99,8 +94,12 @@ public class CruncherFileFromDatastream extends Cruncher
 			extension = c.filenames.get(nameField);
 		if (extension == null || extension.isEmpty())
 			extension = nameField;
-		if (extension != null)
-			extension = extension.substring(Math.min(0, extension.lastIndexOf('.')));
+		if (extension != null) {
+			if (extension.lastIndexOf('.') != -1)
+				extension = extension.substring(Math.min(0, extension.lastIndexOf('.')));
+			else
+				extension = null;
+		}
 		if (extension == null || extension.isEmpty())
 			extension = "";
 		File createTempFile = File.createTempFile("foo", extension);
