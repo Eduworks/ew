@@ -1,24 +1,26 @@
 package com.eduworks.cruncher.string;
 
-import java.io.InputStream;
-import java.math.BigInteger;
-import java.util.Map;
-
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
 import org.apache.commons.codec.binary.Hex;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.eduworks.resolver.Context;
-import com.eduworks.resolver.Cruncher;
+import java.io.InputStream;
+import java.util.Map;
 
 public class CruncherStringToHex extends Cruncher{
 
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
-		String obj = getObjAsString(c, parameters, dataStreams);
+		Object obj = getObj(c, parameters, dataStreams);
 		if (obj == null) return null;
-	    return Hex.encodeHexString(obj.getBytes());
+		if (obj instanceof String)
+			return Hex.encodeHexString(((String)obj).getBytes());
+		if (obj instanceof byte[])
+			return Hex.encodeHexString((byte[])obj);
+		return Hex.encodeHexString(obj.toString().getBytes());
 	}
 
 	@Override
