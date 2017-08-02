@@ -62,12 +62,12 @@ putUrl=#add(
 //BUG: Check to see if there are no signature sheet signatures but the owners change, if it changes the owner.
 //20161126 fray: Added rule: "If the object is new, then the writer does not have to own it."
 putInternal=#object(
-    elasticSearch=#toObject(obj="@obj").httpPost(
+    elasticSearch=#toObject(obj="@obj").flattenStringFields().httpPost(
         url=putUrl,
         contentType="application/json",
         multipart="false"
     ),
-    mapDb=#toObject(obj="@obj").idxPut(indexDir=".",databaseName="skyrepo",index=inferTypeFromObj,key=#add(a="@id",b="/",c="@version"))
+    mapDb=#toObject(obj="@obj").idxPut(indexDir=".",databaseName="skyrepo",index=#toObject(obj="@obj").inferTypeFromObj(),key=#add(a="@id",b="/",c="@version"))
 );
 #skyRepoPutInternal=putInternal;
 
@@ -175,6 +175,8 @@ get=#if(
 
 getMapDb=#idxGet(indexDir=".",databaseName="skyrepo",index=inferTypeWithoutObj,key=#add(a="@id",b="/",c="@version")).toObject();
 getMapDb=#if(operator=getMapDb,operand="",eq=get,ne=getMapDb);
+
+get=#catch(try=getMapDb, any=get);
 
 get=#if(operator="@version",operand="",eq=get,ne=getMapDb);
 get=get.filterResults();
@@ -423,6 +425,26 @@ nonSigSearch = nonSigSearchObj.httpPost(url=searchUrl,contentType="application/j
 
 checkRunNonSigSearch = nonSigSearch;
 
+getResultFromMapDb=#if(operator="@mapDbObj", operand="",
+	eq=#toObject(obj="@elasticObj"),
+	ne=#toObject(obj="@mapDbObj")
+).ccall(
+	mapDbObj=getMapDb.ccall(
+		type=#toObject(obj="@elasticObj").inferTypeFromObj(),
+		id=#toArray(obj="@splitId").getIndex(index=#add(a=#toArray(obj="@splitId").count(), b="-2")),
+		version=#toArray(obj="@splitId").getIndex(index=#add(a=#toArray(obj="@splitId").count(), b="-1")),
+	).call(
+		splitId=#toObject(obj="@elasticObj").getByParam(param=id).split(split="/")
+	)
+);
+
+getResultsFromMapDb = #forEach(
+	obj=#toArray(obj="@results"), 
+	paramName="elasticObj",
+	array="true",
+	op=getResultFromMapDb
+);
+
 search = #if(operator=#toArray(obj="@sigResults").count(), operand="@size",
 	eq=#toArray(obj="@sigResults"),
 	lt=#if(
@@ -475,6 +497,9 @@ search = #if(operator=#toArray(obj="@sigResults").count(), operand="@size",
 	),
 ).ccall(
 	sigResults=checkRunSignatureSearch
+).toParameter(
+	paramName="results", 
+	op=getResultsFromMapDb
 ).removeDuplicates().displayJson(_collapse="true");
 
 #skyrepoSearch=search;

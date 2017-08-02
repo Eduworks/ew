@@ -17,7 +17,7 @@ urlType=#add(
 	a=obj.getByParam(param=context).string(op="trim",chars="/"),
 	b=#if(operator=obj.getByParam(param=context),operand="",ne="/"),
 	c=obj.getByParam(param=type).replace(replace=obj.getByParam(param=context),with="").string(op="trim",chars="/")
-);
+).debug();
 #skyrepoUrlType=urlType;
 
 mapUrl=#add(
