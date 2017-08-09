@@ -17,13 +17,17 @@ urlType=#add(
 	a=obj.getByParam(param=context).string(op="trim",chars="/"),
 	b=#if(operator=obj.getByParam(param=context),operand="",ne="/"),
 	c=obj.getByParam(param=type).replace(replace=obj.getByParam(param=context),with="").string(op="trim",chars="/")
-).debug();
+);
 #skyrepoUrlType=urlType;
 
 mapUrl=#add(
 	_string="true",
 	a=#urlBase(),
-	d="/_mapping"
+	b="/",
+	c=#inferTypeFromObj().toLower(),
+	d="/_mapping",
+	e="/",
+	f=#inferTypeFromObj()
 );
 
 map=mapUrl.httpGet().toObject().cache(global="true",name="elasticMapping");
@@ -200,27 +204,36 @@ iterateOverFields=obj.cforEach(
 			operator=#indexOf(str="@field", substr=#add(a="@", b="owner")),
 			operand="-1",
 			eq=#if(
-				operator=#indexOf(str="@field", substr=#add(a="@", b="type")),
+				operator=#indexOf(str="@field", substr=#add(a="@", b="reader")),
 				operand="-1",
 				eq=#if(
-					operator=#indexOf(str="@field", substr=#add(a="@", b="reader")),
-					operand="-1",
-					eq=#if(
-						operator=prefixType,
-						operand="",
-						ne=#if(
-							operator=noSearchList.has(has=schemaContext.call(typeUrl=prefixType.reduce()).cgetByParam(param=simpleType).cgetByParam(param=type)),
-							operand="true",
-							eq=addMappingNoSearch
-						)
+					operator=prefixType,
+					operand="",
+					ne=#if(
+						operator=noSearchList.has(has=schemaContext.call(typeUrl=prefixType.reduce()).cgetByParam(param=simpleType).cgetByParam(param=type)),
+						operand="true",
+						eq=addMappingNoSearch,
+						ne=#if(operator="@checkType", operand="false",
+							ne=#if(
+								operator=#indexOf(str="@field", substr=#add(a="@", b="type")),
+								operand="-1",
+								ne=addNotAnalyzedMultiField,
+							)
+						),
 					),
-					ne=addExcludeFromAllIndex,
+					eq=#if(operator="@checkType", operand="false",
+						ne=#if(
+							operator=#indexOf(str="@field", substr=#add(a="@", b="type")),
+							operand="-1",
+							ne=addNotAnalyzedMultiField,
+						)
+					)
 				),
-				ne=addNotAnalyzedMultiField,
+				ne=addExcludeFromAllIndex,
 			),
 			ne=addWhiteSpaceRemovalMapping
 		),
-		ne=#toArray(obj="@value").cforEach(paramName="obj",op=#toObject(obj="@obj").typeIterateOverFields(typePrefix=#add(a="@typePrefix",a="@field",b=".properties.")))
+		ne=#toArray(obj="@value").cforEach(paramName="obj",op=#toObject(obj="@obj").typeIterateOverFields(checkType="false", typePrefix=#add(a="@typePrefix",a="@field",b=".properties.")))
 	)
 );
 #typeIterateOverFields=iterateOverFields;

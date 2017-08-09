@@ -75,7 +75,7 @@ put=#if(
     operator="@obj",
     operand="",
     ne=#object(
-        a=#toObject(obj="@obj").skyRepoCheckType(),
+        a=#toObject(obj="@obj").skyRepoCheckType().debug(),
         c=#if(
             operator=#owners(obj="@oldObj").count(),
             operand="0",
@@ -506,9 +506,14 @@ search = #if(operator=#toArray(obj="@sigResults").count(), operand="@size",
 
 typesObj = #object(
 	query=#object(
-		filtered=#object(
-			query=#object(
+		bool=#object(
+			must=#object(
 				match_all=#object()
+			),
+			must_not=#object(
+				exists=#object(
+					field=owner
+				)
 			),
 			filter=#object(
 				bool=#object(
@@ -526,11 +531,6 @@ typesObj = #object(
 						array="true"
 					).append(
 						a=#object(
-							missing=#object(
-								field=owner
-							)
-						),
-						b=#object(
 							bool=#object(
 								must_not=#skyRepoGetProtectedTypes().cforEach(
 									paramName="protectedType",
@@ -556,7 +556,7 @@ typesObj = #object(
 			)
 		)
 	)
-);
+).debug();
 
 types = typesObj.httpPost(url=searchUrl,contentType="application/json", multipart="false").toObject().cget(aggregations="").cget(types="").cget(buckets="").displayJson(_collapse="true");
 
