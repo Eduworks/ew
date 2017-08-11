@@ -158,7 +158,7 @@ getUrl=#add(
 
 get=getUrl.httpGet().toObject();
 
-//Search in the case of no match
+//Search all indices in the case of no match
 get=#if(
 	operator="@type",
 	operand="",
@@ -167,17 +167,40 @@ get=#if(
 		threaded="false",
 		array="true",
 		paramName="index",
-		op=#if(operator=#toObject(obj="@result").get(found=""),operand="true",eq=#toObject(obj="@result")).call(result=get)
+		op=#if(
+			operator=#toObject(obj="@result").get(found=""),
+			operand="true",
+			eq=#toObject(obj="@result")
+		).call(result=get)
 	).getIndex(index="0")
 );
-
-getMapDb=#idxGet(indexDir=".",databaseName="skyrepo",index=#if(operator="@type",operand="",ne="@type"),key=#add(a="@id",b="/",c="@version")).toObject();
-
-//getMapDb=#if(operator=getMapDb,operand="",eq=get,ne=getMapDb);
-getMapDb=#catch(try=getMapDb, any=get.cgetByParam(param="_source"));
+//If needed, find version in ElasticSearch reference.
 getVersionFromElastic=get.getByParam(param="_version");
-get=#if(operator="@version",operand="",eq=getMapDb.call(version=getVersionFromElastic),ne=getMapDb);
+
+//Get versioned object out of MapDB
+getMapDb=#idxGet(
+	indexDir=".",
+	databaseName="skyrepo",
+	index=#if(operator="@type",operand="",ne="@type"),
+	key=#add(a="@id",b="/",c="@version")
+).toObject();
+
+//In case of error or empty, fall back to ElasticSearch.
+getMapDb=#if(operator=getMapDb,operand="",eq=get.cgetByParam(param="_source"),ne=getMapDb);
+getMapDb=#catch(try=getMapDb, any=get.cgetByParam(param="_source"));
+
+//If version isn't provided, locate it in search index.
+get=#if(
+	operator="@version",
+	operand="",
+	eq=getMapDb.call(version=getVersionFromElastic),
+	ne=getMapDb
+);
+
+//Remove objects and fields if the appropriate signatureSheet is not provided.
 get=get.filterResults();
+
+//Instead of returning empty arrays or objects, return nothing.
 get=#if(
 	operator=#toObject(obj="@get").count(),
 	operand="0",
