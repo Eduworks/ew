@@ -1,14 +1,13 @@
 package com.eduworks.cruncher.refl;
 
-import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.Map;
-
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.eduworks.resolver.Context;
-import com.eduworks.resolver.Cruncher;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.Map;
 
 public class CruncherHeaders extends Cruncher
 {
@@ -17,6 +16,7 @@ public class CruncherHeaders extends Cruncher
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
 		JSONObject result = new JSONObject();
+		if (c.request == null) return null;
 		Enumeration<String> headerNames = c.request.getHeaderNames();
 		while (headerNames.hasMoreElements())
 		{
@@ -29,29 +29,25 @@ public class CruncherHeaders extends Cruncher
 	@Override
 	public String getDescription()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return "Returns HTTP headers in a JSON Object";
 	}
 
 	@Override
 	public String getReturn()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return "JSONObject";
 	}
 
 	@Override
 	public String getAttribution()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return ATTRIB_NONE;
 	}
 
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return jo();
 	}
 
 }
