@@ -1,13 +1,12 @@
 package com.eduworks.resolver.string;
 
-import java.io.InputStream;
-import java.util.Map;
-
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.eduworks.resolver.Context;
-import com.eduworks.resolver.Cruncher;
+import java.io.InputStream;
+import java.util.Map;
 
 public class CruncherHash extends Cruncher
 {
@@ -44,7 +43,7 @@ public class CruncherHash extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("<any>","String");
+		return jo("obj","String");
 	}
 
 }
