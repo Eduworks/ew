@@ -1,18 +1,19 @@
 package com.eduworks.cruncher.idx;
 
-import java.io.InputStream;
-import java.util.Map;
-import java.util.NavigableSet;
-
+import com.eduworks.db.mapdb.EwDB;
+import com.eduworks.lang.EwList;
+import com.eduworks.lang.util.EwJson;
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mapdb.Fun;
 
-import com.eduworks.db.mapdb.EwDB;
-import com.eduworks.lang.util.EwJson;
-import com.eduworks.resolver.Context;
-import com.eduworks.resolver.Cruncher;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableSet;
 
 public class CruncherIdxGet extends Cruncher
 {
@@ -39,28 +40,44 @@ public class CruncherIdxGet extends Cruncher
 
 			if (optCommit)
 				ewDB.db.commit();
-			if (optAsString("multi", "false", c, parameters, dataStreams).equals("false"))
+
+			if (index == null)
 			{
-				Object object = ewDB.db.getHashMap(index).get(key);
-				return object;
-			}
-			else
-			{
-				NavigableSet<Fun.Tuple2<String, Object>> multiMap = ewDB.db.getTreeSet(index);
-				JSONArray ja = new JSONArray();
-				for (Object l : Fun.filter(multiMap, key))
+				Map<String, Object> all = ewDB.db.getAll();
+				List<String> keys = new EwList(all.keySet());
+				for (int i = 0;i < keys.size();i++)
 				{
-					ja.put(EwJson.tryParseJson(l,false));
+					Object result = getObject(c, parameters, dataStreams, keys.get(i), key, ewDB);
+					if (result != null)
+						return result;
 				}
-				if (ja.length() > 0)
-					return ja;
-				return null;
 			}
+			return getObject(c, parameters, dataStreams, index, key, ewDB);
 		}
 		finally
 		{
 			if (ewDB != null)
 				ewDB.close();
+		}
+	}
+
+	private Object getObject(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams, String index, String key, EwDB ewDB) throws JSONException {
+		if (optAsString("multi", "false", c, parameters, dataStreams).equals("false"))
+		{
+			Object object = ewDB.db.getHashMap(index).get(key);
+			return object;
+		}
+		else
+		{
+			NavigableSet<Fun.Tuple2<String, Object>> multiMap = ewDB.db.getTreeSet(index);
+			JSONArray ja = new JSONArray();
+			for (Object l : Fun.filter(multiMap, key))
+			{
+				ja.put(EwJson.tryParseJson(l,false));
+			}
+			if (ja.length() > 0)
+				return ja;
+			return null;
 		}
 	}
 
