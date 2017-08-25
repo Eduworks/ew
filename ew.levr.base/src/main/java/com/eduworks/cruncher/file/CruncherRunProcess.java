@@ -30,6 +30,8 @@ public class CruncherRunProcess extends Cruncher
 		
 		ArrayList<String> output = new ArrayList<String>();
 		
+		boolean background = optAsBoolean("background", false, c, parameters, dataStreams);
+		
 		try {
 			ProcessBuilder builder = new ProcessBuilder(args);
 			String wd = optAsString("workingDirectory",null,c,parameters,dataStreams);
@@ -39,6 +41,9 @@ public class CruncherRunProcess extends Cruncher
 	        
 			process = builder.start();
 
+			if(background)
+				return null;
+			
 			InputStream outp = process.getInputStream();
 			InputStreamReader isr = new InputStreamReader(outp);
 	        BufferedReader br = new BufferedReader(isr);
@@ -110,6 +115,6 @@ public class CruncherRunProcess extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("args", "String[]");
+		return jo("args", "String[]", "?workingDirectory", "String", "?background", "boolean");
 	};
 }
