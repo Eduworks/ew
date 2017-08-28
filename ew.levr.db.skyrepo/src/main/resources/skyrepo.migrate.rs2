@@ -24,8 +24,8 @@ someMigration=someResults.forEach(
 		a=#toObject(obj="@obj").getByParam(param="_source").skyRepoCheckType(),
         aa=#toObject(obj="@obj").getByParam(param="_source").skyRepoPutInternal(),
 		b=#if(
-			operator=newHome.getByParam(param="_source").toString(),
-			operand=#toObject(obj="@obj").getByParam(param="_source").toString(),
+			operator=newHome.getByParam(param="_source").getByParam(param=#type()).toString(),
+			operand=#toObject(obj="@obj").getByParam(param="_source").getByParam(param=#type()).toString(),
 			ne=#error(msg=#object(a=newHome.getByParam(param="_source"),b=#toObject(obj="@obj").getByParam(param="_source")),op="503")
 		),
 		c=oldHome
