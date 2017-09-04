@@ -521,7 +521,7 @@ search = #if(operator=#toArray(obj="@sigResults").count(), operand="@size",
 ).toParameter(
 	paramName="results", 
 	op=getResultsFromMapDb
-).removeDuplicates().displayJson(_collapse="true");
+).removeDuplicates().filterResults().displayJson(_collapse="true");
 
 #skyrepoSearch=search;
 
