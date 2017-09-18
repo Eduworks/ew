@@ -37,12 +37,26 @@ public class CruncherRunProcess extends Cruncher
 			String wd = optAsString("workingDirectory",null,c,parameters,dataStreams);
 			if (wd != null)
 				builder.directory(new File(wd));
-	        Process process;
+	        final Process process;
 	        
 			process = builder.start();
 
-			if(background)
+			if(background){
+				EwThreading.fork(new EwThreading.MyRunnable()
+				{
+					@Override
+					public void run()
+					{
+						try{
+							process.waitFor();
+						}catch(InterruptedException e){
+
+						}
+					}
+				});
 				return null;
+			}
+
 			
 			InputStream outp = process.getInputStream();
 			InputStreamReader isr = new InputStreamReader(outp);

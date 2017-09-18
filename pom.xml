@@ -60,6 +60,16 @@
             </roles>
             <timezone>PST</timezone>
         </developer>
+        <developer>
+            <name>Devlin Junker</name>
+            <email>devlin.junker@eduworks.com</email>
+            <organization>Eduworks Corporation</organization>
+            <organizationUrl>http://www.eduworks.com</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>PST</timezone>
+        </developer>
     </developers>
 
     <dependencies>
@@ -144,6 +154,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
@@ -157,7 +168,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> -->
             <plugin>
                 <groupId>com.eduworks</groupId>
                 <artifactId>levr-codegen-maven-plugin</artifactId>
