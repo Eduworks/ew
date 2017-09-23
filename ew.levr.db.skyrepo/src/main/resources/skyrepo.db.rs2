@@ -67,7 +67,7 @@ putInternal=#object(
         contentType="application/json",
         multipart="false"
     ),
-    mapDb=#toObject(obj="@obj").idxPut(indexDir=".",databaseName="skyrepo",index=#toObject(obj="@obj").inferTypeFromObj(),key=#add(a="@id",b="/",c="@version"))
+    mapDb=#toObject(obj="@obj").idxPut(indexDir=".",databaseName="skyrepo",index=#toObject(obj="@obj").inferTypeFromObj(),key=#add(_string="true",a="@id",b="/",c="@version"))
 );
 #skyRepoPutInternal=putInternal;
 
@@ -182,7 +182,7 @@ getMapDb=#idxGet(
 	indexDir=".",
 	databaseName="skyrepo",
 	index=#if(operator="@type",operand="",ne="@type"),
-	key=#add(a="@id",b="/",c="@version")
+	key=#add(_string="true",a="@id",b="/",c="@version")
 ).toObject();
 
 //In case of error or empty, fall back to ElasticSearch.
