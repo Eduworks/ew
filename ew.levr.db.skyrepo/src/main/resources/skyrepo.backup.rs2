@@ -181,11 +181,16 @@ indexBase=#if(
 purgea=#add(
     a=urlBase,
     b="/",
-    bb=indexBase,
+    bb="@index",
     bbb="/"
 );
 
-purgea=purgea.debug().httpDelete().debug();
+purgea=#elasticSettings().keySet().forEach(
+	threaded="false",
+	array="true",
+	paramName="index",
+	op=purgea.debug().httpDelete().debug()
+);
 
 purgeb=#object(
     a=#fileDelete(path="skyrepo"),
