@@ -154,7 +154,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
@@ -168,7 +167,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin> -->
+            </plugin>
             <plugin>
                 <groupId>com.eduworks</groupId>
                 <artifactId>levr-codegen-maven-plugin</artifactId>
