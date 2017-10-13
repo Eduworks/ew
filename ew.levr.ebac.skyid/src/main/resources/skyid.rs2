@@ -71,6 +71,8 @@ secret=#if(
 	ne=secret
 );
 
+#skyIdSecret = secret;
+
 secret=#pbkdf2(
 	obj=secret,
 	salt=salt,

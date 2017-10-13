@@ -56,12 +56,13 @@ putUrl=#add(
 			j="&version_type=external&refresh=true"
 		),
 		eq="?refresh=true"
-	)	
+	)
 );
 
 //BUG: Check to see if there are no signature sheet signatures but the owners change, if it changes the owner.
 //20161126 fray: Added rule: "If the object is new, then the writer does not have to own it."
 putInternal=#object(
+	aTypeCheck=#toObject(obj="@obj").skyRepoCheckType(type=#if(operator="@type",operand="",eq=#toObject(obj="@obj").inferTypeFromObj(),ne="@type")),
     elasticSearch=#toObject(obj="@obj").flattenStringFields().httpPost(
         url=putUrl,
         contentType="application/json",
@@ -70,12 +71,13 @@ putInternal=#object(
     mapDb=#toObject(obj="@obj").idxPut(indexDir=".",databaseName="skyrepo",index=#toObject(obj="@obj").inferTypeFromObj(),key=#add(_string="true",a="@id",b="/",c="@version"))
 );
 #skyRepoPutInternal=putInternal;
+#skyrepoPutInternal=putInternal;
 
 put=#if(
     operator="@obj",
     operand="",
     ne=#object(
-        a=#toObject(obj="@obj").skyRepoCheckType(),
+        a=#toObject(obj="@obj").skyRepoCheckType(type=#if(operator="@type",operand="",eq=#toObject(obj="@obj").inferTypeFromObj(),ne="@type")),
         c=#if(
             operator=#owners(obj="@oldObj").count(),
             operand="0",
@@ -292,7 +294,7 @@ searchObj=#object(
 				))
 			).valueSet(),
 			should=#if(
-				operator="@types", 
+				operator="@types",
 				operand="",
 				ne=#object(
 					a=typeArray
@@ -449,7 +451,7 @@ getResultFromMapDb=#if(operator="@mapDbObj", operand="",
 );
 
 getResultsFromMapDb = #forEach(
-	obj=#toArray(obj="@results"), 
+	obj=#toArray(obj="@results"),
 	paramName="elasticObj",
 	array="true",
 	op=getResultFromMapDb
@@ -508,7 +510,7 @@ search = #if(operator=#toArray(obj="@sigResults").count(), operand="@size",
 ).ccall(
 	sigResults=checkRunSignatureSearch
 ).toParameter(
-	paramName="results", 
+	paramName="results",
 	op=getResultsFromMapDb
 ).removeDuplicates().filterResults().displayJson(_collapse="true");
 
@@ -554,7 +556,7 @@ typesObj = #object(
 								)
 							)
 						)
-					)	
+					)
 				)
 			)
 		)
