@@ -30,7 +30,13 @@ mapUrl=#add(
 	f=#inferTypeFromObj()
 );
 
-map=mapUrl.httpGet().toObject().cache(global="true",name="elasticMapping");
+map=#add(
+	_string="true",
+	a=#urlBase(),
+	d="/_mapping"
+).httpGet().toObject().cache(global="true",name="elasticMapping");
+
+#elasticMapping = map;
 
 properties=map.getByParam(param=#toLower(obj="@type")).get(mappings="").getByParam(param="@type").get(properties="");
 
@@ -169,7 +175,7 @@ addNotAnalyzedMultiField=#if(
 	operand="not_analyzed",
 	ne=addNotAnalyzedMultiField
 );
-			
+
 addExcludeFromAllIndex = #object(
 	properties=getCurrentMapping.put(
 		_key=#add(a="@typePrefix",c="@field",d=".include_in_all"),

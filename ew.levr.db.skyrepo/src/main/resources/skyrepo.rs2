@@ -46,7 +46,6 @@ query=#if(
 #queryParse = query;
 
 postData=#fileFromDatastream(name="data");
-
 postObject=postData.fileToString().toObject();
 postArray=postData.fileToString().toArray();
 
@@ -158,6 +157,11 @@ delete=get.skyrepoDelete(
     id=query.cget(id=""),
     version=query.cget(version="")
 );
+
+delete=#object(
+	a=delete,
+	b=#afterSave()
+).get(a="");
 
 saveOrGet=#if(
     operator=postData,
