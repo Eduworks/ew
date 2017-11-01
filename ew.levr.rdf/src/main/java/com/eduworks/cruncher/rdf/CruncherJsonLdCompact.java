@@ -1,6 +1,5 @@
 package com.eduworks.cruncher.rdf;
 
-import com.eduworks.lang.util.EwJson;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 import com.github.jsonldjava.core.JsonLdError;
@@ -14,9 +13,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,21 +48,10 @@ public class CruncherJsonLdCompact extends Cruncher {
 			JSONObject ctxObj;
 			if (ctxString != null) {
 				try {
-					ctxObj = new JSONObject(ctxString);
-					context = new HashMap();
-					for (String s : EwJson.getKeys(ctxObj)) {
-						if (ctxObj.isNull(s)) continue;
-
-						((Map) context).put(s, ctxObj.get(s));
-					}
+					context = jsonToJava(new JSONObject(ctxString));
 				} catch (JSONException e) {
 					try {
-						JSONArray arr = new JSONArray(ctxString);
-
-						context = new ArrayList();
-						for (int i = 0; i < arr.length(); i++) {
-							((ArrayList) context).add(arr.get(i));
-						}
+						context = jsonToJava(new JSONArray(ctxString));
 					} catch (JSONException e2) {
 						context = ctxString;
 					}
@@ -85,6 +71,30 @@ public class CruncherJsonLdCompact extends Cruncher {
 			Logger.getLogger(CruncherJsonLdCompact.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return null;
+	}
+
+	public Object jsonToJava(Object o) throws JSONException {
+		if (o instanceof JSONObject)
+		{
+			Map m = new HashMap();
+			Iterator<String> it = ((JSONObject)o).keys();
+			while (it.hasNext())
+			{
+				String next = it.next();
+				m.put(next,jsonToJava(((JSONObject)o).get(next)));
+			}
+			return m;
+		}
+
+		if (o instanceof JSONArray)
+		{
+			List l = new ArrayList();
+			for (int i = 0;i < ((JSONArray)o).length();i++)
+				l.add(jsonToJava(((JSONArray)o).get(i)));
+			return l;
+		}
+
+		return o;
 	}
 
 	@Override
