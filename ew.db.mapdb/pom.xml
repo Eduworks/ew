@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.eduworks</groupId>
     <artifactId>ew</artifactId>
-	<version>SNAPSHOT</version>
+	<version>5.8.0</version>
   </parent>
   <artifactId>ew.db.mapdb</artifactId>
   <properties>
@@ -15,7 +15,7 @@
   	<dependency>
   		<groupId>com.eduworks</groupId>
   		<artifactId>ew.common</artifactId>
-		<version>SNAPSHOT</version>
+		<version>5.8.0</version>
   	</dependency>
   	<dependency>
   		<groupId>org.mapdb</groupId>

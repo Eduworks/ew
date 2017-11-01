@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.eduworks</groupId>
 		<artifactId>ew</artifactId>
-		<version>SNAPSHOT</version>
+		<version>5.8.0</version>
 	</parent>
 	<artifactId>ew.levr.base</artifactId>
 	<properties>
@@ -23,7 +23,7 @@
 		<dependency>
 			<groupId>com.eduworks</groupId>
 			<artifactId>ew.levr.core</artifactId>
-			<version>SNAPSHOT</version>
+			<version>5.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
