@@ -231,7 +231,9 @@ search=#skyrepoSearch(
 	).ccall(
 		ownership=#if(operator="@ownership",operand="",eq=searchParamObj.cget(ownership=""),ne="@ownership")
 	), 
-	types=searchParamObj.cget(types="")
+	types=searchParamObj.cget(types=""),
+	sort=searchParamObj.cget(sort=""),
+	track_scores=searchParamObj.cget(track_scores="")
 );
 #skyRepoSearch = search;
 
