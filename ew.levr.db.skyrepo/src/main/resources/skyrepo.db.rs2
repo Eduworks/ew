@@ -301,7 +301,9 @@ searchObj=#object(
 				).valueSet()
 			)
 		)
-	)
+	),
+	sort="@sort",
+	track_scores="@track_scores"
 ).put(
 	_key="_source",
 	_value=#object(a="*").valueSet()
@@ -396,7 +398,9 @@ nonSigSearchObj = #object(
 				)
 			)
 		)
-	)
+	),
+	sort="@sort",
+	track_scores="@track_scores"
 ).put(
 	_key="_source",
 	_value=#object(a="*").valueSet()
