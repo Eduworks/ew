@@ -194,7 +194,7 @@ postSearchOrOther = #if(
 data=postSearchOrOther;
 /data=data;
 
-multiGet=postArray.cforEach(paramName="urlRemainder",op=get.toObject(),rethrow="false",array="true").displayJson(_collapse="true");
+multiGet=postArray.cforEach(paramName="urlRemainder",op=get.toObject().catch(runtime=#object().get(a="")),rethrow="false",array="true").displayJson(_collapse="true");
 
 /sky/repo/multiGet=multiGet;
 
