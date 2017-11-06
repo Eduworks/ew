@@ -302,11 +302,7 @@ searchObj=#object(
 			)
 		)
 	)
-	sort=#if(
-		operator="@sort",
-		operand="",
-		ne=#add(_string="true",a="@sort",b=".keyword")
-	),
+	sort="@sort",
 	track_scores="@track_scores"
 ).put(
 	_key="_source",
@@ -403,11 +399,7 @@ nonSigSearchObj = #object(
 			)
 		)
 	),
-	sort=#if(
-		operator="@sort",
-		operand="",
-		ne=#add(_string="true",a="@sort",b=".keyword")
-	),
+	sort="@sort",
 	track_scores="@track_scores"
 ).put(
 	_key="_source",
