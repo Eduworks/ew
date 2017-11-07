@@ -301,7 +301,7 @@ searchObj=#object(
 				).valueSet()
 			)
 		)
-	)
+	),
 	sort="@sort",
 	track_scores="@track_scores"
 ).put(
