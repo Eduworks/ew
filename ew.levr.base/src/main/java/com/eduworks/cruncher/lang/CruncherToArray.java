@@ -1,16 +1,15 @@
 package com.eduworks.cruncher.lang;
 
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-
+import com.eduworks.lang.EwList;
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.eduworks.lang.EwList;
-import com.eduworks.resolver.Context;
-import com.eduworks.resolver.Cruncher;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 
 public class CruncherToArray extends Cruncher
 {
@@ -58,28 +57,19 @@ public class CruncherToArray extends Cruncher
 				return ary;
 			}
 		}
-		if (obj instanceof JSONObject && optAsBoolean("wrap", false, c, parameters, dataStreams))
+		if (optAsBoolean("wrap", true, c, parameters, dataStreams))
 		{
 			JSONArray ja = new JSONArray();
 			ja.put(obj);
 			return ja;
 		}
-		if (obj instanceof Double)
-		{
-			JSONArray ja = new JSONArray();
-			ja.put(obj);
-			return ja;
-		}
-		Object o = getObj(c, parameters, dataStreams);
-		JSONArray ja = new JSONArray();
-		ja.put(o);
-		return ja;
+		return null;
 	}
 
 	@Override
 	public String getDescription()
 	{
-		return "Converts many things into an array. If wrap = true, will wrap a JSONObject.";
+		return "Converts many things into an array. If wrap = true, will wrap obj.";
 	}
 
 	@Override
