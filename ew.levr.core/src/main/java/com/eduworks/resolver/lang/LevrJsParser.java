@@ -2,29 +2,21 @@ package com.eduworks.resolver.lang;
 
 import com.eduworks.lang.json.impl.EwJsonObject;
 import com.eduworks.lang.util.EwJson;
-import com.eduworks.resolver.Context;
-import com.eduworks.resolver.Cruncher;
-import com.eduworks.resolver.CruncherJavascriptBinder;
-import com.eduworks.resolver.Resolvable;
-import com.eduworks.resolver.ResolverFactory;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.TreeSet;
-import java.util.logging.Level;
-import javax.script.Bindings;
-import javax.script.Invocable;
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
+import com.eduworks.resolver.*;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import jdk.nashorn.internal.runtime.Undefined;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import javax.script.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.TreeSet;
+import java.util.logging.Level;
 
 /**
  *
@@ -108,7 +100,7 @@ public class LevrJsParser
     {
         try
         {
-            if (cruncherName.equals("try") || cruncherName.equals("if") || cruncherName.equals("catch") || cruncherName.equals("while") || cruncherName.equals("true") || cruncherName.equals("false"))
+            if (cruncherName.equals("try") || cruncherName.equals("if") || cruncherName.equals("catch") || cruncherName.equals("null") || cruncherName.equals("while") || cruncherName.equals("true") || cruncherName.equals("false"))
             {
                 return null;
             }
