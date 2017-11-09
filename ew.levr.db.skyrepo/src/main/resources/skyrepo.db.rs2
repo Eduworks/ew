@@ -302,7 +302,11 @@ searchObj=#object(
 			)
 		)
 	),
-	sort="@sort",
+	sort=#object(
+		a=#toObject(obj="@sort").catch(any=#object().get(a="")),
+		b=#toArray(obj="@sort",wrapString="false").catch(any=#object().get(a="")),
+		c="@sort"
+	).valueSet().getIndex(index="0"),
 	track_scores="@track_scores"
 ).put(
 	_key="_source",
@@ -399,7 +403,11 @@ nonSigSearchObj = #object(
 			)
 		)
 	),
-	sort="@sort",
+	sort=#object(
+		a=#toObject(obj="@sort").catch(any=#object().get(a="")),
+		b=#toArray(obj="@sort",wrapString="false").catch(any=#object().get(a="")),
+		c="@sort"
+	).valueSet().getIndex(index="0"),
 	track_scores="@track_scores"
 ).put(
 	_key="_source",

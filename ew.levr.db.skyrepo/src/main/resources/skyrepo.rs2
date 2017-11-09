@@ -218,21 +218,21 @@ search=#skyrepoSearch(
 		ne="@size"
 	).ccall(
 		size=#if(operator="@size",operand="",eq=searchParamObj.cget(size=""),ne="@size")
-	), 
+	),
 	start=#if(operator="@start", operand="",
 		eq="0",
 		ne="@start"
 	).ccall(
 		start=#if(operator="@start",operand="",eq=searchParamObj.cget(start=""),ne="@start")
-	), 
+	),
 	ownership=#if(operator="@ownership", operand="",
 		eq="all",
 		ne="@ownership"
 	).ccall(
 		ownership=#if(operator="@ownership",operand="",eq=searchParamObj.cget(ownership=""),ne="@ownership")
-	), 
+	),
 	types=searchParamObj.cget(types=""),
-	sort=searchParamObj.cget(sort=""),
+	sort=#if(operator="@sort",operand="",eq=searchParamObj.cget(sort=""),ne="@sort"),
 	track_scores=searchParamObj.cget(track_scores="")
 );
 #skyRepoSearch = search;

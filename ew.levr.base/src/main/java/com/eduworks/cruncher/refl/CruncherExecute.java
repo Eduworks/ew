@@ -1,20 +1,19 @@
 package com.eduworks.cruncher.refl;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.eduworks.lang.EwMap;
 import com.eduworks.lang.util.EwJson;
 import com.eduworks.levr.servlet.impl.LevrResolverServlet;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 import com.eduworks.util.io.InMemoryFile;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
 
 public class CruncherExecute extends Cruncher
 {
@@ -105,12 +104,14 @@ public class CruncherExecute extends Cruncher
 		{
 			JSONArray ja = (JSONArray) o;
 			for (int i = 0; i < ja.length(); i++)
+				if (!ja.isNull(i))
 				accmDataStream(dataStreamMap, ja.get(i));
 		}
 		else if (o instanceof JSONObject)
 		{
 			JSONObject jo = (JSONObject) o;
 			for (String key : EwJson.getKeys(jo))
+				if (!jo.isNull(key))
 				accmDataStream(dataStreamMap, jo.get(key));
 		}
 	}
