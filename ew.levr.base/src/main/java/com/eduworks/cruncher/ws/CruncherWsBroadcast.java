@@ -36,7 +36,7 @@ public class CruncherWsBroadcast extends Cruncher {
 		for (Session s : LevrResolverWebSocket.sessions) {
 			boolean done = false;
 			int counter = 0;
-			while (!done && counter < 1000) {
+			while (!done && counter++ < 1000) {
 				try {
 					s.getAsyncRemote().sendText(obj.toString());
 					done = true;
