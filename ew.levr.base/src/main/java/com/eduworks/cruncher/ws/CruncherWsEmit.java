@@ -37,7 +37,7 @@ public class CruncherWsEmit extends Cruncher
         for (Session s : LevrResolverWebSocket.sessions)
         {
             if (s.getId().equals(to))
-                s.getAsyncRemote().sendText(obj.toString());
+                CruncherWsBroadcast.resolve(obj,s);
         }
         return obj;
     }

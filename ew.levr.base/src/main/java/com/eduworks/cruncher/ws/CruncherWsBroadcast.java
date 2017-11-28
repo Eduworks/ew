@@ -1,6 +1,5 @@
 package com.eduworks.cruncher.ws;
 
-import com.eduworks.lang.threading.EwThreading;
 import com.eduworks.levr.websocket.LevrResolverWebSocket;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
@@ -23,8 +22,8 @@ import java.util.Map;
  */
 
 /**
- * @method wsBroadcast
  * @param obj {Cruncher|Function|Object} Thing to broadcast. Will be converted to a string.
+ * @method wsBroadcast
  * @return {Object} Returns obj.
  */
 public class CruncherWsBroadcast extends Cruncher {
@@ -34,18 +33,24 @@ public class CruncherWsBroadcast extends Cruncher {
 		Object obj = getObj(c, parameters, dataStreams);
 		if (obj == null) return null;
 		for (Session s : LevrResolverWebSocket.sessions) {
-			boolean done = false;
-			int counter = 0;
-			while (!done && counter++ < 1000) {
-				try {
-					s.getAsyncRemote().sendText(obj.toString());
-					done = true;
-				} catch (Exception ex) {
-					EwThreading.sleep(5);
-				}
-			}
+			resolve(obj, s);
 		}
 		return obj;
+	}
+
+	public static void resolve(Object obj, Session s) throws JSONException {
+		if (!s.isOpen()) {
+			LevrResolverWebSocket.sessions.remove(s);
+			return;
+		}
+		try {
+			s.getAsyncRemote().sendText(obj.toString());
+		} catch (Exception ex) {
+			try {
+				resolve(obj,s);
+			} catch (StackOverflowError error) {
+			}
+		}
 	}
 
 	@Override
