@@ -104,6 +104,7 @@
         <module>ew.levr.ontology</module>
         <module>ew.levr.security</module>
         <module>ew.levr.service.paypal</module>
+        <module>ew.levr.service.dropbox</module>
         <module>ew.levr.code</module>
         <module>ew.levr.service.solr</module>
         <module>ew.levr.lang.english</module>
