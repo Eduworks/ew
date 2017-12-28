@@ -152,7 +152,7 @@ save=#object(
 afterSave=#false();
 #afterSave=afterSave;
 
-delete=get.skyrepoDelete(
+delete=#skyrepoDelete(
     type=query.cget(type=""),
     id=query.cget(id=""),
     version=query.cget(version="")
