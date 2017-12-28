@@ -3,18 +3,24 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-owner=#add(a="@",b="owner");
+owner=#add(_string="true",a="@",b="owner");
 #owner=owner;
-context=#add(a="@",b="context");
+
+context=#add(_string="true",a="@",b="context");
 #context=context;
-type=#add(a="@",b="type");
+
+type=#add(_string="true",a="@",b="type");
 #type=type;
-reader=#add(a="@",b="reader");
+
+reader=#add(_string="true",a="@",b="reader");
 #reader=reader;
-id=#add(a="@",b="id");
+
+id=#add(_string="true",a="@",b="id");
 #id=id;
-signatureParam=#add(a="@",b="signature");
+
+signatureParam=#add(_string="true",a="@",b="signature");
 #signature=signatureParam;
+
 signatureArr=#toObject(obj="@signatureArr");
 context=signatureArr.getByParam(param=context);
 type=signatureArr.getByParam(param=type);

@@ -78,6 +78,7 @@ simpleType=#split(obj="@field",split=".").cgetIndex(index=#split(obj="@field",sp
 getCurrentMapping=properties.toDotNotationObject().forEach(
 	paramName="k",
 	valueName="v",
+	threaded="false",
 	op=#if(
 		operator=#startsWith(
 			obj="@k",
@@ -123,10 +124,10 @@ addMappingNoSearch=#object(
 
 addWhiteSpaceRemovalMapping = #object(
 	properties=getCurrentMapping.put(
-		_key=#add(a="@typePrefix",c="@field",d=".analyzer"),
+		_key=#add(_string="true",a="@typePrefix",c="@field",d=".analyzer"),
 		_value="whitespace_remove"
 	).put(
-		_key=#add(a="@typePrefix",c="@field",d=".type"),
+		_key=#add(_string="true",a="@typePrefix",c="@field",d=".type"),
 		_value="text"
 	).fromDotNotationObject()
 ).httpPost(url=mapUrl,contentType="application/json",multipart="false");
@@ -171,8 +172,8 @@ addNotAnalyzedMultiField=#object(
 );
 
 addNotAnalyzedMultiField=#if(
-	operator=getCurrentMapping.getByParam(param=#add(a="@typePrefix",c="@field",d=".fields.(full).index")),
-	operand="not_analyzed",
+	operator=getCurrentMapping.getByParam(param=#add(a="@typePrefix",c="@field",d=".fields.(full).type")),
+	operand="keyword",
 	ne=addNotAnalyzedMultiField
 );
 
@@ -239,7 +240,14 @@ iterateOverFields=obj.cforEach(
 			),
 			ne=addWhiteSpaceRemovalMapping
 		),
-		ne=#toArray(obj="@value").cforEach(paramName="obj",op=#toObject(obj="@obj").typeIterateOverFields(checkType="false", typePrefix=#add(a="@typePrefix",a="@field",b=".properties.")))
+		ne=#toArray(obj="@value").cforEach(
+			paramName="obj",
+			threaded="false",
+			op=#toObject(obj="@obj").typeIterateOverFields(
+				checkType="false",
+				typePrefix=#add(a="@typePrefix",a="@field",b=".properties.")
+			)
+		)
 	)
 );
 #typeIterateOverFields=iterateOverFields;
