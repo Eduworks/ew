@@ -61,33 +61,39 @@ putUrl=#add(
 
 //BUG: Check to see if there are no signature sheet signatures but the owners change, if it changes the owner.
 //20161126 fray: Added rule: "If the object is new, then the writer does not have to own it."
-putInternal=#object(
-	aTypeCheck=#if(
-		operator="@typeChecked",
-		operand="true",
-		ne=#toObject(obj="@obj").skyRepoCheckType(
-			type=#if(
-				operator="@type",
-				operand="",
-				eq=#toObject(obj="@obj").inferTypeFromObj(),
-				ne="@type"
-			)
+skyrepoPutInternalTypeCheck = #if(
+	operator="@typeChecked",
+	operand="true",
+	ne=#toObject(obj="@obj").skyRepoCheckType(
+		type=#if(
+			operator="@type",
+			operand="",
+			eq=#toObject(obj="@obj").inferTypeFromObj(),
+			ne="@type"
 		)
-	),
-    elasticSearch=#toObject(obj="@obj").flattenStringFields().httpPost(
-        url=putUrl,
-        contentType="application/json",
-        multipart="false"
-    ),
-    mapDb=#toObject(obj="@obj").idxPut(
-    	indexDir=".",
-    	databaseName="skyrepo",
-    	index=#toObject(obj="@obj").inferTypeFromObj(),
-    	key=#add(_string="true",a="@id",b="/",c="@version")
-    )
+	)
+);
+skyrepoPutInternalIndex = #toObject(obj="@obj").flattenStringFields().httpPost(
+  	url=putUrl,
+  	contentType="application/json",
+  	multipart="false"
+);
+skyrepoPutInternalIndex = #object(a=skyrepoPutInternalTypeCheck,b=skyrepoPutInternalIndex);
+skyrepoPutInternalPermanent = #toObject(obj="@obj").idxPut(
+	indexDir=".",
+	databaseName="skyrepo",
+	index=#toObject(obj="@obj").inferTypeFromObj(),
+	key=#add(_string="true",a="@id",b="/",c="@version")
+);
+putInternal=#object(
+    elasticSearch=skyrepoPutInternalIndex,
+    mapDb=skyrepoPutInternalPermanent
 );
 #skyRepoPutInternal=putInternal;
 #skyrepoPutInternal=putInternal;
+#skyrepoPutInternalTypeCheck=skyrepoPutInternalTypeCheck;
+#skyrepoPutInternalIndex=skyrepoPutInternalIndex;
+#skyrepoPutInternalPermanent=skyrepoPutInternalPermanent;
 
 put=#if(
     operator="@obj",
