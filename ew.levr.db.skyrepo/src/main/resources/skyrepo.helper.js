@@ -16,7 +16,6 @@ function flattenStringFields(jsonLd, first){
 		first = true;
 	}
 
-
 	if(Array.isArray(jsonLd)){
 		var ret = [];
 		

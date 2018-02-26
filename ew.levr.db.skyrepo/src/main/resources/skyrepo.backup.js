@@ -1,9 +1,7 @@
 skyrepoBackup = function(){
 	if (this.params.secret != skyIdSecret())
 		error("You must provide secret=`cat skyId.secret` to invoke backup.",401);
-	var backup = {};
-	backup.permanent = {};
-	backup.indexed = {};
+	var backup = {permanent:{},indexed:{}};
 	var settings = elasticMapping();
 	var indices = EcObject.keys(settings);
 	var types = [];
@@ -27,7 +25,6 @@ skyrepoBackup = function(){
 		sort:"_doc"
 	};
 	var firstQueryUrl = urlBase() + "/_search?scroll=1m&version";
-	console.log(firstQueryUrl);
 	var results = httpPost(JSON.stringify(firstQueryPost),firstQueryUrl,"application/json","false");
 	var scroll = results["_scroll_id"];
 	while (results != null && scroll != null && scroll != "")
@@ -55,7 +52,7 @@ skyrepoRestore = function(){
 
 	var file = getFileFromPost.call(this,"data");
 	if(file == undefined || file == null)
-		error("Unable to find restore file. Please attach via a POST request with the name = 'data'.",400);
+		error("Unable to find restore file. Please attach via a multi part POST request with the name = 'data'.",400);
 	if (EcArray.isArray(file))
 		file = file[0];
 	file = JSON.parse(fileToString(file));
