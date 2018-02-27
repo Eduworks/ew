@@ -150,8 +150,12 @@ delete=#object(
 		).ccall(
 			oldObj=#skyrepoGet(version="")
 		),
-		elasticSearch=#httpDelete(
-			url=deleteUrl
+		elasticSearch=#if(
+			operator=#httpDelete(
+				url=deleteUrl
+			).get(result=""),
+			operand="not_found",
+			eq=#error(msg="Object not found.",code="404").debug()
 		)
 ).cget(z="");
 
