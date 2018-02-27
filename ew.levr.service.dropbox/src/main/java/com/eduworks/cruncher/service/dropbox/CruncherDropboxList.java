@@ -1,4 +1,4 @@
-package com.eduworks.cruncher.service;
+package com.eduworks.cruncher.service.dropbox;
 
 import com.dropbox.core.DbxApiException;
 import com.dropbox.core.DbxException;
