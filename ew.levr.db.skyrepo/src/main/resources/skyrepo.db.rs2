@@ -138,7 +138,7 @@ deleteUrl=#add(
 //BUG: Check to see if there are no signature sheet signatures but the owners change, if it changes the owner.
 delete=#object(
 		b=#if(
-			operator=#owners().count(obj="@oldObj"),
+			operator=#owners(obj="@oldObj").count(),
 			operand="0",
 			gt=#if(
 				operator=#signatureSheet().intersect(b=#owners(obj="@oldObj")).count(),
@@ -154,14 +154,14 @@ delete=#object(
 					disabledeq=#error(code="403",msg="This object is public, nobody can delete it."),
 				)
 		).ccall(
-			oldObj=#skyrepoGet(version="")
+			oldObj=#skyrepoGetInternal(version="")
 		),
 		elasticSearch=#if(
 			operator=#httpDelete(
 				url=deleteUrl
 			).get(result=""),
 			operand="not_found",
-			eq=#error(msg="Object not found.",code="404").debug()
+			eq=#error(msg="Object not found.",code="404")
 		)
 ).cget(z="");
 
@@ -224,6 +224,15 @@ get=#if(
 	eq=getMapDb.call(version=getVersionFromElastic),
 	ne=getMapDb
 );
+
+//Instead of returning empty arrays or objects, return nothing.
+getInternal=#if(
+	operator=#toObject(obj="@get").count(),
+	operand="0",
+	ne=#toObject(obj="@get")
+).call(get=get);
+
+#skyrepoGetInternal=getInternal;
 
 //Remove objects and fields if the appropriate signatureSheet is not provided.
 get=get.filterResults();
