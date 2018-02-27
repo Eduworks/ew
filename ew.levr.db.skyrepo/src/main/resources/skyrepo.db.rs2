@@ -333,8 +333,7 @@ searchObj=#object(
 		b=#toArray(obj="@sort",wrapString="false").catch(any=#object().get(a="")),
 		c="@sort"
 	).valueSet().getIndex(index="0"),
-	track_scores="@track_scores",
-	ignore_unavailable="true"
+	track_scores="@track_scores"
 ).put(
 	_key="_source",
 	_value=#object(a="*").valueSet()
