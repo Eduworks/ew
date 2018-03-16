@@ -5,6 +5,7 @@ import com.dropbox.core.DbxDownloader;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
+import com.dropbox.core.v2.DbxTeamClientV2;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.Metadata;
 import com.eduworks.resolver.Context;
@@ -25,11 +26,16 @@ public class CruncherDropboxLoad extends Cruncher {
         String path = getAsString("path", c, parameters, dataStreams);
         String clientIdentifier = getAsString("clientIdentifier", c, parameters, dataStreams);
         String access_token = getAsString("accessToken", c, parameters, dataStreams);
+        String userId = optAsString("userId", null, c, parameters, dataStreams);
         JSONArray results = new JSONArray();
         try {
             // Create Dropbox client
             DbxRequestConfig config = new DbxRequestConfig(clientIdentifier);
-            DbxClientV2 client = new DbxClientV2(config, access_token);
+            DbxClientV2 client;
+            if (userId == null)
+                client = new DbxClientV2(config, access_token);
+            else
+                client = new DbxTeamClientV2(config, access_token).asMember(userId);
             InMemoryFile imf = new InMemoryFile();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             DbxDownloader<FileMetadata> download = client.files().download(path);
@@ -39,14 +45,11 @@ public class CruncherDropboxLoad extends Cruncher {
             imf.data = baos.toByteArray();
             return imf;
         } catch (DbxApiException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException(e);
         } catch (DbxException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
