@@ -11,6 +11,8 @@ import java.util.UUID;
 
 /**
  * Created by fray on 10/30/17.
+ * Note: This UUID is based on UUID3, but Java does not implement it correctly.
+ * See: https://stackoverflow.com/questions/9504519/what-namespace-does-the-jdk-use-to-generate-a-uuid-with-nameuuidfrombytes
  */
 public class CruncherUuidFromString extends Cruncher {
 
