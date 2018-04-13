@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherCreateDirectory.java - EW Library</title>
+    <title>ew.levr.core/src/main/java/com/eduworks/levr/websocket/LevrResolverWebSocketSimple.java - EW Library</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
@@ -77,85 +77,19 @@
 
         <div id="main" class="yui3-u">
             <div class="content"><div class="title">
-  <h1 class="file-name">ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherCreateDirectory.java</h1>
+  <h1 class="file-name">ew.levr.core/src/main/java/com/eduworks/levr/websocket/LevrResolverWebSocketSimple.java</h1>
 </div>
 
 <pre class="code prettyprint linenums">
-package com.eduworks.cruncher.file;
+package com.eduworks.levr.websocket;
 
-import java.io.File;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.eduworks.resolver.Context;
-import com.eduworks.resolver.Cruncher;
+import javax.websocket.server.ServerEndpoint;
 
 /**
- * Creates a directory. Will throw exception if the directory exists, use alongside fileExists to prevent this. Will not create parent directories.
- *
- * rs2: #createDirectory(path=&quot;Relative or Full Path to directory&quot;);&lt;br&gt;
- * LevrJS: createDirectory.call(this,&quot;Relative or Full Path to directory&quot;);
- *
- * @class createDirectory
- * @module ew.levr.base
- * @author fritz.ray@eduworks.com
+ * Created by fray on 8/17/17.
  */
-public class CruncherCreateDirectory extends Cruncher {
-
-    /**
-     * @method createDirectory
-     * @param path {String} Relative or Full Path to directory.
-     * @param [safe=true] {Boolean} For security, will not obey paths that contain &#x27;..&#x27;or startsWIth(&#x27;/&#x27;) paths.
-     * @return {Boolean} True if the directory was created.
-     */
-    public Object resolve(Context c,
-            java.util.Map&lt;String, String[]&gt; parameters, java.util.Map&lt;String, java.io.InputStream&gt; dataStreams)
-            throws org.json.JSONException {
-
-        String path = getAsString(&quot;path&quot;, c, parameters, dataStreams);
-        if (optAsBoolean(&quot;safe&quot;, true, c, parameters, dataStreams) &amp;&amp; pathUnsafe(path)) {
-            throw new RuntimeException(&quot;Cannot go up in filesystem.&quot;);
-        }
-
-        File f = new File(path);
-
-        if (f.exists()) {
-            throw new RuntimeException(&quot;Directory Already Exists&quot;);
-        } else {
-            if (f.mkdir()) {
-                return true;
-            }
-
-            throw new RuntimeException(&quot;Unable to create directory at &quot; + path);
-        }
-
-    }
-
-    public static boolean pathUnsafe(String path) {
-        return path.contains(&quot;..&quot;) || path.startsWith(&quot;/&quot;);
-    }
-
-    @Override
-    public String getDescription() {
-        return &quot;Checks whether file exists on the filesystem.&quot;;
-    }
-
-    @Override
-    public String getReturn() {
-        return &quot;InMemoryFile&quot;;
-    }
-
-    @Override
-    public String getAttribution() {
-        return ATTRIB_NONE;
-    }
-
-    @Override
-    public JSONObject getParameters() throws JSONException {
-        return jo(&quot;path&quot;, &quot;String&quot;);
-    }
-;
+@ServerEndpoint(value = &quot;/ws&quot;)
+public class LevrResolverWebSocketSimple extends LevrResolverWebSocket {
 }
 
 </pre>

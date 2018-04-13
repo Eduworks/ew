@@ -358,12 +358,28 @@
             "fors": {},
             "namespaces": {}
         },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/lang/CruncherNull.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/lang/CruncherNull.java",
+            "modules": {},
+            "classes": {
+                "null": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java": {
             "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java",
             "modules": {},
             "classes": {
                 "add": 1
             },
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.base/src/main/java/com/eduworks/cruncher/uuid/CruncherUuidFromString.java": {
+            "name": "ew.levr.base/src/main/java/com/eduworks/cruncher/uuid/CruncherUuidFromString.java",
+            "modules": {},
+            "classes": {},
             "fors": {},
             "namespaces": {}
         },
@@ -429,6 +445,13 @@
         },
         "ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java": {
             "name": "ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.core/src/main/java/com/eduworks/levr/websocket/LevrResolverWebSocketSimple.java": {
+            "name": "ew.levr.core/src/main/java/com/eduworks/levr/websocket/LevrResolverWebSocketSimple.java",
             "modules": {},
             "classes": {},
             "fors": {},
@@ -545,6 +568,13 @@
             "fors": {},
             "namespaces": {}
         },
+        "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToRdfJson.java": {
+            "name": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToRdfJson.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToRdfXml.java": {
             "name": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToRdfXml.java",
             "modules": {},
@@ -566,6 +596,13 @@
             "fors": {},
             "namespaces": {}
         },
+        "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherRdfToJsonLd.java": {
+            "name": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherRdfToJsonLd.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "ew.levr.rdf/src/main/java/com/eduworks/levr/rdf/Package.java": {
             "name": "ew.levr.rdf/src/main/java/com/eduworks/levr/rdf/Package.java",
             "modules": {},
@@ -582,6 +619,13 @@
         },
         "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java": {
             "name": "ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "ew.levr.service.dropbox/src/main/java/com/eduworks/cruncher/service/dropbox/Package.java": {
+            "name": "ew.levr.service.dropbox/src/main/java/com/eduworks/cruncher/service/dropbox/Package.java",
             "modules": {},
             "classes": {},
             "fors": {},
@@ -660,6 +704,7 @@
                 "fileToString": 1,
                 "filename": 1,
                 "filepath": 1,
+                "null": 1,
                 "add": 1,
                 "wsBroadcast": 1,
                 "wsEmit": 1
@@ -684,7 +729,7 @@
             "tag": "module",
             "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdExpand.java",
             "line": 19,
-            "description": "Converts a JSON object to JSON-LD and performs a Compact operation.\n\nrs2: result = obj.jsonLdCompact();<br>\nLevrJS: result = jsonLdCompact.call(this,obj);"
+            "description": "Converts a JSON object to JSON-LD and performs a Compact operation.\n<p>\nrs2: result = obj.jsonLdCompact();<br>\nLevrJS: result = jsonLdCompact.call(this,obj);"
         }
     },
     "classes": {
@@ -942,6 +987,21 @@
             "description": "Zips either a Map<String,?>, a JSONObject composed of \"filename\":\"UTF-8 encoded string\" or a JSONArray of files.\nTODO: sDoes not support streaming, large file operations may require modification of this Cruncher.\n\nrs2: obj = obj.filepath(); levrJs: obj = filepame.call(this,obj);",
             "author": "fritz.ray@eduworks.com"
         },
+        "null": {
+            "name": "null",
+            "shortname": "null",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ew.levr.base",
+            "namespace": "",
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/lang/CruncherNull.java",
+            "line": 12,
+            "description": "Returns null.\n\nrs2: #toObject(obj=\"@param\").catch(any=#null()); levrJs: f = null;",
+            "author": "fritz.ray@eduworks.com"
+        },
         "add": {
             "name": "add",
             "shortname": "add",
@@ -968,8 +1028,8 @@
             "module": "ew.levr.base",
             "namespace": "",
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/ws/CruncherWsBroadcast.java",
-            "line": 12,
-            "description": "Broadcasts a message to all websockets connected to this machine.\n\nrs2: obj.wsBroadcast();<br>\nLevrJS: wsBroadcast.call(this,obj);",
+            "line": 13,
+            "description": "Broadcasts a message to all websockets connected to this machine.\n<p>\nrs2: obj.wsBroadcast();<br>\nLevrJS: wsBroadcast.call(this,obj);",
             "author": "fritz.ray@eduworks.com"
         },
         "wsEmit": {
@@ -998,8 +1058,8 @@
             "module": "ew.levr.rdf",
             "namespace": "",
             "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdCompact.java",
-            "line": 24,
-            "description": "Converts a JSON object to JSON-LD and performs a Compact operation.\n\nrs2: result = obj.jsonLdCompact();<br>\nLevrJS: result = jsonLdCompact.call(this,obj);",
+            "line": 20,
+            "description": "Converts a JSON object to JSON-LD and performs a Compact operation.\n<p>\nrs2: result = obj.jsonLdCompact();<br>\nLevrJS: result = jsonLdCompact.call(this,obj);",
             "author": "fritz.ray@eduworks.com"
         },
         "jsonLdExpand": {
@@ -4698,6 +4758,17 @@
             "module": "ew.levr.base"
         },
         {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/lang/CruncherNull.java",
+            "line": 23,
+            "itemtype": "method",
+            "name": "null",
+            "return": {
+                "description": "(Object) null."
+            },
+            "class": "null",
+            "module": "ew.levr.base"
+        },
+        {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/math/CruncherAdd.java",
             "line": 21,
             "itemtype": "method",
@@ -4728,10 +4799,15 @@
             "module": "ew.levr.base"
         },
         {
+            "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/uuid/CruncherUuidFromString.java",
+            "line": 12,
+            "description": "Created by fray on 10/30/17.\nNote: This UUID is based on UUID3, but Java does not implement it correctly.\nSee: https://stackoverflow.com/questions/9504519/what-namespace-does-the-jdk-use-to-generate-a-uuid-with-nameuuidfrombytes",
+            "class": "wsBroadcast",
+            "module": "ew.levr.base"
+        },
+        {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/ws/CruncherWsBroadcast.java",
-            "line": 22,
-            "itemtype": "method",
-            "name": "wsBroadcast",
+            "line": 24,
             "params": [
                 {
                     "name": "obj",
@@ -4739,6 +4815,8 @@
                     "type": "Cruncher|Function|Object"
                 }
             ],
+            "itemtype": "method",
+            "name": "wsBroadcast",
             "return": {
                 "description": "Returns obj.",
                 "type": "Object"
@@ -5130,8 +5208,15 @@
             "module": "ew.levr.base"
         },
         {
+            "file": "ew.levr.core/src/main/java/com/eduworks/levr/websocket/LevrResolverWebSocketSimple.java",
+            "line": 5,
+            "description": "Created by fray on 8/17/17.",
+            "class": "jsonLdCompact",
+            "module": "ew.levr.base"
+        },
+        {
             "file": "ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java",
-            "line": 29,
+            "line": 21,
             "author": "fray",
             "class": "jsonLdCompact",
             "module": "ew.levr.base"
@@ -5257,7 +5342,7 @@
         },
         {
             "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdCompact.java",
-            "line": 34,
+            "line": 31,
             "itemtype": "method",
             "name": "jsonLdCompact",
             "params": [
@@ -5307,8 +5392,15 @@
             "module": "ew.levr.rdf"
         },
         {
+            "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToRdfJson.java",
+            "line": 27,
+            "author": "fray",
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
             "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToRdfXml.java",
-            "line": 25,
+            "line": 29,
             "author": "fray",
             "class": "",
             "module": "ew.levr.rdf"
@@ -5323,6 +5415,13 @@
         {
             "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherNQuadsToJsonLd.java",
             "line": 24,
+            "author": "fray",
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherRdfToJsonLd.java",
+            "line": 25,
             "author": "fray",
             "class": "",
             "module": "ew.levr.rdf"
@@ -5591,6 +5690,13 @@
             "return": {
                 "description": "true if the passwords match, false otherwise"
             },
+            "class": "",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "ew.levr.service.dropbox/src/main/java/com/eduworks/cruncher/service/dropbox/Package.java",
+            "line": 3,
+            "description": "Package Placeholder for this project. Forces Javadoc generation.",
             "class": "",
             "module": "ew.levr.rdf"
         },
@@ -7206,6 +7312,10 @@
             "line": " ew.image/src/main/java/com/fms/gif/animated/GifDecoder.java:771"
         },
         {
+            "message": "Missing item type\nCreated by fray on 10/30/17.\nNote: This UUID is based on UUID3, but Java does not implement it correctly.\nSee: https://stackoverflow.com/questions/9504519/what-namespace-does-the-jdk-use-to-generate-a-uuid-with-nameuuidfrombytes",
+            "line": " ew.levr.base/src/main/java/com/eduworks/cruncher/uuid/CruncherUuidFromString.java:12"
+        },
+        {
             "message": "Missing item type\nAn API for Resolver enumerations that define a set of keys or values for an operation.",
             "line": " ew.levr.base/src/main/java/com/eduworks/resolver/enumeration/CruncherEnum.java:3"
         },
@@ -7318,8 +7428,12 @@
             "line": " ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java:194"
         },
         {
+            "message": "Missing item type\nCreated by fray on 8/17/17.",
+            "line": " ew.levr.core/src/main/java/com/eduworks/levr/websocket/LevrResolverWebSocketSimple.java:5"
+        },
+        {
             "message": "Missing item type",
-            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java:29"
+            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java:21"
         },
         {
             "message": "Missing item type",
@@ -7391,7 +7505,11 @@
         },
         {
             "message": "Missing item type",
-            "line": " ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToRdfXml.java:25"
+            "line": " ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToRdfJson.java:27"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToRdfXml.java:29"
         },
         {
             "message": "Missing item type",
@@ -7400,6 +7518,10 @@
         {
             "message": "Missing item type",
             "line": " ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherNQuadsToJsonLd.java:24"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherRdfToJsonLd.java:25"
         },
         {
             "message": "Missing item type\nPackage Placeholder for this project. Forces Javadoc generation.",
@@ -7468,6 +7590,10 @@
         {
             "message": "Missing item type\nCheck that a plaintext password matches a previously hashed\none",
             "line": " ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java:741"
+        },
+        {
+            "message": "Missing item type\nPackage Placeholder for this project. Forces Javadoc generation.",
+            "line": " ew.levr.service.dropbox/src/main/java/com/eduworks/cruncher/service/dropbox/Package.java:3"
         },
         {
             "message": "Missing item type\nPackage Placeholder for this project. Forces Javadoc generation.",

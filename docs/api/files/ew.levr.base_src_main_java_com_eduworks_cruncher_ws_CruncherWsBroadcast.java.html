@@ -56,6 +56,7 @@
                             <li><a href="../classes/fileToString.html">fileToString</a></li>
                             <li><a href="../classes/jsonLdCompact.html">jsonLdCompact</a></li>
                             <li><a href="../classes/jsonLdExpand.html">jsonLdExpand</a></li>
+                            <li><a href="../classes/null.html">null</a></li>
                             <li><a href="../classes/variableGet.html">variableGet</a></li>
                             <li><a href="../classes/variableSet.html">variableSet</a></li>
                             <li><a href="../classes/wsBroadcast.html">wsBroadcast</a></li>
@@ -85,15 +86,16 @@ package com.eduworks.cruncher.ws;
 import com.eduworks.levr.websocket.LevrResolverWebSocket;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
-import java.io.InputStream;
-import java.util.Map;
-import javax.websocket.Session;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.websocket.Session;
+import java.io.InputStream;
+import java.util.Map;
+
 /**
  * Broadcasts a message to all websockets connected to this machine.
- * 
+ * &lt;p&gt;
  * rs2: obj.wsBroadcast();&lt;br&gt;
  * LevrJS: wsBroadcast.call(this,obj);
  *
@@ -101,50 +103,59 @@ import org.json.JSONObject;
  * @module ew.levr.base
  * @author fritz.ray@eduworks.com
  */
+
 /**
- * @method wsBroadcast
  * @param obj {Cruncher|Function|Object} Thing to broadcast. Will be converted to a string.
+ * @method wsBroadcast
  * @return {Object} Returns obj.
  */
-public class CruncherWsBroadcast extends Cruncher
-{
+public class CruncherWsBroadcast extends Cruncher {
 
-    @Override
-    public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
-    {
-        Object obj = getObj(c, parameters, dataStreams);
-        if (obj == null) return null;
-        for (Session s : LevrResolverWebSocket.sessions)
-        {
-            s.getAsyncRemote().sendText(obj.toString());
-        }
-        return obj;
-    }
+	@Override
+	public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException {
+		Object obj = getObj(c, parameters, dataStreams);
+		if (obj == null) return null;
+		for (Session s : LevrResolverWebSocket.sessions) {
+			resolve(obj, s);
+		}
+		return obj;
+	}
 
-    @Override
-    public String getDescription()
-    {
-        return &quot;Broadcasts a message to all websockets connected to this machine.&quot;;
-    }
+	public static void resolve(Object obj, Session s) throws JSONException {
+		if (!s.isOpen()) {
+			LevrResolverWebSocket.sessions.remove(s);
+			return;
+		}
+		try {
+			s.getAsyncRemote().sendText(obj.toString());
+		} catch (Exception ex) {
+			try {
+				resolve(obj,s);
+			} catch (StackOverflowError error) {
+			}
+		}
+	}
 
-    @Override
-    public String getReturn()
-    {
-        return &quot;Object&quot;;
-    }
+	@Override
+	public String getDescription() {
+		return &quot;Broadcasts a message to all websockets connected to this machine.&quot;;
+	}
 
-    @Override
-    public String getAttribution()
-    {
-        return ATTRIB_NONE;
-    }
+	@Override
+	public String getReturn() {
+		return &quot;Object&quot;;
+	}
 
-    @Override
-    public JSONObject getParameters() throws JSONException
-    {
-        return jo(&quot;obj&quot;,&quot;Object&quot;);
-    }
-    
+	@Override
+	public String getAttribution() {
+		return ATTRIB_NONE;
+	}
+
+	@Override
+	public JSONObject getParameters() throws JSONException {
+		return jo(&quot;obj&quot;, &quot;Object&quot;);
+	}
+
 }
 
 </pre>

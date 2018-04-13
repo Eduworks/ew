@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherCreateDirectory.java - EW Library</title>
+    <title>null - EW Library</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
@@ -66,6 +66,37 @@
             </div>
             
             
+            <div id="sections" class="sidebox">
+              <div class="hd">
+                <h2 class="no-toc">null</h2>
+              </div>
+              <div class="bd">
+            
+            
+            
+            
+                  <div><a href="#method-summary">Method Summary</a></div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                  <div><a href="#public-methods">Public Methods</a></div>
+                  <ul>
+                      <li><a href="#method_null">null</a></li>
+                  </ul>
+            
+            
+              </div>
+            </div>
             
             
             
@@ -77,88 +108,98 @@
 
         <div id="main" class="yui3-u">
             <div class="content"><div class="title">
-  <h1 class="file-name">ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherCreateDirectory.java</h1>
+    <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_lang_CruncherNull.java.html#l12"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;lang&#x2F;CruncherNull.java:12</code></a></span>
+    <h1 class="class-name">null</h1>
 </div>
 
-<pre class="code prettyprint linenums">
-package com.eduworks.cruncher.file;
 
-import java.io.File;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import com.eduworks.resolver.Context;
-import com.eduworks.resolver.Cruncher;
+<div class="class-description"><p>Returns null.</p>
+<p>rs2: #toObject(obj="@param").catch(any=#null()); levrJs: f = null;</p>
+</div>
 
-/**
- * Creates a directory. Will throw exception if the directory exists, use alongside fileExists to prevent this. Will not create parent directories.
- *
- * rs2: #createDirectory(path=&quot;Relative or Full Path to directory&quot;);&lt;br&gt;
- * LevrJS: createDirectory.call(this,&quot;Relative or Full Path to directory&quot;);
- *
- * @class createDirectory
- * @module ew.levr.base
- * @author fritz.ray@eduworks.com
- */
-public class CruncherCreateDirectory extends Cruncher {
 
-    /**
-     * @method createDirectory
-     * @param path {String} Relative or Full Path to directory.
-     * @param [safe=true] {Boolean} For security, will not obey paths that contain &#x27;..&#x27;or startsWIth(&#x27;/&#x27;) paths.
-     * @return {Boolean} True if the directory was created.
-     */
-    public Object resolve(Context c,
-            java.util.Map&lt;String, String[]&gt; parameters, java.util.Map&lt;String, java.io.InputStream&gt; dataStreams)
-            throws org.json.JSONException {
 
-        String path = getAsString(&quot;path&quot;, c, parameters, dataStreams);
-        if (optAsBoolean(&quot;safe&quot;, true, c, parameters, dataStreams) &amp;&amp; pathUnsafe(path)) {
-            throw new RuntimeException(&quot;Cannot go up in filesystem.&quot;);
-        }
 
-        File f = new File(path);
 
-        if (f.exists()) {
-            throw new RuntimeException(&quot;Directory Already Exists&quot;);
-        } else {
-            if (f.mkdir()) {
-                return true;
-            }
 
-            throw new RuntimeException(&quot;Unable to create directory at &quot; + path);
-        }
 
-    }
 
-    public static boolean pathUnsafe(String path) {
-        return path.contains(&quot;..&quot;) || path.startsWith(&quot;/&quot;);
-    }
+  <h2 id="method-summary">Method Summary</h2>
 
-    @Override
-    public String getDescription() {
-        return &quot;Checks whether file exists on the filesystem.&quot;;
-    }
+    <table class="summary">
+      <thead>
+      <tr>
+        <th colspan="2">Public Methods</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            public
+            
+            
+          </td>
+          <td>
+            <div class="method-name ">
+              <a href="#method_null">null</a>( ): 
+            </div>
+            <div class="short-description">
+              
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-    @Override
-    public String getReturn() {
-        return &quot;InMemoryFile&quot;;
-    }
 
-    @Override
-    public String getAttribution() {
-        return ATTRIB_NONE;
-    }
 
-    @Override
-    public JSONObject getParameters() throws JSONException {
-        return jo(&quot;path&quot;, &quot;String&quot;);
-    }
-;
-}
 
-</pre>
+
+
+
+
+
+
+
+
+
+
+
+  <div id="methods public">
+    <h2 id="public-methods">Public Methods</h2>
+<div class="method item">
+    <div id="method_null" class="title">
+        <span class="source-link"><a href="../files/ew.levr.base_src_main_java_com_eduworks_cruncher_lang_CruncherNull.java.html#l23"><code>ew.levr.base&#x2F;src&#x2F;main&#x2F;java&#x2F;com&#x2F;eduworks&#x2F;cruncher&#x2F;lang&#x2F;CruncherNull.java:23</code></a></span>
+        <h3 class="">
+            public
+            
+            
+            null( ): 
+        </h3>
+    </div>
+
+
+
+    <div class="method-description"></div>
+
+
+      <div class="return">
+        <h4>Return:</h4>
+        <div>
+          
+          <span class="return-description"><p>(Object) null.</p>
+</span>
+        </div>
+      </div>
+
+
+</div>
+  </div>
+
+
+
 
 </div>
         </div>
