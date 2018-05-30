@@ -219,7 +219,16 @@ public class LevrJsParser
             ScriptObjectMirror m = (ScriptObjectMirror) o;
             if (m.getClassName().toLowerCase().equals("object"))
             {
-                return new JSONObject(m);
+                JSONObject jo = new JSONObject();
+                for (String key : m.keySet())
+                {
+                    try {
+                        jo.put(key,jsToJava(m.get(key)));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return jo;
             }
             else if (m.isArray())
             {
