@@ -104,29 +104,29 @@ public class LevrResolverServlet extends LevrServlet {
 	private static void loadAdditionalConfigFilesFromServletContext(String path, ServletContext servletContext) throws IOException, JSONException {
 		if (path.endsWith(".jar") && (path.toLowerCase().contains("levr"))) {
 			ZipInputStream zip = new ZipInputStream(servletContext.getResourceAsStream(path));
-			EwList<ZipEntry> entries = new EwList<ZipEntry>();
+			EwList<File> tempFiles = new EwList<File>();
 			while (true) {
 				ZipEntry e = zip.getNextEntry();
 				if (e == null)
 					break;
-				entries.add(e);
-			}
-			entries.sort(new Comparator<ZipEntry>() {
-				@Override
-				public int compare(ZipEntry o1, ZipEntry o2) {
-					return o1.getName().compareTo(o2.getName());
-				}
-			});
-			for (ZipEntry e : entries){
 				String name = e.getName();
 				if (name.endsWith(".rs2") || (name.endsWith(".js") && name.contains("node_modules") == false)) {
 					File createTempFile = File.createTempFile(path.replace("/", "_").replace("\\", "_"), e.getName().replace("/", "_").replace("\\", "_"));
 					FileWriter fileWriter = new FileWriter(createTempFile);
 					IOUtils.copy(zip, fileWriter);
 					fileWriter.close();
-					loadAdditionalConfigFiles(createTempFile);
-					createTempFile.delete();
+					tempFiles.add(createTempFile);
 				}
+			}
+			tempFiles.sort(new Comparator<File>() {
+				@Override
+				public int compare(File o1, File o2) {
+					return o1.getPath().compareTo(o2.getPath());
+				}
+			});
+			for (File createTempFile : tempFiles) {
+				loadAdditionalConfigFiles(createTempFile);
+				createTempFile.delete();
 			}
 			zip.close();
 		} else if (path.endsWith("/")) {
