@@ -104,13 +104,23 @@ public class LevrResolverServlet extends LevrServlet {
 	private static void loadAdditionalConfigFilesFromServletContext(String path, ServletContext servletContext) throws IOException, JSONException {
 		if (path.endsWith(".jar") && (path.toLowerCase().contains("levr"))) {
 			ZipInputStream zip = new ZipInputStream(servletContext.getResourceAsStream(path));
+			EwList<ZipEntry> entries = new EwList<ZipEntry>();
 			while (true) {
 				ZipEntry e = zip.getNextEntry();
 				if (e == null)
 					break;
+				entries.add(e);
+			}
+			entries.sort(new Comparator<ZipEntry>() {
+				@Override
+				public int compare(ZipEntry o1, ZipEntry o2) {
+					return o1.getName().compareTo(o2.getName());
+				}
+			});
+			for (ZipEntry e : entries){
 				String name = e.getName();
 				if (name.endsWith(".rs2") || (name.endsWith(".js") && name.contains("node_modules") == false)) {
-					File createTempFile = File.createTempFile(path.replace("/", "").replace("\\", ""), e.getName().replace("/", "").replace("\\", ""));
+					File createTempFile = File.createTempFile(path.replace("/", "_").replace("\\", "_"), e.getName().replace("/", "_").replace("\\", "_"));
 					FileWriter fileWriter = new FileWriter(createTempFile);
 					IOUtils.copy(zip, fileWriter);
 					fileWriter.close();
@@ -120,22 +130,28 @@ public class LevrResolverServlet extends LevrServlet {
 			}
 			zip.close();
 		} else if (path.endsWith("/")) {
-			Set<String> resourcePaths = servletContext.getResourcePaths(path);
+			EwList<String> resourcePaths = new EwList<String>(servletContext.getResourcePaths(path));
 			if (resourcePaths != null && resourcePaths.size() > 0)
-				for (String contextPath : resourcePaths) {
-					if (contextPath.endsWith("/") || contextPath.endsWith(".jar")) {
-						loadAdditionalConfigFilesFromServletContext(contextPath, servletContext);
-						continue;
+				resourcePaths.sort(new Comparator<String>() {
+					@Override
+					public int compare(String o1, String o2) {
+						return o1.compareTo(o2);
 					}
-					File createTempFile = File.createTempFile("inWar", contextPath.replace("/", "").replace("\\", ""));
-					FileWriter fileWriter = new FileWriter(createTempFile);
-					InputStream resourceAsStream = servletContext.getResourceAsStream(contextPath);
-					IOUtils.copy(resourceAsStream, fileWriter);
-					resourceAsStream.close();
-					fileWriter.close();
-					loadAdditionalConfigFiles(createTempFile);
-					createTempFile.delete();
+				});
+			for (String contextPath : resourcePaths) {
+				if (contextPath.endsWith("/") || contextPath.endsWith(".jar")) {
+					loadAdditionalConfigFilesFromServletContext(contextPath, servletContext);
+					continue;
 				}
+				File createTempFile = File.createTempFile("inWar", contextPath.replace("/", "_").replace("\\", "_"));
+				FileWriter fileWriter = new FileWriter(createTempFile);
+				InputStream resourceAsStream = servletContext.getResourceAsStream(contextPath);
+				IOUtils.copy(resourceAsStream, fileWriter);
+				resourceAsStream.close();
+				fileWriter.close();
+				loadAdditionalConfigFiles(createTempFile);
+				createTempFile.delete();
+			}
 		}
 		// else
 		// System.out.println("Failed: " + path);
@@ -144,21 +160,28 @@ public class LevrResolverServlet extends LevrServlet {
 	private static void loadAdditionalConfigFilesFromContext(String path) throws IOException, JSONException {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		if (classLoader != null) {
-			Enumeration<URL> resourcePaths = classLoader.getResources(path);
-			if (resourcePaths != null)
-				while (resourcePaths.hasMoreElements()) {
-					String contextPath = resourcePaths.nextElement().toString();
+			EwList<URL> resourcePaths = new EwList<URL>(classLoader.getResources(path));
+			if (resourcePaths != null) {
+				resourcePaths.sort(new Comparator<URL>() {
+					@Override
+					public int compare(URL o1, URL o2) {
+						return o1.toString().compareTo(o2.toString());
+					}
+				});
+				for (URL resourcePath : resourcePaths) {
+					String contextPath = resourcePath.toString();
 					if (contextPath.endsWith("/")) {
 						loadAdditionalConfigFilesFromContext(contextPath);
 						continue;
 					}
-					File createTempFile = File.createTempFile("inWar", contextPath.replace("/", "").replace("\\", ""));
+					File createTempFile = File.createTempFile("inWar", contextPath.replace("/", "_").replace("\\", "_"));
 					FileWriter fileWriter = new FileWriter(createTempFile);
 					IOUtils.copy(classLoader.getResourceAsStream(contextPath), fileWriter);
 					fileWriter.close();
 					loadAdditionalConfigFiles(createTempFile);
 					createTempFile.delete();
 				}
+			}
 		}
 	}
 
