@@ -77,7 +77,10 @@ public class LevrJsParser
                 final TreeSet<String> bindingTreeset = new TreeSet<>();
                 bindingTreeset.addAll(bindings.keySet());
                 bindingTreeset.removeAll(ResolverFactory.cruncherSpecs.keySet());
-                log.debug(bindingTreeset);
+                if (bindingTreeset.size() > 50)
+                    log.debug(bindingTreeset.size() + " functions loaded.");
+                else
+                    log.debug(bindingTreeset);
             }
             return bindings;
         }
