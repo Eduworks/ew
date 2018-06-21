@@ -3,34 +3,34 @@
   <parent>
     <groupId>com.eduworks</groupId>
     <artifactId>ew</artifactId>
-		<version>5.12.1</version>
+		<version>5.12.2</version>
   </parent>
   <artifactId>ew.levr.db.skyrepo</artifactId>
   <dependencies>
 		<dependency>
 			<groupId>com.eduworks</groupId>
 			<artifactId>ew.levr.security</artifactId>
-			<version>5.12.1</version>
+			<version>5.12.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.eduworks</groupId>
 			<artifactId>ew.levr.net</artifactId>
-			<version>5.12.1</version>
+			<version>5.12.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.eduworks</groupId>
 			<artifactId>ew.levr.base</artifactId>
-			<version>5.12.1</version>
+			<version>5.12.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.eduworks</groupId>
 			<artifactId>ew.levr.db.mapdb</artifactId>
-			<version>5.12.1</version>
+			<version>5.12.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.eduworks</groupId>
 			<artifactId>ew.levr.rdf</artifactId>
-			<version>5.12.1</version>
+			<version>5.12.2</version>
 		</dependency>
   </dependencies>
 </project>
