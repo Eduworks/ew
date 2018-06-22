@@ -3,23 +3,26 @@ package com.eduworks.cruncher.rdf;
 import com.eduworks.lang.util.EwJson;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
-import com.github.jsonldjava.core.JsonLdConsts;
 import com.github.jsonldjava.core.JsonLdError;
 import com.github.jsonldjava.core.JsonLdOptions;
 import com.github.jsonldjava.core.JsonLdProcessor;
+import com.github.jsonldjava.rdf2go.RDF2GoTripleCallback;
 import com.github.jsonldjava.utils.JsonUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.ontoware.rdf2go.model.Syntax;
+import org.openrdf.rdf2go.RepositoryModelSet;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  *
@@ -65,12 +68,15 @@ public class CruncherJsonLdToTurtle extends Cruncher
             } else {
                 context = jsonObject;
         	}
-            
-            JsonLdOptions options = new JsonLdOptions();
-            options.setExpandContext(context);
-            options.format = JsonLdConsts.TEXT_TURTLE;
-            String rdfString = (String)JsonLdProcessor.toRDF(jsonObject, options);
-            return rdfString;
+
+	        JsonLdOptions options = new JsonLdOptions();
+	        options.setExpandContext(context);
+	        final RDF2GoTripleCallback cb = new RDF2GoTripleCallback();
+	        final RepositoryModelSet model = (RepositoryModelSet) JsonLdProcessor.toRDF(jsonObject, cb, options);
+
+	        StringWriter writer = null;
+	        model.writeTo(writer = new StringWriter(), Syntax.Turtle);
+	        return writer.getBuffer().toString();
         }
         catch (IOException ex)
         {
