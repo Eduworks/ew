@@ -21,6 +21,8 @@ public class CruncherAmqpListen extends Cruncher {
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException {
 		String hostName = optAsString("hostName", "localhost", c, parameters, dataStreams);
 		Integer port = optAsInteger("port", -1, c, parameters, dataStreams);
+		String username = optAsString("username","", c, parameters, dataStreams);
+		String password = optAsString("password","", c, parameters, dataStreams);
 		String queueName = optAsString("queue","", c, parameters, dataStreams);
 		String exchangeName = optAsString("exchangeName","",c,parameters,dataStreams);
 		String exchangeType = optAsString("exchangeType","topic",c,parameters,dataStreams);
@@ -29,7 +31,7 @@ public class CruncherAmqpListen extends Cruncher {
 		boolean exclusive = optAsBoolean("exclusive", false, c, parameters, dataStreams);
 		boolean autoDelete = optAsBoolean("autoDelete", false, c, parameters, dataStreams);
 
-		Channel channel = CruncherAmqpSend.getChannel(hostName, port, queueName, exchangeName,exchangeType,routingKey,durable, exclusive, autoDelete);
+		Channel channel = CruncherAmqpSend.getChannel(hostName, port, username,password,queueName, exchangeName,exchangeType,routingKey,durable, exclusive, autoDelete);
 		final Resolvable op = (Resolvable) get("obj");
 		try {
 			channel.basicConsume(queueName, true, new DefaultConsumer(channel) {

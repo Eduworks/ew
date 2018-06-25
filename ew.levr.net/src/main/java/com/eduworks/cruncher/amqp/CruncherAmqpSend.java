@@ -24,6 +24,8 @@ public class CruncherAmqpSend extends Cruncher {
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException {
 		String hostName = optAsString("hostName", "localhost", c, parameters, dataStreams);
 		Integer port = optAsInteger("port", -1, c, parameters, dataStreams);
+		String username = optAsString("username","", c, parameters, dataStreams);
+		String password = optAsString("password","", c, parameters, dataStreams);
 		String queueName = optAsString("queue","", c, parameters, dataStreams);
 		String routingKey = optAsString("routingKey","", c, parameters, dataStreams);
 		String exchangeName = optAsString("exchangeName","",c,parameters,dataStreams);
@@ -33,7 +35,7 @@ public class CruncherAmqpSend extends Cruncher {
 		boolean autoDelete = optAsBoolean("autoDelete", false, c, parameters, dataStreams);
 		Object o = getObj(c, parameters, dataStreams);
 
-		Channel channel = getChannel(hostName, port, queueName, exchangeName,exchangeType,routingKey,durable, exclusive, autoDelete);
+		Channel channel = getChannel(hostName, port, username,password,queueName, exchangeName,exchangeType,routingKey,durable, exclusive, autoDelete);
 		try {
 			channel.basicPublish(exchangeName, exchangeName.isEmpty() ? queueName : routingKey, null, o.toString().getBytes());
 		} catch (IOException e) {
@@ -42,17 +44,21 @@ public class CruncherAmqpSend extends Cruncher {
 		return null;
 	}
 
-	public static Channel getChannel(String hostName, Integer port, String queueName, String exchangeName,String exchangeType,String routingKey,boolean durable, boolean exclusive, boolean autoDelete) {
+	public static Channel getChannel(String hostName, Integer port,String username,String password, String queueName, String exchangeName,String exchangeType,String routingKey,boolean durable, boolean exclusive, boolean autoDelete) {
 		ConnectionFactory factory = null;
 		synchronized (factories) {
-			if (factories.containsKey(hostName))
-				factory = factories.get(hostName);
+			if (factories.containsKey(hostName+username+password+port))
+				factory = factories.get(hostName+username+password+port);
 			else {
 				factory = new ConnectionFactory();
 				factory.setHost(hostName);
+				if (username != null && !username.isEmpty())
+				factory.setUsername(username);
+				if (password != null && !password.isEmpty())
+				factory.setPassword(password);
 				if (port != null)
 					factory.setPort(port);
-				factories.put(hostName, factory);
+				factories.put(hostName+username+password+port, factory);
 			}
 		}
 		Connection connection = null;
@@ -70,7 +76,7 @@ public class CruncherAmqpSend extends Cruncher {
 				}
 			}
 		}
-		String cacheName = hostName + port + queueName+":"+exchangeName+exchangeType+routingKey + durable + exclusive + autoDelete;
+		String cacheName = hostName + port +username+password+ queueName+":"+exchangeName+exchangeType+routingKey + durable + exclusive + autoDelete;
 		Channel channel = null;
 		synchronized (channels) {
 			try {
