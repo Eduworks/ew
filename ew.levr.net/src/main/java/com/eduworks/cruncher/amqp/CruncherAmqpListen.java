@@ -24,7 +24,7 @@ public class CruncherAmqpListen extends Cruncher {
 		String username = optAsString("username","", c, parameters, dataStreams);
 		String password = optAsString("password","", c, parameters, dataStreams);
 		String queueName = optAsString("queue","", c, parameters, dataStreams);
-		String exchangeName = optAsString("exchangeName","",c,parameters,dataStreams);
+		String exchangeName = optAsString("exchangeName",optAsString("exchange","",c,parameters,dataStreams),c,parameters,dataStreams);
 		String exchangeType = optAsString("exchangeType","topic",c,parameters,dataStreams);
 		String routingKey = optAsString("routingKey","", c, parameters, dataStreams);
 		boolean durable = optAsBoolean("durable", false, c, parameters, dataStreams);

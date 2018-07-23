@@ -28,7 +28,7 @@ public class CruncherAmqpSend extends Cruncher {
 		String password = optAsString("password","", c, parameters, dataStreams);
 		String queueName = optAsString("queue","", c, parameters, dataStreams);
 		String routingKey = optAsString("routingKey","", c, parameters, dataStreams);
-		String exchangeName = optAsString("exchangeName","",c,parameters,dataStreams);
+		String exchangeName = optAsString("exchangeName",optAsString("exchange","",c,parameters,dataStreams),c,parameters,dataStreams);
 		String exchangeType = optAsString("exchangeType","topic",c,parameters,dataStreams);
 		boolean durable = optAsBoolean("durable", false, c, parameters, dataStreams);
 		boolean exclusive = optAsBoolean("exclusive", false, c, parameters, dataStreams);
