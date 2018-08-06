@@ -59,7 +59,7 @@ public class LevrResolverServlet extends LevrServlet {
 
 	public static boolean initConfig(PrintStream pw, ServletContext servletContext) throws IOException {
 		if (codeFilesLastCheckedMs + 5000 < System.currentTimeMillis()) {
-			codeFilesLastCheckedMs = System.currentTimeMillis();
+			codeFilesLastCheckedMs = System.currentTimeMillis()+60000;
 			if (resolvableWebServices == null || getFilesLastModified(new File(EwFileSystem.getWebConfigurationPath())) != codeFilesLastModifiedMs) {
 				FileReader input = null;
 				try {
@@ -97,6 +97,7 @@ public class LevrResolverServlet extends LevrServlet {
 					IOUtils.closeQuietly(input);
 				}
 			}
+			codeFilesLastCheckedMs = System.currentTimeMillis();
 		}
 		return true;
 	}
