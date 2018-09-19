@@ -1,10 +1,10 @@
 package com.eduworks.cruncher.net;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.SocketException;
-import java.util.Map;
-
+import com.eduworks.lang.threading.EwThreading;
+import com.eduworks.lang.util.EwJson;
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
+import com.eduworks.resolver.exception.SoftException;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -15,11 +15,10 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.eduworks.lang.threading.EwThreading;
-import com.eduworks.lang.util.EwJson;
-import com.eduworks.resolver.Context;
-import com.eduworks.resolver.Cruncher;
-import com.eduworks.resolver.exception.SoftException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.SocketException;
+import java.util.Map;
 
 public class CruncherHttpDelete extends Cruncher
 {
@@ -146,7 +145,7 @@ public class CruncherHttpDelete extends Cruncher
     @Override
     public JSONObject getParameters() throws JSONException
     {
-        return jo("obj", "String", "contentType", "String", "?name", "String", "?authToken", "String");
+        return jo("obj", "String", "contentType", "String", "?name", "String", "?authToken", "String", "<any>", "String");
     }
 
 }
