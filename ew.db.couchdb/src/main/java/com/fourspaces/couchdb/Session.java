@@ -16,38 +16,15 @@
 
 package com.fourspaces.couchdb;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.ProtocolException;
-import java.net.SocketException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpException;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpRequestInterceptor;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.auth.AuthScheme;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.AuthState;
-import org.apache.http.auth.Credentials;
-import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.*;
+import org.apache.http.auth.*;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.methods.*;
 import org.apache.http.client.params.AllClientPNames;
 import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.protocol.ClientContext;
@@ -71,6 +48,15 @@ import org.apache.http.protocol.ExecutionContext;
 import org.apache.http.protocol.HttpContext;
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.ProtocolException;
+import java.net.SocketException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Session is the main connection to the CouchDB instance. However, you'll
@@ -467,16 +453,9 @@ public class Session
 		if (content != null)
 		{
 			HttpEntity entity;
-			try
-			{
-				entity = new StringEntity(content, DEFAULT_CHARSET);
-				post.setEntity(entity);
-				post.setHeader(new BasicHeader("Content-Type", MIME_TYPE_JSON));
-			}
-			catch (UnsupportedEncodingException e)
-			{
-				log.error(ExceptionUtils.getStackTrace(e));
-			}
+			entity = new StringEntity(content, DEFAULT_CHARSET);
+			post.setEntity(entity);
+			post.setHeader(new BasicHeader("Content-Type", MIME_TYPE_JSON));
 		}
 
 		return http(post);
@@ -508,16 +487,9 @@ public class Session
 		if (content != null)
 		{
 			HttpEntity entity;
-			try
-			{
-				entity = new StringEntity(content, DEFAULT_CHARSET);
-				put.setEntity(entity);
-				put.setHeader(new BasicHeader("Content-Type", MIME_TYPE_JSON));
-			}
-			catch (UnsupportedEncodingException e)
-			{
-				log.error(ExceptionUtils.getStackTrace(e));
-			}
+			entity = new StringEntity(content, DEFAULT_CHARSET);
+			put.setEntity(entity);
+			put.setHeader(new BasicHeader("Content-Type", MIME_TYPE_JSON));
 		}
 		return http(put);
 	}
