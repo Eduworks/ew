@@ -77,7 +77,10 @@ public class LevrJsParser
                 final TreeSet<String> bindingTreeset = new TreeSet<>();
                 bindingTreeset.addAll(bindings.keySet());
                 bindingTreeset.removeAll(ResolverFactory.cruncherSpecs.keySet());
-                log.debug(bindingTreeset);
+                if (bindingTreeset.size() > 50)
+                    log.debug(bindingTreeset.size() + " functions loaded.");
+                else
+                    log.debug(bindingTreeset);
             }
             return bindings;
         }
@@ -219,7 +222,16 @@ public class LevrJsParser
             ScriptObjectMirror m = (ScriptObjectMirror) o;
             if (m.getClassName().toLowerCase().equals("object"))
             {
-                return new JSONObject(m);
+                JSONObject jo = new JSONObject();
+                for (String key : m.keySet())
+                {
+                    try {
+                        jo.put(key,jsToJava(m.get(key)));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return jo;
             }
             else if (m.isArray())
             {

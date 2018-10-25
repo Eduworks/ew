@@ -29,12 +29,10 @@ import com.eduworks.resolver.Cruncher;
 import com.eduworks.resolver.exception.SoftException;
 import com.eduworks.util.io.InMemoryFile;
 
-public class CruncherHttpPut extends Cruncher
-{
+public class CruncherHttpPut extends Cruncher {
 
     @Override
-    public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
-    {
+    public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException {
         final Object o = getObj(c, parameters, dataStreams);
         String url = getAsString("url", c, parameters, dataStreams);
         String contentType = getAsString("contentType", c, parameters, dataStreams);
@@ -43,28 +41,23 @@ public class CruncherHttpPut extends Cruncher
         HttpPut put = new HttpPut(url);
 
         HttpEntity entity = null;
-        try
-        {
+        try {
             if (o instanceof File)
                 entity = new FileEntity((File) o);
             else if (o instanceof InMemoryFile)
                 entity = new InputStreamEntity(((InMemoryFile) o).getInputStream(), ((InMemoryFile) o).data.length, ContentType.create(contentType));
-            else
-            {
+            else {
                 byte[] bytes = o.toString().getBytes("UTF-8");
                 entity = new InputStreamEntity(new ByteArrayInputStream(bytes), bytes.length, ContentType.create(contentType));
             }
             put.setHeader("Content-Type", contentType);
-        }
-        catch (UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         if (authToken != null && !authToken.trim().isEmpty())
             put.setHeader("Authorization", "Basic " + authToken);
-        for (String key : keySet())
-        {
+        for (String key : keySet()) {
             if (key.equals("url"))
                 continue;
             if (key.equals("obj"))
@@ -85,29 +78,21 @@ public class CruncherHttpPut extends Cruncher
         CloseableHttpClient hc = HttpClients.createDefault();
 
         CloseableHttpResponse execute = null;
-        try
-        {
+        try {
             do
-                try
-                {
+                try {
                     execute = hc.execute(put);
-                }
-                catch (ClientProtocolException e)
-                {
+                } catch (ClientProtocolException e) {
                     if (reliable)
                         EwThreading.sleep(500);
                     else
                         e.printStackTrace();
-                }
-                catch (SocketException e)
-                {
+                } catch (SocketException e) {
                     if (reliable)
                         EwThreading.sleep(500);
                     else
                         throw new SoftException(e.getMessage());
-                }
-                catch (IOException e)
-                {
+                } catch (IOException e) {
                     if (reliable)
                         EwThreading.sleep(500);
                     else
@@ -118,17 +103,12 @@ public class CruncherHttpPut extends Cruncher
             if (execute == null)
                 return null;
             String string = null;
-            try
-            {
+            try {
                 if (execute.getEntity() != null)
                     string = EntityUtils.toString(execute.getEntity());
-            }
-            catch (ParseException e)
-            {
+            } catch (ParseException e) {
                 e.printStackTrace();
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             if (string == null)
@@ -137,46 +117,37 @@ public class CruncherHttpPut extends Cruncher
             if (EwJson.isJson(string))
                 return EwJson.tryParseJson(string, false);
             return string;
-        }
-        finally
-        {
-            try
-            {
+        } finally {
+            try {
                 if (execute != null)
                     execute.close();
                 if (hc != null)
                     hc.close();
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
             }
         }
     }
 
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         return "Performs an HTTP Put. The payload is provided by obj.\n"
                 + "Will attach one file as a payload\n"
                 + "Results will come back as JSON or a string.";
     }
 
     @Override
-    public String getReturn()
-    {
+    public String getReturn() {
         return "JSONObject|JSONArray|String";
     }
 
     @Override
-    public String getAttribution()
-    {
+    public String getAttribution() {
         return ATTRIB_NONE;
     }
 
     @Override
-    public JSONObject getParameters() throws JSONException
-    {
-        return jo("obj", "String", "contentType", "String", "?name", "String", "?authToken", "String");
+    public JSONObject getParameters() throws JSONException {
+        return jo("obj", "String", "url", "String", "contentType", "String", "?name", "String", "?authToken", "String");
     }
 
 }

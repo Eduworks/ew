@@ -1,18 +1,16 @@
 package com.eduworks.levr.servlet;
 
-import java.io.IOException;
-import java.io.PrintStream;
-import java.util.Map;
+import com.eduworks.levr.servlet.impl.LevrResolverServlet;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.log4j.Logger;
-
-import com.eduworks.levr.servlet.impl.LevrResolverServlet;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Map;
 
 public abstract class LevrServlet extends HttpServlet
 {
@@ -78,15 +76,19 @@ public abstract class LevrServlet extends HttpServlet
 		}
 	}
 
+	public static String accessControlAllowOrigin = "*";
+	public static String accessControlAllowMethods = "GET, PUT, POST, DELETE, OPTIONS";
+	public static String accessControlAllowHeaders = "If-Modified-Since, Content-Type, Content-Range, Content-Disposition, Content-Description, signatureSheet";
+
 	@Override
 	public void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		ServletOutputStream outputStream = response.getOutputStream();
 		try
 		{
-			response.setHeader("Access-Control-Allow-Origin", "*");
-			response.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
-			response.setHeader("Access-Control-Allow-Headers", "If-Modified-Since, Content-Type, Content-Range, Content-Disposition, Content-Description, signatureSheet");
+			response.setHeader("Access-Control-Allow-Origin", accessControlAllowOrigin);
+			response.setHeader("Access-Control-Allow-Methods", accessControlAllowMethods);
+			response.setHeader("Access-Control-Allow-Headers", accessControlAllowHeaders);
 		}
 		catch (Throwable e)
 		{

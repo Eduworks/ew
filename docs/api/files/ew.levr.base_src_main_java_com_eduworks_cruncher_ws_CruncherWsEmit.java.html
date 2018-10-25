@@ -56,6 +56,7 @@
                             <li><a href="../classes/fileToString.html">fileToString</a></li>
                             <li><a href="../classes/jsonLdCompact.html">jsonLdCompact</a></li>
                             <li><a href="../classes/jsonLdExpand.html">jsonLdExpand</a></li>
+                            <li><a href="../classes/null.html">null</a></li>
                             <li><a href="../classes/variableGet.html">variableGet</a></li>
                             <li><a href="../classes/variableSet.html">variableSet</a></li>
                             <li><a href="../classes/wsBroadcast.html">wsBroadcast</a></li>
@@ -119,7 +120,7 @@ public class CruncherWsEmit extends Cruncher
         for (Session s : LevrResolverWebSocket.sessions)
         {
             if (s.getId().equals(to))
-                s.getAsyncRemote().sendText(obj.toString());
+                CruncherWsBroadcast.resolve(obj,s);
         }
         return obj;
     }

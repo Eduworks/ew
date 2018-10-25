@@ -19,6 +19,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "filepath",
         "jsonLdCompact",
         "jsonLdExpand",
+        "null",
         "variableGet",
         "variableSet",
         "wsBroadcast",
@@ -37,7 +38,7 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "ew.levr.rdf",
             "name": "ew.levr.rdf",
-            "description": "Converts a JSON object to JSON-LD and performs a Compact operation.\n\nrs2: result = obj.jsonLdCompact();<br>\nLevrJS: result = jsonLdCompact.call(this,obj);"
+            "description": "Converts a JSON object to JSON-LD and performs a Compact operation.\n<p>\nrs2: result = obj.jsonLdCompact();<br>\nLevrJS: result = jsonLdCompact.call(this,obj);"
         }
     ],
     "elements": []
