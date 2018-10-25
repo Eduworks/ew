@@ -28,6 +28,8 @@ import org.json.JSONObject;
 
 import javax.script.Bindings;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -59,6 +61,19 @@ public class LevrResolverServlet extends LevrServlet
         ResolverFactory.populateFactorySpecsDynamically();
     }
 
+    @Override
+    public void init(ServletConfig sc) {
+	try {
+	    super.init(sc);
+	    if (sc != null)
+		initConfig(new PrintStream(System.out, true), sc.getServletContext());
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}catch (ServletException e) {
+	    e.printStackTrace();
+	}
+    }
+    
     public static boolean initConfig(PrintStream pw, ServletContext servletContext) throws IOException
     {
         if (codeFilesLastCheckedMs + 5000 < System.currentTimeMillis())
