@@ -36,10 +36,10 @@ public abstract class Cruncher implements Resolvable
     public Map<String, Object> data = null;
     public boolean resolverCompatibilityReplaceMode = true;
     public static Logger log = null;
-    protected Integer codeLineNumber = null;
-    protected Integer codeColNumber = null;
-    protected String codeFileName = null;
-    protected String codeMethod = null;
+    protected Integer codeLineNumber = 0;
+    protected Integer codeColNumber = 0;
+    protected String codeFileName = "";
+    protected String codeMethod = "";
 
     static
     {
