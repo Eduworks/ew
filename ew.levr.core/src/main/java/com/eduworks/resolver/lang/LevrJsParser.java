@@ -240,6 +240,7 @@ public class LevrJsParser
             else if (m.isFunction())
             {
                 CruncherJavascriptBinder b = new CruncherJavascriptBinder();
+                b.setLineAndColAndSource(0,0,"","");
                 b.build("obj", m);
                 return b;
             }
