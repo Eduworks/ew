@@ -286,14 +286,15 @@ public class LevrResolverServlet extends LevrServlet {
 	}
 
 	private static void bindJavascriptFunctions(Map<String, Resolvable> resolvableFunctions, Bindings bindings, File codeFile) {
-		CruncherJavascriptBinder cj = new CruncherJavascriptBinder();
 		for (String s : bindings.keySet()) {
 			CruncherJavascriptBinder jb = new CruncherJavascriptBinder();
+			jb.setLineAndColAndSource(0,0,codeFile.getName(),s);
 			jb.build("function", s);
 			if (ResolverFactory.cruncherSpecs.containsKey(s))
 				continue;
 			if (bindings.get(s) instanceof ScriptObjectMirror) {
 				ScriptObjectMirror binding = (ScriptObjectMirror) bindings.get(s);
+
 				if (binding.isFunction())
 					if (LevrResolverServlet.resolvableFunctions.get(s) == null || LevrResolverServlet.resolvableFunctions.get(s) instanceof CruncherJavascriptBinder) {
 						String preamble = levrFunctionUseCodeFileAsNamespace ? codeFile.getName().substring(0, codeFile.getName().length() - 2) : "";

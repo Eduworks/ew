@@ -6,11 +6,12 @@
 package com.eduworks.resolver;
 
 import com.eduworks.levr.servlet.impl.LevrResolverServlet;
-import java.io.InputStream;
-import java.util.Map;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.util.Map;
 
 /**
  *
@@ -33,10 +34,12 @@ public class CruncherBindWebService extends Cruncher
             ScriptObjectMirror m = (ScriptObjectMirror) get;
             if (m.isFunction())
             {
+                String endpoint = getAsString("endpoint", c, parameters, dataStreams);
                 CruncherJavascriptBinder b = new CruncherJavascriptBinder();
+                b.setLineAndColAndSource(0,0,"",endpoint);
                 b.build("obj", m);
 
-                LevrResolverServlet.resolvableWebServices.put(getAsString("endpoint", c, parameters, dataStreams), b);
+                LevrResolverServlet.resolvableWebServices.put(endpoint, b);
                 return null;
             }
         }

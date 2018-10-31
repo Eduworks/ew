@@ -1,18 +1,16 @@
 package com.eduworks.resolver;
 
 import com.eduworks.resolver.lang.LevrJsParser;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.script.Bindings;
-import javax.script.Invocable;
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptException;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  *
@@ -20,6 +18,11 @@ import org.json.JSONObject;
  */
 public class CruncherJavascriptBinder extends Cruncher
 {
+    public CruncherJavascriptBinder(){
+        super();
+        setLineAndColAndSource(0,0,"","");
+    }
+
 
     @Override
     public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
