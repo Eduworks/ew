@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.eduworks</groupId>
         <artifactId>ew</artifactId>
-        <version>5.14.3</version>
+        <version>5.14.4</version>
     </parent>
     <artifactId>ew.levr.service.dropbox</artifactId>
     <dependencies>
@@ -16,7 +16,7 @@
         <dependency>
             <groupId>com.eduworks</groupId>
             <artifactId>ew.levr.core</artifactId>
-            <version>5.14.3</version>
+            <version>5.14.4</version>
         </dependency>
     </dependencies>
 </project>

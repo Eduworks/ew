@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.eduworks</groupId>
 		<artifactId>ew</artifactId>
-		<version>5.14.3</version>
+		<version>5.14.4</version>
 	</parent>
 	<artifactId>ew.distributed</artifactId>
 	<properties>
@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>com.eduworks</groupId>
 			<artifactId>ew.common</artifactId>
-			<version>5.14.3</version>
+			<version>5.14.4</version>
 		</dependency>
 	</dependencies>
 </project>
