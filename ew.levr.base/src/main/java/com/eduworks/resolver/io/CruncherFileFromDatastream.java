@@ -17,7 +17,7 @@ public class CruncherFileFromDatastream extends Cruncher
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
-		String nameField = optAsString("name", null,c, parameters, dataStreams);
+		String nameField = optAsString("name", null, c, parameters, dataStreams);
 		Boolean useInMemory = optAsBoolean("inMemory", true, c, parameters, dataStreams);
 		Boolean useFileName = optAsBoolean("useFileName", false, c, parameters, dataStreams);
 		if (!(nameField == null || nameField.isEmpty()))
@@ -25,39 +25,36 @@ public class CruncherFileFromDatastream extends Cruncher
 			try
 			{
 				if (useInMemory)
-					return getRFileFromPost(c,dataStreams, nameField,useFileName);
+					return getRFileFromPost(c, dataStreams, nameField, useFileName);
 				else
-					return getFileFromPost(c,dataStreams, nameField,useFileName);
-			}
-			catch (IOException e)
+					return getFileFromPost(c, dataStreams, nameField, useFileName);
+			} catch (IOException e)
 			{
 				e.printStackTrace();
 				throw new RuntimeException("Could not find name of file in POST.");
 			}
-		}
-		else
+		} else
 		{
-			String except = optAsString("except",null, c, parameters, dataStreams);
+			String except = optAsString("except", null, c, parameters, dataStreams);
 			EwList<Object> results = new EwList<Object>();
 			if (dataStreams != null)
-			for (Entry<String, InputStream> entry : dataStreams.entrySet())
-			{
-				String key = entry.getKey();
-				if (key.equals(except))
-					continue;
-				try
+				for (Entry<String, InputStream> entry : dataStreams.entrySet())
 				{
-					entry.getValue().reset();
-					if (useInMemory)
-						results.add(getRFileFromPost(c,dataStreams, key,useFileName));
-					else
-						results.add(getFileFromPost(c,dataStreams, key,useFileName));
+					String key = entry.getKey();
+					if (key.equals(except))
+						continue;
+					try
+					{
+						entry.getValue().reset();
+						if (useInMemory)
+							results.add(getRFileFromPost(c, dataStreams, key, useFileName));
+						else
+							results.add(getFileFromPost(c, dataStreams, key, useFileName));
+					} catch (IOException e)
+					{
+						e.printStackTrace();
+					}
 				}
-				catch (IOException e)
-				{
-					e.printStackTrace();
-				}
-			}
 			return results;
 		}
 	}
@@ -70,16 +67,19 @@ public class CruncherFileFromDatastream extends Cruncher
 		if (!dataStreams.containsKey(nameField))
 			return null;
 		InputStream document = dataStreams.get(nameField);
-		document.reset();
 		InMemoryFile createTempFile = new InMemoryFile();
-		if (useFileName && c.filenames.containsKey(nameField))
-			createTempFile.name = c.filenames.get(nameField);
-		if (createTempFile.name == null || createTempFile.name.isEmpty())
-			createTempFile.name = nameField;
-		createTempFile.data = IOUtils.toByteArray(document);
+		synchronized (document)
+		{
+			document.reset();
+			if (useFileName && c.filenames.containsKey(nameField))
+				createTempFile.name = c.filenames.get(nameField);
+			if (createTempFile.name == null || createTempFile.name.isEmpty())
+				createTempFile.name = nameField;
+			createTempFile.data = IOUtils.toByteArray(document);
+		}
 		return createTempFile;
 	}
-	
+
 	private File getFileFromPost(Context c, Map<String, InputStream> dataStreams, String nameField, boolean useFileName) throws IOException,
 			FileNotFoundException
 	{
@@ -88,34 +88,38 @@ public class CruncherFileFromDatastream extends Cruncher
 		if (!dataStreams.containsKey(nameField))
 			return null;
 		InputStream document = dataStreams.get(nameField);
-		document.reset();
-		String extension = "";
-		if (useFileName && c.filenames.containsKey(nameField))
-			extension = c.filenames.get(nameField);
-		if (extension == null || extension.isEmpty())
-			extension = nameField;
-		if (extension != null) {
-			if (extension.lastIndexOf('.') != -1)
-				extension = extension.substring(Math.min(0, extension.lastIndexOf('.')));
-			else
-				extension = null;
-		}
-		if (extension == null || extension.isEmpty())
-			extension = "";
-		File createTempFile = File.createTempFile("foo", extension);
-		FileOutputStream fw = new FileOutputStream(createTempFile);
-		try
+		synchronized (document)
 		{
-			IOUtils.copy(document, fw);
-			return createTempFile;
-		}
-		finally
-		{
-			IOUtils.closeQuietly(fw);
-			IOUtils.closeQuietly(document);
-//			EwFileSystem.deleteEventually(createTempFile);
+			document.reset();
+			String extension = "";
+			if (useFileName && c.filenames.containsKey(nameField))
+				extension = c.filenames.get(nameField);
+			if (extension == null || extension.isEmpty())
+				extension = nameField;
+			if (extension != null)
+			{
+				if (extension.lastIndexOf('.') != -1)
+					extension = extension.substring(Math.min(0, extension.lastIndexOf('.')));
+				else
+					extension = null;
+			}
+			if (extension == null || extension.isEmpty())
+				extension = "";
+			File createTempFile = File.createTempFile("foo", extension);
+			FileOutputStream fw = new FileOutputStream(createTempFile);
+			try
+			{
+				IOUtils.copy(document, fw);
+				return createTempFile;
+			} finally
+			{
+				IOUtils.closeQuietly(fw);
+				IOUtils.closeQuietly(document);
+				//			EwFileSystem.deleteEventually(createTempFile);
+			}
 		}
 	}
+
 	@Override
 	public String getDescription()
 	{
@@ -123,25 +127,29 @@ public class CruncherFileFromDatastream extends Cruncher
 				"\nOptional Name = Name of MPP file to retreive." +
 				"\nOptional Except = Retreive everything except the name provided.";
 	}
+
 	@Override
 	public String[] getResolverNames()
 	{
-		return new String[]{getResolverName(),"getFileFromPost"};
+		return new String[]{getResolverName(), "getFileFromPost"};
 	}
+
 	@Override
 	public String getReturn()
 	{
 		return "List|File|InMemoryFile";
 	}
+
 	@Override
 	public String getAttribution()
 	{
 		return ATTRIB_NONE;
 	}
+
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("?name","String","?except","String","?inMemory","String");
+		return jo("?name", "String", "?except", "String", "?inMemory", "String");
 	}
 
 }

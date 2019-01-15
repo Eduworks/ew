@@ -1,0 +1,107 @@
+# Change Log
+
+## [5.14.3](https://github.com/eduworks/ew/tree/5.14.3) (2018-11-01)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.14.2...5.14.3)
+
+## [5.14.2](https://github.com/eduworks/ew/tree/5.14.2) (2018-10-24)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.14.1...5.14.2)
+
+## [5.14.1](https://github.com/eduworks/ew/tree/5.14.1) (2018-08-06)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.14.0...5.14.1)
+
+## [5.14.0](https://github.com/eduworks/ew/tree/5.14.0) (2018-08-06)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.13.0...5.14.0)
+
+## [5.13.0](https://github.com/eduworks/ew/tree/5.13.0) (2018-06-26)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.12.3...5.13.0)
+
+## [5.12.3](https://github.com/eduworks/ew/tree/5.12.3) (2018-06-25)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.12.2...5.12.3)
+
+## [5.12.2](https://github.com/eduworks/ew/tree/5.12.2) (2018-06-21)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.12.1...5.12.2)
+
+## [5.12.1](https://github.com/eduworks/ew/tree/5.12.1) (2018-06-21)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.12.0...5.12.1)
+
+## [5.12.0](https://github.com/eduworks/ew/tree/5.12.0) (2018-06-14)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.11.0...5.12.0)
+
+## [5.11.0](https://github.com/eduworks/ew/tree/5.11.0) (2018-04-13)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.10.0...5.11.0)
+
+## [5.10.0](https://github.com/eduworks/ew/tree/5.10.0) (2018-02-27)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.9.2...5.10.0)
+
+## [5.9.2](https://github.com/eduworks/ew/tree/5.9.2) (2018-02-27)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.9.1...5.9.2)
+
+**Fixed bugs:**
+
+- Skyrepo: Delete, even if fails, returns 200 OK. [\#10](https://github.com/Eduworks/ew/issues/10)
+
+## [5.9.1](https://github.com/eduworks/ew/tree/5.9.1) (2017-12-28)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.9.0...5.9.1)
+
+## [5.9.0](https://github.com/eduworks/ew/tree/5.9.0) (2017-11-28)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.7.3...5.9.0)
+
+**Closed issues:**
+
+- Need to allow sort by elasticsearch through skyRepo [\#4](https://github.com/Eduworks/ew/issues/4)
+- Now returning errors in search, \#error is thrown in a test, not sure what it means. [\#3](https://github.com/Eduworks/ew/issues/3)
+
+## [5.7.3](https://github.com/eduworks/ew/tree/5.7.3) (2017-10-13)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.7.2...5.7.3)
+
+## [5.7.2](https://github.com/eduworks/ew/tree/5.7.2) (2017-09-23)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.7.0...5.7.2)
+
+## [5.7.0](https://github.com/eduworks/ew/tree/5.7.0) (2017-08-11)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.6.0...5.7.0)
+
+## [5.6.0](https://github.com/eduworks/ew/tree/5.6.0) (2017-07-06)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.5.2...5.6.0)
+
+## [5.5.2](https://github.com/eduworks/ew/tree/5.5.2) (2017-07-01)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.5.1...5.5.2)
+
+## [5.5.1](https://github.com/eduworks/ew/tree/5.5.1) (2017-06-28)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.5.0...5.5.1)
+
+## [5.5.0](https://github.com/eduworks/ew/tree/5.5.0) (2017-06-28)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.3.0...5.5.0)
+
+## [5.3.0](https://github.com/eduworks/ew/tree/5.3.0) (2017-05-02)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.0.1...5.3.0)
+
+**Merged pull requests:**
+
+- add tests for LevrJsParser [\#2](https://github.com/Eduworks/ew/pull/2) ([sohail288](https://github.com/sohail288))
+- fixes LevrJsParser:javaToJS method for mid-string single-quotes [\#1](https://github.com/Eduworks/ew/pull/1) ([sohail288](https://github.com/sohail288))
+
+## [5.0.1](https://github.com/eduworks/ew/tree/5.0.1) (2017-01-23)
+[Full Changelog](https://github.com/eduworks/ew/compare/4.2.2...5.0.1)
+
+## [4.2.2](https://github.com/eduworks/ew/tree/4.2.2) (2017-01-21)
+[Full Changelog](https://github.com/eduworks/ew/compare/5.0.0...4.2.2)
+
+## [5.0.0](https://github.com/eduworks/ew/tree/5.0.0) (2017-01-20)
+[Full Changelog](https://github.com/eduworks/ew/compare/4.2.1...5.0.0)
+
+## [4.2.1](https://github.com/eduworks/ew/tree/4.2.1) (2017-01-20)
+[Full Changelog](https://github.com/eduworks/ew/compare/4.2.0...4.2.1)
+
+## [4.2.0](https://github.com/eduworks/ew/tree/4.2.0) (2016-12-29)
+[Full Changelog](https://github.com/eduworks/ew/compare/4.1.0...4.2.0)
+
+## [4.1.0](https://github.com/eduworks/ew/tree/4.1.0) (2016-12-14)
+[Full Changelog](https://github.com/eduworks/ew/compare/4.0.0...4.1.0)
+
+## [4.0.0](https://github.com/eduworks/ew/tree/4.0.0) (2016-11-28)
+[Full Changelog](https://github.com/eduworks/ew/compare/3.0.0...4.0.0)
+
+## [3.0.0](https://github.com/eduworks/ew/tree/3.0.0) (2016-11-27)
+
+
+\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
