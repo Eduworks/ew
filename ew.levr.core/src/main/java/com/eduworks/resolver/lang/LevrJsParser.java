@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.TreeSet;
 import java.util.logging.Level;
 
@@ -235,7 +236,15 @@ public class LevrJsParser
             }
             else if (m.isArray())
             {
-                return new JSONArray(m.values());
+                JSONArray ja = new JSONArray();
+                for (int i = 0;i < m.values().size();i++) {
+                    try {
+                        ja.put(i,jsToJava(((List)m.values()).get(i)));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return ja;
             }
             else if (m.isFunction())
             {
