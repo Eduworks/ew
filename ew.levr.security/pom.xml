@@ -4,14 +4,14 @@
 	<parent>
 		<groupId>com.eduworks</groupId>
 		<artifactId>ew</artifactId>
-		<version>5.14.5</version>
+		<version>5.14.6</version>
 	</parent>
 	<artifactId>ew.levr.security</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>com.eduworks</groupId>
 			<artifactId>ew.levr.core</artifactId>
-			<version>5.14.5</version>
+			<version>5.14.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
