@@ -1,15 +1,11 @@
 package com.eduworks.resolver;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import com.eduworks.lang.EwMap;
+import com.eduworks.lang.EwSet;
+import com.eduworks.lang.json.impl.EwJsonArray;
+import com.eduworks.lang.util.EwJson;
+import com.eduworks.resolver.lang.LevrJsParser;
+import com.google.common.base.Predicate;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,12 +16,9 @@ import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
-import com.eduworks.lang.EwMap;
-import com.eduworks.lang.EwSet;
-import com.eduworks.lang.json.impl.EwJsonArray;
-import com.eduworks.lang.util.EwJson;
-import com.eduworks.resolver.lang.LevrJsParser;
-import com.google.common.base.Predicate;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.*;
 
 public class ResolverFactory
 {
@@ -114,6 +107,18 @@ public class ResolverFactory
 			if (!url.toString().contains("levr") && url.toString().contains(".jar"))
 				continue;
 			urls.add(url);
+		}
+		if (urls.size() == 0)
+		{
+			System.out.println("No '*levr*.jar' jars detected. We may be running in a repackaged (fat) JAR. Loosening search.");
+			for (URL url : urlsForCurrentClasspath)
+			{
+				if (url.toString().contains("icu4j"))
+					continue;
+				if (!url.toString().contains(".jar"))
+					continue;
+				urls.add(url);
+			}
 		}
 		System.out.println(urls.toString());
 		System.out.println("We are now going to scan for any Resolvers, Crunchers, or Scripters.");
