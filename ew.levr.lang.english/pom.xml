@@ -4,14 +4,14 @@
 	<parent>
 		<groupId>com.eduworks</groupId>
 		<artifactId>ew</artifactId>
-		<version>5.14.6</version>
+		<version>5.14.7</version>
 	</parent>
 	<artifactId>ew.levr.lang.english</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>com.eduworks</groupId>
 			<artifactId>ew.levr.core</artifactId>
-			<version>5.14.6</version>
+			<version>5.14.7</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.sociaal</groupId>
