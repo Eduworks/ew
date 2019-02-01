@@ -237,9 +237,10 @@ public class LevrJsParser
             else if (m.isArray())
             {
                 JSONArray ja = new JSONArray();
-                for (int i = 0;i < m.values().size();i++) {
+                List values = (List) m.values();
+                for (int i = 0;i < values.size();i++) {
                     try {
-                        ja.put(i,jsToJava(((List)m.values()).get(i)));
+                        ja.put(i,jsToJava(values.get(i)));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
