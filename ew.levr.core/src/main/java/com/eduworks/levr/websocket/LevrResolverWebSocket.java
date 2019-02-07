@@ -1,36 +1,25 @@
 package com.eduworks.levr.websocket;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.websocket.OnClose;
-import javax.websocket.OnError;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;
-
-import org.apache.log4j.Logger;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.eduworks.interfaces.EwJsonSerializable;
 import com.eduworks.lang.EwList;
 import com.eduworks.lang.util.EwJson;
 import com.eduworks.levr.servlet.impl.LevrResolverServlet;
 import com.eduworks.resolver.Context;
 import com.eduworks.util.io.InMemoryFile;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Level;
+import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.websocket.EndpointConfig;
+import javax.websocket.*;
+import javax.websocket.server.ServerEndpoint;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.util.*;
+import java.util.logging.Level;
 
 @ServerEndpoint(value = "/ws/custom")
 public class LevrResolverWebSocket implements ServletContextListener
@@ -127,7 +116,8 @@ public class LevrResolverWebSocket implements ServletContextListener
             try
             {
                 error.put("error", e.toString());
-                session.getBasicRemote().sendText(error.toString());
+                if (session.isOpen())
+                    session.getBasicRemote().sendText(error.toString());
             }
             catch (JSONException e1)
             {
