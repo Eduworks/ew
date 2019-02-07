@@ -75,41 +75,43 @@ public class LevrResolverServlet extends LevrServlet {
 	public static boolean initConfig(PrintStream pw, ServletContext servletContext) throws IOException {
 		if (codeFilesLastCheckedMs + 5000 < System.currentTimeMillis()) {
 			codeFilesLastCheckedMs = System.currentTimeMillis()+60000;
-			if (resolvableWebServices == null || getFilesLastModified(new File(EwFileSystem.getWebConfigurationPath())) != codeFilesLastModifiedMs) {
-				FileReader input = null;
-				try {
-					synchronized (lock) {
-						resolvableWebServices = new EwMap<String, Resolvable>();
-						resolvableFunctions = new EwMap<String, Resolvable>();
-						codeFiles = new EwList<File>();
+			Long alreadyDoneChecker = codeFilesLastCheckedMs;
+			synchronized (lock) {
+				if (alreadyDoneChecker == codeFilesLastCheckedMs)
+				if (resolvableWebServices == null || getFilesLastModified(new File(EwFileSystem.getWebConfigurationPath())) != codeFilesLastModifiedMs) {
+					FileReader input = null;
+					try {
+							resolvableWebServices = new EwMap<String, Resolvable>();
+							resolvableFunctions = new EwMap<String, Resolvable>();
+							codeFiles = new EwList<File>();
 
-						if (servletContext != null) {
-							loadAdditionalConfigFilesFromServletContext("/WEB-INF/lib/", servletContext);
-							loadAdditionalConfigFilesFromServletContext("/WEB-INF/classes/", servletContext);
-							//loadAdditionalConfigFilesFromServletContext("/", servletContext);
-						}
-						loadAdditionalConfigFiles(new File(EwFileSystem.getWebConfigurationPath()));
-						codeFilesLastModifiedMs = getFilesLastModified(new File(EwFileSystem.getWebConfigurationPath()));
-					}
-					for (String webService : resolvableFunctions.keySet())
-						if (webService.toLowerCase().endsWith("autoexecute")) {
-							Context c = new Context();
-							try {
-								execute(log, true, webService, c, new HashMap<String, String[]>(), new HashMap<String, InputStream>(), true);
-								c.success();
-							} catch (Exception ex) {
-								c.failure();
-								log.debug("Auto-Execute failed.", ex);
+							if (servletContext != null) {
+								loadAdditionalConfigFilesFromServletContext("/WEB-INF/lib/", servletContext);
+								loadAdditionalConfigFilesFromServletContext("/WEB-INF/classes/", servletContext);
+								//loadAdditionalConfigFilesFromServletContext("/", servletContext);
 							}
-							c.finish();
-						}
-					return true;
-				} catch (JSONException e) {
-					pw.println("Error in config: " + e.getMessage());
-					e.printStackTrace();
-					return false;
-				} finally {
-					IOUtils.closeQuietly(input);
+							loadAdditionalConfigFiles(new File(EwFileSystem.getWebConfigurationPath()));
+							codeFilesLastModifiedMs = getFilesLastModified(new File(EwFileSystem.getWebConfigurationPath()));
+						for (String webService : resolvableFunctions.keySet())
+							if (webService.toLowerCase().endsWith("autoexecute")) {
+								Context c = new Context();
+								try {
+									execute(log, true, webService, c, new HashMap<String, String[]>(), new HashMap<String, InputStream>(), true);
+									c.success();
+								} catch (Exception ex) {
+									c.failure();
+									log.debug("Auto-Execute failed.", ex);
+								}
+								c.finish();
+							}
+						return true;
+					} catch (JSONException e) {
+						pw.println("Error in config: " + e.getMessage());
+						e.printStackTrace();
+						return false;
+					} finally {
+						IOUtils.closeQuietly(input);
+					}
 				}
 			}
 			codeFilesLastCheckedMs = System.currentTimeMillis();
