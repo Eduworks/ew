@@ -4,6 +4,7 @@ import com.eduworks.interfaces.EwJsonSerializable;
 import com.eduworks.lang.EwList;
 import com.eduworks.lang.EwMap;
 import com.eduworks.lang.json.EwJsonCollection;
+import com.eduworks.lang.threading.EwThreading;
 import com.eduworks.lang.util.EwCache;
 import com.eduworks.lang.util.EwJson;
 import com.eduworks.levr.servlet.LevrServlet;
@@ -27,11 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.script.Bindings;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -59,28 +56,28 @@ public class LevrResolverServlet extends LevrServlet {
 		ResolverFactory.populateFactorySpecsDynamically();
 	}
 
-    @Override
-    public void init(ServletConfig sc) {
-	try {
-	    super.init(sc);
-	    if (sc != null)
-		initConfig(new PrintStream(System.out, true), sc.getServletContext());
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}catch (ServletException e) {
-	    e.printStackTrace();
+	@Override
+	public void init(ServletConfig sc) {
+		try {
+			super.init(sc);
+			if (sc != null)
+				initConfig(new PrintStream(System.out, true), sc.getServletContext());
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ServletException e) {
+			e.printStackTrace();
+		}
 	}
-    }
-       
+
 	public static boolean initConfig(PrintStream pw, ServletContext servletContext) throws IOException {
 		if (codeFilesLastCheckedMs + 5000 < System.currentTimeMillis()) {
-			codeFilesLastCheckedMs = System.currentTimeMillis()+60000;
+			codeFilesLastCheckedMs = System.currentTimeMillis() + 60000;
 			Long alreadyDoneChecker = codeFilesLastCheckedMs;
 			synchronized (lock) {
 				if (alreadyDoneChecker == codeFilesLastCheckedMs)
-				if (resolvableWebServices == null || getFilesLastModified(new File(EwFileSystem.getWebConfigurationPath())) != codeFilesLastModifiedMs) {
-					FileReader input = null;
-					try {
+					if (resolvableWebServices == null || getFilesLastModified(new File(EwFileSystem.getWebConfigurationPath())) != codeFilesLastModifiedMs) {
+						FileReader input = null;
+						try {
 							resolvableWebServices = new EwMap<String, Resolvable>();
 							resolvableFunctions = new EwMap<String, Resolvable>();
 							codeFiles = new EwList<File>();
@@ -92,27 +89,32 @@ public class LevrResolverServlet extends LevrServlet {
 							}
 							loadAdditionalConfigFiles(new File(EwFileSystem.getWebConfigurationPath()));
 							codeFilesLastModifiedMs = getFilesLastModified(new File(EwFileSystem.getWebConfigurationPath()));
-						for (String webService : resolvableFunctions.keySet())
-							if (webService.toLowerCase().endsWith("autoexecute")) {
-								Context c = new Context();
-								try {
-									execute(log, true, webService, c, new HashMap<String, String[]>(), new HashMap<String, InputStream>(), true);
-									c.success();
-								} catch (Exception ex) {
-									c.failure();
-									log.debug("Auto-Execute failed.", ex);
+							EwThreading.fork(new EwThreading.MyRunnable() {
+								@Override
+								public void run() {
+									for (String webService : resolvableFunctions.keySet())
+										if (webService.toLowerCase().endsWith("autoexecute")) {
+											Context c = new Context();
+											try {
+												execute(log, true, webService, c, new HashMap<String, String[]>(), new HashMap<String, InputStream>(), true);
+												c.success();
+											} catch (Exception ex) {
+												c.failure();
+												log.debug("Auto-Execute failed.", ex);
+											}
+											c.finish();
+										}
 								}
-								c.finish();
-							}
-						return true;
-					} catch (JSONException e) {
-						pw.println("Error in config: " + e.getMessage());
-						e.printStackTrace();
-						return false;
-					} finally {
-						IOUtils.closeQuietly(input);
+							});
+							return true;
+						} catch (JSONException e) {
+							pw.println("Error in config: " + e.getMessage());
+							e.printStackTrace();
+							return false;
+						} finally {
+							IOUtils.closeQuietly(input);
+						}
 					}
-				}
 			}
 			codeFilesLastCheckedMs = System.currentTimeMillis();
 		}
@@ -290,7 +292,7 @@ public class LevrResolverServlet extends LevrServlet {
 	private static void bindJavascriptFunctions(Map<String, Resolvable> resolvableFunctions, Bindings bindings, File codeFile) {
 		for (String s : bindings.keySet()) {
 			CruncherJavascriptBinder jb = new CruncherJavascriptBinder();
-			jb.setLineAndColAndSource(0,0,codeFile.getName(),s);
+			jb.setLineAndColAndSource(0, 0, codeFile.getName(), s);
 			jb.build("function", s);
 			if (ResolverFactory.cruncherSpecs.containsKey(s))
 				continue;
