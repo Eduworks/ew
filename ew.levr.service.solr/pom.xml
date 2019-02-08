@@ -3,14 +3,14 @@
   <parent>
     <groupId>com.eduworks</groupId>
     <artifactId>ew</artifactId>
-		<version>5.15.0</version>
+		<version>5.15.1</version>
   </parent>
   <artifactId>ew.levr.service.solr</artifactId>
   <dependencies>
   	<dependency>
   		<groupId>com.eduworks</groupId>
   		<artifactId>ew.levr.core</artifactId>
-		<version>5.15.0</version>
+		<version>5.15.1</version>
   	</dependency>
   	<dependency>
   		<groupId>org.apache.solr</groupId>
