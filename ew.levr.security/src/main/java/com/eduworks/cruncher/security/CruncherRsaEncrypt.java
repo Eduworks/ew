@@ -87,6 +87,6 @@ public class CruncherRsaEncrypt extends Cruncher
 	@Override
 	public JSONObject getParameters() throws JSONException
 	{
-		return jo("obj", "String", "ppk", "String");
+		return jo("obj", "String", "pk", "String");
 	}
 }

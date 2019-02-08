@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.TreeSet;
 import java.util.logging.Level;
 
@@ -235,11 +236,21 @@ public class LevrJsParser
             }
             else if (m.isArray())
             {
-                return new JSONArray(m.values());
+                JSONArray ja = new JSONArray();
+                List values = (List) m.values();
+                for (int i = 0;i < values.size();i++) {
+                    try {
+                        ja.put(i,jsToJava(values.get(i)));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return ja;
             }
             else if (m.isFunction())
             {
                 CruncherJavascriptBinder b = new CruncherJavascriptBinder();
+                b.setLineAndColAndSource(0,0,"","");
                 b.build("obj", m);
                 return b;
             }

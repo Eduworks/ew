@@ -1,28 +1,21 @@
 package com.eduworks.resolver;
 
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicLong;
-
+import com.eduworks.lang.EwList;
+import com.eduworks.lang.json.impl.EwJsonObject;
+import com.eduworks.lang.util.EwUri;
+import com.eduworks.resolver.exception.EditableRuntimeException;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.eduworks.lang.EwList;
-import com.eduworks.lang.json.impl.EwJsonObject;
-import com.eduworks.lang.util.EwUri;
-import com.eduworks.resolver.exception.EditableRuntimeException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 /*
  * High performance zero flexibility implementation of Resolver
@@ -43,10 +36,10 @@ public abstract class Cruncher implements Resolvable
     public Map<String, Object> data = null;
     public boolean resolverCompatibilityReplaceMode = true;
     public static Logger log = null;
-    protected Integer codeLineNumber = null;
-    protected Integer codeColNumber = null;
-    protected String codeFileName = null;
-    protected String codeMethod = null;
+    protected Integer codeLineNumber = 0;
+    protected Integer codeColNumber = 0;
+    protected String codeFileName = "";
+    protected String codeMethod = "";
 
     static
     {
@@ -212,8 +205,10 @@ public abstract class Cruncher implements Resolvable
             b.append(":");
             if (o instanceof Cruncher)
                 b.append(o.getClass().getSimpleName());
-            else
+            else if (o != null)
                 b.append(o.toString());
+            else
+                b.append("null");
         }
         b.append("\n\t\t}");
         return b.toString();
