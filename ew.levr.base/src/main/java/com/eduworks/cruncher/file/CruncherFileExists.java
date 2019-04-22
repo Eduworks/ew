@@ -1,7 +1,11 @@
 package com.eduworks.cruncher.file;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
 
+import com.eduworks.util.io.InMemoryFile;
+import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,9 +43,10 @@ public class CruncherFileExists extends Cruncher {
         if (f.exists()) {
             return true;
         } else {
+            if (java.lang.System.getenv(f.getName()) != null)
+                return true;
             return false;
         }
-
     }
 
     @Override

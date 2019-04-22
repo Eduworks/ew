@@ -1,16 +1,16 @@
 package com.eduworks.cruncher.file;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
+import com.eduworks.util.io.InMemoryFile;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.eduworks.resolver.Context;
-import com.eduworks.resolver.Cruncher;
-import com.eduworks.util.io.InMemoryFile;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.StringReader;
 
 /**
  * Loads a file in a filesystem. Will attempt to copy the file into memory if the file is less than 2GB.
@@ -37,6 +37,18 @@ public class CruncherFileLoad extends Cruncher {
             throw new RuntimeException("Cannot go up in filesystem.");
         }
         File f = new File(path);
+        if (java.lang.System.getenv(f.getName()) != null)
+        {
+            InMemoryFile imf = new InMemoryFile();
+            imf.name = f.getName();
+            imf.path = path;
+            try {
+                imf.data = IOUtils.toByteArray(new StringReader(System.getenv(f.getName())));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return imf;
+        }
         if (optAsBoolean("file", false, c, parameters, dataStreams)) {
             return f;
         }
