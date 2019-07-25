@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.SocketException;
+import java.nio.charset.Charset;
 import java.util.Map;
 
 import org.apache.http.HttpEntity;
@@ -105,7 +106,7 @@ public class CruncherHttpPut extends Cruncher {
             String string = null;
             try {
                 if (execute.getEntity() != null)
-                    string = EntityUtils.toString(execute.getEntity());
+                    string = EntityUtils.toString(execute.getEntity(), Charset.defaultCharset());
             } catch (ParseException e) {
                 e.printStackTrace();
             } catch (IOException e) {
