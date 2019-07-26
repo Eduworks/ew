@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.SocketException;
+import java.nio.charset.Charset;
 import java.util.Map;
 
 public class CruncherHttpDelete extends Cruncher
@@ -90,7 +91,7 @@ public class CruncherHttpDelete extends Cruncher
             String string = null;
             try
             {
-                string = EntityUtils.toString(execute.getEntity());
+                string = EntityUtils.toString(execute.getEntity(), Charset.defaultCharset());
             }
             catch (ParseException e)
             {

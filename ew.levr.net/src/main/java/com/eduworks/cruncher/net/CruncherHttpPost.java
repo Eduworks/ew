@@ -162,7 +162,7 @@ public class CruncherHttpPost extends Cruncher
             String string = null;
             try
             {
-                string = EntityUtils.toString(execute.getEntity());
+                string = EntityUtils.toString(execute.getEntity(),Charset.defaultCharset());
             }
             catch (ParseException e)
             {

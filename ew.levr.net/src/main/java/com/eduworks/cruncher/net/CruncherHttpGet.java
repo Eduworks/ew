@@ -2,6 +2,7 @@ package com.eduworks.cruncher.net;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Map;
 
 import javax.mail.internet.ContentDisposition;
@@ -95,7 +96,7 @@ public class CruncherHttpGet extends Cruncher
                 }
                 else
                 {
-                    String string = EntityUtils.toString(execute.getEntity());
+                    String string = EntityUtils.toString(execute.getEntity(), Charset.defaultCharset());
                     if (EwJson.isJson(string))
                         return EwJson.tryParseJson(string, false);
                     return string;
