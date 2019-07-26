@@ -2,7 +2,7 @@
     "project": {
         "name": "EW Library",
         "description": "EW Library API: ",
-        "version": "5.1.0",
+        "version": "5.16.1",
         "url": "http://ew.eduworks.org/",
         "logo": "http://eduworks.com/img/eduworks-ring-e.png"
     },
@@ -672,13 +672,6 @@
             "classes": {},
             "fors": {},
             "namespaces": {}
-        },
-        "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java": {
-            "name": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
-            "modules": {},
-            "classes": {},
-            "fors": {},
-            "namespaces": {}
         }
     },
     "modules": {
@@ -848,7 +841,7 @@
             "module": "ew.levr.base",
             "namespace": "",
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileExists.java",
-            "line": 11,
+            "line": 15,
             "description": "Returns true if the file or directory located at the path exists.\n\nrs2: result = #fileExists(path=\"Relative or Full Path to directory\");<br>\nLevrJS: fileExists.call(this,\"Relative or Full Path to directory\");",
             "author": "fritz.ray@eduworks.com"
         },
@@ -3179,14 +3172,14 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 75,
+            "line": 61,
             "description": "The Session is the main connection to the CouchDB instance. However, you'll\nonly use the Session to obtain a reference to a CouchDB Database. All of the\nmain work happens at the Database level.\n<p>\nIt uses the Apache's HttpClient library for all communication with the\nserver. This is a little more robust than the standard URLConnection.\n<p>\nEx usage: <br>\nSession session = new Session(host,port); Database db =\nsession.getDatabase(\"dbname\");",
             "author": "brennanjubb - HTTP-Auth username/pass",
             "class": "cache"
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 143,
+            "line": 129,
             "description": "Constructor for obtaining a Session with an HTTP-AUTH username/password\nand (optionally) a secure connection This isn't supported by CouchDB -\nyou need a proxy in front to use this",
             "params": [
                 {
@@ -3218,7 +3211,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 206,
+            "line": 192,
             "description": "Constructor for obtaining a Session with an HTTP-AUTH username/password\nThis isn't supported by CouchDB - you need a proxy in front to use this",
             "params": [
                 {
@@ -3242,7 +3235,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 224,
+            "line": 210,
             "description": "Main constructor for obtaining a Session.",
             "params": [
                 {
@@ -3258,7 +3251,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 237,
+            "line": 223,
             "description": "Optional constructor that indicates an HTTPS connection should be used.\nThis isn't supported by CouchDB - you need a proxy in front to use this",
             "params": [
                 {
@@ -3278,7 +3271,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 253,
+            "line": 239,
             "description": "Read-only",
             "return": {
                 "description": "the host name"
@@ -3287,7 +3280,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 263,
+            "line": 249,
             "description": "read-only",
             "return": {
                 "description": "the port"
@@ -3296,7 +3289,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 273,
+            "line": 259,
             "description": "Is this a secured connection (set in constructor)",
             "return": {
                 "description": "True if secured."
@@ -3305,7 +3298,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 283,
+            "line": 269,
             "description": "Retrieves a list of all database names from the server",
             "return": {
                 "description": "List of database names."
@@ -3317,7 +3310,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 303,
+            "line": 289,
             "description": "Loads a database instance from the server",
             "params": [
                 {
@@ -3335,7 +3328,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 326,
+            "line": 312,
             "description": "Creates a new database (if the name doesn't already exist)",
             "params": [
                 {
@@ -3353,7 +3346,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 354,
+            "line": 340,
             "description": "Deletes a database (by name) from the CouchDB server.",
             "params": [
                 {
@@ -3371,7 +3364,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 369,
+            "line": 355,
             "description": "Deletes a database from the CouchDB server",
             "params": [
                 {
@@ -3389,7 +3382,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 383,
+            "line": 369,
             "description": "For a given url (such as /_all_dbs/), build the database connection url",
             "params": [
                 {
@@ -3404,7 +3397,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 417,
+            "line": 403,
             "description": "Package level access to send a DELETE request to the given URL",
             "params": [
                 {
@@ -3422,7 +3415,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 430,
+            "line": 416,
             "description": "Send a POST with no body / parameters",
             "params": [
                 {
@@ -3440,7 +3433,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 442,
+            "line": 428,
             "description": "Send a POST with body",
             "params": [
                 {
@@ -3462,7 +3455,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 455,
+            "line": 441,
             "description": "Send a POST with a body and query string",
             "params": [
                 {
@@ -3488,7 +3481,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 485,
+            "line": 464,
             "description": "Send a PUT (for creating databases)",
             "params": [
                 {
@@ -3506,7 +3499,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 497,
+            "line": 476,
             "description": "Send a PUT with a body (for creating documents)",
             "params": [
                 {
@@ -3528,7 +3521,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 525,
+            "line": 497,
             "description": "Overloaded Put using by attachments",
             "throws": {
                 "description": "JSONException"
@@ -3537,7 +3530,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 554,
+            "line": 526,
             "description": "Send a GET request",
             "params": [
                 {
@@ -3555,7 +3548,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 573,
+            "line": 545,
             "description": "Send a GET request with a number of name/value pairs as a query string",
             "params": [
                 {
@@ -3577,7 +3570,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 587,
+            "line": 559,
             "description": "Send a GET request with a queryString (?foo=bar)",
             "params": [
                 {
@@ -3599,7 +3592,7 @@
         },
         {
             "file": "ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java",
-            "line": 601,
+            "line": 573,
             "description": "Method that actually performs the GET/PUT/POST/DELETE calls. Executes the\ngiven HttpMethod on the HttpClient object (one HttpClient per Session).\n<p>\nThis returns a CouchResponse, which can be used to get the status of the\ncall (isOk), and any headers / body that was sent back.",
             "params": [
                 {
@@ -4530,7 +4523,7 @@
         },
         {
             "file": "ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileExists.java",
-            "line": 23,
+            "line": 27,
             "itemtype": "method",
             "name": "fileExists",
             "params": [
@@ -5103,21 +5096,21 @@
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java",
-            "line": 37,
+            "line": 35,
             "description": "Both GET and POST execute in the same fashion. The only difference is\nthat a GET is guaranteed not to have datastreams (files) attached to it.",
             "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java",
-            "line": 59,
+            "line": 57,
             "description": "Both GET and POST execute in the same fashion. The only difference is\nthat a GET is guaranteed not to have datastreams (files) attached to it.",
             "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java",
-            "line": 121,
+            "line": 123,
             "description": "Appropriately wraps a JSONP call if the request has a callback parameter.\nThis is required by cross-domain ajax service calls. See: <a\nhref=\"http://bob.pythonmac.org/archives/2005/12/05/remote-json-jsonp/\"\n>this link</a>",
             "params": [
                 {
@@ -5137,7 +5130,7 @@
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java",
-            "line": 154,
+            "line": 156,
             "description": "Get an integer value from the request object, defaulting to a known value\nif it is not present.",
             "params": [
                 {
@@ -5161,7 +5154,7 @@
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java",
-            "line": 173,
+            "line": 175,
             "description": "Get value from the request object, defaulting to a known value if it is\nnot present.",
             "params": [
                 {
@@ -5185,7 +5178,7 @@
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java",
-            "line": 194,
+            "line": 196,
             "description": "Get an string value from the request object, defaulting to a known value\nif it is not present.",
             "params": [
                 {
@@ -5216,28 +5209,28 @@
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java",
-            "line": 21,
+            "line": 22,
             "author": "fray",
             "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/resolver/CruncherBindWebService.java",
-            "line": 15,
+            "line": 16,
             "author": "fray",
             "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/resolver/CruncherJavascriptBinder.java",
-            "line": 17,
+            "line": 15,
             "author": "fray",
             "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/resolver/ResolverFactory.java",
-            "line": 37,
+            "line": 30,
             "class": "jsonLdCompact",
             "module": "ew.levr.base"
         },
@@ -5407,7 +5400,7 @@
         },
         {
             "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToTurtle.java",
-            "line": 24,
+            "line": 27,
             "author": "fray",
             "class": "",
             "module": "ew.levr.rdf"
@@ -6076,166 +6069,6 @@
             },
             "class": "",
             "module": "ew.levr.rdf"
-        },
-        {
-            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
-            "line": 23,
-            "description": "Display help information on levr-codegen-maven-plugin.<br/>\nCall <code>mvn levr-codegen-maven-plugin:help -Ddetail=true -Dgoal=&lt;goal-name&gt;</code> to display parameter details.",
-            "author": "",
-            "version": "",
-            "class": "",
-            "module": "ew.levr.rdf"
-        },
-        {
-            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
-            "line": 33,
-            "description": "If <code>true</code>, display all settable properties for each goal.",
-            "class": "",
-            "module": "ew.levr.rdf"
-        },
-        {
-            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
-            "line": 40,
-            "description": "The name of the goal for which to show help. If unspecified, all goals will be displayed.",
-            "class": "",
-            "module": "ew.levr.rdf"
-        },
-        {
-            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
-            "line": 47,
-            "description": "The maximum length of a display line, should be positive.",
-            "class": "",
-            "module": "ew.levr.rdf"
-        },
-        {
-            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
-            "line": 54,
-            "description": "The number of spaces per indentation level, should be positive.",
-            "class": "",
-            "module": "ew.levr.rdf"
-        },
-        {
-            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
-            "line": 89,
-            "description": "{@inheritDoc}",
-            "class": "",
-            "module": "ew.levr.rdf"
-        },
-        {
-            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
-            "line": 289,
-            "description": "<p>Repeat a String <code>n</code> times to form a new string.</p>",
-            "params": [
-                {
-                    "name": "str",
-                    "description": "String to repeat"
-                },
-                {
-                    "name": "repeat",
-                    "description": "number of times to repeat str"
-                }
-            ],
-            "return": {
-                "description": "String with repeated String"
-            },
-            "throws": {
-                "description": "NullPointerException       if str is <code>null</code>"
-            },
-            "class": "",
-            "module": "ew.levr.rdf"
-        },
-        {
-            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
-            "line": 310,
-            "description": "Append a description to the buffer by respecting the indentSize and lineLength parameters.\n<b>Note</b>: The last character is always a new line.",
-            "params": [
-                {
-                    "name": "sb",
-                    "description": "The buffer to append the description, not <code>null</code>."
-                },
-                {
-                    "name": "description",
-                    "description": "The description, not <code>null</code>."
-                },
-                {
-                    "name": "indent",
-                    "description": "The base indentation level of each line, must not be negative."
-                }
-            ],
-            "class": "",
-            "module": "ew.levr.rdf"
-        },
-        {
-            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
-            "line": 326,
-            "description": "Splits the specified text into lines of convenient display length.",
-            "params": [
-                {
-                    "name": "text",
-                    "description": "The text to split into lines, must not be <code>null</code>."
-                },
-                {
-                    "name": "indent",
-                    "description": "The base indentation level of each line, must not be negative."
-                },
-                {
-                    "name": "indentSize",
-                    "description": "The size of each indentation, must not be negative."
-                },
-                {
-                    "name": "lineLength",
-                    "description": "The length of the line, must not be negative."
-                }
-            ],
-            "return": {
-                "description": "The sequence of display lines, never <code>null</code>."
-            },
-            "throws": {
-                "description": "NegativeArraySizeException if <code>indent < 0</code>"
-            },
-            "class": "",
-            "module": "ew.levr.rdf"
-        },
-        {
-            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
-            "line": 352,
-            "description": "Adds the specified line to the output sequence, performing line wrapping if necessary.",
-            "params": [
-                {
-                    "name": "lines",
-                    "description": "The sequence of display lines, must not be <code>null</code>."
-                },
-                {
-                    "name": "line",
-                    "description": "The line to add, must not be <code>null</code>."
-                },
-                {
-                    "name": "indentSize",
-                    "description": "The size of each indentation, must not be negative."
-                },
-                {
-                    "name": "lineLength",
-                    "description": "The length of the line, must not be negative."
-                }
-            ],
-            "class": "",
-            "module": "ew.levr.rdf"
-        },
-        {
-            "file": "levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java",
-            "line": 403,
-            "description": "Gets the indentation level of the specified line.",
-            "params": [
-                {
-                    "name": "line",
-                    "description": "The line whose indentation level should be retrieved, must not be <code>null</code>."
-                }
-            ],
-            "return": {
-                "description": "The indentation level of the line."
-            },
-            "class": "",
-            "module": "ew.levr.rdf"
         }
     ],
     "warnings": [
@@ -6258,10 +6091,6 @@
         {
             "message": "unknown tag: exception",
             "line": " ew.levr.security/src/main/java/com/eduworks/cruncher/security/BCrypt.java:375"
-        },
-        {
-            "message": "unknown tag: version",
-            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:23"
         },
         {
             "message": "Missing item type\nTypically, toString is used to describe things in a debug way. Displayable\nprovides a user-friendly representation of the object.",
@@ -6933,103 +6762,103 @@
         },
         {
             "message": "Missing item type\nThe Session is the main connection to the CouchDB instance. However, you'll\nonly use the Session to obtain a reference to a CouchDB Database. All of the\nmain work happens at the Database level.\n<p>\nIt uses the Apache's HttpClient library for all communication with the\nserver. This is a little more robust than the standard URLConnection.\n<p>\nEx usage: <br>\nSession session = new Session(host,port); Database db =\nsession.getDatabase(\"dbname\");",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:75"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:61"
         },
         {
             "message": "Missing item type\nConstructor for obtaining a Session with an HTTP-AUTH username/password\nand (optionally) a secure connection This isn't supported by CouchDB -\nyou need a proxy in front to use this",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:143"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:129"
         },
         {
             "message": "Missing item type\nConstructor for obtaining a Session with an HTTP-AUTH username/password\nThis isn't supported by CouchDB - you need a proxy in front to use this",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:206"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:192"
         },
         {
             "message": "Missing item type\nMain constructor for obtaining a Session.",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:224"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:210"
         },
         {
             "message": "Missing item type\nOptional constructor that indicates an HTTPS connection should be used.\nThis isn't supported by CouchDB - you need a proxy in front to use this",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:237"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:223"
         },
         {
             "message": "Missing item type\nRead-only",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:253"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:239"
         },
         {
             "message": "Missing item type\nread-only",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:263"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:249"
         },
         {
             "message": "Missing item type\nIs this a secured connection (set in constructor)",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:273"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:259"
         },
         {
             "message": "Missing item type\nRetrieves a list of all database names from the server",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:283"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:269"
         },
         {
             "message": "Missing item type\nLoads a database instance from the server",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:303"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:289"
         },
         {
             "message": "Missing item type\nCreates a new database (if the name doesn't already exist)",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:326"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:312"
         },
         {
             "message": "Missing item type\nDeletes a database (by name) from the CouchDB server.",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:354"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:340"
         },
         {
             "message": "Missing item type\nDeletes a database from the CouchDB server",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:369"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:355"
         },
         {
             "message": "Missing item type\nFor a given url (such as /_all_dbs/), build the database connection url",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:383"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:369"
         },
         {
             "message": "Missing item type\nPackage level access to send a DELETE request to the given URL",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:417"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:403"
         },
         {
             "message": "Missing item type\nSend a POST with no body / parameters",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:430"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:416"
         },
         {
             "message": "Missing item type\nSend a POST with body",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:442"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:428"
         },
         {
             "message": "Missing item type\nSend a POST with a body and query string",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:455"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:441"
         },
         {
             "message": "Missing item type\nSend a PUT (for creating databases)",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:485"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:464"
         },
         {
             "message": "Missing item type\nSend a PUT with a body (for creating documents)",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:497"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:476"
         },
         {
             "message": "Missing item type\nOverloaded Put using by attachments",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:525"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:497"
         },
         {
             "message": "Missing item type\nSend a GET request",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:554"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:526"
         },
         {
             "message": "Missing item type\nSend a GET request with a number of name/value pairs as a query string",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:573"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:545"
         },
         {
             "message": "Missing item type\nSend a GET request with a queryString (?foo=bar)",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:587"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:559"
         },
         {
             "message": "Missing item type\nMethod that actually performs the GET/PUT/POST/DELETE calls. Executes the\ngiven HttpMethod on the HttpClient object (one HttpClient per Session).\n<p>\nThis returns a CouchResponse, which can be used to get the status of the\ncall (isOk), and any headers / body that was sent back.",
-            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:601"
+            "line": " ew.db.couchdb/src/main/java/com/fourspaces/couchdb/Session.java:573"
         },
         {
             "message": "Missing item type\nThe View is the mechanism for performing Querys on a CouchDB instance. The\nview can be named or ad-hoc (see AdHocView). (Currently [14 Sept 2007] named\nview aren't working in the mainline CouchDB code... but this _should_ work.)\n<p>\nThe View object exists mainly to apply filtering to the view. Otherwise,\nviews can be called directly from the database object by using their names\n(or given an ad-hoc query).",
@@ -7405,27 +7234,27 @@
         },
         {
             "message": "Missing item type\nBoth GET and POST execute in the same fashion. The only difference is\nthat a GET is guaranteed not to have datastreams (files) attached to it.",
-            "line": " ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java:37"
+            "line": " ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java:35"
         },
         {
             "message": "Missing item type\nBoth GET and POST execute in the same fashion. The only difference is\nthat a GET is guaranteed not to have datastreams (files) attached to it.",
-            "line": " ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java:59"
+            "line": " ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java:57"
         },
         {
             "message": "Missing item type\nAppropriately wraps a JSONP call if the request has a callback parameter.\nThis is required by cross-domain ajax service calls. See: <a\nhref=\"http://bob.pythonmac.org/archives/2005/12/05/remote-json-jsonp/\"\n>this link</a>",
-            "line": " ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java:121"
+            "line": " ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java:123"
         },
         {
             "message": "Missing item type\nGet an integer value from the request object, defaulting to a known value\nif it is not present.",
-            "line": " ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java:154"
+            "line": " ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java:156"
         },
         {
             "message": "Missing item type\nGet value from the request object, defaulting to a known value if it is\nnot present.",
-            "line": " ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java:173"
+            "line": " ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java:175"
         },
         {
             "message": "Missing item type\nGet an string value from the request object, defaulting to a known value\nif it is not present.",
-            "line": " ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java:194"
+            "line": " ew.levr.core/src/main/java/com/eduworks/levr/servlet/LevrServlet.java:196"
         },
         {
             "message": "Missing item type\nCreated by fray on 8/17/17.",
@@ -7433,19 +7262,19 @@
         },
         {
             "message": "Missing item type",
-            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java:21"
+            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java:22"
         },
         {
             "message": "Missing item type",
-            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/CruncherBindWebService.java:15"
+            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/CruncherBindWebService.java:16"
         },
         {
             "message": "Missing item type",
-            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/CruncherJavascriptBinder.java:17"
+            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/CruncherJavascriptBinder.java:15"
         },
         {
             "message": "Missing item type",
-            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/ResolverFactory.java:37"
+            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/ResolverFactory.java:30"
         },
         {
             "message": "Missing item type\nHello world!",
@@ -7513,7 +7342,7 @@
         },
         {
             "message": "Missing item type",
-            "line": " ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToTurtle.java:24"
+            "line": " ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdToTurtle.java:27"
         },
         {
             "message": "Missing item type",
@@ -7710,50 +7539,6 @@
         {
             "message": "Missing item type\nReturns the Full IRI of the OntologyObject",
             "line": " ew.ontology/src/main/java/com/eduworks/ontology/OntologyWrapper.java:18"
-        },
-        {
-            "message": "Missing item type\nDisplay help information on levr-codegen-maven-plugin.<br/>\nCall <code>mvn levr-codegen-maven-plugin:help -Ddetail=true -Dgoal=&lt;goal-name&gt;</code> to display parameter details.",
-            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:23"
-        },
-        {
-            "message": "Missing item type\nIf <code>true</code>, display all settable properties for each goal.",
-            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:33"
-        },
-        {
-            "message": "Missing item type\nThe name of the goal for which to show help. If unspecified, all goals will be displayed.",
-            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:40"
-        },
-        {
-            "message": "Missing item type\nThe maximum length of a display line, should be positive.",
-            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:47"
-        },
-        {
-            "message": "Missing item type\nThe number of spaces per indentation level, should be positive.",
-            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:54"
-        },
-        {
-            "message": "Missing item type\n{@inheritDoc}",
-            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:89"
-        },
-        {
-            "message": "Missing item type\n<p>Repeat a String <code>n</code> times to form a new string.</p>",
-            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:289"
-        },
-        {
-            "message": "Missing item type\nAppend a description to the buffer by respecting the indentSize and lineLength parameters.\n<b>Note</b>: The last character is always a new line.",
-            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:310"
-        },
-        {
-            "message": "Missing item type\nSplits the specified text into lines of convenient display length.",
-            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:326"
-        },
-        {
-            "message": "Missing item type\nAdds the specified line to the output sequence, performing line wrapping if necessary.",
-            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:352"
-        },
-        {
-            "message": "Missing item type\nGets the indentation level of the specified line.",
-            "line": " levr-codegen-maven-plugin/target/generated-sources/plugin/com/eduworks/HelpMojo.java:403"
         }
     ]
 }

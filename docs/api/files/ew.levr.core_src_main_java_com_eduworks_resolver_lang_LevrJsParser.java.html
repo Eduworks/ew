@@ -5,7 +5,7 @@
     <title>ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java - EW Library</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
-    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/yui/3.18.0/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
@@ -70,7 +70,7 @@
             
             
             <div class="version-info">
-              Version: 5.1.0
+              Version: 5.16.1
             </div>
             
         </div>
@@ -98,6 +98,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.TreeSet;
 import java.util.logging.Level;
 
@@ -160,7 +161,10 @@ public class LevrJsParser
                 final TreeSet&lt;String&gt; bindingTreeset = new TreeSet&lt;&gt;();
                 bindingTreeset.addAll(bindings.keySet());
                 bindingTreeset.removeAll(ResolverFactory.cruncherSpecs.keySet());
-                log.debug(bindingTreeset);
+                if (bindingTreeset.size() &gt; 50)
+                    log.debug(bindingTreeset.size() + &quot; functions loaded.&quot;);
+                else
+                    log.debug(bindingTreeset);
             }
             return bindings;
         }
@@ -302,15 +306,34 @@ public class LevrJsParser
             ScriptObjectMirror m = (ScriptObjectMirror) o;
             if (m.getClassName().toLowerCase().equals(&quot;object&quot;))
             {
-                return new JSONObject(m);
+                JSONObject jo = new JSONObject();
+                for (String key : m.keySet())
+                {
+                    try {
+                        jo.put(key,jsToJava(m.get(key)));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return jo;
             }
             else if (m.isArray())
             {
-                return new JSONArray(m.values());
+                JSONArray ja = new JSONArray();
+                List values = (List) m.values();
+                for (int i = 0;i &lt; values.size();i++) {
+                    try {
+                        ja.put(i,jsToJava(values.get(i)));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return ja;
             }
             else if (m.isFunction())
             {
                 CruncherJavascriptBinder b = new CruncherJavascriptBinder();
+                b.setLineAndColAndSource(0,0,&quot;&quot;,&quot;&quot;);
                 b.build(&quot;obj&quot;, m);
                 return b;
             }

@@ -5,7 +5,7 @@
     <title>ew.levr.base/src/main/java/com/eduworks/cruncher/file/CruncherFileLoad.java - EW Library</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
-    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/yui/3.18.0/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
@@ -70,7 +70,7 @@
             
             
             <div class="version-info">
-              Version: 5.1.0
+              Version: 5.16.1
             </div>
             
         </div>
@@ -83,17 +83,17 @@
 <pre class="code prettyprint linenums">
 package com.eduworks.cruncher.file;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-
+import com.eduworks.resolver.Context;
+import com.eduworks.resolver.Cruncher;
+import com.eduworks.util.io.InMemoryFile;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.eduworks.resolver.Context;
-import com.eduworks.resolver.Cruncher;
-import com.eduworks.util.io.InMemoryFile;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.StringReader;
 
 /**
  * Loads a file in a filesystem. Will attempt to copy the file into memory if the file is less than 2GB.
@@ -120,6 +120,18 @@ public class CruncherFileLoad extends Cruncher {
             throw new RuntimeException(&quot;Cannot go up in filesystem.&quot;);
         }
         File f = new File(path);
+        if (java.lang.System.getenv(f.getName()) != null)
+        {
+            InMemoryFile imf = new InMemoryFile();
+            imf.name = f.getName();
+            imf.path = path;
+            try {
+                imf.data = IOUtils.toByteArray(new StringReader(System.getenv(f.getName())));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return imf;
+        }
         if (optAsBoolean(&quot;file&quot;, false, c, parameters, dataStreams)) {
             return f;
         }
