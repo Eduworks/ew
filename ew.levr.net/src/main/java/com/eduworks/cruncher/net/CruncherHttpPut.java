@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.NoRouteToHostException;
 import java.net.SocketException;
 import java.nio.charset.Charset;
 import java.util.Map;
@@ -83,6 +84,11 @@ public class CruncherHttpPut extends Cruncher {
             do
                 try {
                     execute = hc.execute(put);
+                } catch (NoRouteToHostException e) {
+                    if (reliable)
+                        EwThreading.sleep(500);
+                    else
+                        e.printStackTrace();
                 } catch (ClientProtocolException e) {
                     if (reliable)
                         EwThreading.sleep(500);
@@ -148,7 +154,7 @@ public class CruncherHttpPut extends Cruncher {
 
     @Override
     public JSONObject getParameters() throws JSONException {
-        return jo("obj", "String", "url", "String", "contentType", "String", "?name", "String", "?authToken", "String");
+        return jo("obj", "String", "url", "String", "contentType", "String", "?name", "String", "?authToken", "String", "?reliable", "Boolean");
     }
 
 }
