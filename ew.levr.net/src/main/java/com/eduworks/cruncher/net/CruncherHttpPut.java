@@ -154,7 +154,7 @@ public class CruncherHttpPut extends Cruncher {
 
     @Override
     public JSONObject getParameters() throws JSONException {
-        return jo("obj", "String", "url", "String", "contentType", "String", "?name", "String", "?authToken", "String", "?reliable", "Boolean");
+        return jo("obj", "String", "url", "String", "contentType", "String", "?authToken", "String", "?reliable", "Boolean");
     }
 
 }

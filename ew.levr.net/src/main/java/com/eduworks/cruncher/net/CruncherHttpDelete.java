@@ -154,7 +154,7 @@ public class CruncherHttpDelete extends Cruncher
     @Override
     public JSONObject getParameters() throws JSONException
     {
-        return jo("obj", "String", "contentType", "String", "?name", "String", "?authToken", "String", "?reliable", "Boolean", "<any>", "String");
+        return jo("obj", "String", "?authToken", "String", "?reliable", "Boolean", "<any>", "String");
     }
 
 }
