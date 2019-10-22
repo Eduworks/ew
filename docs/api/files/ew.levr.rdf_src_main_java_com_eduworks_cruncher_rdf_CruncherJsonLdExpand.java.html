@@ -70,7 +70,7 @@
             
             
             <div class="version-info">
-              Version: 5.16.1
+              Version: 5.16.2
             </div>
             
         </div>
@@ -85,16 +85,18 @@ package com.eduworks.cruncher.rdf;
 
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
-import com.github.jsonldjava.core.JsonLdError;
-import com.github.jsonldjava.core.JsonLdOptions;
-import com.github.jsonldjava.core.JsonLdProcessor;
+import com.github.jsonldjava.core.*;
 import com.github.jsonldjava.utils.JsonUtils;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -116,6 +118,54 @@ import org.json.JSONObject;
  */
 public class CruncherJsonLdExpand extends Cruncher
 {
+    static JsonLdOptions options = new JsonLdOptions();
+    static {
+        options.setDocumentLoader(new DocumentLoader(){
+            private Map&lt;String, Object&gt; injectedDocs = new HashMap();
+            public static final String DISALLOW_REMOTE_CONTEXT_LOADING = &quot;com.github.jsonldjava.disallowRemoteContextLoading&quot;;
+            /** @deprecated */
+            @Deprecated
+            public static final String ACCEPT_HEADER = &quot;application/ld+json, application/json;q=0.9, application/javascript;q=0.5, text/javascript;q=0.5, text/plain;q=0.2, */*;q=0.1&quot;;
+            private volatile CloseableHttpClient httpClient;
+
+            @Override
+            public DocumentLoader addInjectedDoc(String url, String doc) throws JsonLdError {
+                try {
+                    this.injectedDocs.put(url, JsonUtils.fromString(doc));
+                    return this;
+                } catch (Exception var4) {
+                    throw new JsonLdError(JsonLdError.Error.LOADING_INJECTED_CONTEXT_FAILED, url, var4);
+                }
+            }
+
+            @Override
+            public RemoteDocument loadDocument(String url) throws JsonLdError {
+                RemoteDocument doc = new RemoteDocument(url, (Object)null);
+                if (this.injectedDocs.containsKey(url)) {
+                    try {
+                        doc.setDocument(this.injectedDocs.get(url));
+                        return doc;
+                    } catch (Exception var5) {
+                        throw new JsonLdError(JsonLdError.Error.LOADING_INJECTED_CONTEXT_FAILED, url, var5);
+                    }
+                } else {
+                    String disallowRemote = System.getProperty(&quot;com.github.jsonldjava.disallowRemoteContextLoading&quot;);
+                    if (&quot;true&quot;.equalsIgnoreCase(disallowRemote)) {
+                        throw new JsonLdError(JsonLdError.Error.LOADING_REMOTE_CONTEXT_FAILED, &quot;Remote context loading has been disallowed (url was &quot; + url + &quot;)&quot;);
+                    } else {
+                        try {
+                            Object result = JsonUtils.fromURL(new URL(url), this.getHttpClient());
+                            this.injectedDocs.put(url,result);
+                            doc.setDocument(result);
+                            return doc;
+                        } catch (Exception var6) {
+                            throw new JsonLdError(JsonLdError.Error.LOADING_REMOTE_CONTEXT_FAILED, url, var6);
+                        }
+                    }
+                }
+            }
+        });
+    }
     @Override
     public Object resolve(Context c, Map&lt;String, String[]&gt; parameters, Map&lt;String, InputStream&gt; dataStreams) throws JSONException
     {
@@ -127,7 +177,6 @@ public class CruncherJsonLdExpand extends Cruncher
 // Number or null depending on the root object in the file).
             Object jsonObject = JsonUtils.fromInputStream(new ByteArrayInputStream(obj.toString().getBytes()));
 // Create an instance of JsonLdOptions with the standard JSON-LD options
-            JsonLdOptions options = new JsonLdOptions();
 // Call whichever JSONLD function you want! (e.g. compact)
             
             Object compact = JsonLdProcessor.expand(jsonObject,options);

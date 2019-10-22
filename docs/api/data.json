@@ -2,7 +2,7 @@
     "project": {
         "name": "EW Library",
         "description": "EW Library API: ",
-        "version": "5.16.1",
+        "version": "5.16.2",
         "url": "http://ew.eduworks.org/",
         "logo": "http://eduworks.com/img/eduworks-ring-e.png"
     },
@@ -721,7 +721,7 @@
             "namespaces": {},
             "tag": "module",
             "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdExpand.java",
-            "line": 19,
+            "line": 21,
             "description": "Converts a JSON object to JSON-LD and performs a Compact operation.\n<p>\nrs2: result = obj.jsonLdCompact();<br>\nLevrJS: result = jsonLdCompact.call(this,obj);"
         }
     },
@@ -1051,7 +1051,7 @@
             "module": "ew.levr.rdf",
             "namespace": "",
             "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdCompact.java",
-            "line": 20,
+            "line": 19,
             "description": "Converts a JSON object to JSON-LD and performs a Compact operation.\n<p>\nrs2: result = obj.jsonLdCompact();<br>\nLevrJS: result = jsonLdCompact.call(this,obj);",
             "author": "fritz.ray@eduworks.com"
         },
@@ -1066,7 +1066,7 @@
             "module": "ew.levr.rdf",
             "namespace": "",
             "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdExpand.java",
-            "line": 19,
+            "line": 21,
             "description": "Converts a JSON object to JSON-LD and performs a Expand operation.\n\nrs2: result = obj.jsonLdExpand();<br>\nLevrJS: result = jsonLdExpand.call(this,obj);",
             "author": "fritz.ray@eduworks.com"
         }
@@ -5335,7 +5335,7 @@
         },
         {
             "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdCompact.java",
-            "line": 31,
+            "line": 30,
             "itemtype": "method",
             "name": "jsonLdCompact",
             "params": [
@@ -5360,7 +5360,7 @@
         },
         {
             "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdExpand.java",
-            "line": 29,
+            "line": 31,
             "itemtype": "method",
             "name": "jsonLdExpand",
             "params": [
@@ -5374,6 +5374,12 @@
                 "description": "Cached value if in cache, computed value if not in cache.",
                 "type": "JSON-LD"
             },
+            "class": "jsonLdExpand",
+            "module": "ew.levr.rdf"
+        },
+        {
+            "file": "ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdExpand.java",
+            "line": 43,
             "class": "jsonLdExpand",
             "module": "ew.levr.rdf"
         },
@@ -7327,6 +7333,10 @@
         {
             "message": "Missing item type\nPackage Placeholder for this project. Forces Javadoc generation.",
             "line": " ew.levr.ontology/src/main/java/com/eduworks/levr/ontology/Package.java:3"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ew.levr.rdf/src/main/java/com/eduworks/cruncher/rdf/CruncherJsonLdExpand.java:43"
         },
         {
             "message": "Missing item type",
