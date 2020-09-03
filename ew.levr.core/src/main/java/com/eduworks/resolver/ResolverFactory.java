@@ -5,7 +5,6 @@ import com.eduworks.lang.EwSet;
 import com.eduworks.lang.json.impl.EwJsonArray;
 import com.eduworks.lang.util.EwJson;
 import com.eduworks.resolver.lang.LevrJsParser;
-import com.google.common.base.Predicate;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +18,7 @@ import org.reflections.util.ConfigurationBuilder;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class ResolverFactory
 {
@@ -130,7 +130,7 @@ public class ResolverFactory
 				new TypeAnnotationsScanner().filterResultsBy(new Predicate<String>()
 				{
 					@Override
-					public boolean apply(String input)
+					public boolean test(String input)
 					{
 						if (input.contains("Cruncher"))
 							return true;
