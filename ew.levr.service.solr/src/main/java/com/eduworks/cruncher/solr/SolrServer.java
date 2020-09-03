@@ -1,11 +1,11 @@
 package com.eduworks.cruncher.solr;
 
+import org.apache.solr.client.solrj.impl.ConcurrentUpdateSolrClient;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
+
 import java.util.HashMap;
 
-import org.apache.solr.client.solrj.impl.ConcurrentUpdateSolrServer;
-import org.apache.solr.client.solrj.impl.HttpSolrServer;
-
 public class SolrServer {
-	public static HashMap<String, HttpSolrServer> serverMap = new HashMap<String, HttpSolrServer>();
-	public static HashMap<String, ConcurrentUpdateSolrServer> updateServerMap = new HashMap<String, ConcurrentUpdateSolrServer>();
+	public static HashMap<String, HttpSolrClient> serverMap = new HashMap<>();
+	public static HashMap<String, ConcurrentUpdateSolrClient> updateServerMap = new HashMap<>();
 }
