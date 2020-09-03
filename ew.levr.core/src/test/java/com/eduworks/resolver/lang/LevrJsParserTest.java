@@ -11,10 +11,6 @@ import static junit.framework.TestCase.assertTrue;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
-import org.powermock.modules.junit4.PowerMockRunner;
 import sun.font.Script;
 
 import static org.junit.Assert.assertEquals;
@@ -24,28 +20,18 @@ import static org.junit.Assert.assertEquals;
  *
  * Tests the core levrJs functionality
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(LevrJsParser.class)
-@SuppressStaticInitializationFor("com.eduworks.resolver.lang.LevrJsParser")
 public class LevrJsParserTest
 {
-    private ScriptEngine engine;
-
     @Before
     public void setUp() throws Exception
     {
-        ScriptEngineManager factory = new ScriptEngineManager();
-        engine = factory.getEngineByName("nashorn");
-        //engine.getBindings(ScriptContext.ENGINE_SCOPE).putAll();
-
-        PowerMockito.spy(LevrJsParser.class);
     }
 
     @Test
     public void testJsToJavaGetsAnObject() throws Exception
     {
-        engine.eval("function getAnObj() {return {anAttr: 'a value'}}");
-        Invocable invocable = (Invocable) engine;
+        LevrJsParser.engine.eval("function getAnObj() {return {anAttr: 'a value'}}");
+        Invocable invocable = (Invocable) LevrJsParser.engine;
         Object result = invocable.invokeFunction("getAnObj");
 
         Object parsedResult = LevrJsParser.jsToJava(result);
@@ -56,8 +42,8 @@ public class LevrJsParserTest
     @Test
     public void testJsToJavaGetsAnArray() throws Exception
     {
-        engine.eval("function getAnArray() {return [1, 'array', 2, 'array'];}");
-        Invocable invocable = (Invocable) engine;
+        LevrJsParser.engine.eval("function getAnArray() {return [1, 'array', 2, 'array'];}");
+        Invocable invocable = (Invocable) LevrJsParser.engine;
         Object result = invocable.invokeFunction("getAnArray");
 
         Object parsedResult = LevrJsParser.jsToJava(result);
@@ -68,8 +54,8 @@ public class LevrJsParserTest
     @Test
     public void testJsToJavaGetsAFunction() throws Exception
     {
-        engine.eval("function getAFunction() {return function retFunc(){};}");
-        Invocable invocable = (Invocable) engine;
+        LevrJsParser.engine.eval("function getAFunction() {return function retFunc(){};}");
+        Invocable invocable = (Invocable) LevrJsParser.engine;
         Object result = invocable.invokeFunction("getAFunction");
 
         Object parsedResult = LevrJsParser.jsToJava(result);
@@ -80,8 +66,8 @@ public class LevrJsParserTest
     @Test
     public void testJsToJavaReturnsAnArbitraryPrimitiveAsAString() throws Exception
     {
-        engine.eval("function getABoolean() {return true;}");
-        Invocable invocable = (Invocable) engine;
+        LevrJsParser.engine.eval("function getABoolean() {return true;}");
+        Invocable invocable = (Invocable) LevrJsParser.engine;
         Object result = invocable.invokeFunction("getABoolean");
 
         Object parsedResult = LevrJsParser.jsToJava(result);
@@ -92,8 +78,8 @@ public class LevrJsParserTest
     @Test
     public void testJsToJavaReturnsUndefinedAsNull() throws Exception
     {
-        engine.eval("function undef() {}");
-        Invocable invocable = (Invocable) engine;
+        LevrJsParser.engine.eval("function undef() {}");
+        Invocable invocable = (Invocable) LevrJsParser.engine;
         Object result = invocable.invokeFunction("undef");
 
         Object parsedResult = LevrJsParser.jsToJava(result);
@@ -105,9 +91,6 @@ public class LevrJsParserTest
     @Test
     public void testJavaToJsConvertsAJsonObjectCorrectly() throws Exception
     {
-        // need to enable the engine in LevrJsParser since static block
-        // is being skipped
-        LevrJsParser.engine = engine;
         JSONObject jo = new JSONObject();
         JSONObject puttedObj = new JSONObject();
         JSONArray puttedArr = new JSONArray();
@@ -136,9 +119,6 @@ public class LevrJsParserTest
     @Test
     public void testJavaToJsConvertsAJsonArrayCorrectly() throws Exception
     {
-        // need to enable the engine in LevrJsParser since static block
-        // is being skipped
-        LevrJsParser.engine = engine;
         JSONArray ja = new JSONArray();
         JSONObject puttedObject = new JSONObject();
         puttedObject.put("key", "value");
@@ -163,9 +143,6 @@ public class LevrJsParserTest
     @Test
     public void regressionTestJavaToJsConvertsObjectsWithQuotesInThem() throws Exception
     {
-        // need to enable the engine in LevrJsParser since static block
-        // is being skipped
-        LevrJsParser.engine = engine;
         JSONObject carrier = new JSONObject();
         String culprit = "Don't fail";
         carrier.put("key", culprit);
