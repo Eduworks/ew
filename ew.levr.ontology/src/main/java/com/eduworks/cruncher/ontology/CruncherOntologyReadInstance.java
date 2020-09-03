@@ -1,17 +1,16 @@
 package com.eduworks.cruncher.ontology;
 
-import java.io.InputStream;
-import java.util.Map;
-
+import com.eduworks.ontology.Ontology;
+import com.eduworks.resolver.Context;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.query.ReadWrite;
+import org.apache.jena.shared.ClosedException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.eduworks.ontology.Ontology;
-import com.eduworks.resolver.Context;
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.query.ReadWrite;
-import com.hp.hpl.jena.shared.ClosedException;
+import java.io.InputStream;
+import java.util.Map;
 
 public class CruncherOntologyReadInstance extends CruncherOntology
 {
