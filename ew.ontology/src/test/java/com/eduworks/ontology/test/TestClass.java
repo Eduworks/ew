@@ -1,22 +1,5 @@
 package com.eduworks.ontology.test;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.Set;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import com.eduworks.ontology.Ontology;
-import com.eduworks.ontology.OntologyClass;
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.query.ReadWrite;
-
 public class TestClass {
 //
 //	public static String idChar = Ontology.idCharacter;

@@ -1,13 +1,13 @@
 package com.eduworks.ontology;
 
 
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.ModelGetter;
-import com.hp.hpl.jena.rdf.model.ModelReader;
-import com.hp.hpl.jena.tdb.TDBException;
-import com.hp.hpl.jena.tdb.TDBLoader;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.ModelGetter;
+import org.apache.jena.rdf.model.ModelReader;
+import org.apache.jena.tdb.TDBException;
+import org.apache.jena.tdb.TDBLoader;
 
 
 public class OntologyTDBModelGetter implements ModelGetter {
