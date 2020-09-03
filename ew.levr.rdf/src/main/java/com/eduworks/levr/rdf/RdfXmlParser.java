@@ -42,7 +42,7 @@ public class RdfXmlParser implements RDFParser {
 				
 				
 				 throw new JsonLdError(JsonLdError.Error.INVALID_INPUT,
-		                    "XML Parse Error: "+e.getMessage());
+		                    "XML Parse Error: "+e.getMessage(),e);
 			}
 			
 		} else {
@@ -183,7 +183,7 @@ public class RdfXmlParser implements RDFParser {
 							String datatype = obj.optString("rdf:datatype");
 							if(datatype.isEmpty())
 								datatype = null;
-							String unescaped = RDFDatasetUtils.unescape(obj.getString("content"));
+							String unescaped = RDFDatasetUtils.unescape(obj.get("content").toString());
 							
 							object = new RDFDataset.Literal(unescaped, datatype, language);
 						}else if(obj.length() == 1 && obj.has("rdf:resource")){
@@ -198,7 +198,7 @@ public class RdfXmlParser implements RDFParser {
 							parseInner(obj, dataset, namespaces);
 						}
 					} catch (JSONException e) {
-						sObject = duplicate.getString(key);
+						sObject = duplicate.get(key).toString();
 						
 						object = new RDFDataset.BlankNode(RDFDatasetUtils.unescape(sObject));
 					}
