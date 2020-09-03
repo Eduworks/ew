@@ -60,7 +60,7 @@ public class CruncherJsonLdExpand extends Cruncher
                 RemoteDocument doc = new RemoteDocument(url, (Object)null);
                 if (this.injectedDocs.containsKey(url)) {
                     try {
-                        doc.setDocument(this.injectedDocs.get(url));
+                        doc = new RemoteDocument(url, this.injectedDocs.get(url));
                         return doc;
                     } catch (Exception var5) {
                         throw new JsonLdError(JsonLdError.Error.LOADING_INJECTED_CONTEXT_FAILED, url, var5);
@@ -73,7 +73,7 @@ public class CruncherJsonLdExpand extends Cruncher
                         try {
                             Object result = JsonUtils.fromURL(new URL(url), this.getHttpClient());
                             this.injectedDocs.put(url,result);
-                            doc.setDocument(result);
+                            doc = new RemoteDocument(url, result);
                             return doc;
                         } catch (Exception var6) {
                             throw new JsonLdError(JsonLdError.Error.LOADING_REMOTE_CONTEXT_FAILED, url, var6);
