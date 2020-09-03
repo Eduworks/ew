@@ -1,14 +1,13 @@
 package com.eduworks.cruncher.ontology;
 
-import java.io.InputStream;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.eduworks.ontology.Ontology;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.util.Map;
 
 public class CruncherOntologySetUriPrefix extends Cruncher
 {

@@ -2,9 +2,7 @@ package com.eduworks.cruncher.rdf;
 
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
-import com.github.jsonldjava.core.JsonLdError;
-import com.github.jsonldjava.core.JsonLdOptions;
-import com.github.jsonldjava.core.JsonLdProcessor;
+import com.github.jsonldjava.core.*;
 import com.github.jsonldjava.utils.JsonUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,6 +11,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,7 +58,7 @@ public class CruncherJsonLdCompact extends Cruncher {
 			} else {
 				context = jsonObject;
 			}
-			JsonLdOptions options = new JsonLdOptions();
+			JsonLdOptions options = CruncherJsonLdExpand.options;
 
 			Object compact = JsonLdProcessor.compact(jsonObject, context, options);
 

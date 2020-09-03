@@ -5,7 +5,7 @@
     <title>ew.levr.core/src/main/java/com/eduworks/resolver/CruncherBindWebService.java - EW Library</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
-    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/yui/3.18.0/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
@@ -70,7 +70,7 @@
             
             
             <div class="version-info">
-              Version: 5.1.0
+              Version: 5.16.2
             </div>
             
         </div>
@@ -89,11 +89,12 @@
 package com.eduworks.resolver;
 
 import com.eduworks.levr.servlet.impl.LevrResolverServlet;
-import java.io.InputStream;
-import java.util.Map;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.util.Map;
 
 /**
  *
@@ -116,10 +117,12 @@ public class CruncherBindWebService extends Cruncher
             ScriptObjectMirror m = (ScriptObjectMirror) get;
             if (m.isFunction())
             {
+                String endpoint = getAsString(&quot;endpoint&quot;, c, parameters, dataStreams);
                 CruncherJavascriptBinder b = new CruncherJavascriptBinder();
+                b.setLineAndColAndSource(0,0,&quot;&quot;,endpoint);
                 b.build(&quot;obj&quot;, m);
 
-                LevrResolverServlet.resolvableWebServices.put(getAsString(&quot;endpoint&quot;, c, parameters, dataStreams), b);
+                LevrResolverServlet.resolvableWebServices.put(endpoint, b);
                 return null;
             }
         }

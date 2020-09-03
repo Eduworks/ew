@@ -50,7 +50,7 @@
         <dependency>
             <groupId>com.eduworks</groupId>
             <artifactId>ew.levr.core</artifactId>
-            <version>SNAPSHOT</version>
+            <version>5.16.2</version>
         </dependency>
         <dependency>
             <groupId>net.sf.jgap</groupId>

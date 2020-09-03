@@ -6,11 +6,11 @@ import java.io.IOException;
 
 import org.apache.jena.riot.RDFDataMgr;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.vocabulary.OntDocManagerVocab;
-import com.hp.hpl.jena.vocabulary.RDF;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.OntDocManagerVocab;
+import org.apache.jena.vocabulary.RDF;
 
 public class OntologyPolicyFile {
 	

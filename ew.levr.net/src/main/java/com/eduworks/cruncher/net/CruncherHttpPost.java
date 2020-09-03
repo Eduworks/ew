@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.net.NoRouteToHostException;
 import java.net.SocketException;
 import java.nio.charset.Charset;
 import java.util.Map;
@@ -134,6 +135,13 @@ public class CruncherHttpPost extends Cruncher
                 {
                     execute = hc.execute(post);
                 }
+                catch (NoRouteToHostException e)
+                {
+                    if (reliable)
+                        EwThreading.sleep(500);
+                    else
+                        e.printStackTrace();
+                }
                 catch (ClientProtocolException e)
                 {
                     if (reliable)
@@ -229,7 +237,7 @@ public class CruncherHttpPost extends Cruncher
     @Override
     public JSONObject getParameters() throws JSONException
     {
-        return jo("obj", "String", "url", "String", "contentType", "String", "?multipart", "Boolean", "?name", "String", "?authToken", "String");
+        return jo("obj", "String", "url", "String", "contentType", "String", "?multipart", "Boolean", "?name", "String", "?authToken", "String", "?reliable", "Boolean");
     }
 
 }

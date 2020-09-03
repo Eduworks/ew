@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.NoRouteToHostException;
 import java.net.SocketException;
 import java.nio.charset.Charset;
 import java.util.Map;
@@ -62,6 +63,13 @@ public class CruncherHttpDelete extends Cruncher
                 try
                 {
                     execute = hc.execute(delete);
+                }
+                catch (NoRouteToHostException e)
+                {
+                    if (reliable)
+                        EwThreading.sleep(500);
+                    else
+                        e.printStackTrace();
                 }
                 catch (ClientProtocolException e)
                 {
@@ -146,7 +154,7 @@ public class CruncherHttpDelete extends Cruncher
     @Override
     public JSONObject getParameters() throws JSONException
     {
-        return jo("obj", "String", "contentType", "String", "?name", "String", "?authToken", "String", "<any>", "String");
+        return jo("obj", "String", "?authToken", "String", "?reliable", "Boolean", "<any>", "String");
     }
 
 }

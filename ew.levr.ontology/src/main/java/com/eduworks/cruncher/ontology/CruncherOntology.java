@@ -4,10 +4,10 @@ import com.eduworks.ontology.Ontology;
 import com.eduworks.resolver.Context;
 import com.eduworks.resolver.ContextEvent;
 import com.eduworks.resolver.Cruncher;
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.query.ReadWrite;
-import com.hp.hpl.jena.shared.ClosedException;
-import com.hp.hpl.jena.tdb.TDB;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.query.ReadWrite;
+import org.apache.jena.shared.ClosedException;
+import org.apache.jena.tdb.TDB;
 
 public abstract class CruncherOntology extends Cruncher {
 

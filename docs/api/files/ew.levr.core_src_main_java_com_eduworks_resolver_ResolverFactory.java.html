@@ -5,7 +5,7 @@
     <title>ew.levr.core/src/main/java/com/eduworks/resolver/ResolverFactory.java - EW Library</title>
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
-    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/yui/3.18.0/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
@@ -70,7 +70,7 @@
             
             
             <div class="version-info">
-              Version: 5.1.0
+              Version: 5.16.2
             </div>
             
         </div>
@@ -83,16 +83,12 @@
 <pre class="code prettyprint linenums">
 package com.eduworks.resolver;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import com.eduworks.lang.EwMap;
+import com.eduworks.lang.EwSet;
+import com.eduworks.lang.json.impl.EwJsonArray;
+import com.eduworks.lang.util.EwJson;
+import com.eduworks.resolver.lang.LevrJsParser;
+import com.google.common.base.Predicate;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -103,12 +99,9 @@ import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
-import com.eduworks.lang.EwMap;
-import com.eduworks.lang.EwSet;
-import com.eduworks.lang.json.impl.EwJsonArray;
-import com.eduworks.lang.util.EwJson;
-import com.eduworks.resolver.lang.LevrJsParser;
-import com.google.common.base.Predicate;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.*;
 
 public class ResolverFactory
 {
@@ -197,6 +190,18 @@ public class ResolverFactory
 			if (!url.toString().contains(&quot;levr&quot;) &amp;&amp; url.toString().contains(&quot;.jar&quot;))
 				continue;
 			urls.add(url);
+		}
+		if (urls.size() == 0)
+		{
+			System.out.println(&quot;No &#x27;*levr*.jar&#x27; jars detected. We may be running in a repackaged (fat) JAR. Loosening search.&quot;);
+			for (URL url : urlsForCurrentClasspath)
+			{
+				if (url.toString().contains(&quot;icu4j&quot;))
+					continue;
+				if (!url.toString().contains(&quot;.jar&quot;))
+					continue;
+				urls.add(url);
+			}
 		}
 		System.out.println(urls.toString());
 		System.out.println(&quot;We are now going to scan for any Resolvers, Crunchers, or Scripters.&quot;);

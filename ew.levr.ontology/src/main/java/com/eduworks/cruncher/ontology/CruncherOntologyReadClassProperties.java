@@ -1,20 +1,19 @@
 package com.eduworks.cruncher.ontology;
 
-import java.io.InputStream;
-import java.util.Map;
-import java.util.Set;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.eduworks.ontology.Ontology;
 import com.eduworks.ontology.OntologyClass;
 import com.eduworks.ontology.OntologyProperty;
 import com.eduworks.resolver.Context;
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.query.ReadWrite;
-import com.hp.hpl.jena.shared.ClosedException;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.query.ReadWrite;
+import org.apache.jena.shared.ClosedException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.util.Map;
+import java.util.Set;
 
 public class CruncherOntologyReadClassProperties extends CruncherOntology
 {

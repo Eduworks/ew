@@ -2,6 +2,7 @@ package com.eduworks.cruncher.net;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.NoRouteToHostException;
 import java.nio.charset.Charset;
 import java.util.Map;
 
@@ -24,20 +25,17 @@ import com.eduworks.resolver.Context;
 import com.eduworks.resolver.Cruncher;
 import com.eduworks.util.io.InMemoryFile;
 
-public class CruncherHttpGet extends Cruncher
-{
+public class CruncherHttpGet extends Cruncher {
 
     @Override
-    public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
-    {
+    public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException {
         final String url = getObjAsString(c, parameters, dataStreams);
         HttpGet get = new HttpGet(url);
         boolean reliable = optAsBoolean("reliable", false, c, parameters, dataStreams);
 
         CloseableHttpClient hc = HttpClients.createDefault();
 
-        for (String key : keySet())
-        {
+        for (String key : keySet()) {
             if (key.equals("url"))
                 continue;
             if (key.equals("obj"))
@@ -50,22 +48,21 @@ public class CruncherHttpGet extends Cruncher
         }
 
         CloseableHttpResponse execute = null;
-        try
-        {
+        try {
             do
-                try
-                {
+                try {
                     execute = hc.execute(get);
-                }
-                catch (ClientProtocolException e)
-                {
+                } catch (NoRouteToHostException e) {
                     if (reliable)
                         EwThreading.sleep(500);
                     else
                         e.printStackTrace();
-                }
-                catch (IOException e)
-                {
+                } catch (ClientProtocolException e) {
+                    if (reliable)
+                        EwThreading.sleep(500);
+                    else
+                        e.printStackTrace();
+                } catch (IOException e) {
                     if (reliable)
                         EwThreading.sleep(500);
                     else
@@ -75,76 +72,58 @@ public class CruncherHttpGet extends Cruncher
 
             if (execute == null)
                 return null;
-            try
-            {
-                if (optAsBoolean("file", false, c, parameters, dataStreams))
-                {
+            try {
+                if (optAsBoolean("file", false, c, parameters, dataStreams)) {
                     InMemoryFile imf = new InMemoryFile();
                     imf.data = EntityUtils.toByteArray(execute.getEntity());
                     imf.mime = EntityUtils.getContentMimeType(execute.getEntity());
                     Header header = execute.getFirstHeader("Content-Disposition");
                     if (header != null)
-                        try
-                        {
+                        try {
                             imf.name = new ContentDisposition(header.getValue()).getParameter("filename");
-                        }
-                        catch (ParseException e)
-                        {
+                        } catch (ParseException e) {
                             e.printStackTrace();
                         }
                     return imf;
-                }
-                else
-                {
+                } else {
                     String string = EntityUtils.toString(execute.getEntity(), Charset.defaultCharset());
                     if (EwJson.isJson(string))
                         return EwJson.tryParseJson(string, false);
                     return string;
                 }
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
                 return null;
             }
-        }
-        finally
-        {
-            try
-            {
+        } finally {
+            try {
                 if (execute != null)
                     execute.close();
                 if (hc != null)
                     hc.close();
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
             }
         }
     }
 
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         return "Fetches a web page using an HTTP Get. URL is to be placed in 'obj'. Will auto convert result to JSON if possible.";
     }
 
     @Override
-    public String getReturn()
-    {
+    public String getReturn() {
         return "JSONObject|JSONArray|String";
     }
 
     @Override
-    public String getAttribution()
-    {
+    public String getAttribution() {
         return ATTRIB_NONE;
     }
 
     @Override
-    public JSONObject getParameters() throws JSONException
-    {
-        return jo("obj", "String", "<any>", "String");
+    public JSONObject getParameters() throws JSONException {
+        return jo("obj", "String", "?reliable", "Boolean", "<any>", "String");
     }
 
 }

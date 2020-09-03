@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
 import java.util.logging.Level;
@@ -34,6 +35,8 @@ public class LevrJsParser
     {
         reinitialize();
         String allCruncherBindings = "";
+        if (ResolverFactory.cruncherSpecs == null)
+            ResolverFactory.cruncherSpecs = new HashMap<>();
         for (String cruncherName : ResolverFactory.cruncherSpecs.keySet())
         {
             if (cruncherName.equals("toString")) continue; 

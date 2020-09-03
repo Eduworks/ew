@@ -18,6 +18,7 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.zip.DeflaterInputStream;
 import java.util.zip.GZIPInputStream;
@@ -29,7 +30,6 @@ import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
 import com.eduworks.lang.EwSet;
-import com.google.common.base.Predicate;
 import java.util.Enumeration;
 
 public class EwFileSystem
@@ -105,7 +105,7 @@ public class EwFileSystem
                 new ResourcesScanner().filterResultsBy(new Predicate<String>()
                 {
                     @Override
-                    public boolean apply(String input)
+                    public boolean test(String input)
                     {
                         try
                         {
@@ -143,7 +143,7 @@ public class EwFileSystem
                 new ResourcesScanner().filterResultsBy(new Predicate<String>()
                 {
                     @Override
-                    public boolean apply(String input)
+                    public boolean test(String input)
                     {
                         try
                         {
@@ -181,7 +181,7 @@ public class EwFileSystem
                 new ResourcesScanner().filterResultsBy(new Predicate<String>()
                 {
                     @Override
-                    public boolean apply(String input)
+                    public boolean test(String input)
                     {
                         try
                         {

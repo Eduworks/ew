@@ -2,9 +2,11 @@ package com.eduworks.cruncher.net;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.NoRouteToHostException;
 import java.net.URL;
 import java.util.Map;
 
+import com.eduworks.lang.threading.EwThreading;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,6 +38,10 @@ public class CruncherHttpStatus extends Cruncher
             String rc = String.valueOf(conn.getResponseCode());
             conn.disconnect();
             ret = rc;
+        }
+        catch (NoRouteToHostException e)
+        {
+            ret = "NO ROUTE TO HOST";
         }
         catch (java.net.UnknownHostException uhe)
         {
@@ -73,7 +79,7 @@ public class CruncherHttpStatus extends Cruncher
     @Override
     public JSONObject getParameters() throws JSONException
     {
-        return jo("url", "String");
+        return jo("url", "String", "?reliable", "Boolean");
     }
 
 }
