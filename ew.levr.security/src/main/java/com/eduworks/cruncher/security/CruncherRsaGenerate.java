@@ -17,6 +17,7 @@ import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.asn1.pkcs.RSAPrivateKey;
 import org.bouncycastle.asn1.pkcs.RSAPrivateKeyStructure;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.util.Properties;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemWriter;
 import org.json.JSONException;
@@ -32,6 +33,7 @@ public class CruncherRsaGenerate extends Cruncher
 
 	public static void checkProvider()
 	{
+		System.setProperty("org.bouncycastle.asn1.allow_unsafe_integer","true");
 		BouncyCastleProvider provider = new BouncyCastleProvider();
 		if (Security.getProvider(provider.getName()) == null)
 			Security.addProvider(provider);

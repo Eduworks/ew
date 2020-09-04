@@ -1,6 +1,8 @@
 package com.eduworks.cruncher.security;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -34,11 +36,9 @@ public class CruncherRsaDecrypt extends Cruncher
 		String key = getAsString("ppk", c, parameters, dataStreams);
 		try
 		{
-			PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(Base64.decodeBase64(key.replace("-----BEGIN PRIVATE KEY-----", "")
-					.replace("-----END PRIVATE KEY-----", "").replace("-----BEGIN RSA PRIVATE KEY-----", "")
-					.replace("-----END RSA PRIVATE KEY-----", "").replaceAll("\r?\n", "")));
+			PKCS8EncodedKeySpec bobPubKeySpec = new PKCS8EncodedKeySpec(new PemReader(new StringReader(key)).readPemObject().getContent());
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-			PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);
+			PrivateKey privateKey = keyFactory.generatePrivate(bobPubKeySpec);
 
 			Cipher cipher = Cipher.getInstance("RSA/None/OAEPWithSHA1AndMGF1Padding");
 			cipher.init(Cipher.DECRYPT_MODE, privateKey);
@@ -67,6 +67,8 @@ public class CruncherRsaDecrypt extends Cruncher
 		}
 		catch (BadPaddingException e)
 		{
+			throw new RuntimeException(e);
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}

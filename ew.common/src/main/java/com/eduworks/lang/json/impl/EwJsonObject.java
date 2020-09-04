@@ -1,13 +1,7 @@
 package com.eduworks.lang.json.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.lang.reflect.Field;
+import java.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +28,7 @@ import com.eduworks.lang.util.EwUri;
  * This list can and should grow as Eduworks applications have need of new JSON
  * array functionality.
  * </p>
- * 
+ *
  * @author dharvey
  * @since September, 2011
  */
@@ -65,7 +59,7 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 	/**
 	 * Convert String or {@link JSONObject} to EwJsonObject, and put and return
 	 * it if it is valid.
-	 * 
+	 *
 	 * @param json
 	 *            Collection to get element from.
 	 * @param ref
@@ -108,7 +102,7 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 	 * If "ref" is not null, merge "from" with any existing json value at "ref"
 	 * -- a non-json value at "ref" will be overwritten. If "from" is an
 	 * {@link EwJsonArray}, its values will be merged using the indices as keys.
-	 * 
+	 *
 	 * @param into
 	 *            Object to merge from into.
 	 * @param from
@@ -172,7 +166,7 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 	 * converted to an {@link EwJsonObject} and returned. If ref is null the new
 	 * object is merged with the the one passed in; otherwise the new object is
 	 * merged with anything existing at the key slot specified by ref.
-	 * 
+	 *
 	 * @param object
 	 *            Object to merge into
 	 * @param source
@@ -275,7 +269,7 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 	 * If "from" is parsable as JSON, merge it with "into"; otherwise if ref and
 	 * from are not null, put or merge with "from". Finally, return "into" as an
 	 * EwJsonObject.
-	 * 
+	 *
 	 * @see EwJson#tryParseJson(Object, boolean)
 	 * @see EwJsonObject#merge(EwJsonObject, EwJsonCollection, Object)
 	 * @param into
@@ -316,6 +310,17 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 	public EwJsonObject()
 	{
 		super();
+
+		Field f1 = null;
+		try {
+			f1 = getClass().getSuperclass().getDeclaredField("map");
+			f1.setAccessible(true);
+			f1.set(this,new LinkedHashMap());
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public EwJsonObject(String source) throws JSONException
@@ -368,7 +373,7 @@ public class EwJsonObject extends JSONObject implements EwJsonCollection
 
 	/**
 	 * Attempt to merge any object with this.
-	 * 
+	 *
 	 * @see #merge(Object)
 	 * @param source
 	 *            Object to attempt to use to populate this array.

@@ -1,6 +1,8 @@
 package com.eduworks.cruncher.security;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -13,6 +15,10 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
+import org.bouncycastle.asn1.ASN1Sequence;
+import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
+import org.bouncycastle.jcajce.provider.asymmetric.rsa.KeyFactorySpi;
+import org.bouncycastle.util.io.pem.PemObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,16 +36,23 @@ public class CruncherRsaSign extends Cruncher
 		String key = getAsString("ppk", c, parameters, dataStreams);
 		try
 		{
-			PKCS8EncodedKeySpec bobPubKeySpec = new PKCS8EncodedKeySpec(Base64.decodeBase64(key.replace("-----BEGIN PRIVATE KEY-----", "")
-					.replace("-----END PRIVATE KEY-----", "").replace("-----BEGIN RSA PRIVATE KEY-----", "")
-					.replace("-----END RSA PRIVATE KEY-----", "").replaceAll("\r?\n", "")));
+			PemReader pr = new PemReader(new StringReader(key));
+			PemObject po = pr.readPemObject();
+			PKCS8EncodedKeySpec bobPubKeySpec = new PKCS8EncodedKeySpec(po.getContent());
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+			//KeyFactorySpi kfs = new KeyFactorySpi();
+			ASN1Sequence.fromByteArray(bobPubKeySpec.getEncoded());
 			PrivateKey bobPubKey = keyFactory.generatePrivate(bobPubKeySpec);
 			Signature sig = Signature.getInstance("sha1withrsa");
 			sig.initSign(bobPubKey);
 			sig.update(object.getBytes());
 			byte[] signature = sig.sign();
+
 			return new String(Base64.encodeBase64(signature));
+		}
+		catch (IllegalArgumentException e)
+		{
+			throw new RuntimeException(e);
 		}
 		catch (SignatureException e)
 		{
@@ -55,6 +68,8 @@ public class CruncherRsaSign extends Cruncher
 		}
 		catch (InvalidKeySpecException e)
 		{
+			throw new RuntimeException(e);
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}

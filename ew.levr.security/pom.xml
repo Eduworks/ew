@@ -13,6 +13,7 @@
 			<artifactId>ew.levr.core</artifactId>
 			<version>5.16.2</version>
 		</dependency>
+		<!--Bouncycastle beyond 1.53 (1.6x) doesn't read PEM keys from forge.-->
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15on</artifactId>
