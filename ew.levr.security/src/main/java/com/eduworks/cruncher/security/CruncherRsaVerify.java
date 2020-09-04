@@ -1,6 +1,8 @@
 package com.eduworks.cruncher.security;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -22,6 +24,10 @@ import com.eduworks.resolver.Cruncher;
 public class CruncherRsaVerify extends Cruncher
 {
 
+	static{
+
+	}
+
 	@Override
 	public Object resolve(Context c, Map<String, String[]> parameters, Map<String, InputStream> dataStreams) throws JSONException
 	{
@@ -33,7 +39,7 @@ public class CruncherRsaVerify extends Cruncher
 			against = new EwJsonObject(against);
 		try
 		{
-			X509EncodedKeySpec bobPubKeySpec = new X509EncodedKeySpec(Base64.decodeBase64(key.replace("-----BEGIN PUBLIC KEY-----", "").replace("-----END PUBLIC KEY-----", "").replace("-----BEGIN RSA PUBLIC KEY-----", "").replace("-----END RSA PUBLIC KEY-----", "").replaceAll("\r?\n","")));
+			X509EncodedKeySpec bobPubKeySpec = new X509EncodedKeySpec(new PemReader(new StringReader(key)).readPemObject().getContent());
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 			PublicKey bobPubKey = keyFactory.generatePublic(bobPubKeySpec);
 			Signature sig = Signature.getInstance("sha1withrsa");
@@ -58,6 +64,8 @@ public class CruncherRsaVerify extends Cruncher
 		}
 		catch (InvalidKeySpecException e)
 		{
+			throw new RuntimeException(e);
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}

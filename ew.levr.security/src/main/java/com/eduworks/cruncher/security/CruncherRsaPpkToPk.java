@@ -20,7 +20,6 @@ import org.bouncycastle.asn1.ASN1Encoding;
 import org.bouncycastle.asn1.pkcs.RSAPublicKey;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.io.pem.PemObject;
-import org.bouncycastle.util.io.pem.PemReader;
 import org.bouncycastle.util.io.pem.PemWriter;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,9 +37,9 @@ public class CruncherRsaPpkToPk extends Cruncher
 		String key = getObjAsString(c, parameters, dataStreams);
 		try
 		{
-			PKCS8EncodedKeySpec bobPubKeySpec = new PKCS8EncodedKeySpec(Base64.decodeBase64(key.replace("-----BEGIN RSA PRIVATE KEY-----", "")
-					.replace("-----END RSA PRIVATE KEY-----", "").replace("-----BEGIN PRIVATE KEY-----", "").replace("-----END PRIVATE KEY-----", "")
-					.replaceAll("\r?\n", "")));
+			PemReader pr = new PemReader(new StringReader(key));
+			PemObject po = pr.readPemObject();
+			PKCS8EncodedKeySpec bobPubKeySpec = new PKCS8EncodedKeySpec(po.getContent());
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 			RSAPrivateCrtKey ppk = (RSAPrivateCrtKey) keyFactory.generatePrivate(bobPubKeySpec);
 			PublicKey pk = keyFactory.generatePublic(new RSAPublicKeySpec(ppk.getModulus(), ppk.getPublicExponent()));
