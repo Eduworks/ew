@@ -2,7 +2,7 @@
     "project": {
         "name": "EW Library",
         "description": "EW Library API: ",
-        "version": "5.16.2",
+        "version": "5.16.3",
         "url": "http://ew.eduworks.org/",
         "logo": "http://eduworks.com/img/eduworks-ring-e.png"
     },
@@ -1480,7 +1480,7 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 22,
+            "line": 16,
             "description": "A class to extend {@link JSONObject} and implement {@link EwJsonCollection}.\nProvides the following features and functionality:\n<ul>\n<li>enhances all JSONObject behavior even when JSONObject methods are called\n</li>\n<li>processes complex array keys \"key[0].key[next]\" against nested JSON\nobjects</li>\n<li>wraps incoming/outgoing {@link JSONArray}s as EwJsonArrays</li>\n<li>wraps incoming/outgoing {@link JSONObject}s as {@link EwJsonObject}s</li>\n</ul>\n<p>\nThis list can and should grow as Eduworks applications have need of new JSON\narray functionality.\n</p>",
             "author": "dharvey",
             "since": "September, 2011",
@@ -1488,7 +1488,7 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 65,
+            "line": 59,
             "description": "Convert String or {@link JSONObject} to EwJsonObject, and put and return\nit if it is valid.",
             "params": [
                 {
@@ -1511,7 +1511,7 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 106,
+            "line": 100,
             "description": "Merges values from an {@link EwJsonCollection} to a {@link EwJsonObject}.\nIf \"ref\" is not null, merge \"from\" with any existing json value at \"ref\"\n-- a non-json value at \"ref\" will be overwritten. If \"from\" is an\n{@link EwJsonArray}, its values will be merged using the indices as keys.",
             "params": [
                 {
@@ -1537,7 +1537,7 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 155,
+            "line": 149,
             "see": [
                 "#mergeFromString(JSONObject",
                 "String",
@@ -1560,7 +1560,7 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 168,
+            "line": 162,
             "description": "Parse contents of json object String, and insert the new object at the\nspecified key (ref). If object is null, an {@link EwJsonObject} is\ninstantiated from source and returned. If source is null the object is\nconverted to an {@link EwJsonObject} and returned. If ref is null the new\nobject is merged with the the one passed in; otherwise the new object is\nmerged with anything existing at the key slot specified by ref.",
             "params": [
                 {
@@ -1586,7 +1586,7 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 274,
+            "line": 268,
             "description": "If \"from\" is parsable as JSON, merge it with \"into\"; otherwise if ref and\nfrom are not null, put or merge with \"from\". Finally, return \"into\" as an\nEwJsonObject.",
             "see": [
                 "EwJson#tryParseJson(Object",
@@ -1619,7 +1619,7 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 369,
+            "line": 374,
             "description": "Attempt to merge any object with this.",
             "see": [
                 "#merge(Object)"
@@ -1637,62 +1637,62 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 399,
+            "line": 404,
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 471,
+            "line": 476,
             "description": "Overridden to convert Strings or {@link JSONArray}s to\n{@link EwJsonArray}s",
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 494,
+            "line": 499,
             "description": "Overridden to convert Strings or {@link JSONObject}s to\n{@link EwJsonObject}s",
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 553,
+            "line": 558,
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 571,
+            "line": 576,
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 587,
+            "line": 592,
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 600,
+            "line": 605,
             "description": "Iterates over sorted keys and inserts separators between corresponding\nvalues",
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 652,
+            "line": 657,
             "description": "Overridden to ensure complex keys are dereferenced by all getters. This\nmethod is what enables all gets and opts to parse complex keys.",
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 662,
+            "line": 667,
             "description": "Referenced by overridden {@link #opt(String)}, which is called throughout\nparent code.",
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 672,
+            "line": 677,
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 698,
+            "line": 703,
             "return": {
                 "description": "the boolean value corresponding to \"ref\", or false if key does\n        not exist or is not a String"
             },
@@ -1700,7 +1700,7 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 717,
+            "line": 722,
             "return": {
                 "description": "the value corresponding to \"ref\", or  if key\n        does not exist or is not a String",
                 "type": "@link Double#NaN"
@@ -1709,7 +1709,7 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 736,
+            "line": 741,
             "return": {
                 "description": "the value corresponding to \"ref\", or zero if key does not exist\n        or is not a String"
             },
@@ -1717,13 +1717,13 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 755,
+            "line": 760,
             "description": "Overridden to convert Strings or {@link JSONArray}s to\n{@link EwJsonArray}s",
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 765,
+            "line": 770,
             "return": {
                 "description": "the EwJsonArray corresponding to \"ref\", or null if key does not\n        exist or is not a String"
             },
@@ -1731,13 +1731,13 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 789,
+            "line": 794,
             "description": "Overridden to convert Strings or {@link JSONObject}s to\n{@link EwJsonObject}s",
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 799,
+            "line": 804,
             "return": {
                 "description": "the EwJsonObject corresponding to \"ref\", or null if key does not\n        exist or is not a String"
             },
@@ -1745,7 +1745,7 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 835,
+            "line": 840,
             "return": {
                 "description": "the value corresponding to \"ref\", or zero if key does not exist\n        or is not a String"
             },
@@ -1753,7 +1753,7 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 854,
+            "line": 859,
             "return": {
                 "description": "the value corresponding to \"ref\", or the empty string if key does\n        not exist or is not a String"
             },
@@ -1761,46 +1761,46 @@
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 879,
+            "line": 884,
             "description": "Overridden to avoid conversion of {@link Collection}s to\n{@link JSONArray}s",
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 889,
+            "line": 894,
             "description": "Inserts a {@link JSONArray} created from the {@link Collection} at the\nspecified key.",
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 917,
+            "line": 922,
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 930,
+            "line": 935,
             "description": "Overridden to first try parsing value as an EwJsonCollection. All puts\nexecuted in the parent call this method. Null values result in the\nremoval of any existing value at key.",
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 950,
+            "line": 955,
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 960,
+            "line": 965,
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 1012,
+            "line": 1017,
             "description": "Compares this with object, after it has been wrapped by\n{@link EwJson#wrap(Object)}.",
             "class": "cache"
         },
         {
             "file": "ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java",
-            "line": 1064,
+            "line": 1069,
             "description": "Joins next key and value, and returns the key -- does not check nulls or\nif keys has next",
             "class": "cache"
         },
@@ -5209,7 +5209,7 @@
         },
         {
             "file": "ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java",
-            "line": 22,
+            "line": 23,
             "author": "fray",
             "class": "jsonLdCompact",
             "module": "ew.levr.base"
@@ -5243,7 +5243,7 @@
         },
         {
             "file": "ew.levr.core/src/test/java/com/eduworks/resolver/lang/LevrJsParserTest.java",
-            "line": 22,
+            "line": 18,
             "description": "Created by Eduworks on 2/6/2017.\n\nTests the core levrJs functionality",
             "class": "jsonLdCompact",
             "module": "ew.levr.base"
@@ -5708,7 +5708,7 @@
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
-            "line": 156,
+            "line": 114,
             "description": "Loads an existing ontology from the local directory and wraps it in an\nOntology object to be manipulated",
             "params": [
                 {
@@ -5717,7 +5717,7 @@
                 },
                 {
                     "name": "identifier",
-                    "description": "- Identifier of the ontology (right now this is the filename\n           without the directory or extension)"
+                    "description": "- Identifier of the ontology (right now this is the filename\n                  without the directory or extension)"
                 }
             ],
             "return": {
@@ -5728,7 +5728,7 @@
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
-            "line": 225,
+            "line": 172,
             "description": "Creates a new ontology file in the local directory and then loads and\nwraps it in an Ontology object",
             "params": [
                 {
@@ -5737,7 +5737,7 @@
                 },
                 {
                     "name": "identifier",
-                    "description": "- The identifier of the new ontology (right now, just the name\n           of the file without the path or extension)"
+                    "description": "- The identifier of the new ontology (right now, just the name\n                  of the file without the path or extension)"
                 }
             ],
             "return": {
@@ -5748,7 +5748,7 @@
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
-            "line": 285,
+            "line": 223,
             "description": "Constructor for creating/loading a new ontology, wraps the ontology given\nand saves the",
             "params": [
                 {
@@ -5765,7 +5765,7 @@
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
-            "line": 301,
+            "line": 237,
             "description": "Saves the underlying ontology after modifications to the ontology that\nneed to be propogated for queries",
             "params": [
                 {
@@ -5778,7 +5778,7 @@
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
-            "line": 367,
+            "line": 293,
             "description": "Returns the OntologyClass object for the classId specified",
             "params": [
                 {
@@ -5794,17 +5794,17 @@
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
-            "line": 424,
+            "line": 341,
             "description": "Returns a map from classId to OntologyClass of all of the classes in this\nontology",
             "return": {
-                "description": "map from classId to OntologyClass of all of the classes in this\n        ontology"
+                "description": "map from classId to OntologyClass of all of the classes in this\nontology"
             },
             "class": "",
             "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
-            "line": 459,
+            "line": 372,
             "description": "Creates a new instance of a class with the property values given",
             "params": [
                 {
@@ -5824,7 +5824,7 @@
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
-            "line": 483,
+            "line": 392,
             "description": "Returns the OntologyInstance object for the instanceId specified",
             "params": [
                 {
@@ -5840,7 +5840,7 @@
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
-            "line": 623,
+            "line": 504,
             "description": "Returns the OntologyProperty object for the propertyId specified",
             "params": [
                 {
@@ -5856,37 +5856,37 @@
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
-            "line": 682,
+            "line": 551,
             "description": "Returns a Map from propertyId to OntologyProperty object of all of the\nproperties in this ontology",
             "return": {
-                "description": "Map from propertyId to OntologyProperty of all properties in the\n        ontology"
+                "description": "Map from propertyId to OntologyProperty of all properties in the\nontology"
             },
             "class": "",
             "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
-            "line": 743,
+            "line": 606,
             "description": "Returns a Map from propertyId to OntologyProperty object of all of the\ndata properties in this ontology",
             "return": {
-                "description": "Map from propertyId to OntologyProperty of all data properties in\n        the ontology"
+                "description": "Map from propertyId to OntologyProperty of all data properties in\nthe ontology"
             },
             "class": "",
             "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java",
-            "line": 776,
+            "line": 634,
             "description": "Returns a Map from propertyId to OntologyProperty object of all of the\nobject properties in this ontology",
             "return": {
-                "description": "Map from propertyId to OntologyProperty of all object properties\n        in the ontology"
+                "description": "Map from propertyId to OntologyProperty of all object properties\nin the ontology"
             },
             "class": "",
             "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java",
-            "line": 411,
+            "line": 410,
             "description": "Creates a new Ontology Class Object, saving the necessary data for future\nmanipulation/querying of the class. There is no guarantee that the class\nalready exists in the ontology, this could be creating a new class right\nnow",
             "params": [
                 {
@@ -5903,13 +5903,13 @@
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java",
-            "line": 518,
+            "line": 517,
             "class": "",
             "module": "ew.levr.rdf"
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java",
-            "line": 527,
+            "line": 526,
             "description": "Returns all of the Ontology Instances of this class in a map",
             "return": {
                 "description": "a Map of String (InstanceId) to the OntologyInstance it\n        identifies"
@@ -5919,7 +5919,7 @@
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java",
-            "line": 559,
+            "line": 558,
             "description": "Returns a JSONObject that contains the information that represents this\nclass of the form: Where propId is an (idChar)-formatted Id of a property",
             "return": {
                 "description": "JSON representation of the ontology."
@@ -5929,7 +5929,7 @@
         },
         {
             "file": "ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java",
-            "line": 761,
+            "line": 760,
             "description": "Returns the Ontology that this class is a part of",
             "return": {
                 "description": "Ontology object that this class is described in"
@@ -6240,139 +6240,139 @@
         },
         {
             "message": "Missing item type\nA class to extend {@link JSONObject} and implement {@link EwJsonCollection}.\nProvides the following features and functionality:\n<ul>\n<li>enhances all JSONObject behavior even when JSONObject methods are called\n</li>\n<li>processes complex array keys \"key[0].key[next]\" against nested JSON\nobjects</li>\n<li>wraps incoming/outgoing {@link JSONArray}s as EwJsonArrays</li>\n<li>wraps incoming/outgoing {@link JSONObject}s as {@link EwJsonObject}s</li>\n</ul>\n<p>\nThis list can and should grow as Eduworks applications have need of new JSON\narray functionality.\n</p>",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:22"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:16"
         },
         {
             "message": "Missing item type\nConvert String or {@link JSONObject} to EwJsonObject, and put and return\nit if it is valid.",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:65"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:59"
         },
         {
             "message": "Missing item type\nMerges values from an {@link EwJsonCollection} to a {@link EwJsonObject}.\nIf \"ref\" is not null, merge \"from\" with any existing json value at \"ref\"\n-- a non-json value at \"ref\" will be overwritten. If \"from\" is an\n{@link EwJsonArray}, its values will be merged using the indices as keys.",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:106"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:100"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:155"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:149"
         },
         {
             "message": "Missing item type\nParse contents of json object String, and insert the new object at the\nspecified key (ref). If object is null, an {@link EwJsonObject} is\ninstantiated from source and returned. If source is null the object is\nconverted to an {@link EwJsonObject} and returned. If ref is null the new\nobject is merged with the the one passed in; otherwise the new object is\nmerged with anything existing at the key slot specified by ref.",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:168"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:162"
         },
         {
             "message": "Missing item type\nIf \"from\" is parsable as JSON, merge it with \"into\"; otherwise if ref and\nfrom are not null, put or merge with \"from\". Finally, return \"into\" as an\nEwJsonObject.",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:274"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:268"
         },
         {
             "message": "Missing item type\nAttempt to merge any object with this.",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:369"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:374"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:399"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:404"
         },
         {
             "message": "Missing item type\nOverridden to convert Strings or {@link JSONArray}s to\n{@link EwJsonArray}s",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:471"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:476"
         },
         {
             "message": "Missing item type\nOverridden to convert Strings or {@link JSONObject}s to\n{@link EwJsonObject}s",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:494"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:499"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:553"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:558"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:571"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:576"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:587"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:592"
         },
         {
             "message": "Missing item type\nIterates over sorted keys and inserts separators between corresponding\nvalues",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:600"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:605"
         },
         {
             "message": "Missing item type\nOverridden to ensure complex keys are dereferenced by all getters. This\nmethod is what enables all gets and opts to parse complex keys.",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:652"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:657"
         },
         {
             "message": "Missing item type\nReferenced by overridden {@link #opt(String)}, which is called throughout\nparent code.",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:662"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:667"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:672"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:677"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:698"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:703"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:717"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:722"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:736"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:741"
         },
         {
             "message": "Missing item type\nOverridden to convert Strings or {@link JSONArray}s to\n{@link EwJsonArray}s",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:755"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:760"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:765"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:770"
         },
         {
             "message": "Missing item type\nOverridden to convert Strings or {@link JSONObject}s to\n{@link EwJsonObject}s",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:789"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:794"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:799"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:804"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:835"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:840"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:854"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:859"
         },
         {
             "message": "Missing item type\nOverridden to avoid conversion of {@link Collection}s to\n{@link JSONArray}s",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:879"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:884"
         },
         {
             "message": "Missing item type\nInserts a {@link JSONArray} created from the {@link Collection} at the\nspecified key.",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:889"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:894"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:917"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:922"
         },
         {
             "message": "Missing item type\nOverridden to first try parsing value as an EwJsonCollection. All puts\nexecuted in the parent call this method. Null values result in the\nremoval of any existing value at key.",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:930"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:935"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:950"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:955"
         },
         {
             "message": "Missing item type",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:960"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:965"
         },
         {
             "message": "Missing item type\nCompares this with object, after it has been wrapped by\n{@link EwJson#wrap(Object)}.",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:1012"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:1017"
         },
         {
             "message": "Missing item type\nJoins next key and value, and returns the key -- does not check nulls or\nif keys has next",
-            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:1064"
+            "line": " ew.common/src/main/java/com/eduworks/lang/json/impl/EwJsonObject.java:1069"
         },
         {
             "message": "Missing item type\nDefines a common API for classes extending members of the org.json library,\nsuch that the underlying functionality can be manipulated as an\nEwJsonCollection.\n\nProvides these basic features and functionality (see implementations for\nspecifics):\n<ul>\n<li>an extensible API of customized JSON functionality</li>\n<li>an API for converting or merging common classes into JSON</li>\n<li>an API for encoding and decoding string values</li>\n</ul>\nKnown implementations:\n<ul>\n<li>{@link EwJsonArray}</li>\n<li>{@link EwJsonObject}</li>\n</ul>",
@@ -7268,7 +7268,7 @@
         },
         {
             "message": "Missing item type",
-            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java:22"
+            "line": " ew.levr.core/src/main/java/com/eduworks/resolver/lang/LevrJsParser.java:23"
         },
         {
             "message": "Missing item type",
@@ -7288,7 +7288,7 @@
         },
         {
             "message": "Missing item type\nCreated by Eduworks on 2/6/2017.\n\nTests the core levrJs functionality",
-            "line": " ew.levr.core/src/test/java/com/eduworks/resolver/lang/LevrJsParserTest.java:22"
+            "line": " ew.levr.core/src/test/java/com/eduworks/resolver/lang/LevrJsParserTest.java:18"
         },
         {
             "message": "Missing item type",
@@ -7440,71 +7440,71 @@
         },
         {
             "message": "Missing item type\nLoads an existing ontology from the local directory and wraps it in an\nOntology object to be manipulated",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:156"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:114"
         },
         {
             "message": "Missing item type\nCreates a new ontology file in the local directory and then loads and\nwraps it in an Ontology object",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:225"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:172"
         },
         {
             "message": "Missing item type\nConstructor for creating/loading a new ontology, wraps the ontology given\nand saves the",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:285"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:223"
         },
         {
             "message": "Missing item type\nSaves the underlying ontology after modifications to the ontology that\nneed to be propogated for queries",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:301"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:237"
         },
         {
             "message": "Missing item type\nReturns the OntologyClass object for the classId specified",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:367"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:293"
         },
         {
             "message": "Missing item type\nReturns a map from classId to OntologyClass of all of the classes in this\nontology",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:424"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:341"
         },
         {
             "message": "Missing item type\nCreates a new instance of a class with the property values given",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:459"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:372"
         },
         {
             "message": "Missing item type\nReturns the OntologyInstance object for the instanceId specified",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:483"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:392"
         },
         {
             "message": "Missing item type\nReturns the OntologyProperty object for the propertyId specified",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:623"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:504"
         },
         {
             "message": "Missing item type\nReturns a Map from propertyId to OntologyProperty object of all of the\nproperties in this ontology",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:682"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:551"
         },
         {
             "message": "Missing item type\nReturns a Map from propertyId to OntologyProperty object of all of the\ndata properties in this ontology",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:743"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:606"
         },
         {
             "message": "Missing item type\nReturns a Map from propertyId to OntologyProperty object of all of the\nobject properties in this ontology",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:776"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/Ontology.java:634"
         },
         {
             "message": "Missing item type\nCreates a new Ontology Class Object, saving the necessary data for future\nmanipulation/querying of the class. There is no guarantee that the class\nalready exists in the ontology, this could be creating a new class right\nnow",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java:411"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java:410"
         },
         {
             "message": "Missing item type",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java:518"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java:517"
         },
         {
             "message": "Missing item type\nReturns all of the Ontology Instances of this class in a map",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java:527"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java:526"
         },
         {
             "message": "Missing item type\nReturns a JSONObject that contains the information that represents this\nclass of the form: Where propId is an (idChar)-formatted Id of a property",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java:559"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java:558"
         },
         {
             "message": "Missing item type\nReturns the Ontology that this class is a part of",
-            "line": " ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java:761"
+            "line": " ew.ontology/src/main/java/com/eduworks/ontology/OntologyClass.java:760"
         },
         {
             "message": "Missing item type\nCreates a new Instance of the Class that is passed in with the values of\nproperties being those that are passed in",

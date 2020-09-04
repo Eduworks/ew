@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.eduworks</groupId>
 		<artifactId>ew</artifactId>
-		<version>5.16.2</version>
+		<version>5.16.3</version>
 	</parent>
 	<artifactId>ew.levr.db.sql</artifactId>
 	<packaging>jar</packaging>
@@ -12,7 +12,7 @@
 		<dependency>
 			<groupId>com.eduworks</groupId>
 			<artifactId>ew.levr.core</artifactId>
-			<version>5.16.2</version>
+			<version>5.16.3</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
